@@ -1,14 +1,17 @@
 ###Current Status:
 * You can Login, create characters and enter world.
-* Fallen Star quest working in 80%.
-* Working with 1.0.3.10057.
+* The Fallen Star quest working in 99%.
+* Legacy of Cain quest working in 20%.
+* Drop is still bugged.
+* Working with 1.0.3.10057 (soon newer with new Patcher).
 
 ***
 
 # Stay awhile and listen
 
-* Read the [FAQ](http://wiki.mooege.org/FAQ) and check the [wiki](http://wiki.mooege.org/) before asking!
+* All sites about mooege is dead, sorry :)
 * Check [RageZone Forums](http://ragezone.com/) for more informations.
+* Community board soon...
 
 # Welcome to mooege
 
