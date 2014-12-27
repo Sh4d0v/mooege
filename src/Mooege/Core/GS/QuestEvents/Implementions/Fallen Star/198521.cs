@@ -52,7 +52,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //okay now we send a notify with QuestEvent for every one
             world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
             //force leah to have a specific conversation list :p
-            //world.GetActorBySNO(4580).Tags.Add(MarkerKeys.ConversationList, new TagMapEntry(198541, 108832, 2)); // erekose trying to add manually the conversation to leah's conversation list
+            //world.GetActorBySNO(4580).Tags.Add(MarkerKeys.ConversationList, new TagMapEntry(198541, 108832, 2));
 
             foreach (var player in world.Players)
             {
@@ -65,6 +65,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 });
             };
 
+            // starting second quest
             StartConversation(world, 198541);
         }
 

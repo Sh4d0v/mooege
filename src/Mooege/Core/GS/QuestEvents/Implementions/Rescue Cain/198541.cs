@@ -44,10 +44,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         public override void Execute(Map.World world)
         {
+            // test kill leah
+            if (world.HasActor(72))
+            {
+                world.GetActorByDynamicId(72).Destroy();
+            }
             Logger.Debug(" RESCUE CAIN QUEST STARTED ");
+            Logger.Debug(" 1 ");
             StartConversation(world, 190404);
+            //Logger.Debug(" 2 ");
+            //world.Game.Quests.Advance(72095); // force going into step 7
+            Logger.Debug(" 3 ");
             StartConversation(world, 166678); // "let me open the gate"
-            world.Game.Quests.Advance(72095); // force going into step 7
+            Logger.Debug(" 4 ");
+            //world.Game.Quests.Advance(72095);
+            Logger.Debug(" 5 ");
+            StartConversation(world, 198588);
         }
 
         private bool StartConversation(Map.World world, Int32 conversationId)

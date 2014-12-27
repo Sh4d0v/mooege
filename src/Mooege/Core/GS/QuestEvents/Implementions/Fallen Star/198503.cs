@@ -234,30 +234,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
                     {
-                        // for some obnoxious reason we should shoot the poor rumfeld here                       
-                        //var actorToShoot = world.GetActorBySNO(3739);
-                        //if ( (actorToShoot != null)) //  && (world.GetActorsBySNO(3739).Count > 1) )
-                        //{
-                        //    Logger.Debug("trying to shoot actor SNO {0}, world contains {1} such actors ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
-                        //    world.Leave(actorToShoot); // or directly remove this shit
-                        //}
-                        //else
-                        //{
-                        //    Logger.Debug("No actor to shoot yet");
-                        //}
-
-                        //actorToShoot = world.GetActorBySNO(4580);
-                        //if (actorToShoot != null)
-                        //{
-                        //    Logger.Debug("trying to shoot actor SNO {0}, world contains {1} such actors ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
-                        //    world.Leave(actorToShoot); // or directly remove this shit
-                        //}
-                        //else
-                        //{
-                        //    Logger.Debug("No actor to shoot yet");
-                        //}
-
-
                         world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, portalAID);
                         break;
                     }

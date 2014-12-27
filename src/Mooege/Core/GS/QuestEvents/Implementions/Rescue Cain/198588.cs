@@ -44,14 +44,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         public override void Execute(Map.World world)
         {
             Logger.Debug(" RESCUE CAIN QUEST SECOND FILE STARTED ");
-            if (HadConversation)
-            {
-                HadConversation = false;
-                world.Game.Quests.Advance(72095);
-            }
-
+            world.Game.Quests.Advance(72095);
         }
-
-
     }
 }

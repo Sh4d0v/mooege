@@ -99,6 +99,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     StartConversation(world, 151102);
                     world.Game.Quests.Advance(87700);
                     Logger.Debug("Event finished");
+                    // wyjebanie leah                      
+                    var actorToShoot = world.GetActorByDynamicId(72);
+                    if (actorToShoot != null)
+                    {
+                        Logger.Debug("trying to shoot actor SNO {0}, world contains {1} such actors ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
+                        world.Leave(actorToShoot);
+                    }
+                    else
+                    {
+                        Logger.Debug("No actor to shoot yet");
+                    }
                     // setActorOperable(world, 3739, true);
                 });
             });
