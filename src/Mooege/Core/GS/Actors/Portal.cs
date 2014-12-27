@@ -41,6 +41,8 @@ namespace Mooege.Core.GS.Actors
         public Portal(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+
+
             try
             {
                 this.Destination = new ResolvedPortalDestination
@@ -74,10 +76,20 @@ namespace Mooege.Core.GS.Actors
             //this.Attributes[GameAttribute.Hitpoints_Total_From_Level] = 3.051758E-05f;
             //this.Attributes[GameAttribute.Hitpoints_Cur] = 0.0009994507f;
             //this.Attributes[GameAttribute.Level] = 1;
+
+            // EREKOSE STUFF
+            //Logger.Debug(" (Portal ctor) position is {0}", this._position);
+            //Logger.Debug(" (Portal ctor) quest range is {0}", this._questRange);
+            // Logger.Debug(" (Portal ctor) is in scene SNO {0}", this.CurrentScene.SceneSNO);            
+            //Logger.Debug(" (Portal Ctor) portal used has actor SNO {3}, SNO Name {0}, exists in world sno {1}, has dest world sno {2}", this.ActorSNO.Name, tags[MarkerKeys.DestinationWorld].Id, tags[MarkerKeys.DestinationWorld].Id, snoId);
+
         }
 
         public override bool Reveal(Player player)
         {
+            //Logger.Debug(" (Reveal) portal {0} has location {1}", this.ActorSNO, this._position);
+
+
             if (!base.Reveal(player) || this.Destination == null)
                 return false;
 
@@ -120,6 +132,8 @@ namespace Mooege.Core.GS.Actors
 
         public override void OnTargeted(Player player, TargetMessage message)
         {
+            Logger.Debug("(OnTargeted) Portal has been activated ");
+
             var world = this.World.Game.GetWorld(this.Destination.WorldSNO);
 
             if (world == null)

@@ -148,10 +148,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     {
                         Logger.Debug("Could not find the Wretched Mother QUEEN ACTOR ID {0}", wretchedMotherQueenAID);
                     }
-
-
-
-
                 });
             }
         }

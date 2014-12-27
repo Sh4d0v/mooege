@@ -19,6 +19,7 @@
 using Mooege.Net.GS.Message.Fields;
 using Mooege.Core.GS.Players;
 using Mooege.Core.GS.Actors.Implementations.Hirelings;
+using Mooege.Common.Logging;
 
 namespace Mooege.Core.GS.Actors.Interactions
 {
@@ -29,6 +30,8 @@ namespace Mooege.Core.GS.Actors.Interactions
 
     public class ConversationInteraction : IInteraction
     {
+        private static readonly Logger Logger = new Logger("ConversationInteraction");
+
         public int ConversationSNO;
         public bool Read;
 
@@ -51,6 +54,7 @@ namespace Mooege.Core.GS.Actors.Interactions
 
         public void MarkAsRead() // Just a hack to show functionality /fasbat
         {
+            Logger.Debug(" (Mark as Read) ConversationSNO {0} is marked as Read ", ConversationSNO);
             Read = true;
         }
     }

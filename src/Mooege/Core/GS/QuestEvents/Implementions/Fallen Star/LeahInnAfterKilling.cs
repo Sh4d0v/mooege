@@ -23,10 +23,13 @@ using System.Text;
 using Mooege.Common.MPQ.FileFormats;
 using Mooege.Net.GS.Message.Definitions.ACD;
 using Mooege.Net.GS.Message.Definitions.Animation;
+using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -52,7 +55,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 world.Game.Quests.Advance(87700);
             }
-
         }
 
 

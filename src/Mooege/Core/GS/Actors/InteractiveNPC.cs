@@ -271,6 +271,8 @@ namespace Mooege.Core.GS.Actors
                 ActorId = this.DynamicID,
                 Effect = Net.GS.Message.Definitions.Effect.Effect.Unknown36
             });
+
+            UpdateConversationList();
         }
 
         public void Consume(GameClient client, GameMessage message)

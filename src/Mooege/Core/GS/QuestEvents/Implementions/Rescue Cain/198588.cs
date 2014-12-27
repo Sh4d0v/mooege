@@ -27,36 +27,31 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
-using System.Threading;
-
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _198541 : QuestEvent
+    class _198588 : QuestEvent
     {
-
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        public _198541()
-            : base(198541)
+        public _198588()
+            : base(198588)
         {
         }
+
+        private Boolean HadConversation = true;
 
         public override void Execute(Map.World world)
         {
-            Logger.Debug(" RESCUE CAIN QUEST STARTED ");
-            StartConversation(world, 190404);
-            StartConversation(world, 166678); // "let me open the gate"
-            world.Game.Quests.Advance(72095); // force going into step 7
+            Logger.Debug(" RESCUE CAIN QUEST SECOND FILE STARTED ");
+            if (HadConversation)
+            {
+                HadConversation = false;
+                world.Game.Quests.Advance(72095);
+            }
+
         }
 
-        private bool StartConversation(Map.World world, Int32 conversationId)
-        {
-            foreach (var player in world.Players)
-            {
-                player.Value.Conversations.StartConversation(conversationId);
-            }
-            return true;
-        }
+
     }
 }

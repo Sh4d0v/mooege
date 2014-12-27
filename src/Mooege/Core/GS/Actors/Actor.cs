@@ -152,6 +152,9 @@ namespace Mooege.Core.GS.Actors
             get { return true; }
         }
 
+        /// <summary>
+        /// The info set for actor. (erekose)
+        /// </summary>
         public Mooege.Common.MPQ.FileFormats.Actor ActorData { get; private set; }
 
         /// <summary>
@@ -239,8 +242,9 @@ namespace Mooege.Core.GS.Actors
             : this(world, snoId, null)
         { }
 
-        protected virtual void quest_OnQuestProgress(Quest quest)
+        protected virtual void quest_OnQuestProgress(Quest quest) // erekose changed from protected to public
         {
+            // Logger.Debug(" (quest_onQuestProgress) has been called for actor {0} -> lauching UpdateQuestRangeVisibility", NameSNOId);
             UpdateQuestRangeVisbility();
         }
 
@@ -259,6 +263,13 @@ namespace Mooege.Core.GS.Actors
                         quest.OnQuestProgress -= quest_OnQuestProgress;
 
             base.Destroy();
+        }
+
+        //erekose debug function
+        public virtual void dumpConversationList()
+        {
+            Logger.Debug(" %%%%%%%% MOCK DUMPING CONVERSATION LIST FOR BASIC ACTOR {0} %%%%%%", NameSNOId);
+
         }
 
 
@@ -461,7 +472,7 @@ namespace Mooege.Core.GS.Actors
 
         #region reveal & unreveal handling
 
-        protected void UpdateQuestRangeVisbility()
+        protected void UpdateQuestRangeVisbility() //erekose set to protected
         {
             if (_questRange != null)
                 Visible = World.Game.Quests.IsInQuestRange(_questRange);
@@ -747,15 +758,22 @@ namespace Mooege.Core.GS.Actors
                 int snoQuestRange = Tags[MarkerKeys.QuestRange].Id;
                 if (Mooege.Common.MPQ.MPQStorage.Data.Assets[SNOGroup.QuestRange].ContainsKey(snoQuestRange))
                     _questRange = Mooege.Common.MPQ.MPQStorage.Data.Assets[SNOGroup.QuestRange][snoQuestRange].Data as Mooege.Common.MPQ.FileFormats.QuestRange;
-                else Logger.Warn("Actor {0} is tagged with unknown QuestRange {1}", NameSNOId, snoQuestRange);
+                else Logger.Warn("Actor {0}  Dyn ID {1} is tagged with unknown QuestRange {2}", NameSNOId, DynamicID, snoQuestRange);
             }
 
             if (Tags.ContainsKey(MarkerKeys.ConversationList))
             {
                 int snoConversationList = Tags[MarkerKeys.ConversationList].Id;
+
+                Logger.Debug(" (ReadTags) actor {0} dyniD {2} has a conversation list {1}", NameSNOId, snoConversationList, DynamicID);
+
                 if (Mooege.Common.MPQ.MPQStorage.Data.Assets[SNOGroup.ConversationList].ContainsKey(snoConversationList))
                     ConversationList = Mooege.Common.MPQ.MPQStorage.Data.Assets[SNOGroup.ConversationList][snoConversationList].Data as Mooege.Common.MPQ.FileFormats.ConversationList;
-                else Logger.Warn("Actor {0} is tagged with unknown ConversationList {1}", NameSNOId, snoConversationList);
+                else
+                {
+                    Logger.Warn("Actor {0} Dyn ID {1} is tagged with unknown ConversationList {2}", NameSNOId, DynamicID, snoConversationList);
+                    // ConversationList = null; // erekose this is bad but at least it can be tracked  and not worse than  failed "as" cast :p
+                }
             }
 
 
