@@ -1,0 +1,8 @@
+
+bnet/chat_types.protobnet.protocol.chatbnet/channel_types.proto"²
+ChannelState
+identity (	
+locale (
+public (:false
+bucket_index (2S
+chat#.bnet.protocol.channel.ChannelStated (2 .bnet.protocol.chat.ChannelState

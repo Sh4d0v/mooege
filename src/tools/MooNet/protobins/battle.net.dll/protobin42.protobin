@@ -1,0 +1,15 @@
+
+bnet/role.protobnet.protocolbnet/attribute.proto"‡
+Role
+
+id (
+name (	
+	privilege (	
+assignable_role (B
+required (:false
+unique (:false
+relegation_role (5
+	attribute (2".bnet.protocol.attribute.Attribute
+kickable_role	 (B
+removable_role
+ (B

@@ -1,0 +1,8 @@
+
+bnet/field_options.protobnet.protocol google/protobuf/descriptor.proto* 
+	LogOption
+
+HIDDEN
+HEX:F
+log.google.protobuf.FieldOptionsІ (2.bnet.protocol.LogOptionB"
+bnet.protocolBFieldOptionsProto

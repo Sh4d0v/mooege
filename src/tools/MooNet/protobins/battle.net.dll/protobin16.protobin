@@ -1,0 +1,47 @@
+
+bnet/game_master_types.protobnet.protocol.game_masterbnet/attribute.protobnet/entity.proto"j
+Player)
+identity (2.bnet.protocol.Identity5
+	attribute (2".bnet.protocol.attribute.Attribute"›
+ConnectInfo*
+	member_id (2.bnet.protocol.EntityId
+host (	
+port (
+token (5
+	attribute (2".bnet.protocol.attribute.Attribute"ÿ
+GameStatsBucket
+
+bucket_min (:0"
+
+bucket_max (:4.2949673e+009
+wait_milliseconds (:0
+games_per_hour (:0
+active_games (:0
+active_players (:0
+forming_games (:0
+waiting_players (:0
+open_joinable_games	 (:0)
+players_in_open_joinable_games
+ (:0
+open_games_total (:0&
+players_in_open_games_total (:0"á
+GameFactoryDescription
+
+id (
+name (	5
+	attribute (2".bnet.protocol.attribute.Attribute@
+stats_bucket (2*.bnet.protocol.game_master.GameStatsBucket
+unseeded_id (:0
+allow_queueing (:true"J
+
+GameHandle
+
+factory_id ((
+game_id (2.bnet.protocol.EntityId"s
+CancelGameEntryRequest
+
+request_id (
+
+factory_id (1
+player (2!.bnet.protocol.game_master.PlayerB1
+bnet.protocol.game_masterBGameMasterTypesProto

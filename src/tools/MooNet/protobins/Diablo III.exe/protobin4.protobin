@@ -1,0 +1,111 @@
+
+Profile.proto
+D3.ProfileAttributeSerializer.protoItems.proto
+Hero.protoOnlineService.protoGBHandle.proto"o
+	ClassInfo
+playtime (:0
+highest_level (:0
+highest_difficulty (:0
+	pvp_games (:0"9
+SkillWithRune
+skill (:-1
+	rune_type (:-1";
+SkillsWithRunes(
+runes (2.D3.Profile.SkillWithRune"#
+PassiveSkills
+
+sno_traits ("M
+
+KillerInfo
+
+sno_killer (:-1
+rarity (
+rare_name_gbids ("Î
+HeroProfile
+monsters_killed (
+elites_killed (
+gold_collected (
+highest_level (
+highest_difficulty (
+create_time (
+hardcore (:false
+strength (
+	dexterity	 (
+intelligence
+ (
+vitality (
+armor (
+dps (
+resist_arcane (
+resist_fire (
+resist_lightning (
+resist_poison (
+resist_cold (%
+	equipment (2.D3.Items.ItemList6
+sno_active_skills (2.D3.Profile.SkillsWithRunes-
+
+sno_traits (2.D3.Profile.PassiveSkills
+
+death_time (+
+killer_info (2.D3.Profile.KillerInfo
+sno_kill_location (+
+hero_id (2.D3.OnlineService.EntityId
+damage_increase (
+crit_chance (
+damage_reduction (
+life (
+	pvp_glory# (
+pvp_wins$ (
+pvp_takedowns% (
+
+pvp_damage& ("9
+HeroProfileList&
+heros (2.D3.Profile.HeroProfile"ô
+AccountProfile
+highest_difficulty (!
+highest_boss_difficulty_1 (!
+highest_boss_difficulty_2 (!
+highest_boss_difficulty_3 (!
+highest_boss_difficulty_4 (
+monsters_killed (:0
+elites_killed (:0
+gold_collected (:0
+highest_hardcore_level	 ( 
+hardcore_monsters_killed
+ (.
+class_barbarian (2.D3.Profile.ClassInfo0
+class_demonhunter (2.D3.Profile.ClassInfo)
+
+class_monk (2.D3.Profile.ClassInfo0
+class_witchdoctor (2.D3.Profile.ClassInfo+
+class_wizard (2.D3.Profile.ClassInfo
+pvp_wins (
+pvp_takedowns (
+
+pvp_damage ("R
+PvpMatchPlayer
+
+account_id (
+
+gbid_class (
+	is_female (:false"i
+PvpMatchPlayers*
+team_0 (2.D3.Profile.PvpMatchPlayer*
+team_1 (2.D3.Profile.PvpMatchPlayer"—
+PvpMatch
+arena (,
+players (2.D3.Profile.PvpMatchPlayers
+score_team_0 (
+score_team_1 (
+	play_time (
+hero_id ("5
+PvpMatchList%
+matches (2.D3.Profile.PvpMatch"–
+PvpTeam
+team_id (
+rating (
+rating_variance (
+	bootstrap (
+games_played (
+last_played (
+num_members (

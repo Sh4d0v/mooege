@@ -1,0 +1,12 @@
+
+#bnet/authentication_sso_types.protobnet.protocol.authenticationbnet/rpc.proto"r
+WebSSOClientProof
+sso_id (
+client_salt (
+client_proof ("
+server_signature_challenge ("†
+WebSSOServerProof
+server_verify_salt (
+server_proof (
+server_signature_proof (
+server_signature_random (

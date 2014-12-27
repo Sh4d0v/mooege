@@ -1,0 +1,56 @@
+
+CS.protoD3.CSAttributeSerializer.protoItems.protoOnlineService.protoItemCrafting.proto
+Hero.protoAccount.protoProfile.proto"¾
+ToolTip(
+itemId (2.D3.OnlineService.ItemId
+ItemQualityLevel (
+Name (	
+Type (	
+SetItem (
+Flavor (	
+Cost (	
+
+Durability (	
+	ClassReqs	 (	
+Requirements
+ (	
+Enhancement (	
+
+StackCount (
+
+NumSockets (
+FilledSockets (
+DisplayName (	"/
+TooltipList 
+tooltips (2.D3.CS.ToolTip"e
+
+FallenHero(
+profile (2.D3.Profile.HeroProfile
+digest (2.D3.Hero.Digest
+time (	"¼
+Snapshot
+version (/
+
+definition (2.D3.Account.SavedDefinition'
+heros (2.D3.Hero.SavedDefinition3
+account_profile (2.D3.Profile.AccountProfile2
+hero_profiles (2.D3.Profile.HeroProfileList'
+fallen_heros (2.D3.CS.FallenHero
+mails (2.D3.Items.Mails
+create_time ("E
+SnapshotVersion
+version (!
+snapshot (2.D3.CS.Snapshot"<
+SnapshotVersions(
+versions (2.D3.CS.SnapshotVersion"5
+PartitionedGBID
+gbid (
+partition_id ("H
+PartitionedGBIDList1
+partitioned_gbids (2.D3.CS.PartitionedGBID"V
+PartitionedGBIDCapQuantity
+gbid (
+partition_id (
+cap_quantity ("^
+PartitionedGBIDCapQuantityList<
+partitioned_gbids (2!.D3.CS.PartitionedGBIDCapQuantity
