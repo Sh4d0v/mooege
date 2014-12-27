@@ -2,7 +2,10 @@
 * You can Login, create characters and enter world.
 * The Fallen Star quest working in 99%.
 * Legacy of Cain quest working in 20%.
-* Drop is still bugged.
+* A Shattered Crown quest working in 0%.
+* Reign of the Black King quest working in 5%.
+* Skills working in 50%.
+* Drop is still bugged. Decrease of gold drop.
 * Working with 1.0.3.10057 (soon newer with new Patcher).
 
 ***
