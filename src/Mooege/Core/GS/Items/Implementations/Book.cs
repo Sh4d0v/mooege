@@ -34,7 +34,6 @@ namespace Mooege.Core.GS.Items.Implementations
         public Book(World world, Mooege.Common.MPQ.FileFormats.ItemTable definition)
             : base(world, definition)
         {
-            // Items are NOT constructed with tags
             var actorData = ActorSNO.Target as Mooege.Common.MPQ.FileFormats.Actor;
 
             if (actorData.TagMap.ContainsKey(ActorKeys.Lore))
@@ -43,21 +42,6 @@ namespace Mooege.Core.GS.Items.Implementations
             }
         }
 
-        /*
-          // Items are NOT constructed with tags!
-                protected override void ReadTags()
-                {
-                    base.ReadTags();
-                    if (this.Tags.ContainsKey((int)MarkerTagTypes.LoreSNOId))
-                    {
-                        LoreSNOId = Tags[(int)MarkerTagTypes.LoreSNOId].Int2;
-                    }
-                    else
-                    {
-                        LoreSNOId = -1;
-                    }
-                }
-        */
         public override void OnTargeted(Player player, TargetMessage message)
         {
             //Logger.Trace("OnTargeted");

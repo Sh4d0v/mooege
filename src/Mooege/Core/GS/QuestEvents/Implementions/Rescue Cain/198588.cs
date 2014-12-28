@@ -39,12 +39,11 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
         }
 
-        private Boolean HadConversation = true;
-
         public override void Execute(Map.World world)
         {
             Logger.Debug(" RESCUE CAIN QUEST SECOND FILE STARTED ");
-            world.Game.Quests.Advance(72095);
+            // world.GetActorBySNO(3739).WalkSpeed = 0.108f;
+            // world.GetActorBySNO(3739).RunSpeed = 0.3598633f;
         }
     }
 }

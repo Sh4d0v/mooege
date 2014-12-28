@@ -282,6 +282,8 @@ namespace Mooege.Core.GS.Players
 
             // Attributes
             SetAllStatsInCorrectOrder();
+            // Enabled stone of recall
+            EnableStoneOfRecall();
 
             //this only need to be set on Player load
             this.Attributes[GameAttribute.Hitpoints_Cur] = this.Attributes[GameAttribute.Hitpoints_Max_Total];
@@ -1759,6 +1761,7 @@ namespace Mooege.Core.GS.Players
         {
             Attributes[GameAttribute.Skill, 0x0002EC66] = 1;
             Attributes[GameAttribute.Skill_Total, 0x0002EC66] = 1;
+
             Attributes.SendChangedMessage(this.InGameClient);
         }
 

@@ -50,16 +50,12 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 world.GetActorByDynamicId(72).Destroy();
             }
             Logger.Debug(" RESCUE CAIN QUEST STARTED ");
-            Logger.Debug(" 1 ");
-            StartConversation(world, 190404);
-            //Logger.Debug(" 2 ");
-            //world.Game.Quests.Advance(72095); // force going into step 7
-            Logger.Debug(" 3 ");
-            StartConversation(world, 166678); // "let me open the gate"
-            Logger.Debug(" 4 ");
+            //Logger.Debug(" Quests.Advance(72095) ");
             //world.Game.Quests.Advance(72095);
-            Logger.Debug(" 5 ");
-            StartConversation(world, 198588);
+            Logger.Debug(" Conversation(190404) ");
+            StartConversation(world, 190404);
+            Logger.Debug(" Conversation(166678) ");
+            StartConversation(world, 166678); // "let me open the gate" need if in Old Ruins
         }
 
         private bool StartConversation(Map.World world, Int32 conversationId)

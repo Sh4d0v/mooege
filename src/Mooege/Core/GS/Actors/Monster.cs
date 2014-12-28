@@ -90,7 +90,7 @@ namespace Mooege.Core.GS.Actors
                 this.Attributes[GameAttribute.Level] = monsterData.Level.Normal;
                 this.Attributes[GameAttribute.Hitpoints_Max] = monsterLevels.MonsterLevel[monsterData.Level.Normal].F0;
                 this.Attributes[GameAttribute.Hitpoints_Cur] = this.Attributes[GameAttribute.Hitpoints_Max_Total];
-                this.Attributes[GameAttribute.Attacks_Per_Second] = 1.0f;
+                this.Attributes[GameAttribute.Attacks_Per_Second] = 1.2f;
                 this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
                 this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
                 this.WalkSpeed = monsterData.Floats[129];  // TODO: this is probably multiplied by something
