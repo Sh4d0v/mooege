@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+using System;
 using Mooege.Common.Logging;
 using Mooege.Core.MooNet.Online;
 
@@ -58,6 +59,7 @@ namespace Mooege.Net.MooNet
 
             if (!this.Listen(bindIP, Config.Instance.Port)) return;
             Logger.Info("MooNet-Server is listening on {0}:{1}...", bindIP, Config.Instance.Port);
+            Console.Beep();
         }
     }
 }

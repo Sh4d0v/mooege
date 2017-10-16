@@ -50,13 +50,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         List<uint> monstersAlive = new List<uint> { }; //We use this for the killeventlistener.
         List<Int32> monstersId = new List<Int32> { };
         List<Vector3D> ActorsVector3D = new List<Vector3D> { }; //We fill this with the vectors of the actors
+        //bool started = false;
 
         public override void Execute(Map.World world)
         {
             ////Disable RumFord so he doesn't offer the quest. Somehow, hes supposed to mark it as readed and not offer it while theres no other quest available but he does,
             ////so you can trigger the event multiple times while the event is already running, therefor, we disable his interaction till the event is done.-Wesko
 
-            // setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
+            setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
 
             //Start the conversation between RumFord & Guard.
             StartConversation(world, 198199);
@@ -110,7 +111,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     {
                         Logger.Debug("No actor to shoot yet");
                     }
-                    // setActorOperable(world, 3739, true);
+
+                    setActorOperable(world, 3739, true);
                 });
             });
 

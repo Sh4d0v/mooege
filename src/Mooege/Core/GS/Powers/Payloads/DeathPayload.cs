@@ -122,8 +122,8 @@ namespace Mooege.Core.GS.Powers.Payloads
 
                     player.ExpBonusData.Update(player.GBHandle.Type, this.Target.GBHandle.Type);
                     this.Target.World.SpawnGold(this.Target, player);
-                    if (Mooege.Common.Helpers.Math.RandomHelper.Next(1, 100) < 20)
-                        this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
+                        if (Mooege.Common.Helpers.Math.RandomHelper.NextDouble() < Mooege.Net.GS.Config.Instance.HealthGlobeDropRate / 100)
+                            this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
                 }
             }
 

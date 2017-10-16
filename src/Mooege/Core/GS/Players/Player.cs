@@ -346,7 +346,12 @@ namespace Mooege.Core.GS.Players
             this.Attributes[GameAttribute.Resource_Factor_Level, (int)Toon.HeroTable.PrimaryResource] = Toon.HeroTable.PrimaryResourceFactorLevel;
             //scripted //this.Attributes[GameAttribute.Resource_Max_Total, (int)data.PrimaryResource] = GetMaxResource((int)data.PrimaryResource);
             //scripted //this.Attributes[GameAttribute.Resource_Effective_Max, (int)data.PrimaryResource] = GetMaxResource((int)data.PrimaryResource);
-            this.Attributes[GameAttribute.Resource_Cur, (int)Toon.HeroTable.PrimaryResource] = GetMaxResource((int)Toon.HeroTable.PrimaryResource);
+
+            if (this.Toon.Class == ToonClass.Barbarian) // Barbarian Starts with 0 fury always [Necrosummon]
+                this.Attributes[GameAttribute.Resource_Cur, (int)Toon.HeroTable.PrimaryResource] = 0;
+            else
+                this.Attributes[GameAttribute.Resource_Cur, (int)Toon.HeroTable.PrimaryResource] = GetMaxResource((int)Toon.HeroTable.PrimaryResource);
+
             this.Attributes[GameAttribute.Resource_Regen_Per_Second, (int)Toon.HeroTable.PrimaryResource] = Toon.HeroTable.PrimaryResourceRegenPerSecond;
             //scripted //this.Attributes[GameAttribute.Resource_Regen_Total, (int)data.PrimaryResource] = data.PrimaryResourceRegenPerSecond;
             this.Attributes[GameAttribute.Resource_Type_Primary] = (int)Toon.HeroTable.PrimaryResource;
@@ -456,7 +461,7 @@ namespace Mooege.Core.GS.Players
             this.Attributes[GameAttribute.IsContentRestrictedActor] = true;
             this.Attributes[GameAttribute.Trait, 0x0000CE11] = 1;
             this.Attributes[GameAttribute.TeamID] = 2;
-            this.Attributes[GameAttribute.Shared_Stash_Slots] = 14;
+            //this.Attributes[GameAttribute.Shared_Stash_Slots] = 14;
             this.Attributes[GameAttribute.Backpack_Slots] = 60;
             this.Attributes[GameAttribute.General_Cooldown] = 0;
         }
@@ -548,14 +553,12 @@ namespace Mooege.Core.GS.Players
         }
         public void SetAttributesOther()
         {
-
-
-
             //Bonus stats
             this.Attributes[GameAttribute.Hit_Chance] = 1f;
 
             this.Attributes[GameAttribute.Attacks_Per_Second] = 1.2f;
             //this.Attributes[GameAttribute.Attacks_Per_Second_Item] = 1.199219f;
+            this.Attributes[GameAttribute.Crit_Percent_Base] = 0.05f; //5% Critical Chance Base of all classes [Necrosummon]
             this.Attributes[GameAttribute.Crit_Percent_Cap] = Toon.HeroTable.CritPercentCap;
             //scripted //this.Attributes[GameAttribute.Casting_Speed_Total] = 1f;
             this.Attributes[GameAttribute.Casting_Speed] = 1f;
@@ -581,7 +584,12 @@ namespace Mooege.Core.GS.Players
 
             //TestOutPutItemAttributes(); //Activate this only for finding item stats.
             this.Attributes.BroadcastChangedIfRevealed();
+        }
 
+        public void SetAttributesPassiveSkills()
+        {
+            // Passive Bonus activate when you enter in the game [Necrosummon]
+            BarbarianPassivesActivated();
         }
 
 
@@ -794,7 +802,7 @@ namespace Mooege.Core.GS.Players
                 }
             }
 
-            this.SkillSet.UpdatePassiveSkills(this.Toon);
+            this.SkillSet.UpdatePassiveSkills(this.Toon, this);
             this.Attributes.BroadcastChangedIfRevealed();
             this.UpdateHeroState();
         }
@@ -1066,10 +1074,12 @@ namespace Mooege.Core.GS.Players
             this.Conversations.StopAll();
 
             // save visual equipment
-            this.Toon.HeroVisualEquipmentField.Value = this.Inventory.GetVisualEquipment();
-            this.Toon.HeroLevelField.Value = this.Attributes[GameAttribute.Level];
+            this.Toon.HeroNameField.Value = this.Toon.Name; // Refresh Character Name when is changed for the !changename command [Necrosummon]
+            this.Toon.HeroFlagsField.Value = this.Toon.Gender; // Refresh character gender when is changed with the !changesex command [Necrosummon]
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroVisualEquipmentField);
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroLevelField);
+            this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroNameField); // Refresh character name when is changed with the !changename command [Necrosummon]
+            this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroFlagsField); // Refresh character gender when is changed with the !changesex command [Necrosummon]
 
             // save all inventory items
             this.Inventory.SaveToDB();
@@ -1702,8 +1712,13 @@ namespace Mooege.Core.GS.Players
 
             // TODO: replace this with Trait_Barbarian_Fury.pow implementation
             if (this.Toon.Class == ToonClass.Barbarian)
+            {
                 UsePrimaryResource(tickSeconds * 0.9f);
 
+                if (UnforgivingPassive()) // Barbarian Unforgiving Passive [Necrosummon]
+                    //GeneratePrimaryResource(tickSeconds * 1.5f);
+                    GeneratePrimaryResource(tickSeconds * 20.5f);
+            }
 
         }
 
@@ -1764,6 +1779,72 @@ namespace Mooege.Core.GS.Players
 
             Attributes.SendChangedMessage(this.InGameClient);
         }
+
+        #endregion
+
+        #region PassiveSkillEffects
+
+        public bool PassiveEffect(int PassiveID)
+        {
+            if (this.Toon.DBToon.DBActiveSkills.Passive0 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive1 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive2 == PassiveID)
+                return true;
+            else
+                return false;
+        }
+
+        // Barbarian Passives
+
+        #region BarbarianPassives
+
+        public void BarbarianPassivesActivated()
+        {
+            if (RuthlessPassive())
+                Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
+
+            if (NervesOfSteelPassive())
+                Attributes[GameAttribute.Armor] += (int)Attributes[GameAttribute.Vitality_Total];
+        }
+
+        public void BarbarianPassivesUnActivated()
+        {
+            if (RuthlessPassive())
+                Attributes[GameAttribute.Crit_Percent_Base] -= 0.05f;
+
+            if (NervesOfSteelPassive())
+                Attributes[GameAttribute.Armor] -= (int)Attributes[GameAttribute.Vitality_Total];
+        }
+
+        #region Unforgiving
+        public bool UnforgivingPassive()
+        {
+            if (PassiveEffect(205300))
+                return true;
+            else
+                return false;
+        }
+        #endregion
+
+        #region Ruthless
+        public bool RuthlessPassive()
+        {
+            if (PassiveEffect(205175))
+                return true;
+            else
+                return false;
+        }
+
+        #endregion
+
+        #region NervesOfSteel
+        public bool NervesOfSteelPassive()
+        {
+            if (PassiveEffect(217819))
+                return true;
+            else
+                return false;
+        }
+        #endregion
+        #endregion
 
         #endregion
 

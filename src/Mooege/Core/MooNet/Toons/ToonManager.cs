@@ -82,6 +82,16 @@ namespace Mooege.Core.MooNet.Toons
 
         public static Toon CreateNewToon(string name, int classId, ToonFlags flags, byte level, GameAccount gameAccount)
         {
+
+            #region LevelConfs Server.conf
+            if (Mooege.Net.GS.Config.Instance.LevelStarter < 1)
+                level = 1;
+            else if (Mooege.Net.GS.Config.Instance.LevelStarter > Mooege.Net.GS.Config.Instance.MaxLevel)
+                level = (byte)Mooege.Net.GS.Config.Instance.MaxLevel;
+            else
+                level = (byte)Mooege.Net.GS.Config.Instance.LevelStarter;
+            #endregion
+
             var dbGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID);
             var newDBToon = new DBToon
                                 {

@@ -37,6 +37,13 @@ using Mooege.Net.MooNet;
 using System.Text;
 using Monster = Mooege.Core.GS.Actors.Monster;
 
+using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Common.Storage;
+using Mooege.Core.MooNet.Toons;
+using NHibernate.Linq;
+using Mooege.Core.MooNet.Accounts;
+using Mooege.Core.GS.Players;
+
 namespace Mooege.Core.GS.Games
 {
     [CommandGroup("tp", "Transfers your character to another world.")]
@@ -67,7 +74,10 @@ namespace Mooege.Core.GS.Games
                 if (world == null)
                     return "Can't teleport you to world with snoId " + worldId;
 
-                invokerClient.InGameClient.Player.ChangeWorld(world, world.StartingPoints.First().Position);
+                //invokerClient.InGameClient.Player.ChangeWorld(world, world.StartingPoints.First().Position); This doesn't work [Necrosummon]
+
+                // Fixed [Necrosummon]
+                invokerClient.InGameClient.Player.Teleport(world.StartingPoints.First().Position);
                 return string.Format("Teleported to: {0} [id: {1}]", MPQStorage.Data.Assets[SNOGroup.Worlds][worldId].Name, worldId);
             }
 
@@ -570,6 +580,213 @@ namespace Mooege.Core.GS.Games
             }
             return matches.Aggregate(matches.Count >= 1 ? "Item Matches:\n" : "No match found.",
                                      (current, match) => current + string.Format("[{0}] {1}\n", match.SNOActor.ToString("D6"), match.Name));
+        }
+
+        // Save Command [Necrosummon]
+        [CommandGroup("save", "Save or Update the DB")]
+        public class SaveCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string Save(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                Toon toon = invokerClient.Account.CurrentGameAccount.CurrentToon;
+                var dbToon = DBSessions.AccountSession.Get<DBToon>(toon.PersistentID);
+
+                DBSessions.AccountSession.SaveOrUpdate(dbToon);
+                DBSessions.AccountSession.Flush();
+
+                return string.Format("Player saved {0}", toon.Name);
+            }
+        }
+
+        // Changename Command [Necrosummon]
+        [CommandGroup("changename", "Change the name of you character.")]
+        public class ChangeNameCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string ChangeName(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                GameAccount account = invokerClient.Account.CurrentGameAccount;
+                Toon toon = invokerClient.Account.CurrentGameAccount.CurrentToon;
+                var dbToon = DBSessions.AccountSession.Get<DBToon>(toon.PersistentID);
+                string PreviousName = toon.DBToon.Name; // Current character name before the name change. [Necrosummon]
+
+                if (@params == null)
+                    return "Enter a name (only characters)";
+
+                // Check @params string if only contain letters, if not, name will not change. [Necrosummon]
+                foreach (char ch in @params[0])
+                {
+                    if (!Char.IsLetter(ch) && ch != 32)
+                        return "Only letters";
+                }
+
+                // New name = string
+                toon.DBToon.Name = @params[0];
+
+                // Update Database
+                DBSessions.AccountSession.SaveOrUpdate(dbToon);
+                DBSessions.AccountSession.Flush();
+
+                return string.Format("Player named {0} changed to {1}", PreviousName, toon.Name);
+            }
+        }
+
+        // Change character sex [Necrosummon]
+        [CommandGroup("changesex", "Change the gender of you character.")]
+        public class ChangeGenderCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string ChangeGender(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                Toon toon = invokerClient.Account.CurrentGameAccount.CurrentToon;
+                ToonFlags gender = invokerClient.Account.CurrentGameAccount.CurrentToon.Flags;
+                var dbToon = DBSessions.AccountSession.Get<DBToon>(toon.PersistentID);
+                string lastGender = toon.DBToon.Flags.ToString();
+
+                if (gender == ToonFlags.Male)
+                    toon.DBToon.Flags = ToonFlags.Female;
+                else if (gender == ToonFlags.Female)
+                    toon.DBToon.Flags = ToonFlags.Male;
+
+                DBSessions.AccountSession.SaveOrUpdate(dbToon);
+                DBSessions.AccountSession.Flush();
+
+                return string.Format("Gender {0} changed to {1}!. Reload to see the change.", lastGender, toon.DBToon.Flags.ToString());
+            }
+        }
+
+        // Add gold command [Necrosummon]
+        [CommandGroup("addgold", "Add gold to you account.")]
+        public class AddGoldCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string AddGold(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                if (@params == null)
+                    return "Enter a amount to get gold.";
+
+                foreach (char ch in @params[0])
+                {
+                    if (!Char.IsNumber(ch) && ch != 32)
+                        return "Only integer values";
+                }
+
+                Player player = invokerClient.InGameClient.Player;
+
+                Int32 goldAdded = Int32.Parse(@params[0]);
+
+                player.Inventory.AddGoldAmount(goldAdded);
+
+                return string.Format("Added {0} gold.", goldAdded);
+            }
+        }
+
+        // Modify speed walk [Necrosummon]
+        [CommandGroup("speed", "Modify speed walk of you character.")]
+        public class ModifySpeedCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string ModifySpeed(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                if (@params == null)
+                    return "Change the movement speed. Min 0 (Base), Max 2.\n You can use decimal values like 1,3 for example.";
+
+                foreach (char ch in @params[0])
+                {
+                    if (Char.IsLetter(ch))
+                        return "Only Numbers";
+                }
+
+                if (@params[0].Contains(","))
+                    return "jojo";
+
+                float SpeedValue = float.Parse(@params[0]);
+                float MaxSpeed = 2;
+                float BaseSpeed = 0.36f;
+                var playerSpeed = invokerClient.InGameClient.Player.Attributes;
+
+                if (SpeedValue <= BaseSpeed) // Base Run Speed [Necrosummon]
+                {
+                    playerSpeed[Mooege.Net.GS.Message.GameAttribute.Running_Rate] = BaseSpeed;
+                    return "Speed changed to Base Speed";
+                }
+
+                if (SpeedValue > MaxSpeed)
+                {
+                    playerSpeed[Mooege.Net.GS.Message.GameAttribute.Running_Rate] = MaxSpeed;
+                    return string.Format("MaxSpeed {0}", MaxSpeed);
+                }
+                else
+                    playerSpeed[Mooege.Net.GS.Message.GameAttribute.Running_Rate] = SpeedValue;
+
+                return string.Format("Speed changed to {0}", SpeedValue);
+            }
+        }
+
+        // Modify model scale of you character [Necrosummon]
+        [CommandGroup("changescale", "Modify model scale of you character.")]
+        public class ModifyScaleCommand : CommandGroup
+        {
+            [DefaultCommand]
+            public string ModifyScale(string[] @params, MooNetClient invokerClient)
+            {
+                if (invokerClient == null)
+                    return "You can not invoke this command from console.";
+
+                if (invokerClient.InGameClient == null)
+                    return "You can only invoke this command while ingame.";
+
+                if (@params == null)
+                    return "Change the movement speed. Min 0 (Base), Max 2.\n You can use decimal values like 1,3 for example.";
+
+                foreach (char ch in @params[0])
+                {
+                    if (Char.IsLetter(ch))
+                        return "Only Numbers";
+
+                    if (!Char.IsDigit(ch))
+                        return "Max 3 decimals";
+                }
+
+                float Scale = float.Parse(@params[0]);
+                var player = invokerClient.InGameClient.Player;
+                float previusScale = invokerClient.InGameClient.Player.Scale;
+
+                player.Scale = Scale;
+
+                return string.Format("Scale changed to {0} to {1}", previusScale, Scale);
+            }
         }
     }
 }

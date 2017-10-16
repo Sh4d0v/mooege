@@ -48,7 +48,10 @@ namespace Mooege.Common.Logging
         {
             var timeStamp = this.IncludeTimeStamps ? "[" + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss.fff") + "] " : "";
             SetConsoleForegroundColor(level);
-            Console.WriteLine(string.Format("{0}[{1}] [{2}]: {3}", timeStamp, level.ToString().PadLeft(5), logger, message));
+            if (Mooege.Net.GS.Config.Instance.TimeStamp == true)
+                Console.WriteLine(string.Format("{0}[{1}] [{2}]: {3}", timeStamp, level.ToString().PadLeft(5), logger, message));
+            else
+                Console.WriteLine(string.Format("[{0}] [{1}]: {2}", level.ToString().PadLeft(5), logger, message));
         }
 
         /// <summary>

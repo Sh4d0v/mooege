@@ -658,9 +658,16 @@ namespace Mooege.Core.GS.Players
 
         public void AddGoldAmount(int amount)
         {
-            _inventoryGold.Attributes[GameAttribute.Gold] += amount;
-            _inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = _inventoryGold.Attributes[GameAttribute.Gold];
-            _inventoryGold.Attributes.SendChangedMessage(_owner.InGameClient);
+            int maxGoldValue = 2147483647; // Max int value [Necrosummon]
+
+            if (_inventoryGold.Attributes[GameAttribute.Gold] == maxGoldValue)
+                amount = 0;
+            else
+            {
+                _inventoryGold.Attributes[GameAttribute.Gold] += amount;
+                _inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = _inventoryGold.Attributes[GameAttribute.Gold];
+                _inventoryGold.Attributes.SendChangedMessage(_owner.InGameClient);
+            }
         }
 
         public void RemoveGoldAmount(int amount)

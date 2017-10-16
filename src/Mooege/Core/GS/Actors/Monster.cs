@@ -33,6 +33,7 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using MonsterFF = Mooege.Common.MPQ.FileFormats.Monster;
 using GameBalance = Mooege.Common.MPQ.FileFormats.GameBalance;
 using Mooege.Core.GS.Common.Types.SNO;
+using Mooege.Net.GS;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -77,7 +78,7 @@ namespace Mooege.Core.GS.Actors
         {
             this.Field2 = 0x8;
             this.GBHandle.Type = (int)GBHandleType.Monster; this.GBHandle.GBID = 1;
-            this.Attributes[GameAttribute.Experience_Granted] = 125;
+            this.Attributes[GameAttribute.Experience_Granted] = 125 * Config.Instance.ExpRate;
 
             // lookup GameBalance MonsterLevels.gam asset
             var monsterLevels = (GameBalance)Mooege.Common.MPQ.MPQStorage.Data.Assets[SNOGroup.GameBalance][19760].Data;
@@ -88,7 +89,7 @@ namespace Mooege.Core.GS.Actors
             {
                 this.Brain = new MonsterBrain(this);
                 this.Attributes[GameAttribute.Level] = monsterData.Level.Normal;
-                this.Attributes[GameAttribute.Hitpoints_Max] = monsterLevels.MonsterLevel[monsterData.Level.Normal].F0;
+                this.Attributes[GameAttribute.Hitpoints_Max] = monsterLevels.MonsterLevel[monsterData.Level.Normal].F0 * Config.Instance.MonsterHPRate;
                 this.Attributes[GameAttribute.Hitpoints_Cur] = this.Attributes[GameAttribute.Hitpoints_Max_Total];
                 this.Attributes[GameAttribute.Attacks_Per_Second] = 1.2f;
                 this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;

@@ -139,7 +139,9 @@ namespace Mooege.Core.GS.Powers.Payloads
 
             // TODO: probably will calculate this based on GameAttribute.Crit_Percent_Base + GameAttribute.Crit_Percent_Bonus_Capped
             // right now those attributes aren't set though, so just do calc a generic 5% chance for now
-            return PowerContext.Rand.NextDouble() < 0.05;
+
+            // Fixed critical chance formula based on Crit Percent Base [Necrosummon]
+            return PowerContext.Rand.NextDouble() < user.Attributes[GameAttribute.Crit_Percent_Base]; 
         }
     }
 }

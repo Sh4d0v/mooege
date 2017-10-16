@@ -24,7 +24,7 @@ namespace Mooege.Net.GS.Message.Definitions.Trade
     /// Show a trade window. The inventory 0x14 (20) for an actor is
     /// shown as trade offerings 
     /// </summary>
-    [Message(Opcodes.OpenTradeWindow )]
+    [Message(Opcodes.OpenTradeWindow)]
     public class OpenTradeWindowMessage : GameMessage
     {
         public int ActorID;

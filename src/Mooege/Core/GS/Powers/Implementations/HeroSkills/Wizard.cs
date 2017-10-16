@@ -1225,6 +1225,7 @@ namespace Mooege.Core.GS.Powers.Implementations
         public override void OnChannelOpen()
         {
             this.EffectsPerSecond = ScriptFormula(15);
+            int baseEffectSkill = 19327; // Effect ID of No Rune. Is used in all runes except Rune B [Necrosummon]
 
             if (Rune_B > 0)
             {
@@ -1233,7 +1234,10 @@ namespace Mooege.Core.GS.Powers.Implementations
             else
             {
                 _beamEnd = SpawnEffect(6535, User.Position, 0, WaitInfinite());
-                User.AddComplexEffect(RuneSelect(19327, 149835, -1, 149836, 149869, 149879), _beamEnd);
+
+                User.AddComplexEffect(baseEffectSkill, _beamEnd); // Base Effect for Skill [Necrosummon]
+                User.AddComplexEffect(RuneSelect(-1, 149835, -1, 149836, 149869, 149879), _beamEnd); // We add secondary effect to base effect [Necrosummon]
+                //User.AddComplexEffect(RuneSelect(19327, 149835, -1, 149836, 149869, 149879), _beamEnd);
             }
         }
 

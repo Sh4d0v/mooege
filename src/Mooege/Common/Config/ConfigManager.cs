@@ -34,7 +34,7 @@ namespace Mooege.Common.Config
         {
             try
             {
-                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "config.ini"); // the config file's location.
+                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Server.conf"); // the config file's location.
                 Parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
                 _fileExists = true;
             }
@@ -42,7 +42,7 @@ namespace Mooege.Common.Config
             {
                 Parser = new IniConfigSource(); // initiate a new .ini source.
                 _fileExists = false;
-                Logger.Warn("Error loading settings config.ini, will be using default settings.");
+                Logger.Warn("Error loading settings Server.ini, will be using default settings.");
             }
             finally
             {

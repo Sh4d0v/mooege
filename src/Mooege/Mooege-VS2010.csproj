@@ -75,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dep\nhibernate\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="LibMooNet">
+      <HintPath>..\..\dep\LibMooNet\LibMooNet.dll</HintPath>
+    </Reference>
     <Reference Include="ManagedOpenSsl">
       <HintPath>..\..\dep\openssl\ManagedOpenSsl.dll</HintPath>
     </Reference>
@@ -772,12 +775,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LibMooNet\LibMooNet.csproj">
-      <Project>{4CC19847-6F24-4453-9E31-126F94308AB9}</Project>
-      <Name>LibMooNet</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\GS\Map\Debug\WorldVisualizer.resx">

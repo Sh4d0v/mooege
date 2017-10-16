@@ -25,6 +25,8 @@ using Mooege.Common.Logging;
 using Mooege.Net.MooNet;
 using System.Data.SQLite;
 using Mooege.Common.Storage;
+using Mooege.Net.GS.Message;
+using Mooege.Core.GS.Players;
 
 namespace Mooege.Core.GS.Skills
 {
@@ -167,7 +169,7 @@ namespace Mooege.Core.GS.Skills
             }
         }
 
-        public void UpdatePassiveSkills(Toon toon)
+        public void UpdatePassiveSkills(Toon toon, Player player)
         {
             Logger.Debug("Update passive to {0} {1} {2}", PassiveSkills[0], PassiveSkills[1], PassiveSkills[2]);
             var dbToon = DBSessions.AccountSession.Get<DBToon>(toon.PersistentID);
@@ -175,9 +177,27 @@ namespace Mooege.Core.GS.Skills
             dbToon.DBActiveSkills.Passive1 = PassiveSkills[1];
             dbToon.DBActiveSkills.Passive2 = PassiveSkills[2];
 
+            // PassiveSkillEffects when character Update the passives [Necrosummon]
+            PassiveSkillsEffects(player);
+
             DBSessions.AccountSession.SaveOrUpdate(dbToon.DBActiveSkills);
             DBSessions.AccountSession.Flush();
 
+        }
+
+        public void PassiveSkillsEffects(Player player)
+        {
+            #region Barbarian
+
+            // Barbarian
+            if (player.RuthlessPassive())
+                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
+            //player.Attributes[GameAttribute.Crit_Damage_Percent] += 50; // Doesn't work [Necrosummon]
+
+            if (player.NervesOfSteelPassive())
+                player.Attributes[GameAttribute.Armor] += (int)player.Attributes[GameAttribute.Vitality_Total];
+
+            #endregion
         }
     }
 }

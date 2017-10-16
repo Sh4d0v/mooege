@@ -107,7 +107,6 @@ namespace Mooege.Core.GS.Actors.Implementations
         public virtual void OnRequestBuyItem(Players.Player player, uint itemId)
         {
             // TODO: Check gold here
-            // int $player_Gold = GetGoldAmount();
             Item item = _vendorGrid.GetItem(itemId);
             if (item == null)
                 return;
@@ -118,8 +117,8 @@ namespace Mooege.Core.GS.Actors.Implementations
             }
 
             // TODO: Remove the gold
-            // RemoveGoldAmount($coast);
             player.Inventory.BuyItem(item);
+            player.Inventory.RemoveGoldAmount(item.ItemDefinition.BaseGoldValue); // Remove the gold amount for buy a item [Necrosummon]
         }
     }
 }

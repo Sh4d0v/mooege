@@ -23,7 +23,21 @@ namespace Mooege.Net.GS
         public string BindIP { get { return this.GetString("BindIP", "0.0.0.0"); } set { this.Set("BindIP", value); } }
         public string BindIPv6 { get { return this.GetString("BindIPv6", "::1"); } set { this.Set("BindIPv6", value); } }
         public int Port { get { return this.GetInt("Port", 1345); } set { this.Set("Port", value); } }
+        public bool TimeStamp { get { return this.GetBoolean("TimeStamp", false); } set { this.Set("TimeStamp", value); } }
 
+        // Server Properties [Necrosummon]
+        public int ExpRate { get { return this.GetInt("ExpRate", 1); } set { this.Set("ExpRate", value); } }
+        public int MonsterHPRate { get { return this.GetInt("MonsterHPRate", 1); } set { this.Set("MonsterHPRate", value); } }
+        //public int MonsterDamageMultiplier { get { return this.GetInt("MonsterDamageMultiplier", 1); } set { this.Set("MonsterDamageMultiplier", value); } }
+        public int LevelStarter { get { return this.GetInt("LevelStarter", 1); } set { this.Set("LevelStarter", value); } }
+        public int StarterGold { get { return this.GetInt("StarterGold", 0); } set { this.Set("StarterGold", value); } }
+        public int StarterStash { get { return this.GetInt("StarterStash", 14); } set { this.Set("StarterStash", value); } }
+        public int MaxLevel { get { return this.GetInt("MaxLevel", 1); } set { this.Set("MaxLevel", value); } }
+        public float ItemDropRate { get { return this.GetFloat("ItemDropRate", 1); } set { this.Set("ItemDropRate", value); } }
+        public float GoldDropRate { get { return this.GetFloat("GoldDropRate", 1); } set { this.Set("GoldDropRate", value); } }
+        public float GoldRate { get { return this.GetFloat("GoldRate", 1); } set { this.Set("GoldRate", value); } }
+        public float HealthGlobeDropRate { get { return this.GetFloat("HealthGlobeDropRate", 1); } set { this.Set("HealthGlobeDropRate", value); } }
+        
         private static readonly Config _instance = new Config();
         public static Config Instance { get { return _instance; } }
         private Config() : base("Game-Server") { }

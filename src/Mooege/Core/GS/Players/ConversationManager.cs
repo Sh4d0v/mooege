@@ -385,7 +385,7 @@ namespace Mooege.Core.GS.Players
 
             // rescue Cain 72095
             this.QuestEventDict.Add(198541, new _198541()); // erekose
-            this.QuestEventDict.Add(198588, new _198588()); // erekose
+            //this.QuestEventDict.Add(198588, new _198588()); // erekose
 
             // skeleton king 72061
             this.QuestEventDict.Add(154570, new _154570());

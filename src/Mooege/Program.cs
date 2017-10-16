@@ -79,15 +79,23 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            //string Revision = "9"; // Actual revision
+            //string date = "08/21/2017";
+
+            //string title = "D3Emu - Revision [" + Revision + "] - Date [" + date + "] - By Necrosummon";
+
+            //Console.Title = title;
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintBanner(); // print ascii banner.
-            PrintLicense(); // print license text.
             Console.ResetColor(); // reset color back to default.
-            
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintLicense();
+            Console.ResetColor();
+
             InitLoggers(); // init logging facility.
 
-            Logger.Info("mooege v{0} warming-up..", Assembly.GetExecutingAssembly().GetName().Version);
-            Logger.Info("Required client version: {0}.", VersionInfo.MooNet.RequiredClientVersion);
+            //Logger.Info("D3Emu revision {0}. {1}", Revision, date);
+            Logger.Info("Required client version: 1.0.3.{0}.", VersionInfo.MooNet.RequiredClientVersion);
 
             // init openssl & wrapper.
             try
@@ -295,11 +303,14 @@ namespace Mooege
         /// </summary>
         private static void PrintBanner()
         {
-            Console.WriteLine(@"  _ __ ___    ___    ___    ___   __ _   ___ ");
-            Console.WriteLine(@" | '_ ` _ \  / _ \  / _ \  / _ \ / _` | / _ \");
-            Console.WriteLine(@" | | | | | || (_) || (_) ||  __/| (_| ||  __/");
-            Console.WriteLine(@" |_| |_| |_| \___/  \___/  \___| \__, | \___|");
-            Console.WriteLine(@"                                 |___/       ");
+            Console.WriteLine();
+            Console.WriteLine(@"       \------.     _           __      ,-.___     _   _        ,---.  ");
+            Console.WriteLine(@"        \ .--. \    \'-,      ,',.'.     \ ._ \    \'-'/       / .-. \ ");
+            Console.WriteLine(@"        | |  | |     | |     J /__\ L    | |_)(     | |       f /   \ l");
+            Console.WriteLine(@"        | |  | |     | |     | |  ] ]    | .-. \    | |   ,   t \   / j");
+            Console.WriteLine(@"        / '--' /    ,'_'.   .'_'. F F    / |__)/    / '--'/    \ '-' / ");
+            Console.WriteLine(@"       /_,----'      ' '     ' ' /,'    '-----'    '-----'      '---'  ");
+            Console.WriteLine(@"      ('                        ''                    ");
             Console.WriteLine();
         }
 
@@ -308,8 +319,8 @@ namespace Mooege
         /// </summary>
         private static void PrintLicense()
         {
-            Console.WriteLine("Copyright (C) 2011 - 2014, mooege project");
-            Console.WriteLine("mooege comes with ABSOLUTELY NO WARRANTY.");
+            Console.WriteLine("Copyright (C) 2016-2017, D3Emu project by Necrosummon");
+            Console.WriteLine("Based on Mooege project Copyright (C) 2011-2012");
             Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; see the LICENSE file for details.");
             Console.WriteLine();
         }

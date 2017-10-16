@@ -770,7 +770,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 User.Attributes[GameAttribute.Damage_Weapon_Percent_Bonus] += ScriptFormula(1);
 
                 //Crit Chance Bonus
-                User.Attributes[GameAttribute.Crit_Damage_Percent] += (int)ScriptFormula(2);
+                User.Attributes[GameAttribute.Crit_Percent_Base] += ScriptFormula(2);
                 User.Attributes.BroadcastChangedIfRevealed();
 
                 return true;
@@ -816,7 +816,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 User.Attributes[GameAttribute.Damage_Weapon_Percent_Bonus] -= ScriptFormula(1);
 
                 //Crit Chance Bonus
-                User.Attributes[GameAttribute.Crit_Damage_Percent] -= (int)ScriptFormula(2);
+                User.Attributes[GameAttribute.Crit_Percent_Base] -= ScriptFormula(2);
                 User.Attributes.BroadcastChangedIfRevealed();
             }
         }
@@ -1300,12 +1300,12 @@ namespace Mooege.Core.GS.Powers.Implementations
                         {
                             WeaponDamage(hit, ScriptFormula(18), DamageType.Physical);
                         };
-                        proj.Launch(target.Position, 2f);
+                        proj.Launch(target.Position, 3f); // Fixed Speed projectile (with 2, the "axe" hits 2 times) [Necrosummon]
                     }
                 }
                 if (Rune_D > 0)
                 {
-                    if (Rand.NextDouble() < 1)
+                    if (Rand.NextDouble() < ScriptFormula(1)) //Fixed Stun Chance [Necrosummon]
                     {
                         hitPayload.Target.PlayEffectGroup(163470);
                         AddBuff(hitPayload.Target, new DebuffStunned(WaitSeconds(ScriptFormula(0))));
@@ -1357,14 +1357,14 @@ namespace Mooege.Core.GS.Powers.Implementations
 
             public override void Remove()
             {
+                int FrenzyBuffRemover = StackCount; //StackCount always is 0, because Remove change to StackCount to 0. We need new integer to save StackCount value before to Remove buff [Necrosummon]
                 base.Remove();
                 if (Rune_A > 0)
                 {
-                    User.Attributes[GameAttribute.Attack_Bonus_Percent] -= StackCount * ScriptFormula(11);
+                    User.Attributes[GameAttribute.Attack_Bonus_Percent] -= FrenzyBuffRemover * ScriptFormula(11);
                 }
-                User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] -= StackCount * ScriptFormula(6);
+                User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] -= FrenzyBuffRemover * ScriptFormula(6);
                 User.Attributes.BroadcastChangedIfRevealed();
-
             }
 
             private void _AddFrenzy()
@@ -2017,7 +2017,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 {
                     User.Attributes[GameAttribute.Attack_Bonus_Percent] += ScriptFormula(8);
                 }
-                User.Attributes[GameAttribute.Crit_Damage_Percent] += (int)ScriptFormula(0);
+                User.Attributes[GameAttribute.Crit_Percent_Base] += ScriptFormula(0); //Critical Chance Fixed [Necrosummon]
                 User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] += ScriptFormula(2);
                 User.Attributes[GameAttribute.Dodge_Chance_Bonus] += ScriptFormula(3);
                 User.Attributes[GameAttribute.Movement_Bonus_Run_Speed] += ScriptFormula(1);
@@ -2034,7 +2034,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 {
                     User.Attributes[GameAttribute.Attack_Bonus_Percent] += ScriptFormula(8);
                 }
-                User.Attributes[GameAttribute.Crit_Damage_Percent] -= (int)ScriptFormula(0);
+                User.Attributes[GameAttribute.Crit_Percent_Base] -= ScriptFormula(0); //Critical Chance Fixed [Necrosummon]
                 User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] -= ScriptFormula(2);
                 User.Attributes[GameAttribute.Dodge_Chance_Bonus] -= ScriptFormula(3);
                 User.Attributes[GameAttribute.Movement_Bonus_Run_Speed] -= ScriptFormula(1);
