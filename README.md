@@ -1,4 +1,4 @@
-###Current Status:
+###Current Status: (to check after update)
 * You can Login, create characters and enter world.
 * The Fallen Star quest working in 99%.
 * Legacy of Cain quest working in 20%.
@@ -14,6 +14,7 @@
 
 * All sites about mooege is dead, sorry :)
 * Check [RageZone Forums](http://ragezone.com/) for more informations.
+* First server is http://d3reflection.com
 * Community board soon...
 
 # Welcome to mooege
@@ -23,6 +24,7 @@ developed with C#. It can be compiled with Microsoft .NET or Mono, which means y
 and Linux. Please see the file LICENSE for license details.
 
 **Copyright (C) 2011 - 2014 mooege project**
+**Copyright (C) 2016 - 2017 D3Emu project by Necrosummon (updated mooege)**
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
