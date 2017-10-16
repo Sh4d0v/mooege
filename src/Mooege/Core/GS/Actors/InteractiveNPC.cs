@@ -24,6 +24,7 @@ using Mooege.Core.GS.Players;
 using Mooege.Net.GS.Message;
 using Mooege.Net.GS.Message.Definitions.World;
 using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Core.GS.Actors.Implementations;
 using Mooege.Net.GS.Message.Fields;
 using Mooege.Net.GS.Message.Definitions.NPC;
 using Mooege.Net.GS;
@@ -227,13 +228,16 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug(" (OnTargeted) the npc has dynID {0}", DynamicID);
 
             player.SelectedNPC = this;
-
+            
+            // i am not sure whether this will work
+            var vendor = player.SelectedNPC as Vendor;
+            
             var count = Interactions.Count + Conversations.Count;
             if (count == 0)
                 return;
 
             // If there is only one conversation option, immediatly select it without showing menu
-            if (Interactions.Count == 0 && Conversations.Count == 1)
+            if (Interactions.Count == 0 && Conversations.Count == 1 && this != vendor)
             {
                 player.Conversations.StartConversation(Conversations[0].ConversationSNO);
                 Conversations[0].MarkAsRead();
@@ -245,10 +249,15 @@ namespace Mooege.Core.GS.Actors
             NPCInteraction[] npcInters = new NPCInteraction[count];
 
             var it = 0;
-            foreach (var conv in Conversations)
-            {
-                npcInters[it] = conv.AsNPCInteraction(this, player);
-                it++;
+            foreach (var conv in Conversations)            
+            {               
+              if (this == vendor)                    
+                  return;                
+              else                
+              {                    
+                  npcInters[it] = conv.AsNPCInteraction(this, player);                    
+                  it++;                
+              }            
             }
 
             foreach (var inter in Interactions)
