@@ -1,12 +1,16 @@
-###Current Status: (to check after update)
+###Current Status:
 * You can Login, create characters and enter world.
 * The Fallen Star quest working in 99%.
 * Legacy of Cain quest working in 20%.
 * A Shattered Crown quest working in 0%.
 * Reign of the Black King quest working in 5%.
-* Skills working in 50%.
+* Skills working in 55%.
 * Drop is still bugged. Decrease of gold drop.
 * Working with 1.0.3.10057 (soon newer with new Patcher).
+* Shared Stash fixed. Now you can buy more rows and tabs.
+* Working commands: !tp, !save, !changename, !changegender, !speed, !addgold
+* Rates of server in Server.conf file.
+* some small updates and fixes (Necrosummon)
 
 ***
 
@@ -15,7 +19,7 @@
 * All sites about mooege is dead, sorry :)
 * Check [RageZone Forums](http://ragezone.com/) for more informations.
 * First server is http://d3reflection.com
-* Community board soon...
+* Community board soon (i hope)...
 
 # Welcome to mooege
 
@@ -24,6 +28,7 @@ developed with C#. It can be compiled with Microsoft .NET or Mono, which means y
 and Linux. Please see the file LICENSE for license details.
 
 **Copyright (C) 2011 - 2014 mooege project**
+
 **Copyright (C) 2016 - 2017 D3Emu project by Necrosummon (updated mooege)**
 
 This program is free software; you can redistribute it and/or
