@@ -1,0 +1,960 @@
+84B730    D3::ACDInventoryGetGoldACD
+840370    D3::ACD::CanSellItem
+847200    D3::ACD::CanUseItem
+83BF60    D3::ACD::GetGBValueByGBId
+8522F0    D3::ACD::GetGold
+83BE30    D3::ACD::GetItemIdentified
+851420    D3::ACD::IsMonster
+8BD580    D3::ACD::IsSkillReady
+BBEF00    D3::ACD::Repair
+BBE100    D3::ACD::SellItem
+BB3E90    D3::ACD::UseItem
+A638C0    D3::Chat
+9D8960    D3::DrawRectangle
+941C10    D3::DumpUIMap
+811C00    D3::GetACDByACDId
+855B40    D3::GetACDIdByANN
+816FA0    D3::GetACDPtrFromGUID
+82AD30    D3::GetAct
+829F00    D3::GetActorPtrFromGUID
+8B5160    D3::GetDouble
+85EB20    D3::GetFloat
+8B5220    D3::GetInt
+83AB40    D3::GetItemQualityLevel
+9EC0C0    D3::GetLevelAreaByActorId
+97EAD0    D3::GetPing
+89E410    D3::GetPlayerByACDId
+89E5B0    D3::GetPlayerByIndex
+97EC20    D3::GetPlayerGUID
+867050    D3::GetQuestPtr
+8A30F0    D3::GetSceneById
+8C7540    D3::GetSceneIdByXY
+94E560    D3::GetScreenRect
+895040    D3::GetSnoInfoFromSnoId
+93BDC0    D3::GetUIManager
+A1D120    D3::GetWorldById
+8A1C20    D3::GetWorldEntry
+80FF10    D3::ItemDescription::Dtor
+976280    D3::ItemDescription::FillDescriptionText
+810EE0    D3::ItemDescription::Ctor
+A89200    D3::IterateUI
+F0E5C0    D3::Log
+BB3800    D3::MoveItem
+8D8630    D3::NavMesh::GetFlags
+97EBE0    D3::Player::GetLocalPlayer
+93BD80    D3::PrintChat
+BC3420    D3::RepairAll
+BC7750    D3::SalvageItem
+97C9B0    D3::UsePowerToActor
+97C770    D3::UsePowerToLocation
+C54580    D3::DirectX::Endscene
+93F3E0    D3::GetUIElementByHash
+A8A2E0    D3::UIElement::Unk1
+A8AF40    D3::UIElement::Unk2
+93F370    D3::UIManager::HasUIElement
+95E130    D3::UIManager::IsInitialized
+840490    D3::GetSellValue
+
+
+008D53D0 	 o_AcdActor__IsGizmo
+008D5280 	 o_AcdActor__GetGizmoGroup
+
+00814C10 	 o_Scenes__Iterate
+008A1C20 	 o_Worlds__Iterate
+0085B120 	 o_FastAttribs__Iterate
+00854950 	 o_Acds__Iterate
+
+0097C770 	 o_UsePower
+00812FB0 	 o_getSnoGroup // by eSnoGroup
+
+00966E10 	 o_UI__MakeUiInfo // takes a string calcs hash and joins string + hash in a struct. stupid name. if somebody knows a better one, pleas tell me :)
+
+
+public enum ActorAttribute : uint
+{
+    Axe_Bad_Data = 0x000,	// int
+    Attribute_Timer = 0x001,	// float
+    Attribute_Pool = 0x002,	// float
+    Death_Count = 0x003,	// float
+    DualWield_Hand = 0x004,	// float
+    DualWield_Hand_Next = 0x005,	// float
+    DualWield_Hands_Swapped = 0x006,	// float
+    Respawn_Game_Time = 0x007,	// float
+    Backpack_Slots = 0x008,	// float
+    Shared_Stash_Slots = 0x009,	// float
+    Strength = 0x00A,	// int
+    Dexterity = 0x00B,	// int
+    Intelligence = 0x00C,	// int
+    Vitality = 0x00D,	// int
+    Strength_Total = 0x00E,	// int
+    Dexterity_Total = 0x00F,	// int
+    Intelligence_Total = 0x010,	// int
+    Vitality_Total = 0x011,	// int
+    Strength_Bonus = 0x012,	// int
+    Dexterity_Bonus = 0x013,	// int
+    Intelligence_Bonus = 0x014,	// int
+    Vitality_Bonus = 0x015,	// int
+    Strength_Bonus_Percent = 0x016,	// int
+    Dexterity_Bonus_Percent = 0x017,	// int
+    Intelligence_Bonus_Percent = 0x018,	// int
+    Vitality_Bonus_Percent = 0x019,	// int
+    Strength_Reduction_Percent = 0x01A,	// int
+    Dexterity_Reduction_Percent = 0x01B,	// int
+    Intelligence_Reduction_Percent = 0x01C,	// int
+    Vitality_Reduction_Percent = 0x01D,	// int
+    Primary_Damage_Attribute = 0x01E,	// float
+    Attack = 0x01F,	// int
+    Precision = 0x020,	// int
+    Defense = 0x021,	// int
+    Attack_Total = 0x022,	// int
+    Precision_Total = 0x023,	// int
+    Defense_Total = 0x024,	// int
+    Attack_Bonus = 0x025,	// int
+    Precision_Bonus = 0x026,	// int
+    Defense_Bonus = 0x027,	// int
+    Attack_Bonus_Percent = 0x028,	// int
+    Precision_Bonus_Percent = 0x029,	// int
+    Defense_Bonus_Percent = 0x02A,	// int
+    Attack_Reduction_Percent = 0x02B,	// int
+    Precision_Reduction_Percent = 0x02C,	// int
+    Defense_Reduction_Percent = 0x02D,	// int
+    Armor = 0x02E,	// int
+    Armor_Bonus_Percent = 0x02F,	// int
+    Armor_Item = 0x030,	// int
+    Armor_Bonus_Item = 0x031,	// int
+    Armor_Item_Percent = 0x032,	// int
+    Armor_Item_SubTotal = 0x033,	// int
+    Armor_Item_Total = 0x034,	// int
+    Armor_Total = 0x035,	// int
+    Experience_Granted = 0x036,	// float
+    Experience_Next = 0x037,	// float
+    Gold_Granted = 0x038,	// float
+    Gold = 0x039,	// float
+    Gold_Find = 0x03A,	// int
+    Level = 0x03B,	// float
+    Level_Cap = 0x03C,	// float
+    Magic_Find = 0x03D,	// int
+    Magic_And_Gold_Find_Suppressed = 0x03E,	// float
+    Treasure_Find = 0x03F,	// int
+    Resource_Cost_Reduction_Amount = 0x040,	// float
+    Resource_Cost_Reduction_Total = 0x041,	// int
+    Resource_Set_Point_Bonus = 0x042,	// int
+    Faster_Healing_Percent = 0x043,	// int
+    Spending_Resource_Heals_Percent = 0x044,	// int
+    Bonus_Healing_Received_Percent = 0x045,	// int
+    Reduced_Healing_Received_Percent = 0x046,	// int
+    Experience_Bonus = 0x047,	// int
+    Experience_Bonus_Percent = 0x048,	// int
+    Health_Globe_Bonus_Chance = 0x049,	// int
+    Health_Globe_Bonus_Mult_Chance = 0x04A,	// int
+    Health_Globe_Bonus_Health = 0x04B,	// int
+    Increased_Health_From_Globes_Percent = 0x04C,	// int
+    Increased_Health_From_Globes_Percent_Total = 0x04D,	// int
+    Bonus_Health_Percent_Per_Second_From_Globes = 0x04E,	// int
+    Bonus_Health_Percent_Per_Second_From_Globes_Total = 0x04F,	// int
+    Mana_Gained_From_Globes_Percent = 0x050,	// int
+    Mana_Gained_From_Globes = 0x051,	// int
+    Resistance = 0x052,	// int
+    Resistance_Percent = 0x053,	// int
+    Resistance_Total = 0x054,	// int
+    Resistance_All = 0x055,	// int
+    Resistance_Percent_All = 0x056,	// int
+    Resistance_From_Intelligence = 0x057,	// int
+    Class_Damage_Reduction_Percent = 0x058,	// int
+    Skill = 0x059,	// float
+    Skill_Total = 0x05A,	// float
+    TeamID = 0x05B,	// float
+    Team_Override = 0x05C,	// float
+    Invulnerable = 0x05D,	// float
+    Loading = 0x05E,	// float
+    Loading_Player_ACD = 0x05F,	// float
+    Loading_Power_SNO = 0x060,	// float
+    Loading_Anim_Tag = 0x061,	// float
+    Loading_NewGame = 0x062,	// float
+    Auto_Porting_To_Save_Point = 0x063,	// float
+    No_Damage = 0x064,	// float
+    No_AutoPickup = 0x065,	// float
+    Light_Radius_Percent_Bonus = 0x066,	// int
+    Hitpoints_Cur = 0x067,	// int
+    Hitpoints_Factor_Level = 0x068,	// int
+    Hitpoints_Factor_Vitality = 0x069,	// int
+    Hitpoints_Total_From_Vitality = 0x06A,	// int
+    Hitpoints_Total_From_Level = 0x06B,	// int
+    Hitpoints_Granted = 0x06C,	// int
+    Hitpoints_Granted_Duration = 0x06D,	// float
+    Hitpoints_Max = 0x06E,	// int
+    Hitpoints_Max_Bonus = 0x06F,	// int
+    Hitpoints_Max_Total = 0x070,	// int
+    Hitpoints_Percent = 0x071,	// int
+    Hitpoints_Regen_Per_Second = 0x072,	// int
+    Hitpoints_Max_Percent_Bonus = 0x073,	// int
+    Hitpoints_Max_Percent_Bonus_Item = 0x074,	// int
+    Hitpoints_Healed_Target = 0x075,	// int
+    Resource_Type_Primary = 0x076,	// float
+    Resource_Type_Secondary = 0x077,	// float
+    Resource_Cur = 0x078,	// int
+    Resource_Max = 0x079,	// int
+    Resource_Max_Bonus = 0x07A,	// int
+    Resource_Max_Total = 0x07B,	// int
+    Resource_Factor_Level = 0x07C,	// int
+    Resource_Granted = 0x07D,	// int
+    Resource_Granted_Duration = 0x07E,	// float
+    Resource_Percent = 0x07F,	// int
+    Resource_Regen_Per_Second = 0x080,	// int
+    Resource_Regen_Bonus_Percent = 0x081,	// int
+    Resource_Regen_Total = 0x082,	// int
+    Resource_Max_Percent_Bonus = 0x083,	// int
+    Resource_Capacity_Used = 0x084,	// int
+    Resource_Effective_Max = 0x085,	// int
+    Resource_Regen_Percent_Per_Second = 0x086,	// int
+    Resource_Degeneration_Stop_Point = 0x087,	// int
+    Movement_Scalar = 0x088,	// int
+    Walking_Rate = 0x089,	// int
+    Running_Rate = 0x08A,	// int
+    Sprinting_Rate = 0x08B,	// int
+    Strafing_Rate = 0x08C,	// int
+    Walking_Rate_Total = 0x08D,	// int
+    Running_Rate_Total = 0x08E,	// int
+    Last_Running_Rate = 0x08F,	// int
+    Sprinting_Rate_Total = 0x090,	// int
+    Strafing_Rate_Total = 0x091,	// int
+    Movement_Bonus_Total = 0x092,	// int
+    Movement_Scalar_Subtotal = 0x093,	// int
+    Movement_Scalar_Capped_Total = 0x094,	// int
+    Movement_Scalar_Uncapped_Bonus = 0x095,	// int
+    Movement_Scalar_Total = 0x096,	// int
+    Movement_Bonus_Run_Speed = 0x097,	// int
+    Casting_Speed = 0x098,	// int
+    Casting_Speed_Bonus = 0x099,	// int
+    Casting_Speed_Total = 0x09A,	// int
+    Always_Hits = 0x09B,	// float
+    Hit_Chance = 0x09C,	// int
+    Attacks_Per_Second_Item = 0x09D,	// int
+    Attacks_Per_Second_Item_Percent = 0x09E,	// int
+    Attacks_Per_Second_Item_Subtotal = 0x09F,	// int
+    Attacks_Per_Second_Item_Bonus = 0x0A0,	// int
+    Attacks_Per_Second_Item_Total = 0x0A1,	// int
+    Attacks_Per_Second = 0x0A2,	// int
+    Attacks_Per_Second_Bonus = 0x0A3,	// int
+    Attacks_Per_Second_Total = 0x0A4,	// int
+    Attacks_Per_Second_Percent = 0x0A5,	// int
+    AI_Cooldown_Reduction_Percent = 0x0A6,	// int
+    Power_Cooldown_Reduction_Percent = 0x0A7,	// int
+    Damage_Delta = 0x0A8,	// int
+    Damage_Delta_Total = 0x0A9,	// int
+    Damage_Min = 0x0AA,	// int
+    Damage_Bonus_Min = 0x0AB,	// int
+    Damage_Min_Total = 0x0AC,	// int
+    Damage_Min_Subtotal = 0x0AD,	// int
+    Damage_Percent_All_From_Skills = 0x0AE,	// int
+    Damage_Weapon_Delta = 0x0AF,	// int
+    Damage_Weapon_Delta_SubTotal = 0x0B0,	// int
+    Damage_Weapon_Max = 0x0B1,	// int
+    Damage_Weapon_Max_Total = 0x0B2,	// int
+    Damage_Weapon_Max_Total_All = 0x0B3,	// int
+    Damage_Weapon_Delta_Total = 0x0B4,	// int
+    Damage_Weapon_Delta_Total_All = 0x0B5,	// int
+    Damage_Weapon_Bonus_Delta = 0x0B6,	// int
+    Damage_Weapon_Min = 0x0B7,	// int
+    Damage_Weapon_Min_Total = 0x0B8,	// int
+    Damage_Weapon_Min_Total_All = 0x0B9,	// int
+    Damage_Weapon_Bonus_Min = 0x0BA,	// int
+    Damage_Weapon_Percent_Bonus = 0x0BB,	// int
+    Damage_Weapon_Percent_All = 0x0BC,	// int
+    Damage_Weapon_Percent_Total = 0x0BD,	// int
+    Damage_Type_Percent_Bonus = 0x0BE,	// int
+    Damage_Percent_Bonus_Witchdoctor = 0x0BF,	// int
+    Damage_Percent_Bonus_Wizard = 0x0C0,	// int
+    Crit_Percent_Base = 0x0C1,	// int
+    Crit_Percent_Bonus_Capped = 0x0C2,	// int
+    Crit_Percent_Bonus_Uncapped = 0x0C3,	// int
+    Crit_Percent_Cap = 0x0C4,	// int
+    Crit_Damage_Percent = 0x0C5,	// int
+    Crit_Effect_Time = 0x0C6,	// float
+    Pierce_Chance = 0x0C7,	// int
+    Damage_Absorb_Percent = 0x0C8,	// int
+    Damage_Reduction_Total = 0x0C9,	// int
+    Damage_Reduction_Current = 0x0CA,	// int
+    Damage_Reduction_Last_Tick = 0x0CB,	// float
+    Block_Chance = 0x0CC,	// int
+    Block_Chance_Total = 0x0CD,	// int
+    Block_Chance_Bonus_Item = 0x0CE,	// int
+    Block_Chance_Item = 0x0CF,	// int
+    Block_Chance_Item_Total = 0x0D0,	// int
+    Block_Amount = 0x0D1,	// int
+    Block_Amount_Bonus_Percent = 0x0D2,	// int
+    Block_Amount_Total_Min = 0x0D3,	// int
+    Block_Amount_Total_Max = 0x0D4,	// int
+    Block_Amount_Item_Min = 0x0D5,	// int
+    Block_Amount_Item_Delta = 0x0D6,	// int
+    Block_Amount_Item_Bonus = 0x0D7,	// int
+    Dodge_Chance_Bonus = 0x0D8,	// int
+    Dodge_Chance_Bonus_Melee = 0x0D9,	// int
+    Dodge_Chance_Bonus_Ranged = 0x0DA,	// int
+    Get_Hit_Current = 0x0DB,	// int
+    Get_Hit_Max_Base = 0x0DC,	// int
+    Get_Hit_Max_Per_Level = 0x0DD,	// int
+    Get_Hit_Max = 0x0DE,	// int
+    Get_Hit_Recovery_Base = 0x0DF,	// int
+    Get_Hit_Recovery_Per_Level = 0x0E0,	// int
+    Get_Hit_Recovery = 0x0E1,	// int
+    Get_Hit_Damage = 0x0E2,	// int
+    Get_Hit_Damage_Scalar = 0x0E3,	// int
+    Last_Damage_MainActor = 0x0E4,	// float
+    Last_ACD_Attacked = 0x0E5,	// float
+    Ignores_Critical_Hits = 0x0E6,	// float
+    Immunity = 0x0E7,	// float
+    Untargetable = 0x0E8,	// float
+    Immobolize = 0x0E9,	// float
+    Immune_To_Knockback = 0x0EA,	// float
+    Power_Immobilize = 0x0EB,	// float
+    Stun_Chance = 0x0EC,	// int
+    Stun_Length = 0x0ED,	// int
+    Stun_Recovery = 0x0EE,	// int
+    Stun_Recovery_Speed = 0x0EF,	// int
+    Stunned = 0x0F0,	// float
+    Stun_Immune = 0x0F1,	// float
+    Poison_Length_Reduction = 0x0F2,	// int
+    Poisoned = 0x0F3,	// float
+    Bleeding = 0x0F4,	// float
+    Bleed_Duration = 0x0F5,	// int
+    Chilled = 0x0F6,	// float
+    Freeze_Length_Reduction = 0x0F7,	// int
+    Freeze_Immune = 0x0F8,	// float
+    Webbed = 0x0F9,	// float
+    Slow = 0x0FA,	// float
+    FireAura = 0x0FB,	// float
+    LightningAura = 0x0FC,	// float
+    ColdAura = 0x0FD,	// float
+    PoisonAura = 0x0FE,	// float
+    Blind = 0x0FF,	// float
+    Enraged = 0x100,	// float
+    Slowdown_Immune = 0x101,	// float
+    Gethit_Immune = 0x102,	// float
+    Suffocation_Per_Second = 0x103,	// int
+    Suffocation_Unit_Value = 0x104,	// int
+    Thorns_Percent = 0x105,	// int
+    Thorns_Percent_All = 0x106,	// int
+    Thorns_Percent_Total = 0x107,	// int
+    Thorns_Fixed = 0x108,	// int
+    Steal_Health_Percent = 0x109,	// int
+    Steal_Mana_Percent = 0x10A,	// int
+    Resource_On_Hit = 0x10B,	// int
+    Resource_On_Kill = 0x10C,	// int
+    Resource_On_Crit = 0x10D,	// int
+    Hitpoints_On_Hit = 0x10E,	// int
+    Hitpoints_On_Kill = 0x10F,	// int
+    Damage_To_Mana = 0x110,	// int
+    Last_Proc_Time = 0x111,	// float
+    Damage_Power_Delta = 0x112,	// int
+    Damage_Power_Min = 0x113,	// int
+    Rope_Overlay = 0x114,	// float
+    General_Cooldown = 0x115,	// float
+    Power_Cooldown = 0x116,	// float
+    Power_Cooldown_Start = 0x117,	// float
+    Proc_Cooldown = 0x118,	// float
+    Emote_Cooldown = 0x119,	// float
+    Projectile_Speed = 0x11A,	// int
+    Projectile_Speed_Increase_Percent = 0x11B,	// int
+    Destroy_When_Path_Blocked = 0x11C,	// float
+    Skill_Toggled_State = 0x11D,	// float
+    Act = 0x11E,	// float
+    Difficulty = 0x11F,	// float
+    Last_Damage_Amount = 0x120,	// int
+    In_Knockback = 0x121,	// float
+    Amplify_Damage_Type_Percent = 0x122,	// int
+    Amplify_Damage_Percent = 0x123,	// int
+    Durability_Cur = 0x124,	// float
+    Durability_Max = 0x125,	// float
+    Durability_Last_Damage = 0x126,	// float
+    Item_Quality_Level = 0x127,	// float
+    Item_Cost_Percent_Bonus = 0x128,	// int
+    Item_Equipped = 0x129,	// float
+    Requirement = 0x12A,	// int
+    Requirements_Ease_Percent = 0x12B,	// int
+    Requirement_When_Equipped = 0x12C,	// int
+    Sockets = 0x12D,	// float
+    Sockets_Filled = 0x12E,	// float
+    Stats_All_Bonus = 0x12F,	// int
+    Item_Bound_To_ACD = 0x130,	// float
+    Item_Locked_To_ACD = 0x131,	// float
+    Item_Binding_Level_Override = 0x132,	// float
+    ItemStackQuantityHi = 0x133,	// float
+    ItemStackQuantityLo = 0x134,	// float
+    Run_Speed_Granted = 0x135,	// int
+    Run_Speed_Duration = 0x136,	// float
+    IdentifyCost = 0x137,	// float
+    Seed = 0x138,	// float
+    IsCrafted = 0x139,	// float
+    DyeType = 0x13A,	// float
+    EnchantAffix = 0x13B,	// float
+    EnchantRangeVal = 0x13C,	// float
+    HighlySalvageable = 0x13D,	// float
+    ItemUnlockTimeHi = 0x13E,	// float
+    ItemUnlockTimeLo = 0x13F,	// float
+    Always_Plays_GetHit = 0x140,	// float
+    Hidden = 0x141,	// float
+    RActor_Fade_Group = 0x142,	// float
+    Quest_Range = 0x143,	// float
+    Attack_Cooldown_Min = 0x144,	// float
+    Attack_Cooldown_Delta = 0x145,	// float
+    InitialCooldownMinTotal = 0x146,	// float
+    InitialCooldownDeltaTotal = 0x147,	// float
+    Attack_Cooldown_Min_Total = 0x148,	// float
+    Attack_Cooldown_Delta_Total = 0x149,	// float
+    Closing_Cooldown_Min_Total = 0x14A,	// float
+    Closing_Cooldown_Delta_Total = 0x14B,	// float
+    Quest_Monster = 0x14C,	// float
+    Quest_Monster_Effect = 0x14D,	// float
+    Treasure_Class = 0x14E,	// float
+    Removes_Body_On_Death = 0x14F,	// float
+    InitialCooldownMin = 0x150,	// float
+    InitialCooldownDelta = 0x151,	// float
+    Knockback_Weight = 0x152,	// int
+    UntargetableByPets = 0x153,	// float
+    Damage_State_Current = 0x154,	// float
+    Damage_State_Max = 0x155,	// float
+    Is_Player_Decoy = 0x156,	// float
+    Custom_Target_Weight = 0x157,	// int
+    Gizmo_State = 0x158,	// float
+    Gizmo_Charges = 0x159,	// float
+    Chest_Open = 0x15A,	// float
+    Door_Locked = 0x15B,	// float
+    Door_Timer = 0x15C,	// float
+    Gizmo_Disabled_By_Script = 0x15D,	// float
+    Gizmo_Operator_ACDID = 0x15E,	// float
+    Triggering_Count = 0x15F,	// float
+    Gate_Position = 0x160,	// int
+    Gate_Velocity = 0x161,	// int
+    Gizmo_Has_Been_Operated = 0x162,	// float
+    Pet_Owner = 0x163,	// float
+    Pet_Creator = 0x164,	// float
+    Pet_Type = 0x165,	// float
+    DropsNoLoot = 0x166,	// float
+    GrantsNoXP = 0x167,	// float
+    Hireling_Class = 0x168,	// float
+    Summoned_By_SNO = 0x169,	// float
+    Is_NPC = 0x16A,	// float
+    NPC_Is_Operatable = 0x16B,	// float
+    NPC_Is_Escorting = 0x16C,	// float
+    NPC_Has_Interact_Options = 0x16D,	// float
+    Conversation_Icon = 0x16E,	// float
+    Callout_Cooldown = 0x16F,	// float
+    Banter_Cooldown = 0x170,	// float
+    Conversation_Heard_Count = 0x171,	// float
+    Last_Tick_Shop_Entered = 0x172,	// float
+    Is_Helper = 0x173,	// float
+    Axe = 0x174,	// int
+    Axe2H = 0x175,	// int
+    ThrowingAxe = 0x176,	// int
+    AxeAny = 0x177,	// int
+    Bow = 0x178,	// int
+    Crossbow = 0x179,	// int
+    BowAny = 0x17A,	// int
+    Club = 0x17B,	// int
+    Club2H = 0x17C,	// int
+    ClubAny = 0x17D,	// int
+    Dagger = 0x17E,	// int
+    Mace = 0x17F,	// int
+    Mace2H = 0x180,	// int
+    MaceAny = 0x181,	// int
+    Sword = 0x182,	// int
+    Sword2H = 0x183,	// int
+    SwordAny = 0x184,	// int
+    Polearm = 0x185,	// int
+    Spear = 0x186,	// int
+    Wand = 0x187,	// int
+    ColdStaff = 0x188,	// int
+    FireStaff = 0x189,	// int
+    LightningStaff = 0x18A,	// int
+    PoisonStaff = 0x18B,	// int
+    StaffAny = 0x18C,	// int
+    Weapon1H = 0x18D,	// int
+    Weapon2H = 0x18E,	// int
+    WeaponMelee = 0x18F,	// int
+    WeaponRanged = 0x190,	// int
+    Quiver = 0x191,	// int
+    Reincarnation_Buff = 0x192,	// float
+    Dead_Body_AnimTag = 0x193,	// float
+    Spawned_by_ACDID = 0x194,	// float
+    Summoned_By_ACDID = 0x195,	// float
+    Summoner_ID = 0x196,	// float
+    Banner_ACDID = 0x197,	// float
+    Breakable_Shield_HP = 0x198,	// int
+    Current_WeaponClass = 0x199,	// float
+    Weapons_Sheathed = 0x19A,	// float
+    Held_In_OffHand = 0x19B,	// float
+    Attacks_Per_Second_Item_MainHand = 0x19C,	// int
+    Attacks_Per_Second_Item_OffHand = 0x19D,	// int
+    Attacks_Per_Second_Item_Total_MainHand = 0x19E,	// int
+    Attacks_Per_Second_Item_Total_OffHand = 0x19F,	// int
+    Damage_Weapon_Min_Total_MainHand = 0x1A0,	// int
+    Damage_Weapon_Min_Total_OffHand = 0x1A1,	// int
+    Damage_Weapon_Delta_Total_MainHand = 0x1A2,	// int
+    Damage_Weapon_Delta_Total_OffHand = 0x1A3,	// int
+    Attacks_Per_Second_Item_CurrentHand = 0x1A4,	// int
+    Damage_Weapon_Min_Total_CurrentHand = 0x1A5,	// int
+    Damage_Weapon_Delta_Total_CurrentHand = 0x1A6,	// int
+    Has_Special_Death_AnimTag = 0x1A7,	// float
+    Death_Type_Override = 0x1A8,	// float
+    In_Combat = 0x1A9,	// float
+    In_Conversation = 0x1AA,	// float
+    Last_Tick_Potion_Used = 0x1AB,	// float
+    Potion_Dilution_Percent = 0x1AC,	// int
+    Out_Of_Combat_Health_Regen_Percent = 0x1AD,	// int
+    Out_Of_Combat_Mana_Regen_Percent = 0x1AE,	// int
+    Potion_Dilution_Duration = 0x1AF,	// float
+    Potion_Dilution_Scalar = 0x1B0,	// int
+    Feared = 0x1B1,	// float
+    Fear_Immune = 0x1B2,	// float
+    Last_Damage_ACD = 0x1B3,	// float
+    Attached_To_ACD = 0x1B4,	// float
+    Attachment_ACD = 0x1B5,	// float
+    Normal_Attack_Replacement_Power_SNO = 0x1B6,	// float
+    Damage_Type_Override = 0x1B7,	// int
+    Minion_Count_Bonus_Percent = 0x1B8,	// int
+    Champion_Teleport_Next_Tick = 0x1B9,	// float
+    Champion_Teleport_Time_Min_In_Seconds = 0x1BA,	// int
+    Champion_Teleport_Time_Delta_In_Seconds = 0x1BB,	// int
+    Champion_Clone_Next_Tick = 0x1BC,	// float
+    Champion_Clone_Time_Min_In_Seconds = 0x1BD,	// int
+    Champion_Clone_Time_Delta_In_Seconds = 0x1BE,	// int
+    Champion_Clone_Hitpoint_Bonus_Percent = 0x1BF,	// int
+    Champion_Clone_Damage_Bonus_Percent = 0x1C0,	// int
+    Champion_Ghostly_Next_Tick = 0x1C1,	// float
+    Champion_Ghostly_Inactive_Time_Min_In_Seconds = 0x1C2,	// int
+    Champion_Ghostly_Inactive_Time_Delta_In_Seconds = 0x1C3,	// int
+    Champion_Ghostly_Active_Time_Min_In_Seconds = 0x1C4,	// int
+    Champion_Ghostly_Active_Time_Delta_In_Seconds = 0x1C5,	// int
+    Champion_Ghostly_Saved_Dodge_Chance = 0x1C6,	// int
+    Champion_Ghostly = 0x1C7,	// float
+    Base_Element = 0x1C8,	// float
+    Projectile_Amount_Bonus_Percent = 0x1C9,	// int
+    Projectile_Reflect_Chance = 0x1CA,	// int
+    Attack_Fear_Chance = 0x1CB,	// int
+    Attack_Fear_Time_Min = 0x1CC,	// int
+    Attack_Fear_Time_Delta = 0x1CD,	// int
+    Buff_Visual_Effect = 0x1CE,	// float
+    Buff_Icon_Start_Tick0 = 0x1CF,	// float
+    Buff_Icon_Start_Tick1 = 0x1D0,	// float
+    Buff_Icon_Start_Tick2 = 0x1D1,	// float
+    Buff_Icon_Start_Tick3 = 0x1D2,	// float
+    Buff_Icon_Start_Tick4 = 0x1D3,	// float
+    Buff_Icon_Start_Tick5 = 0x1D4,	// float
+    Buff_Icon_Start_Tick6 = 0x1D5,	// float
+    Buff_Icon_Start_Tick7 = 0x1D6,	// float
+    Buff_Icon_End_Tick0 = 0x1D7,	// float
+    Buff_Icon_End_Tick1 = 0x1D8,	// float
+    Buff_Icon_End_Tick2 = 0x1D9,	// float
+    Buff_Icon_End_Tick3 = 0x1DA,	// float
+    Buff_Icon_End_Tick4 = 0x1DB,	// float
+    Buff_Icon_End_Tick5 = 0x1DC,	// float
+    Buff_Icon_End_Tick6 = 0x1DD,	// float
+    Buff_Icon_End_Tick7 = 0x1DE,	// float
+    Could_Have_Ragdolled = 0x1DF,	// float
+    Ambient_Damage_Effect_Last_Time = 0x1E0,	// float
+    Scale_Bonus = 0x1E1,	// int
+    Deleted_On_Server = 0x1E2,	// float
+    Scripted_Fade_Time = 0x1E3,	// float
+    Does_No_Damage = 0x1E4,	// float
+    Does_Fake_Damage = 0x1E5,	// float
+    SlowTime_Debuff = 0x1E6,	// int
+    Blocks_Projectiles = 0x1E7,	// float
+    Frozen = 0x1E8,	// float
+    Freeze_Damage_Percent_Bonus = 0x1E9,	// int
+    Buff_Active = 0x1EA,	// float
+    DualWield_BothAttack_Chance = 0x1EB,	// int
+    Summon_Expiration_Tick = 0x1EC,	// float
+    Summon_Count = 0x1ED,	// float
+    Uninterruptible = 0x1EE,	// float
+    Queue_Death = 0x1EF,	// float
+    CantStartDisplayedPowers = 0x1F0,	// float
+    Wizard_Slowtime_Proxy_ACD = 0x1F1,	// float
+    DPS = 0x1F2,	// int
+    Resurrection_Power = 0x1F3,	// float
+    Freeze_Damage = 0x1F4,	// int
+    Freeze_Capacity = 0x1F5,	// int
+    Thaw_Rate = 0x1F6,	// int
+    Chilled_Dur_Bonus_Percent = 0x1F7,	// int
+    DOT_DPS = 0x1F8,	// int
+    DamageCap_Percent = 0x1F9,	// int
+    Item_Time_Sold = 0x1FA,	// float
+    Forced_Hireling_Power = 0x1FB,	// float
+    IsRooted = 0x1FC,	// float
+    RootTargetACD = 0x1FD,	// float
+    RootAutoDecayPerSecond = 0x1FE,	// int
+    RootUnitValue = 0x1FF,	// int
+    RootTotalTicks = 0x200,	// float
+    Hide_Affixes = 0x201,	// float
+    Rune_A = 0x202,	// float
+    Rune_B = 0x203,	// float
+    Rune_C = 0x204,	// float
+    Rune_D = 0x205,	// float
+    Rune_E = 0x206,	// float
+    Resistance_Stun = 0x207,	// int
+    Resistance_Stun_Total = 0x208,	// int
+    Resistance_Root = 0x209,	// int
+    Resistance_Root_Total = 0x20A,	// int
+    Resistance_Freeze = 0x20B,	// int
+    Resistance_Freeze_Total = 0x20C,	// int
+    Resistance_StunRootFreeze = 0x20D,	// int
+    CrowdControl_Reduction = 0x20E,	// int
+    Displays_Team_Effect = 0x20F,	// float
+    Cannot_Be_Added_To_AI_Target_List = 0x210,	// float
+    SkillKit = 0x211,	// float
+    Immune_To_Charm = 0x212,	// float
+    Immune_To_Blind = 0x213,	// float
+    Damage_Shield = 0x214,	// float
+    Silenced = 0x215,	// float
+    Diseased = 0x216,	// float
+    Guard_Object_ACDID = 0x217,	// float
+    Follow_Target_ACDID = 0x218,	// float
+    Follow_Target_Type = 0x219,	// float
+    Forced_Enemy_ACDID = 0x21A,	// float
+    NPC_Talk_Target_ANN = 0x21B,	// float
+    NPC_Conv_Target_ANN = 0x21C,	// float
+    Script_Target_ACDID = 0x21D,	// float
+    Look_Target_Server_ANN = 0x21E,	// float
+    Look_Target_Broadcast_Intensity = 0x21F,	// int
+    Look_Target_Broadcast_Radius = 0x220,	// int
+    Stealthed = 0x221,	// float
+    GemQuality = 0x222,	// float
+    ItemBuffIcon = 0x223,	// float
+    ScrollDuration = 0x224,	// int
+    Gizmo_Actor_SNO_To_Spawn = 0x225,	// float
+    Gizmo_Actor_To_Spawn_Scale = 0x226,	// int
+    Death_Replacement_Power_SNO = 0x227,	// float
+    Attachment_Handled_By_Client = 0x228,	// float
+    AI_In_Special_State = 0x229,	// float
+    AI_Used_Scripted_Spawn_Anim = 0x22A,	// float
+    AI_Spawned_By_Inactive_Marker = 0x22B,	// float
+    Headstone_Player_ANN = 0x22C,	// float
+    Resource_Cost_Reduction_Percent = 0x22D,	// int
+    Resistance_Penetration = 0x22E,	// int
+    Resistance_Penetration_Total = 0x22F,	// int
+    Resistance_Penetration_All = 0x230,	// int
+    Resistance_Penetration_Percent_All = 0x231,	// int
+    Fury_Effect_Level = 0x232,	// float
+    Health_Potion_Bonus_Heal_Percent = 0x233,	// int
+    Free_Cast = 0x234,	// float
+    Free_Cast_All = 0x235,	// float
+    Movement_Scalar_Reduction_Percent = 0x236,	// int
+    Movement_Scalar_Reduction_Resistance = 0x237,	// int
+    Damage_Absorb_Percent_All = 0x238,	// int
+    World_Seed = 0x239,	// float
+    Kill_Count_Record = 0x23A,	// float
+    Object_Destruction_Record = 0x23B,	// float
+    Single_Attack_Record = 0x23C,	// float
+    Environment_Attack_Record = 0x23D,	// float
+    Root_Immune = 0x23E,	// float
+    Monster_Play_Get_Hit_Bonus = 0x23F,	// int
+    Stored_Contact_Frame = 0x240,	// float
+    Buff_Icon_Count0 = 0x241,	// float
+    Buff_Icon_Count1 = 0x242,	// float
+    Buff_Icon_Count2 = 0x243,	// float
+    Buff_Icon_Count3 = 0x244,	// float
+    Buff_Icon_Count4 = 0x245,	// float
+    Buff_Icon_Count5 = 0x246,	// float
+    Buff_Icon_Count6 = 0x247,	// float
+    Buff_Icon_Count7 = 0x248,	// float
+    Observer = 0x249,	// float
+    Resurrect_As_Observer = 0x24A,	// float
+    Combo_Level = 0x24B,	// float
+    Combo_Time_Last_Move = 0x24C,	// float
+    Burrowed = 0x24D,	// float
+    Death_Replacement_Effect_Group_SNO = 0x24E,	// float
+    Checkpoint_Resurrection_Allowed_Game_Time = 0x24F,	// float
+    Checkpoint_Resurrection_Forced_Game_Time = 0x250,	// float
+    Controlling_TimedEvent_SNO = 0x251,	// float
+    Casting_Speed_Percent = 0x252,	// int
+    Using_Bossbar = 0x253,	// float
+    Power_Buff_0_Visual_Effect = 0x254,	// float
+    Power_Buff_1_Visual_Effect = 0x255,	// float
+    Power_Buff_2_Visual_Effect = 0x256,	// float
+    Power_Buff_3_Visual_Effect = 0x257,	// float
+    Power_Buff_4_Visual_Effect = 0x258,	// float
+    Power_Buff_5_Visual_Effect = 0x259,	// float
+    Power_Buff_6_Visual_Effect = 0x25A,	// float
+    Power_Buff_7_Visual_Effect = 0x25B,	// float
+    Store_SNO = 0x25C,	// float
+    Busy = 0x25D,	// float
+    Afk = 0x25E,	// float
+    Last_Action_Timestamp = 0x25F,	// float
+    Portal_Next_Time = 0x260,	// float
+    Repair_Discount_Percent = 0x261,	// int
+    Resource_Degeneration_Prevented = 0x262,	// float
+    Operatable = 0x263,	// float
+    Look_Override = 0x264,	// float
+    Spawner_Concurrent_Count_ID = 0x265,	// float
+    Disabled = 0x266,	// float
+    Skill_Override = 0x267,	// float
+    Skill_Override_Active = 0x268,	// float
+    Skill_Override_Ended = 0x269,	// float
+    Skill_Override_Ended_Active = 0x26A,	// float
+    Is_Power_Proxy = 0x26B,	// float
+    Force_No_Death_Animation = 0x26C,	// float
+    Player_WeaponClass_Anim_Override = 0x26D,	// float
+    Operatable_Story_Gizmo = 0x26E,	// float
+    Power_Buff_0_Visual_Effect_None = 0x26F,	// float
+    Power_Buff_0_Visual_Effect_A = 0x270,	// float
+    Power_Buff_0_Visual_Effect_B = 0x271,	// float
+    Power_Buff_0_Visual_Effect_C = 0x272,	// float
+    Power_Buff_0_Visual_Effect_D = 0x273,	// float
+    Power_Buff_0_Visual_Effect_E = 0x274,	// float
+    Power_Buff_1_Visual_Effect_None = 0x275,	// float
+    Power_Buff_1_Visual_Effect_A = 0x276,	// float
+    Power_Buff_1_Visual_Effect_B = 0x277,	// float
+    Power_Buff_1_Visual_Effect_C = 0x278,	// float
+    Power_Buff_1_Visual_Effect_D = 0x279,	// float
+    Power_Buff_1_Visual_Effect_E = 0x27A,	// float
+    Power_Buff_2_Visual_Effect_None = 0x27B,	// float
+    Power_Buff_2_Visual_Effect_A = 0x27C,	// float
+    Power_Buff_2_Visual_Effect_B = 0x27D,	// float
+    Power_Buff_2_Visual_Effect_C = 0x27E,	// float
+    Power_Buff_2_Visual_Effect_D = 0x27F,	// float
+    Power_Buff_2_Visual_Effect_E = 0x280,	// float
+    Power_Buff_3_Visual_Effect_None = 0x281,	// float
+    Power_Buff_3_Visual_Effect_A = 0x282,	// float
+    Power_Buff_3_Visual_Effect_B = 0x283,	// float
+    Power_Buff_3_Visual_Effect_C = 0x284,	// float
+    Power_Buff_3_Visual_Effect_D = 0x285,	// float
+    Power_Buff_3_Visual_Effect_E = 0x286,	// float
+    Power_Buff_4_Visual_Effect_None = 0x287,	// float
+    Power_Buff_4_Visual_Effect_A = 0x288,	// float
+    Power_Buff_4_Visual_Effect_B = 0x289,	// float
+    Power_Buff_4_Visual_Effect_C = 0x28A,	// float
+    Power_Buff_4_Visual_Effect_D = 0x28B,	// float
+    Power_Buff_4_Visual_Effect_E = 0x28C,	// float
+    Power_Buff_5_Visual_Effect_None = 0x28D,	// float
+    Power_Buff_5_Visual_Effect_A = 0x28E,	// float
+    Power_Buff_5_Visual_Effect_B = 0x28F,	// float
+    Power_Buff_5_Visual_Effect_C = 0x290,	// float
+    Power_Buff_5_Visual_Effect_D = 0x291,	// float
+    Power_Buff_5_Visual_Effect_E = 0x292,	// float
+    Power_Buff_6_Visual_Effect_None = 0x293,	// float
+    Power_Buff_6_Visual_Effect_A = 0x294,	// float
+    Power_Buff_6_Visual_Effect_B = 0x295,	// float
+    Power_Buff_6_Visual_Effect_C = 0x296,	// float
+    Power_Buff_6_Visual_Effect_D = 0x297,	// float
+    Power_Buff_6_Visual_Effect_E = 0x298,	// float
+    Power_Buff_7_Visual_Effect_None = 0x299,	// float
+    Power_Buff_7_Visual_Effect_A = 0x29A,	// float
+    Power_Buff_7_Visual_Effect_B = 0x29B,	// float
+    Power_Buff_7_Visual_Effect_C = 0x29C,	// float
+    Power_Buff_7_Visual_Effect_D = 0x29D,	// float
+    Power_Buff_7_Visual_Effect_E = 0x29E,	// float
+    Walk_Passability_Power_SNO = 0x29F,	// float
+    Passability_Power_SNO = 0x2A0,	// float
+    Flippy_ID = 0x2A1,	// float
+    Summoning_Machine_Num_Casters = 0x2A2,	// float
+    Summoning_Machine_Spawn_Count = 0x2A3,	// float
+    Summoning_Machine_Next_Spawn_Ticks = 0x2A4,	// float
+    Summoning_Machine_Spawn_Team = 0x2A5,	// float
+    Screen_Attack_Radius_Constant = 0x2A6,	// int
+    Damage_Done_Reduction_Percent = 0x2A7,	// int
+    Set_Item_Count = 0x2A8,	// float
+    Spawner_Countdown_Percent = 0x2A9,	// int
+    Attack_Slow = 0x2AA,	// float
+    Power_Disabled = 0x2AB,	// float
+    Weapon_Effect_Override = 0x2AC,	// float
+    Debuff_Duration_Reduction_Percent = 0x2AD,	// int
+    Uses_PvP_Power_Tags = 0x2AE,	// float
+    Trait = 0x2AF,	// float
+    Last_ACD_Attacked_By = 0x2B0,	// float
+    Gold_PickUp_Radius = 0x2B1,	// int
+    Client_Only_Effect = 0x2B2,	// float
+    Has_Doppelganger_Cloned = 0x2B3,	// float
+    Resource_Gain_Bonus_Percent = 0x2B4,	// int
+    Looping_Animation_Start_Time = 0x2B5,	// float
+    Looping_Animation_End_Time = 0x2B6,	// float
+    Looping_Animation_Suppress_Item_Tooltips = 0x2B7,	// float
+    Heal_Effect_Last_Played_Tick = 0x2B8,	// float
+    Resource_Effect_Last_Played_tick = 0x2B9,	// float
+    Thorns_Effect_Last_Played_tick = 0x2BA,	// float
+    PVP_Kills = 0x2BB,	// float
+    PVP_Deaths = 0x2BC,	// float
+    PVP_Assists = 0x2BD,	// float
+    PVP_Progression_Points_Gained = 0x2BE,	// float
+    PVP_Current_Kill_Streak = 0x2BF,	// float
+    PVP_Current_Death_Streak = 0x2C0,	// float
+    PVP_Longest_Kill_Streak = 0x2C1,	// float
+    PVP_Longest_Death_Streak = 0x2C2,	// float
+    Turn_Rate_Scalar = 0x2C3,	// int
+    Turn_Accel_Scalar = 0x2C4,	// int
+    Turn_Deccel_Scalar = 0x2C5,	// int
+    No_Health_Drop = 0x2C6,	// float
+    Leader = 0x2C7,	// float
+    IsContentRestrictedActor = 0x2C8,	// float
+    InBossEncounter = 0x2C9,	// float
+    God = 0x2CA,	// float
+    MinimapActive = 0x2CB,	// float
+    MinimapIconOverride = 0x2CC,	// float
+    MinimapDisableArrow = 0x2CD,	// float
+    Last_Blocked_ACD = 0x2CE,	// float
+    Last_Blocked_Time = 0x2CF,	// float
+    Deactivate_Lure = 0x2D0,	// float
+    Weapons_Hidden = 0x2D1,	// float
+    Actor_Updates_Attributes_From_Owner = 0x2D2,	// float
+    Taunt_Target_ACD = 0x2D3,	// float
+    UI_Only_Percent_Damage_Increase = 0x2D4,	// int
+    Projectile_Effect_SNO = 0x2D5,	// float
+    On_Hit_Fear_Proc_Chance = 0x2D6,	// int
+    On_Hit_Stun_Proc_Chance = 0x2D7,	// int
+    On_Hit_Blind_Proc_Chance = 0x2D8,	// int
+    On_Hit_Freeze_Proc_Chance = 0x2D9,	// int
+    On_Hit_Chill_Proc_Chance = 0x2DA,	// int
+    On_Hit_Slow_Proc_Chance = 0x2DB,	// int
+    On_Hit_Immobilize_Proc_Chance = 0x2DC,	// int
+    On_Hit_Knockback_Proc_Chance = 0x2DD,	// int
+    On_Hit_Bleed_Proc_Chance = 0x2DE,	// int
+    On_Hit_Bleed_Proc_Damage_Base = 0x2DF,	// int
+    On_Hit_Bleed_Proc_Damage_Delta = 0x2E0,	// int
+    Damage_Percent_Reduction_From_Ranged = 0x2E1,	// int
+    Damage_Percent_Reduction_From_Melee = 0x2E2,	// int
+    Damage_Percent_Reduction_Turns_Into_Heal = 0x2E3,	// int
+    Damage_Percent_Reduction_From_Elites = 0x2E4,	// int
+    Damage_Percent_Reduction_From_Type = 0x2E5,	// int
+    Damage_Percent_Bonus_Vs_Monster_Type = 0x2E6,	// int
+    Damage_Percent_Bonus_Vs_Elites = 0x2E7,	// int
+    Item_Manipulation_Timeout = 0x2E8,	// float
+    Picked_Up_Time = 0x2E9,	// float
+    Unequipped_Time = 0x2EA,	// float
+    Last_ACD_Killed_Time = 0x2EB,	// float
+    CannotDieDuring = 0x2EC,	// float
+    Weapon_On_Hit_Fear_Proc_Chance = 0x2ED,	// int
+    Weapon_On_Hit_Stun_Proc_Chance = 0x2EE,	// int
+    Weapon_On_Hit_Blind_Proc_Chance = 0x2EF,	// int
+    Weapon_On_Hit_Freeze_Proc_Chance = 0x2F0,	// int
+    Weapon_On_Hit_Chill_Proc_Chance = 0x2F1,	// int
+    Weapon_On_Hit_Slow_Proc_Chance = 0x2F2,	// int
+    Weapon_On_Hit_Immobilize_Proc_Chance = 0x2F3,	// int
+    Weapon_On_Hit_Knockback_Proc_Chance = 0x2F4,	// int
+    Weapon_On_Hit_Bleed_Proc_Chance = 0x2F5,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Base = 0x2F6,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Delta = 0x2F7,	// int
+    Weapon_On_Hit_Fear_Proc_Chance_MainHand = 0x2F8,	// int
+    Weapon_On_Hit_Fear_Proc_Chance_OffHand = 0x2F9,	// int
+    Weapon_On_Hit_Fear_Proc_Chance_CurrentHand = 0x2FA,	// int
+    Weapon_On_Hit_Stun_Proc_Chance_MainHand = 0x2FB,	// int
+    Weapon_On_Hit_Stun_Proc_Chance_OffHand = 0x2FC,	// int
+    Weapon_On_Hit_Stun_Proc_Chance_CurrentHand = 0x2FD,	// int
+    Weapon_On_Hit_Blind_Proc_Chance_MainHand = 0x2FE,	// int
+    Weapon_On_Hit_Blind_Proc_Chance_OffHand = 0x2FF,	// int
+    Weapon_On_Hit_Blind_Proc_Chance_CurrentHand = 0x300,	// int
+    Weapon_On_Hit_Freeze_Proc_Chance_MainHand = 0x301,	// int
+    Weapon_On_Hit_Freeze_Proc_Chance_OffHand = 0x302,	// int
+    Weapon_On_Hit_Freeze_Proc_Chance_CurrentHand = 0x303,	// int
+    Weapon_On_Hit_Chill_Proc_Chance_MainHand = 0x304,	// int
+    Weapon_On_Hit_Chill_Proc_Chance_OffHand = 0x305,	// int
+    Weapon_On_Hit_Chill_Proc_Chance_CurrentHand = 0x306,	// int
+    Weapon_On_Hit_Slow_Proc_Chance_MainHand = 0x307,	// int
+    Weapon_On_Hit_Slow_Proc_Chance_OffHand = 0x308,	// int
+    Weapon_On_Hit_Slow_Proc_Chance_CurrentHand = 0x309,	// int
+    Weapon_On_Hit_Immobilize_Proc_Chance_MainHand = 0x30A,	// int
+    Weapon_On_Hit_Immobilize_Proc_Chance_OffHand = 0x30B,	// int
+    Weapon_On_Hit_Immobilize_Proc_Chance_CurrentHand = 0x30C,	// int
+    Weapon_On_Hit_Knockback_Proc_Chance_MainHand = 0x30D,	// int
+    Weapon_On_Hit_Knockback_Proc_Chance_OffHand = 0x30E,	// int
+    Weapon_On_Hit_Knockback_Proc_Chance_CurrentHand = 0x30F,	// int
+    Weapon_On_Hit_Bleed_Proc_Chance_MainHand = 0x310,	// int
+    Weapon_On_Hit_Bleed_Proc_Chance_OffHand = 0x311,	// int
+    Weapon_On_Hit_Bleed_Proc_Chance_CurrentHand = 0x312,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Base_MainHand = 0x313,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Base_OffHand = 0x314,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Base_CurrentHand = 0x315,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Delta_MainHand = 0x316,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Delta_OffHand = 0x317,	// int
+    Weapon_On_Hit_Bleed_Proc_Damage_Delta_CurrentHand = 0x318,	// int
+    Power_Damage_Percent_Bonus = 0x319,	// int
+    Power_Resource_Reduction = 0x31A,	// int
+    Power_Cooldown_Reduction = 0x31B,	// int
+    Power_Duration_Increase = 0x31C,	// int
+    Power_Crit_Percent_Bonus = 0x31D,	// int
+    Weapon_Crit_Chance = 0x31E,	// int
+    Weapon_Crit_Chance_MainHand = 0x31F,	// int
+    Weapon_Crit_Chance_OffHand = 0x320,	// int
+    Weapon_Crit_Chance_CurrentHand = 0x321,	// int
+    Strength_Item = 0x322,	// int
+    Dexterity_Item = 0x323,	// int
+    Intelligence_Item = 0x324,	// int
+    Vitality_Item = 0x325,	// int
+    Item_Level_Requirement_Reduction = 0x326,	// float
+    Item_Durability_Percent_Bonus = 0x327,	// int
+    Item_Indestructible = 0x328,	// float
+    Core_Attributes_From_Item_Bonus_Multiplier = 0x329,	// int
+    Waiting_To_Accept_Resurrection = 0x32A,	// float
+    Ghosted = 0x32B,	// float
+    Special_Inventory_Has_Sold = 0x32C,	// float
+    Power_Channel_Lockout_Time = 0x32D,	// float
+    Power_Buff_0_Lockout_Time = 0x32E,	// float
+    Power_Buff_1_Lockout_Time = 0x32F,	// float
+    Power_Buff_2_Lockout_Time = 0x330,	// float
+    Power_Buff_3_Lockout_Time = 0x331,	// float
+    Power_Buff_4_Lockout_Time = 0x332,	// float
+    Power_Buff_5_Lockout_Time = 0x333,	// float
+    Power_Buff_6_Lockout_Time = 0x334,	// float
+    Power_Buff_7_Lockout_Time = 0x335,	// float
+    Known_By_Owner = 0x336,	// float
+    Never_Deactivates = 0x337,	// float
+    Account_Under_Review = 0x338,	// float
+    Projectile_Detonate_Time = 0x339,	// float
+}
+
+0x1655160 SnoGroupTextures
+0x1654f28 SnoGroupShaderMap
+0x1639d48 SnoGroupAppearance
+0x15f9770 SnoGroupPhysMesh
+0x15f4bd0 SnoGroupGlobals
+0x15f4390 SnoGroupObserver
+0x15f2190 SnoGroupScene
+0x15edad8 SnoGroupWorlds
+0x15ec108 SnoGroupActor
+0x15ebc98 SnoGroupAnimSet
+0x15e9148 SnoGroupAnim
+0x15e8808 SnoGroupStringList
+0x15e7e20 SnoGroupPower
+0x15e7788 SnoGroupMarkerSet
+0x15ccc58 SnoGroupHero
+0x15a6008 SnoGroupGameBalance
+0x15e7290 SnoGroupEncounter
+0x15e6eb0 SnoGroupAdventure
+0x15e5608 SnoGroupConversation
+0x15e4c20 SnoGroupConversationList
+0x15e4840 SnoGroupFlagSet
+0x15e4348 SnoGroupSceneGroup
+0x15e2f88 SnoGroupLevelArea
+0x15dfc00 SnoGroupQuest
+0x15df8a8 SnoGroupQuestRange
+0x15deda8 SnoGroupSkillKit
+0x15dbe00 SnoGroupMonster
+0x15dbce0 SnoGroupRecipe
+0x15dbbc0 SnoGroupTimedEvent
+0x15daf20 SnoGroupAct
+0x15dab40 SnoGroupLore
+0x15d8eb0 SnoGroupCondition
+0x15cf098 SnoGroupAccount
+0x15d80f8 SnoGroupTreasureClass
+0x15d78b8 SnoGroupBossEncounter
+0x15d7450 SnoGroupTutorial
+0x16544b8 SnoGroupAmbientSound
+0x1653c78 SnoGroupPhysics
+0x1653668 SnoGroupExplosion
+0x1653318 SnoGroupSurface
+0x1652bf0 SnoGroupEffectGroup
+0x1652328 SnoGroupCloth
+0x1651ae8 SnoGroupTrail
+0x164f5b0 SnoGroupParticle
+0x164ee88 SnoGroupFont
+0x164e878 SnoGroupAnim2D
+0x164ce30 SnoGroupShaders
+0x164a120 SnoGroupUI
+0x1649510 SnoGroupLight
+0x1648b28 SnoGroupSoundBank
+0x1646218 SnoGroupSound
+0x16452b8 SnoGroupMusic
+0x1643d58 SnoGroupRope
+0x16425c8 SnoGroupWeather
+0x1641e18 SnoGroupShakes
+0x1641b50 SnoGroupMaterial
+0x1640d98 SnoGroupReverb
+
