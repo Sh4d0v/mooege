@@ -1,0 +1,12 @@
+-auroraaddress
+-version
+-w
+-launch
+-battlenetaddress
+-battlenetmatchmakingaddress
+-test
+-perftestfilter
+-perftestwaittime
+-perftestsampletime
+-perftestdumpfreq
+-perftestformat
