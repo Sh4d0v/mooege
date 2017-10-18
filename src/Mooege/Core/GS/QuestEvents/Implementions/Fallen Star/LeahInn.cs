@@ -39,27 +39,44 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         public LeahInn()
-            : base(151123) // 204113 // 151156
+            : base(151123)
         {
         }
 
         List<Vector3D> ActorsVector3D = new List<Vector3D> { }; //We fill this with the vectors of the actors that transform, so we spwan zombies in the same location.
         List<uint> monstersAlive = new List<uint> { }; //We use this for the killeventlistener.
+        private Boolean HadConversation = true;
+
 
         public override void Execute(Map.World world)
         {
-            StartConversation(world, 204113);
-            world.Game.Quests.Advance(87700);
-            var transformActors = Task<bool>.Factory.StartNew(() => HoudiniVsZombies(world, 204605));
-            transformActors.Wait();
-            var zombieWave = Task<bool>.Factory.StartNew(() => LaunchWave(ActorsVector3D, world, 203121));
-            zombieWave.Wait();
-            var ListenerZombie = Task<bool>.Factory.StartNew(() => OnKillListener(monstersAlive, world));
-            ListenerZombie.ContinueWith(delegate //Once killed:
+            if (HadConversation)
             {
-                StartConversation(world, 151156);
+                HadConversation = false;
+                StartConversation(world, 204113);
                 world.Game.Quests.Advance(87700);
-            });
+                var transformActors = Task<bool>.Factory.StartNew(() => HoudiniVsZombies(world, 204605));
+                transformActors.Wait();
+                var zombieWave = Task<bool>.Factory.StartNew(() => LaunchWave(ActorsVector3D, world, 203121));
+                zombieWave.Wait();
+                var ListenerZombie = Task<bool>.Factory.StartNew(() => OnKillListener(monstersAlive, world));
+                ListenerZombie.ContinueWith(delegate //Once killed:
+                {
+                    StartConversation(world, 151156);
+                });
+
+                //GameMessage(0x0051)
+                //AttributeSetValueMessage:
+                //{
+                // ActorID: 0x7A580122  Leah.acr (2052587810)
+                // NetAttributeKeyValue:
+                // {
+                //  Field0.Value: 0x00000000 (0)
+                //  Conversation_Icon (366): 0x00000001 (1)
+                // }
+                //}
+                world.Game.Quests.Advance(87700);
+            }
         }
 
         private bool HoudiniVsZombies(Map.World world, Int32 snoId)

@@ -31,7 +31,7 @@ namespace PonyLib
             /// <summary>
             /// Main assemblies version.
             /// </summary>
-            public const string Version = "1.10057.0.0";
+            public const string Version = "1.10485.0.0";
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace PonyLib
             /// <summary>
             /// Required client version.
             /// </summary>
-            public const int RequiredClientVersion = 10057;
+            public const int RequiredClientVersion = 10485;
         }       
     }
 }

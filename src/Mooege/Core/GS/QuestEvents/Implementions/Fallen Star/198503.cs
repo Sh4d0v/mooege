@@ -31,19 +31,19 @@ using System.Threading;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _198503 : QuestEvent // TristramGuardCaptainIntro_New WretchedQueenIsDead Waypoint_OldTristram
+    class _198503 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         public _198503()
-            : base(198503) // 156223
+            : base(198503)
         {
         }
 
         static int wretchedMotherAID = 219725;
         static int wretchedMotherQueenAID = 176889;
-        static int portalAID = 192164; // 176007; // portal actor id ? anyobe ?
+        static int portalAID= 176007; // portal actor id ? anyobe ?
         static int bonusTaskID = 1; // this is the specific ID to be send to client for updates regarding this very FUCKIN bonus objective (like how hard it was to find..doh')
 
 
@@ -81,10 +81,10 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     world.Game.Quests.Advance(87700);
                     Logger.Debug("Event finished");
                     // launch dialog
-                    StartConversation(world, 156223);
-
+                    StartConversation(world, 156223); 
+                    
                     // position of the wretched mother
-                    Vector3D[] WretchedMotherPosSpawn = new Vector3D[3]; // too hard 3 elems..
+                    Vector3D[] WretchedMotherPosSpawn  = new Vector3D[3]; // too hard 3 elems..
                     WretchedMotherPosSpawn[0] = new Vector3D(2427.788f, 2852.193f, 27.1f);
                     WretchedMotherPosSpawn[1] = new Vector3D(2356.931f, 2528.715f, 27.1f);
                     WretchedMotherPosSpawn[2] = new Vector3D(2119.563f, 2489.693f, 27.1f);
@@ -110,7 +110,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         var ListenerWQTask = Task<bool>.Factory.StartNew(() => OnKillBonusListener(monstersAliveBonus, world, bonusTaskID));
                         //Wait for wretched queen mother to be killed.
                         ListenerWQTask.ContinueWith(delegate //Once killed:
-                        {
+                        {                            
                             Logger.Debug("Bonus Event Completed ");
                         });
                     }
@@ -119,35 +119,41 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         Logger.Debug("Could not get/spawn the Wretched Mother ACTOR ID {0}", wretchedMotherAID);
                     }
                     if (actorWQM != null)
-                    {
-                        // ok set a boss health bar for the bitch :;p
-                        actorWQM.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
-                        // actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true; // there also an attribute about QuestMonster
-                        // DOES NOT WORK it hsould be champion affixes or shit of this kind ...
-
+                    {                        
                         //Run Kill Event Listener
                         var ListenerWQMTask = Task<bool>.Factory.StartNew(() => OnWMQKillListener(actorWQM.DynamicID, world));
-
                         //Wait for wretched queen mother to be killed.
                         ListenerWQMTask.ContinueWith(delegate //Once killed:
-                        {
-                            Logger.Debug(" Wretch Queen Event done !!"); // WretchedQueenIsDead                             
+                        {                            
+                            //world.Game.Quests.Advance(87700);
+                            Logger.Debug("Event finished");
+
+                            // portal + rumford (group)
 
                             // portal shit 
                             var portalActorId = world.GetActorBySNO(portalAID);
-                            var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(portalActorId.DynamicID, world));
+                            var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseActorListener(portalActorId.DynamicID, world));
                             //Wait for portal to be used .
                             ListenerUsePortalTask.ContinueWith(delegate //Once killed:
                             {
-                                Logger.Debug(" Waypoint_OldTristram Objective done "); // Waypoint_OldTristram
+                                Logger.Debug(" Portal used :p");
                             });
-                            //conversation with rumford... delegated to another class... since we have a nice conversation system :p                            
+
+
+
+                            //conversation with rumford...
+
+
                         });
                     }
                     else
                     {
                         Logger.Debug("Could not find the Wretched Mother QUEEN ACTOR ID {0}", wretchedMotherQueenAID);
                     }
+
+                    
+
+
                 });
             }
         }
@@ -180,39 +186,38 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         //This is so ugly but I don't knwo how to put few mob with same actor ID in a "group"...
         private bool OnKillBonusListener(List<uint> monstersAlive, Map.World world, int taskID)
-        {
+        {            
             var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
-            Logger.Debug(" dead to be counted {0} world contains {1} WM ", monsterCount, world.GetActorsBySNO(wretchedMotherAID).Count);
+            Logger.Debug(" dead to be counted {0} world contains {1} WM ", monsterCount, world.GetActorsBySNO(wretchedMotherAID).Count);     
             while (true)
             {
-                if (world.GetActorsBySNO(wretchedMotherAID).Count < monsterCount)
-                {
-                    //If dead we count one less and send the update for the bonus stuff :p
-                    Logger.Debug("A wretched mother has been killed");
-                    monsterCount--;
-                    world.Game.Quests.NotifyBonus(Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.BonusStep, bonusTaskID);
-                    if (monsterCount == 0)
-                        break;
-                }
+                    if (world.GetActorsBySNO(wretchedMotherAID).Count < monsterCount)                    
+                    {
+                        //If dead we count one less and send the update for the bonus stuff :p
+                        Logger.Debug( "A wretched mother has been killed");                        
+                        monsterCount--;
+                        world.Game.Quests.NotifyBonus(Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.BonusStep, bonusTaskID);
+                        if (monsterCount == 0)
+                            break;
+                    }                
             }
             return true;
         }
 
         //just for the WMQ 
         private bool OnWMQKillListener(uint monsterDynID, Map.World world)
-        {
+        {            
             while (true)
             {
                 if (world.HasMonster(monsterDynID))
                 {
                     //RAS 
                 }
-                else
-                {
+                else {                    
                     Logger.Debug(" The wretched mother queen has been killed");
 
                     world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
-                    //Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster, 1);
+                        //Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster, 1);
                     break;
                 }
             }
@@ -220,7 +225,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         }
 
         //just for the use of the portal
-        private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
+        private bool OnUseActorListener(uint actorDynID, Map.World world)
         {
             if (world.HasActor(actorDynID))
             {
@@ -228,15 +233,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
 
 
-                Logger.Debug(" supposed portal has type {3} has name {0} and state {1} , has gizmo  been operated ? {2} ", actor.NameSNOId, actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_State], actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated], actor.GetType());
-
                 while (true)
-                {
-                    if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
-                    {
-                        world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, portalAID);
-                        break;
-                    }
+                {               
+                    
+
+
+                    world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                    //Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster, 1);
+                    break;
                 }
             }
             return true;

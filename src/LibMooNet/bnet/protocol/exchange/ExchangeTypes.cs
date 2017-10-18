@@ -83,129 +83,130 @@ namespace bnet.protocol.exchange {
           "bGlzdBgFIAIoBRIVCg1hbGxvd2VkX3JlYWxtGAYgAigNImMKD09yZGVyQm9v" + 
           "a0hhbmRsZRI5CgxwYXJ0aXRpb25faWQYASACKAsyIy5ibmV0LnByb3RvY29s" + 
           "LmV4Y2hhbmdlLlBhcnRpdGlvbklkEhUKDW9yZGVyX2Jvb2tfaWQYAiACKAQi" + 
-          "qgIKFU9yZGVyQm9va05vdGlmaWNhdGlvbhI1CgpvcmRlcl9ib29rGAEgAigL" + 
+          "vwIKFU9yZGVyQm9va05vdGlmaWNhdGlvbhI1CgpvcmRlcl9ib29rGAEgAigL" + 
           "MiEuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5PcmRlckJvb2sSOQoMcGFydGl0" + 
           "aW9uX2lkGAIgAigLMiMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5QYXJ0aXRp" + 
           "b25JZBIVCg1vcmRlcl9ib29rX2lkGAMgAigEEhoKD3RyYWRlX25vd19wcmlj" + 
           "ZRgEIAEoBDoBMBIYCg13aW5uaW5nX3ByaWNlGAUgASgEOgEwEg4KBnN0YXR1" + 
           "cxgGIAIoDRITCgt1cGRhdGVfdGltZRgHIAIoBBIWCgtjbG9zZWRfdGltZRgI" + 
-          "IAEoBDoBMBIVCg1maWxsZWRfYW1vdW50GAkgAigEIvsCChBPcmRlckJvb2tT" + 
-          "dW1tYXJ5EjkKDHBhcnRpdGlvbl9pZBgBIAIoCzIjLmJuZXQucHJvdG9jb2wu" + 
-          "ZXhjaGFuZ2UuUGFydGl0aW9uSWQSFQoNb3JkZXJfYm9va19pZBgCIAIoBBIO" + 
-          "CgZyZXN1bHQYAyACKA0SNQoKb3JkZXJfYm9vaxgEIAEoCzIhLmJuZXQucHJv" + 
-          "dG9jb2wuZXhjaGFuZ2UuT3JkZXJCb29rEg4KBmFtb3VudBgFIAEoBBIYChBi" + 
-          "ZXN0X29mZmVyX3ByaWNlGAYgASgEEhYKDmJlc3RfYmlkX3ByaWNlGAcgASgE" + 
-          "EhAKCGVuZF90aW1lGAggASgEEg4KBnN0YXR1cxgJIAEoBRIUCgxjcmVhdGVk" + 
-          "X3RpbWUYCiABKAQSEwoLYWN0aXZlX3RpbWUYCyABKAQSEwoLY2xvc2VkX3Rp" + 
-          "bWUYDCABKAQSDgoGcmVhc29uGA0gASgNEhoKEm91dF9iaWRfdW5pdF9wcmlj" + 
-          "ZRgOIAEoBCLNAgoFT3JkZXISDgoGYW1vdW50GAEgAigNEhIKCnN0YXJ0X3Rp" + 
-          "bWUYAiABKAQSEAoIZW5kX3RpbWUYAyABKAQSOwoRYWNjb3VudF9mb3JfbW9u" + 
-          "ZXkYBCABKAsyIC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkJsb2JGcm9tEjoK" + 
-          "EGFjY291bnRfZm9yX2l0ZW0YBSABKAsyIC5ibmV0LnByb3RvY29sLmV4Y2hh" + 
-          "bmdlLkJsb2JGcm9tEi0KDGJuZXRfYWNjb3VudBgGIAEoCzIXLmJuZXQucHJv" + 
-          "dG9jb2wuRW50aXR5SWQSLQoMZ2FtZV9hY2NvdW50GAcgASgLMhcuYm5ldC5w" + 
-          "cm90b2NvbC5FbnRpdHlJZBI3CgpzZXNzaW9uX2lkGAggASgLMiMuYm5ldC5w" + 
-          "cm90b2NvbC5leGNoYW5nZS5QYXJ0aXRpb25JZCKqBAoJRXh0ZW5zaW9uEjkK" + 
-          "DHBhcnRpdGlvbl9pZBgBIAIoCzIjLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
-          "UGFydGl0aW9uSWQSFQoNb3JkZXJfYm9va19pZBgCIAIoBBIQCghvcmRlcl9p" + 
-          "ZBgDIAIoBBIVCg1maWxsZWRfYW1vdW50GAQgASgEEhQKDG9yZGVyX3N0YXR1" + 
-          "cxgFIAEoBRIXCg9hdXRob3JpemVkX3RpbWUYBiABKAQSFAoMY3JlYXRlZF90" + 
-          "aW1lGAcgASgEEhMKC2Nsb3NlZF90aW1lGAggASgEEg4KBnJlYXNvbhgJIAEo" + 
-          "DRI1CgpvcmRlcl9ib29rGAogASgLMiEuYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
-          "ZS5PcmRlckJvb2sSGQoRb3JkZXJfYm9va19zdGF0dXMYCyABKAQSFgoObW9u" + 
-          "ZXlfdG9fY2xhaW0YDCABKAQSFgoOaXRlbXNfdG9fY2xhaW0YDSABKAQSGwoM" + 
-          "cmlza19kZWxheWVkGA4gASgIOgVmYWxzZRIZChFmYWlsX29yZGVyX2FjdGlv" + 
-          "bhgPIAEoDRIYChBmYWlsX29iamVjdF90eXBlGBAgASgNEhcKD2ZhaWxfZXJy" + 
-          "b3JfY29kZRgRIAEoDRIdChVmYWlsX2V4dHJhX2Vycm9yX2NvZGUYEiABKA0S" + 
-          "EAoIcmVmdW5kZWQYEyABKAQSGgoSZmlsbGVkX2Z1bmRfYW1vdW50GBQgASgE" + 
-          "InwKBU9mZmVyEiwKBW9yZGVyGAEgAigLMh0uYm5ldC5wcm90b2NvbC5leGNo" + 
-          "YW5nZS5PcmRlchIXCg90cmFkZV9ub3dfcHJpY2UYAiABKAQSFQoNcmVzZXJ2" + 
-          "ZV9wcmljZRgDIAEoBBIVCg1vdXRfYmlkX3ByaWNlGAQgASgEIpIBCg1PZmZl" + 
-          "ckV4dGVuZGVkEiwKBW9mZmVyGAEgAigLMh0uYm5ldC5wcm90b2NvbC5leGNo" + 
-          "YW5nZS5PZmZlchI0CglleHRlbnNpb24YAiACKAsyIS5ibmV0LnByb3RvY29s" + 
-          "LmV4Y2hhbmdlLkV4dGVuc2lvbhIdChVjdXJyZW50X3dpbm5pbmdfcHJpY2UY" + 
-          "AyABKAQitQEKDU9mZmVyQ3JlYXRpb24SLAoFb2ZmZXIYASACKAsyHS5ibmV0" + 
-          "LnByb3RvY29sLmV4Y2hhbmdlLk9mZmVyEhgKEGF1Y3Rpb25fZHVyYXRpb24Y" + 
-          "AiABKAQSGwoTYXVjdGlvbl9zdGFydF9kZWxheRgDIAEoBBI/Cg9iaWxsaW5n" + 
-          "X2FkZHJlc3MYBCABKAsyJi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkJpbGxp" + 
-          "bmdBZGRyZXNzImcKA0JpZBIsCgVvcmRlchgBIAIoCzIdLmJuZXQucHJvdG9j" + 
-          "b2wuZXhjaGFuZ2UuT3JkZXISGgoSY3VycmVudF91bml0X3ByaWNlGAIgASgE" + 
-          "EhYKDm1heF91bml0X3ByaWNlGAMgASgEIooCCgtCaWRFeHRlbmRlZBIoCgNi" + 
-          "aWQYASACKAsyGy5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkJpZBI0CglleHRl" + 
-          "bnNpb24YAiACKAsyIS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkV4dGVuc2lv" + 
-          "bhIbChNvZmZlcl9vdXRfYmlkX3ByaWNlGAMgASgEEh0KFW9mZmVyX3RyYWRl" + 
-          "X25vd19wcmljZRgEIAEoBBIjChtvZmZlcl9jdXJyZW50X3dpbm5pbmdfcHJp" + 
-          "Y2UYBSABKAQSHgoWYmlkX2N1cnJlbnRfdW5pdF9wcmljZRgGIAEoBBIaChJi" + 
-          "aWRfbWF4X3VuaXRfcHJpY2UYByABKAQizAEKC0JpZENyZWF0aW9uEigKA2Jp" + 
-          "ZBgBIAIoCzIbLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmlkEhgKEGF1Y3Rp" + 
-          "b25fZHVyYXRpb24YAiABKAQSGwoTYXVjdGlvbl9zdGFydF9kZWxheRgDIAEo" + 
-          "BBI/Cg9iaWxsaW5nX2FkZHJlc3MYBCABKAsyJi5ibmV0LnByb3RvY29sLmV4" + 
-          "Y2hhbmdlLkJpbGxpbmdBZGRyZXNzEhsKDGZpbGxfb3Jfa2lsbBgFIAEoCDoF" + 
-          "ZmFsc2UinQEKDU9yZGVyRXh0ZW5kZWQSEgoKb3JkZXJfdHlwZRgBIAIoDRI5" + 
-          "CgxiaWRfZXh0ZW5kZWQYAiABKAsyIy5ibmV0LnByb3RvY29sLmV4Y2hhbmdl" + 
-          "LkJpZEV4dGVuZGVkEj0KDm9mZmVyX2V4dGVuZGVkGAMgASgLMiUuYm5ldC5w" + 
-          "cm90b2NvbC5leGNoYW5nZS5PZmZlckV4dGVuZGVkIlMKFFF1ZXJ5RmlsdGVy" + 
-          "QnlPcmRlcklkEhIKCm1heF9yZXN1bHQYASACKA0SFAoMcmVmX29yZGVyX2lk" + 
-          "GAIgASgEEhEKCXJlZl9wcmljZRgDIAEoBCJaChhRdWVyeUZpbHRlckJ5Q3Jl" + 
-          "YXRlZFRpbWUSEgoKbWF4X3Jlc3VsdBgBIAIoDRIYChByZWZfY3JlYXRlZF90" + 
-          "aW1lGAIgASgEEhAKCGN1cnJlbmN5GAMgASgJIvYBChBRdWVyeU9yZGVyRmls" + 
-          "dGVyEhAKCGN1cnJlbmN5GAEgASgJEhIKCnNwZWNpYWxpc3QYAiABKA0SEgoK" + 
-          "b3JkZXJfdHlwZRgDIAEoDRIUCgljbGFpbWFibGUYBCABKA06ATASGQoRb3Jk" + 
-          "ZXJfc3RhdHVzX21hc2sYBSABKA0SFQoGcm9sbHVwGAYgASgIOgVmYWxzZRJF" + 
-          "Cgt0aW1lX2ZpbHRlchgHIAIoCzIwLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
-          "UXVlcnlGaWx0ZXJCeUNyZWF0ZWRUaW1lEhkKEW9yZGVyX2Jvb2tfc3RhdHVz" + 
-          "GAggASgNIpcBCg5DdXJyZW5jeUNvbmZpZxIQCghjdXJyZW5jeRgBIAIoCRIR" + 
-          "Cgl0aWNrX3NpemUYAiABKAQSFgoObWluX3VuaXRfcHJpY2UYAyABKAQSFgoO" + 
-          "bWF4X3VuaXRfcHJpY2UYBCABKAQSFwoPbWluX3RvdGFsX3ByaWNlGAUgASgE" + 
-          "EhcKD21heF90b3RhbF9wcmljZRgGIAEoBCKvAwoQU3BlY2lhbGlzdENvbmZp" + 
-          "ZxISCgpzcGVjaWFsaXN0GAEgAigFEh0KEWF1Y3Rpb25fZHVyYXRpb25zGAIg" + 
-          "AygEQgIQARIgChRhdWN0aW9uX3N0YXJ0X2RlbGF5cxgDIAMoBEICEAESJAoc" + 
-          "YW50aV9zbmlwaW5nX2V4dGVuc2lvbl9kZWxheRgEIAEoBBIbChBtYXhfaXRl" + 
-          "bXNfYW1vdW50GAUgASgEOgEwEiAKGHN0YXJ0aW5nX3VuaXRfcHJpY2VfcnVs" + 
-          "ZRgGIAEoBRIgChhyZXNlcnZlZF91bml0X3ByaWNlX3J1bGUYByABKAUSIQoZ" + 
-          "dHJhZGVfbm93X3VuaXRfcHJpY2VfcnVsZRgIIAEoBRIfChdjdXJyZW50X3Vu" + 
-          "aXRfcHJpY2VfcnVsZRgJIAEoBRIfChdtYXhpbXVtX3VuaXRfcHJpY2VfcnVs" + 
-          "ZRgKIAEoBRI/Cg9jdXJyZW5jeV9jb25maWcYCyADKAsyJi5ibmV0LnByb3Rv" + 
-          "Y29sLmV4Y2hhbmdlLkN1cnJlbmN5Q29uZmlnEhkKEWZpbGxfb3Jfa2lsbF9y" + 
-          "dWxlGAwgASgFIvUBChFGZWVFc3RpbWF0aW9uRGF0YRIPCgdwcm9ncmFtGAEg" + 
-          "AigHEhIKCnNwZWNpYWxpc3QYAiACKAUSEAoIY3VycmVuY3kYAyACKAkSDgoG" + 
-          "c291cmNlGAQgAigHEhQKDG1vbmV5X2Ftb3VudBgFIAIoBBITCgtpdGVtX2Ft" + 
-          "b3VudBgGIAIoBBItCgxibmV0X2FjY291bnQYByABKAsyFy5ibmV0LnByb3Rv" + 
-          "Y29sLkVudGl0eUlkEj8KD2JpbGxpbmdfYWRkcmVzcxgIIAEoCzImLmJuZXQu" + 
-          "cHJvdG9jb2wuZXhjaGFuZ2UuQmlsbGluZ0FkZHJlc3MioQMKCUZlZURldGFp" + 
-          "bBIOCgZyb3dudW0YASACKAQSGgoSZmVlX2F1dGhfZGV0YWlsX2lkGAIgAigE" + 
-          "Eg4KBmZlZV9pZBgDIAEoBBISCgpmZWVfYW1vdW50GAQgASgEEhcKD2Rpc2Nv" + 
-          "dW50X2Ftb3VudBgFIAEoBBIUCgxmZWVfZ3JvdXBfaWQYBiABKAQSFgoOZmVl" + 
-          "X2dyb3VwX25hbWUYByABKAkSFwoPZmxhdF9mZWVfYW1vdW50GAggASgEEhgK" + 
-          "EHNjYWxpbmdfZmVlX3JhdGUYCSABKAISFgoObWF4X2ZlZV9hbW91bnQYCiAB" + 
-          "KAQSFwoPZmVlX2Rlc2NyaXB0aW9uGAsgASgJEg4KBmlzX3RheBgMIAIoCBIW" + 
-          "Cg5jb3Vwb25fYm9va19pZBgNIAEoBBITCgtjb3Vwb25fdHlwZRgOIAEoBBIa" + 
-          "ChJjb3Vwb25fZGVzY3JpcHRpb24YDyABKAkSHwoXbGVmdF9vdmVyX2NvdXBv" + 
-          "bl9jcmVkaXQYECABKAQSHwoXbGVmdF9vdmVyX2NvdXBvbl9jaGFyZ2UYESAB" + 
-          "KAQiMgoLUHJpY2VEZXRhaWwSEwoLdHJhZGVfcHJpY2UYASACKAQSDgoGYW1v" + 
-          "dW50GAIgAigEIiUKBUNvdW50Eg0KBWNvdW50GAEgAigNEg0KBWxpbWl0GAIg" + 
-          "ASgNIkYKFEFkdmFuY2VkU3Vic2NyaXB0aW9uEg8KB3Byb2dyYW0YASACKAcS" + 
-          "DQoFZXZlbnQYAiACKA0SDgoGcmVhc29uGAMgAygNIoMHCgtIaXN0b3J5RGF0" + 
-          "YRIVCg1vcmRlcl9ib29rX2lkGAEgAigEEjkKDHBhcnRpdGlvbl9pZBgCIAIo" + 
-          "CzIjLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQSEQoJYWN0" + 
-          "aW9uX2lkGAMgAigEEhgKEHBhcmVudF9zZXR0bGVfaWQYBCABKAQSFgoOcGFy" + 
-          "ZW50X3NldHRsZWQYBSABKAgSGQoRYXV0aG9yaXplZF9hbW91bnQYBiACKAQS" + 
-          "HQoVYXV0aG9yaXplZF9mZWVfYW1vdW50GAcgASgEEg4KBmFtb3VudBgIIAIo" + 
-          "BBISCgpmZWVfYW1vdW50GAkgASgEEhAKCGRlZmVycmVkGAogAigIEhkKEWhh" + 
-          "c19iZWVuX2RlZmVycmVkGAsgAigIEhAKCHByb2dyZXNzGAwgAigEEg8KB2Ny" + 
-          "ZWF0ZWQYDSACKAQSFgoOcmlza19jb21wbGV0ZWQYDiABKAQSEwoLcmlza19y" + 
-          "ZXN1bHQYDyABKAQSFAoMcmlza192ZXJkaWN0GBAgASgEEhEKCWNvbXBsZXRl" + 
-          "ZBgRIAEoBBITCgtyZXN1bHRfY29kZRgSIAEoBBI6ChBhY2NvdW50X2Zvcl9p" + 
-          "dGVtGBMgAigLMiAuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5CbG9iRnJvbRI7" + 
-          "ChFhY2NvdW50X2Zvcl9tb25leRgUIAIoCzIgLmJuZXQucHJvdG9jb2wuZXhj" + 
-          "aGFuZ2UuQmxvYkZyb20SEgoKb3JkZXJfdHlwZRgVIAIoDRIQCghvcmRlcl9p" + 
-          "ZBgWIAIoBBIPCgdhdXRoX2lkGBcgAigEEhgKEGF1dGhfb2JqZWN0X3R5cGUY" + 
-          "GCACKA0SFwoPdHJhbnNfZGlyZWN0aW9uGBkgAigJEh4KFmF1dGhfY29tcGxl" + 
-          "dGVfcHJvZ3Jlc3MYGiACKAQSHAoUYXV0aF9maWxsZWRfcHJvZ3Jlc3MYGyAC" + 
-          "KAQSGwoTYXV0aF90b3RhbF9wcm9ncmVzcxgcIAIoBBI7CgthdXRoX2hhbmRs" + 
-          "ZRgdIAIoCzImLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmxvYkZyb21PZlR5" + 
-          "cGUSFQoNYXV0aF9kZWZlcnJlZBgeIAIoCBIyCgV0b2tlbhgfIAIoCzIjLmJu" + 
-          "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQ=");
+          "IAEoBDoBMBIVCg1maWxsZWRfYW1vdW50GAkgAigEEhMKCGVuZF90aW1lGAog" + 
+          "ASgEOgEwIvsCChBPcmRlckJvb2tTdW1tYXJ5EjkKDHBhcnRpdGlvbl9pZBgB" + 
+          "IAIoCzIjLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQSFQoN" + 
+          "b3JkZXJfYm9va19pZBgCIAIoBBIOCgZyZXN1bHQYAyACKA0SNQoKb3JkZXJf" + 
+          "Ym9vaxgEIAEoCzIhLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuT3JkZXJCb29r" + 
+          "Eg4KBmFtb3VudBgFIAEoBBIYChBiZXN0X29mZmVyX3ByaWNlGAYgASgEEhYK" + 
+          "DmJlc3RfYmlkX3ByaWNlGAcgASgEEhAKCGVuZF90aW1lGAggASgEEg4KBnN0" + 
+          "YXR1cxgJIAEoBRIUCgxjcmVhdGVkX3RpbWUYCiABKAQSEwoLYWN0aXZlX3Rp" + 
+          "bWUYCyABKAQSEwoLY2xvc2VkX3RpbWUYDCABKAQSDgoGcmVhc29uGA0gASgN" + 
+          "EhoKEm91dF9iaWRfdW5pdF9wcmljZRgOIAEoBCLNAgoFT3JkZXISDgoGYW1v" + 
+          "dW50GAEgAigNEhIKCnN0YXJ0X3RpbWUYAiABKAQSEAoIZW5kX3RpbWUYAyAB" + 
+          "KAQSOwoRYWNjb3VudF9mb3JfbW9uZXkYBCABKAsyIC5ibmV0LnByb3RvY29s" + 
+          "LmV4Y2hhbmdlLkJsb2JGcm9tEjoKEGFjY291bnRfZm9yX2l0ZW0YBSABKAsy" + 
+          "IC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkJsb2JGcm9tEi0KDGJuZXRfYWNj" + 
+          "b3VudBgGIAEoCzIXLmJuZXQucHJvdG9jb2wuRW50aXR5SWQSLQoMZ2FtZV9h" + 
+          "Y2NvdW50GAcgASgLMhcuYm5ldC5wcm90b2NvbC5FbnRpdHlJZBI3CgpzZXNz" + 
+          "aW9uX2lkGAggASgLMiMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5QYXJ0aXRp" + 
+          "b25JZCKqBAoJRXh0ZW5zaW9uEjkKDHBhcnRpdGlvbl9pZBgBIAIoCzIjLmJu" + 
+          "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQSFQoNb3JkZXJfYm9v" + 
+          "a19pZBgCIAIoBBIQCghvcmRlcl9pZBgDIAIoBBIVCg1maWxsZWRfYW1vdW50" + 
+          "GAQgASgEEhQKDG9yZGVyX3N0YXR1cxgFIAEoBRIXCg9hdXRob3JpemVkX3Rp" + 
+          "bWUYBiABKAQSFAoMY3JlYXRlZF90aW1lGAcgASgEEhMKC2Nsb3NlZF90aW1l" + 
+          "GAggASgEEg4KBnJlYXNvbhgJIAEoDRI1CgpvcmRlcl9ib29rGAogASgLMiEu" + 
+          "Ym5ldC5wcm90b2NvbC5leGNoYW5nZS5PcmRlckJvb2sSGQoRb3JkZXJfYm9v" + 
+          "a19zdGF0dXMYCyABKAQSFgoObW9uZXlfdG9fY2xhaW0YDCABKAQSFgoOaXRl" + 
+          "bXNfdG9fY2xhaW0YDSABKAQSGwoMcmlza19kZWxheWVkGA4gASgIOgVmYWxz" + 
+          "ZRIZChFmYWlsX29yZGVyX2FjdGlvbhgPIAEoDRIYChBmYWlsX29iamVjdF90" + 
+          "eXBlGBAgASgNEhcKD2ZhaWxfZXJyb3JfY29kZRgRIAEoDRIdChVmYWlsX2V4" + 
+          "dHJhX2Vycm9yX2NvZGUYEiABKA0SEAoIcmVmdW5kZWQYEyABKAQSGgoSZmls" + 
+          "bGVkX2Z1bmRfYW1vdW50GBQgASgEInwKBU9mZmVyEiwKBW9yZGVyGAEgAigL" + 
+          "Mh0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5PcmRlchIXCg90cmFkZV9ub3df" + 
+          "cHJpY2UYAiABKAQSFQoNcmVzZXJ2ZV9wcmljZRgDIAEoBBIVCg1vdXRfYmlk" + 
+          "X3ByaWNlGAQgASgEIpIBCg1PZmZlckV4dGVuZGVkEiwKBW9mZmVyGAEgAigL" + 
+          "Mh0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5PZmZlchI0CglleHRlbnNpb24Y" + 
+          "AiACKAsyIS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkV4dGVuc2lvbhIdChVj" + 
+          "dXJyZW50X3dpbm5pbmdfcHJpY2UYAyABKAQitQEKDU9mZmVyQ3JlYXRpb24S" + 
+          "LAoFb2ZmZXIYASACKAsyHS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLk9mZmVy" + 
+          "EhgKEGF1Y3Rpb25fZHVyYXRpb24YAiABKAQSGwoTYXVjdGlvbl9zdGFydF9k" + 
+          "ZWxheRgDIAEoBBI/Cg9iaWxsaW5nX2FkZHJlc3MYBCABKAsyJi5ibmV0LnBy" + 
+          "b3RvY29sLmV4Y2hhbmdlLkJpbGxpbmdBZGRyZXNzImcKA0JpZBIsCgVvcmRl" + 
+          "chgBIAIoCzIdLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuT3JkZXISGgoSY3Vy" + 
+          "cmVudF91bml0X3ByaWNlGAIgASgEEhYKDm1heF91bml0X3ByaWNlGAMgASgE" + 
+          "IooCCgtCaWRFeHRlbmRlZBIoCgNiaWQYASACKAsyGy5ibmV0LnByb3RvY29s" + 
+          "LmV4Y2hhbmdlLkJpZBI0CglleHRlbnNpb24YAiACKAsyIS5ibmV0LnByb3Rv" + 
+          "Y29sLmV4Y2hhbmdlLkV4dGVuc2lvbhIbChNvZmZlcl9vdXRfYmlkX3ByaWNl" + 
+          "GAMgASgEEh0KFW9mZmVyX3RyYWRlX25vd19wcmljZRgEIAEoBBIjChtvZmZl" + 
+          "cl9jdXJyZW50X3dpbm5pbmdfcHJpY2UYBSABKAQSHgoWYmlkX2N1cnJlbnRf" + 
+          "dW5pdF9wcmljZRgGIAEoBBIaChJiaWRfbWF4X3VuaXRfcHJpY2UYByABKAQi" + 
+          "zAEKC0JpZENyZWF0aW9uEigKA2JpZBgBIAIoCzIbLmJuZXQucHJvdG9jb2wu" + 
+          "ZXhjaGFuZ2UuQmlkEhgKEGF1Y3Rpb25fZHVyYXRpb24YAiABKAQSGwoTYXVj" + 
+          "dGlvbl9zdGFydF9kZWxheRgDIAEoBBI/Cg9iaWxsaW5nX2FkZHJlc3MYBCAB" + 
+          "KAsyJi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkJpbGxpbmdBZGRyZXNzEhsK" + 
+          "DGZpbGxfb3Jfa2lsbBgFIAEoCDoFZmFsc2UinQEKDU9yZGVyRXh0ZW5kZWQS" + 
+          "EgoKb3JkZXJfdHlwZRgBIAIoDRI5CgxiaWRfZXh0ZW5kZWQYAiABKAsyIy5i" + 
+          "bmV0LnByb3RvY29sLmV4Y2hhbmdlLkJpZEV4dGVuZGVkEj0KDm9mZmVyX2V4" + 
+          "dGVuZGVkGAMgASgLMiUuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5PZmZlckV4" + 
+          "dGVuZGVkIlMKFFF1ZXJ5RmlsdGVyQnlPcmRlcklkEhIKCm1heF9yZXN1bHQY" + 
+          "ASACKA0SFAoMcmVmX29yZGVyX2lkGAIgASgEEhEKCXJlZl9wcmljZRgDIAEo" + 
+          "BCJaChhRdWVyeUZpbHRlckJ5Q3JlYXRlZFRpbWUSEgoKbWF4X3Jlc3VsdBgB" + 
+          "IAIoDRIYChByZWZfY3JlYXRlZF90aW1lGAIgASgEEhAKCGN1cnJlbmN5GAMg" + 
+          "ASgJIvYBChBRdWVyeU9yZGVyRmlsdGVyEhAKCGN1cnJlbmN5GAEgASgJEhIK" + 
+          "CnNwZWNpYWxpc3QYAiABKA0SEgoKb3JkZXJfdHlwZRgDIAEoDRIUCgljbGFp" + 
+          "bWFibGUYBCABKA06ATASGQoRb3JkZXJfc3RhdHVzX21hc2sYBSABKA0SFQoG" + 
+          "cm9sbHVwGAYgASgIOgVmYWxzZRJFCgt0aW1lX2ZpbHRlchgHIAIoCzIwLmJu" + 
+          "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuUXVlcnlGaWx0ZXJCeUNyZWF0ZWRUaW1l" + 
+          "EhkKEW9yZGVyX2Jvb2tfc3RhdHVzGAggASgNIpcBCg5DdXJyZW5jeUNvbmZp" + 
+          "ZxIQCghjdXJyZW5jeRgBIAIoCRIRCgl0aWNrX3NpemUYAiABKAQSFgoObWlu" + 
+          "X3VuaXRfcHJpY2UYAyABKAQSFgoObWF4X3VuaXRfcHJpY2UYBCABKAQSFwoP" + 
+          "bWluX3RvdGFsX3ByaWNlGAUgASgEEhcKD21heF90b3RhbF9wcmljZRgGIAEo" + 
+          "BCKvAwoQU3BlY2lhbGlzdENvbmZpZxISCgpzcGVjaWFsaXN0GAEgAigFEh0K" + 
+          "EWF1Y3Rpb25fZHVyYXRpb25zGAIgAygEQgIQARIgChRhdWN0aW9uX3N0YXJ0" + 
+          "X2RlbGF5cxgDIAMoBEICEAESJAocYW50aV9zbmlwaW5nX2V4dGVuc2lvbl9k" + 
+          "ZWxheRgEIAEoBBIbChBtYXhfaXRlbXNfYW1vdW50GAUgASgEOgEwEiAKGHN0" + 
+          "YXJ0aW5nX3VuaXRfcHJpY2VfcnVsZRgGIAEoBRIgChhyZXNlcnZlZF91bml0" + 
+          "X3ByaWNlX3J1bGUYByABKAUSIQoZdHJhZGVfbm93X3VuaXRfcHJpY2VfcnVs" + 
+          "ZRgIIAEoBRIfChdjdXJyZW50X3VuaXRfcHJpY2VfcnVsZRgJIAEoBRIfChdt" + 
+          "YXhpbXVtX3VuaXRfcHJpY2VfcnVsZRgKIAEoBRI/Cg9jdXJyZW5jeV9jb25m" + 
+          "aWcYCyADKAsyJi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkN1cnJlbmN5Q29u" + 
+          "ZmlnEhkKEWZpbGxfb3Jfa2lsbF9ydWxlGAwgASgFIvUBChFGZWVFc3RpbWF0" + 
+          "aW9uRGF0YRIPCgdwcm9ncmFtGAEgAigHEhIKCnNwZWNpYWxpc3QYAiACKAUS" + 
+          "EAoIY3VycmVuY3kYAyACKAkSDgoGc291cmNlGAQgAigHEhQKDG1vbmV5X2Ft" + 
+          "b3VudBgFIAIoBBITCgtpdGVtX2Ftb3VudBgGIAIoBBItCgxibmV0X2FjY291" + 
+          "bnQYByABKAsyFy5ibmV0LnByb3RvY29sLkVudGl0eUlkEj8KD2JpbGxpbmdf" + 
+          "YWRkcmVzcxgIIAEoCzImLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmlsbGlu" + 
+          "Z0FkZHJlc3MioQMKCUZlZURldGFpbBIOCgZyb3dudW0YASACKAQSGgoSZmVl" + 
+          "X2F1dGhfZGV0YWlsX2lkGAIgAigEEg4KBmZlZV9pZBgDIAEoBBISCgpmZWVf" + 
+          "YW1vdW50GAQgASgEEhcKD2Rpc2NvdW50X2Ftb3VudBgFIAEoBBIUCgxmZWVf" + 
+          "Z3JvdXBfaWQYBiABKAQSFgoOZmVlX2dyb3VwX25hbWUYByABKAkSFwoPZmxh" + 
+          "dF9mZWVfYW1vdW50GAggASgEEhgKEHNjYWxpbmdfZmVlX3JhdGUYCSABKAIS" + 
+          "FgoObWF4X2ZlZV9hbW91bnQYCiABKAQSFwoPZmVlX2Rlc2NyaXB0aW9uGAsg" + 
+          "ASgJEg4KBmlzX3RheBgMIAIoCBIWCg5jb3Vwb25fYm9va19pZBgNIAEoBBIT" + 
+          "Cgtjb3Vwb25fdHlwZRgOIAEoBBIaChJjb3Vwb25fZGVzY3JpcHRpb24YDyAB" + 
+          "KAkSHwoXbGVmdF9vdmVyX2NvdXBvbl9jcmVkaXQYECABKAQSHwoXbGVmdF9v" + 
+          "dmVyX2NvdXBvbl9jaGFyZ2UYESABKAQiMgoLUHJpY2VEZXRhaWwSEwoLdHJh" + 
+          "ZGVfcHJpY2UYASACKAQSDgoGYW1vdW50GAIgAigEIiUKBUNvdW50Eg0KBWNv" + 
+          "dW50GAEgAigNEg0KBWxpbWl0GAIgASgNIkYKFEFkdmFuY2VkU3Vic2NyaXB0" + 
+          "aW9uEg8KB3Byb2dyYW0YASACKAcSDQoFZXZlbnQYAiACKA0SDgoGcmVhc29u" + 
+          "GAMgAygNIqIHCgtIaXN0b3J5RGF0YRIVCg1vcmRlcl9ib29rX2lkGAEgAigE" + 
+          "EjkKDHBhcnRpdGlvbl9pZBgCIAIoCzIjLmJuZXQucHJvdG9jb2wuZXhjaGFu" + 
+          "Z2UuUGFydGl0aW9uSWQSEQoJYWN0aW9uX2lkGAMgAigEEhgKEHBhcmVudF9z" + 
+          "ZXR0bGVfaWQYBCABKAQSFgoOcGFyZW50X3NldHRsZWQYBSABKAgSGQoRYXV0" + 
+          "aG9yaXplZF9hbW91bnQYBiACKAQSHQoVYXV0aG9yaXplZF9mZWVfYW1vdW50" + 
+          "GAcgASgEEg4KBmFtb3VudBgIIAIoBBISCgpmZWVfYW1vdW50GAkgASgEEhAK" + 
+          "CGRlZmVycmVkGAogAigIEhkKEWhhc19iZWVuX2RlZmVycmVkGAsgAigIEhAK" + 
+          "CHByb2dyZXNzGAwgAigEEg8KB2NyZWF0ZWQYDSACKAQSFgoOcmlza19jb21w" + 
+          "bGV0ZWQYDiABKAQSEwoLcmlza19yZXN1bHQYDyABKAQSFAoMcmlza192ZXJk" + 
+          "aWN0GBAgASgEEhEKCWNvbXBsZXRlZBgRIAEoBBITCgtyZXN1bHRfY29kZRgS" + 
+          "IAEoBBI6ChBhY2NvdW50X2Zvcl9pdGVtGBMgAigLMiAuYm5ldC5wcm90b2Nv" + 
+          "bC5leGNoYW5nZS5CbG9iRnJvbRI7ChFhY2NvdW50X2Zvcl9tb25leRgUIAIo" + 
+          "CzIgLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmxvYkZyb20SEgoKb3JkZXJf" + 
+          "dHlwZRgVIAIoDRIQCghvcmRlcl9pZBgWIAIoBBIPCgdhdXRoX2lkGBcgAigE" + 
+          "EhgKEGF1dGhfb2JqZWN0X3R5cGUYGCACKA0SFwoPdHJhbnNfZGlyZWN0aW9u" + 
+          "GBkgAigJEh4KFmF1dGhfY29tcGxldGVfcHJvZ3Jlc3MYGiACKAQSHAoUYXV0" + 
+          "aF9maWxsZWRfcHJvZ3Jlc3MYGyACKAQSGwoTYXV0aF90b3RhbF9wcm9ncmVz" + 
+          "cxgcIAIoBBI7CgthdXRoX2hhbmRsZRgdIAIoCzImLmJuZXQucHJvdG9jb2wu" + 
+          "ZXhjaGFuZ2UuQmxvYkZyb21PZlR5cGUSFQoNYXV0aF9kZWZlcnJlZBgeIAIo" + 
+          "CBIyCgV0b2tlbhgfIAIoCzIjLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFy" + 
+          "dGl0aW9uSWQSHQoVZmFpbF9leHRyYV9lcnJvcl9jb2RlGCAgASgE");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_bnet_protocol_exchange_OrderBook__Descriptor = Descriptor.MessageTypes[0];
@@ -219,7 +220,7 @@ namespace bnet.protocol.exchange {
         internal__static_bnet_protocol_exchange_OrderBookNotification__Descriptor = Descriptor.MessageTypes[2];
         internal__static_bnet_protocol_exchange_OrderBookNotification__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.OrderBookNotification, global::bnet.protocol.exchange.OrderBookNotification.Builder>(internal__static_bnet_protocol_exchange_OrderBookNotification__Descriptor,
-                new string[] { "OrderBook", "PartitionId", "OrderBookId", "TradeNowPrice", "WinningPrice", "Status", "UpdateTime", "ClosedTime", "FilledAmount", });
+                new string[] { "OrderBook", "PartitionId", "OrderBookId", "TradeNowPrice", "WinningPrice", "Status", "UpdateTime", "ClosedTime", "FilledAmount", "EndTime", });
         internal__static_bnet_protocol_exchange_OrderBookSummary__Descriptor = Descriptor.MessageTypes[3];
         internal__static_bnet_protocol_exchange_OrderBookSummary__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.OrderBookSummary, global::bnet.protocol.exchange.OrderBookSummary.Builder>(internal__static_bnet_protocol_exchange_OrderBookSummary__Descriptor,
@@ -303,7 +304,7 @@ namespace bnet.protocol.exchange {
         internal__static_bnet_protocol_exchange_HistoryData__Descriptor = Descriptor.MessageTypes[23];
         internal__static_bnet_protocol_exchange_HistoryData__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.HistoryData, global::bnet.protocol.exchange.HistoryData.Builder>(internal__static_bnet_protocol_exchange_HistoryData__Descriptor,
-                new string[] { "OrderBookId", "PartitionId", "ActionId", "ParentSettleId", "ParentSettled", "AuthorizedAmount", "AuthorizedFeeAmount", "Amount", "FeeAmount", "Deferred", "HasBeenDeferred", "Progress", "Created", "RiskCompleted", "RiskResult", "RiskVerdict", "Completed", "ResultCode", "AccountForItem", "AccountForMoney", "OrderType", "OrderId", "AuthId", "AuthObjectType", "TransDirection", "AuthCompleteProgress", "AuthFilledProgress", "AuthTotalProgress", "AuthHandle", "AuthDeferred", "Token", });
+                new string[] { "OrderBookId", "PartitionId", "ActionId", "ParentSettleId", "ParentSettled", "AuthorizedAmount", "AuthorizedFeeAmount", "Amount", "FeeAmount", "Deferred", "HasBeenDeferred", "Progress", "Created", "RiskCompleted", "RiskResult", "RiskVerdict", "Completed", "ResultCode", "AccountForItem", "AccountForMoney", "OrderType", "OrderId", "AuthId", "AuthObjectType", "TransDirection", "AuthCompleteProgress", "AuthFilledProgress", "AuthTotalProgress", "AuthHandle", "AuthDeferred", "Token", "FailExtraErrorCode", });
         return null;
       };
       pbd::FileDescriptor.InternalBuildGeneratedFileFrom(descriptorData,
@@ -1189,8 +1190,8 @@ namespace bnet.protocol.exchange {
   public sealed partial class OrderBookNotification : pb::GeneratedMessage<OrderBookNotification, OrderBookNotification.Builder> {
     private OrderBookNotification() { }
     private static readonly OrderBookNotification defaultInstance = new OrderBookNotification().MakeReadOnly();
-    private static readonly string[] _orderBookNotificationFieldNames = new string[] { "closed_time", "filled_amount", "order_book", "order_book_id", "partition_id", "status", "trade_now_price", "update_time", "winning_price" };
-    private static readonly uint[] _orderBookNotificationFieldTags = new uint[] { 64, 72, 10, 24, 18, 48, 32, 56, 40 };
+    private static readonly string[] _orderBookNotificationFieldNames = new string[] { "closed_time", "end_time", "filled_amount", "order_book", "order_book_id", "partition_id", "status", "trade_now_price", "update_time", "winning_price" };
+    private static readonly uint[] _orderBookNotificationFieldTags = new uint[] { 64, 80, 72, 10, 24, 18, 48, 32, 56, 40 };
     public static OrderBookNotification DefaultInstance {
       get { return defaultInstance; }
     }
@@ -1301,6 +1302,16 @@ namespace bnet.protocol.exchange {
       get { return filledAmount_; }
     }
     
+    public const int EndTimeFieldNumber = 10;
+    private bool hasEndTime;
+    private ulong endTime_;
+    public bool HasEndTime {
+      get { return hasEndTime; }
+    }
+    public ulong EndTime {
+      get { return endTime_; }
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasOrderBook) return false;
@@ -1319,31 +1330,34 @@ namespace bnet.protocol.exchange {
       int size = SerializedSize;
       string[] field_names = _orderBookNotificationFieldNames;
       if (hasOrderBook) {
-        output.WriteMessage(1, field_names[2], OrderBook);
+        output.WriteMessage(1, field_names[3], OrderBook);
       }
       if (hasPartitionId) {
-        output.WriteMessage(2, field_names[4], PartitionId);
+        output.WriteMessage(2, field_names[5], PartitionId);
       }
       if (hasOrderBookId) {
-        output.WriteUInt64(3, field_names[3], OrderBookId);
+        output.WriteUInt64(3, field_names[4], OrderBookId);
       }
       if (hasTradeNowPrice) {
-        output.WriteUInt64(4, field_names[6], TradeNowPrice);
+        output.WriteUInt64(4, field_names[7], TradeNowPrice);
       }
       if (hasWinningPrice) {
-        output.WriteUInt64(5, field_names[8], WinningPrice);
+        output.WriteUInt64(5, field_names[9], WinningPrice);
       }
       if (hasStatus) {
-        output.WriteUInt32(6, field_names[5], Status);
+        output.WriteUInt32(6, field_names[6], Status);
       }
       if (hasUpdateTime) {
-        output.WriteUInt64(7, field_names[7], UpdateTime);
+        output.WriteUInt64(7, field_names[8], UpdateTime);
       }
       if (hasClosedTime) {
         output.WriteUInt64(8, field_names[0], ClosedTime);
       }
       if (hasFilledAmount) {
-        output.WriteUInt64(9, field_names[1], FilledAmount);
+        output.WriteUInt64(9, field_names[2], FilledAmount);
+      }
+      if (hasEndTime) {
+        output.WriteUInt64(10, field_names[1], EndTime);
       }
       UnknownFields.WriteTo(output);
     }
@@ -1381,6 +1395,9 @@ namespace bnet.protocol.exchange {
         }
         if (hasFilledAmount) {
           size += pb::CodedOutputStream.ComputeUInt64Size(9, FilledAmount);
+        }
+        if (hasEndTime) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(10, EndTime);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -1535,6 +1552,9 @@ namespace bnet.protocol.exchange {
         if (other.HasFilledAmount) {
           FilledAmount = other.FilledAmount;
         }
+        if (other.HasEndTime) {
+          EndTime = other.EndTime;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -1622,6 +1642,10 @@ namespace bnet.protocol.exchange {
             }
             case 72: {
               result.hasFilledAmount = input.ReadUInt64(ref result.filledAmount_);
+              break;
+            }
+            case 80: {
+              result.hasEndTime = input.ReadUInt64(ref result.endTime_);
               break;
             }
           }
@@ -1851,6 +1875,26 @@ namespace bnet.protocol.exchange {
         PrepareBuilder();
         result.hasFilledAmount = false;
         result.filledAmount_ = 0UL;
+        return this;
+      }
+      
+      public bool HasEndTime {
+        get { return result.hasEndTime; }
+      }
+      public ulong EndTime {
+        get { return result.EndTime; }
+        set { SetEndTime(value); }
+      }
+      public Builder SetEndTime(ulong value) {
+        PrepareBuilder();
+        result.hasEndTime = true;
+        result.endTime_ = value;
+        return this;
+      }
+      public Builder ClearEndTime() {
+        PrepareBuilder();
+        result.hasEndTime = false;
+        result.endTime_ = 0UL;
         return this;
       }
     }
@@ -13077,8 +13121,8 @@ namespace bnet.protocol.exchange {
   public sealed partial class HistoryData : pb::GeneratedMessage<HistoryData, HistoryData.Builder> {
     private HistoryData() { }
     private static readonly HistoryData defaultInstance = new HistoryData().MakeReadOnly();
-    private static readonly string[] _historyDataFieldNames = new string[] { "account_for_item", "account_for_money", "action_id", "amount", "auth_complete_progress", "auth_deferred", "auth_filled_progress", "auth_handle", "auth_id", "auth_object_type", "auth_total_progress", "authorized_amount", "authorized_fee_amount", "completed", "created", "deferred", "fee_amount", "has_been_deferred", "order_book_id", "order_id", "order_type", "parent_settle_id", "parent_settled", "partition_id", "progress", "result_code", "risk_completed", "risk_result", "risk_verdict", "token", "trans_direction" };
-    private static readonly uint[] _historyDataFieldTags = new uint[] { 154, 162, 24, 64, 208, 240, 216, 234, 184, 192, 224, 48, 56, 136, 104, 80, 72, 88, 8, 176, 168, 32, 40, 18, 96, 144, 112, 120, 128, 250, 202 };
+    private static readonly string[] _historyDataFieldNames = new string[] { "account_for_item", "account_for_money", "action_id", "amount", "auth_complete_progress", "auth_deferred", "auth_filled_progress", "auth_handle", "auth_id", "auth_object_type", "auth_total_progress", "authorized_amount", "authorized_fee_amount", "completed", "created", "deferred", "fail_extra_error_code", "fee_amount", "has_been_deferred", "order_book_id", "order_id", "order_type", "parent_settle_id", "parent_settled", "partition_id", "progress", "result_code", "risk_completed", "risk_result", "risk_verdict", "token", "trans_direction" };
+    private static readonly uint[] _historyDataFieldTags = new uint[] { 154, 162, 24, 64, 208, 240, 216, 234, 184, 192, 224, 48, 56, 136, 104, 80, 256, 72, 88, 8, 176, 168, 32, 40, 18, 96, 144, 112, 120, 128, 250, 202 };
     public static HistoryData DefaultInstance {
       get { return defaultInstance; }
     }
@@ -13409,6 +13453,16 @@ namespace bnet.protocol.exchange {
       get { return token_ ?? global::bnet.protocol.exchange.PartitionId.DefaultInstance; }
     }
     
+    public const int FailExtraErrorCodeFieldNumber = 32;
+    private bool hasFailExtraErrorCode;
+    private ulong failExtraErrorCode_;
+    public bool HasFailExtraErrorCode {
+      get { return hasFailExtraErrorCode; }
+    }
+    public ulong FailExtraErrorCode {
+      get { return failExtraErrorCode_; }
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasOrderBookId) return false;
@@ -13446,19 +13500,19 @@ namespace bnet.protocol.exchange {
       int size = SerializedSize;
       string[] field_names = _historyDataFieldNames;
       if (hasOrderBookId) {
-        output.WriteUInt64(1, field_names[18], OrderBookId);
+        output.WriteUInt64(1, field_names[19], OrderBookId);
       }
       if (hasPartitionId) {
-        output.WriteMessage(2, field_names[23], PartitionId);
+        output.WriteMessage(2, field_names[24], PartitionId);
       }
       if (hasActionId) {
         output.WriteUInt64(3, field_names[2], ActionId);
       }
       if (hasParentSettleId) {
-        output.WriteUInt64(4, field_names[21], ParentSettleId);
+        output.WriteUInt64(4, field_names[22], ParentSettleId);
       }
       if (hasParentSettled) {
-        output.WriteBool(5, field_names[22], ParentSettled);
+        output.WriteBool(5, field_names[23], ParentSettled);
       }
       if (hasAuthorizedAmount) {
         output.WriteUInt64(6, field_names[11], AuthorizedAmount);
@@ -13470,34 +13524,34 @@ namespace bnet.protocol.exchange {
         output.WriteUInt64(8, field_names[3], Amount);
       }
       if (hasFeeAmount) {
-        output.WriteUInt64(9, field_names[16], FeeAmount);
+        output.WriteUInt64(9, field_names[17], FeeAmount);
       }
       if (hasDeferred) {
         output.WriteBool(10, field_names[15], Deferred);
       }
       if (hasHasBeenDeferred) {
-        output.WriteBool(11, field_names[17], HasBeenDeferred);
+        output.WriteBool(11, field_names[18], HasBeenDeferred);
       }
       if (hasProgress) {
-        output.WriteUInt64(12, field_names[24], Progress);
+        output.WriteUInt64(12, field_names[25], Progress);
       }
       if (hasCreated) {
         output.WriteUInt64(13, field_names[14], Created);
       }
       if (hasRiskCompleted) {
-        output.WriteUInt64(14, field_names[26], RiskCompleted);
+        output.WriteUInt64(14, field_names[27], RiskCompleted);
       }
       if (hasRiskResult) {
-        output.WriteUInt64(15, field_names[27], RiskResult);
+        output.WriteUInt64(15, field_names[28], RiskResult);
       }
       if (hasRiskVerdict) {
-        output.WriteUInt64(16, field_names[28], RiskVerdict);
+        output.WriteUInt64(16, field_names[29], RiskVerdict);
       }
       if (hasCompleted) {
         output.WriteUInt64(17, field_names[13], Completed);
       }
       if (hasResultCode) {
-        output.WriteUInt64(18, field_names[25], ResultCode);
+        output.WriteUInt64(18, field_names[26], ResultCode);
       }
       if (hasAccountForItem) {
         output.WriteMessage(19, field_names[0], AccountForItem);
@@ -13506,10 +13560,10 @@ namespace bnet.protocol.exchange {
         output.WriteMessage(20, field_names[1], AccountForMoney);
       }
       if (hasOrderType) {
-        output.WriteUInt32(21, field_names[20], OrderType);
+        output.WriteUInt32(21, field_names[21], OrderType);
       }
       if (hasOrderId) {
-        output.WriteUInt64(22, field_names[19], OrderId);
+        output.WriteUInt64(22, field_names[20], OrderId);
       }
       if (hasAuthId) {
         output.WriteUInt64(23, field_names[8], AuthId);
@@ -13518,7 +13572,7 @@ namespace bnet.protocol.exchange {
         output.WriteUInt32(24, field_names[9], AuthObjectType);
       }
       if (hasTransDirection) {
-        output.WriteString(25, field_names[30], TransDirection);
+        output.WriteString(25, field_names[31], TransDirection);
       }
       if (hasAuthCompleteProgress) {
         output.WriteUInt64(26, field_names[4], AuthCompleteProgress);
@@ -13536,7 +13590,10 @@ namespace bnet.protocol.exchange {
         output.WriteBool(30, field_names[5], AuthDeferred);
       }
       if (hasToken) {
-        output.WriteMessage(31, field_names[29], Token);
+        output.WriteMessage(31, field_names[30], Token);
+      }
+      if (hasFailExtraErrorCode) {
+        output.WriteUInt64(32, field_names[16], FailExtraErrorCode);
       }
       UnknownFields.WriteTo(output);
     }
@@ -13640,6 +13697,9 @@ namespace bnet.protocol.exchange {
         }
         if (hasToken) {
           size += pb::CodedOutputStream.ComputeMessageSize(31, Token);
+        }
+        if (hasFailExtraErrorCode) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(32, FailExtraErrorCode);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -13860,6 +13920,9 @@ namespace bnet.protocol.exchange {
         if (other.HasToken) {
           MergeToken(other.Token);
         }
+        if (other.HasFailExtraErrorCode) {
+          FailExtraErrorCode = other.FailExtraErrorCode;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -14050,6 +14113,10 @@ namespace bnet.protocol.exchange {
               }
               input.ReadMessage(subBuilder, extensionRegistry);
               Token = subBuilder.BuildPartial();
+              break;
+            }
+            case 256: {
+              result.hasFailExtraErrorCode = input.ReadUInt64(ref result.failExtraErrorCode_);
               break;
             }
           }
@@ -14780,6 +14847,26 @@ namespace bnet.protocol.exchange {
         PrepareBuilder();
         result.hasToken = false;
         result.token_ = null;
+        return this;
+      }
+      
+      public bool HasFailExtraErrorCode {
+        get { return result.hasFailExtraErrorCode; }
+      }
+      public ulong FailExtraErrorCode {
+        get { return result.FailExtraErrorCode; }
+        set { SetFailExtraErrorCode(value); }
+      }
+      public Builder SetFailExtraErrorCode(ulong value) {
+        PrepareBuilder();
+        result.hasFailExtraErrorCode = true;
+        result.failExtraErrorCode_ = value;
+        return this;
+      }
+      public Builder ClearFailExtraErrorCode() {
+        PrepareBuilder();
+        result.hasFailExtraErrorCode = false;
+        result.failExtraErrorCode_ = 0UL;
         return this;
       }
     }

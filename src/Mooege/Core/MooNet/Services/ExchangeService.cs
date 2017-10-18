@@ -381,5 +381,19 @@ namespace Mooege.Core.MooNet.Services
         {
             throw new NotImplementedException();
         }
+
+        public override void EnterExchange(IRpcController controller, bnet.protocol.exchange.EnterRequest request, Action<bnet.protocol.exchange.EnterResponse> done)
+        {
+            throw new NotImplementedException();
+        }
+        public override void LeaveExchange(IRpcController controller, bnet.protocol.exchange.LeaveRequest request, Action<bnet.protocol.NoData> done)
+        {
+            throw new NotImplementedException();
+        }        
+        public override void GetAuthProgress(IRpcController controller, bnet.protocol.exchange_object_provider.GetAuthProgressRequest request, Action<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse> done)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

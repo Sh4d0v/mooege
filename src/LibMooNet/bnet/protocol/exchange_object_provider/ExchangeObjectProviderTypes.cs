@@ -32,6 +32,12 @@ namespace bnet.protocol.exchange_object_provider {
     internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.PaymentMethod, global::bnet.protocol.exchange_object_provider.PaymentMethod.Builder> internal__static_bnet_protocol_exchange_object_provider_PaymentMethod__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_object_provider_GetPaymentMethodsResponse__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetPaymentMethodsResponse, global::bnet.protocol.exchange_object_provider.GetPaymentMethodsResponse.Builder> internal__static_bnet_protocol_exchange_object_provider_GetPaymentMethodsResponse__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest, global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.Builder> internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse, global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.Builder> internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_object_provider_AuthProgress__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.AuthProgress, global::bnet.protocol.exchange_object_provider.AuthProgress.Builder> internal__static_bnet_protocol_exchange_object_provider_AuthProgress__FieldAccessorTable;
     #endregion
     #region Descriptor
     public static pbd::FileDescriptor Descriptor {
@@ -88,7 +94,17 @@ namespace bnet.protocol.exchange_object_provider {
           "cl9jYXAYCCABKAQSEAoIc29mdF9jYXAYCSABKAQSFAoGYWN0aXZlGAogASgI" + 
           "OgR0cnVlImMKGUdldFBheW1lbnRNZXRob2RzUmVzcG9uc2USRgoHbWV0aG9k" + 
           "cxgBIAMoCzI1LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Vfb2JqZWN0X3Byb3Zp" + 
-          "ZGVyLlBheW1lbnRNZXRob2RCA4ABAA==");
+          "ZGVyLlBheW1lbnRNZXRob2QiTQoWR2V0QXV0aFByb2dyZXNzUmVxdWVzdBIz" + 
+          "CgZ0b2tlbnMYASADKAsyIy5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlBhcnRp" + 
+          "dGlvbklkImMKF0dldEF1dGhQcm9ncmVzc1Jlc3BvbnNlEkgKCnByb2dyZXNz" + 
+          "ZXMYASADKAsyNC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92" + 
+          "aWRlci5BdXRoUHJvZ3Jlc3Mi/wEKDEF1dGhQcm9ncmVzcxIyCgV0b2tlbhgB" + 
+          "IAIoCzIjLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQSOQoM" + 
+          "cGFydGl0aW9uX2lkGAIgAigLMiMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5Q" + 
+          "YXJ0aXRpb25JZBIWCg50b3RhbF9wcm9ncmVzcxgDIAIoBBIYChBjdXJyZW50" + 
+          "X3Byb2dyZXNzGAQgASgEEhkKEWNvbXBsZXRlX3Byb2dyZXNzGAUgASgEEhAK" + 
+          "CGRlZmVycmVkGAYgASgIEhEKCWNvbXBsZXRlZBgHIAEoBBIOCgZyZWFzb24Y" + 
+          "CCABKARCA4ABAA==");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_bnet_protocol_exchange_object_provider_ReportAuthorizeRequest__Descriptor = Descriptor.MessageTypes[0];
@@ -119,6 +135,18 @@ namespace bnet.protocol.exchange_object_provider {
         internal__static_bnet_protocol_exchange_object_provider_GetPaymentMethodsResponse__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetPaymentMethodsResponse, global::bnet.protocol.exchange_object_provider.GetPaymentMethodsResponse.Builder>(internal__static_bnet_protocol_exchange_object_provider_GetPaymentMethodsResponse__Descriptor,
                 new string[] { "Methods", });
+        internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__Descriptor = Descriptor.MessageTypes[7];
+        internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest, global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.Builder>(internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__Descriptor,
+                new string[] { "Tokens", });
+        internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__Descriptor = Descriptor.MessageTypes[8];
+        internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse, global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.Builder>(internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__Descriptor,
+                new string[] { "Progresses", });
+        internal__static_bnet_protocol_exchange_object_provider_AuthProgress__Descriptor = Descriptor.MessageTypes[9];
+        internal__static_bnet_protocol_exchange_object_provider_AuthProgress__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange_object_provider.AuthProgress, global::bnet.protocol.exchange_object_provider.AuthProgress.Builder>(internal__static_bnet_protocol_exchange_object_provider_AuthProgress__Descriptor,
+                new string[] { "Token", "PartitionId", "TotalProgress", "CurrentProgress", "CompleteProgress", "Deferred", "Completed", "Reason", });
         return null;
       };
       pbd::FileDescriptor.InternalBuildGeneratedFileFrom(descriptorData,
@@ -4240,6 +4268,1244 @@ namespace bnet.protocol.exchange_object_provider {
       }
     }
     static GetPaymentMethodsResponse() {
+      object.ReferenceEquals(global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class GetAuthProgressRequest : pb::GeneratedMessage<GetAuthProgressRequest, GetAuthProgressRequest.Builder> {
+    private GetAuthProgressRequest() { }
+    private static readonly GetAuthProgressRequest defaultInstance = new GetAuthProgressRequest().MakeReadOnly();
+    private static readonly string[] _getAuthProgressRequestFieldNames = new string[] { "tokens" };
+    private static readonly uint[] _getAuthProgressRequestFieldTags = new uint[] { 10 };
+    public static GetAuthProgressRequest DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override GetAuthProgressRequest DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override GetAuthProgressRequest ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<GetAuthProgressRequest, GetAuthProgressRequest.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressRequest__FieldAccessorTable; }
+    }
+    
+    public const int TokensFieldNumber = 1;
+    private pbc::PopsicleList<global::bnet.protocol.exchange.PartitionId> tokens_ = new pbc::PopsicleList<global::bnet.protocol.exchange.PartitionId>();
+    public scg::IList<global::bnet.protocol.exchange.PartitionId> TokensList {
+      get { return tokens_; }
+    }
+    public int TokensCount {
+      get { return tokens_.Count; }
+    }
+    public global::bnet.protocol.exchange.PartitionId GetTokens(int index) {
+      return tokens_[index];
+    }
+    
+    public override bool IsInitialized {
+      get {
+        foreach (global::bnet.protocol.exchange.PartitionId element in TokensList) {
+          if (!element.IsInitialized) return false;
+        }
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _getAuthProgressRequestFieldNames;
+      if (tokens_.Count > 0) {
+        output.WriteMessageArray(1, field_names[0], tokens_);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        foreach (global::bnet.protocol.exchange.PartitionId element in TokensList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static GetAuthProgressRequest ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static GetAuthProgressRequest ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private GetAuthProgressRequest MakeReadOnly() {
+      tokens_.MakeReadOnly();
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(GetAuthProgressRequest prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<GetAuthProgressRequest, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(GetAuthProgressRequest cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private GetAuthProgressRequest result;
+      
+      private GetAuthProgressRequest PrepareBuilder() {
+        if (resultIsReadOnly) {
+          GetAuthProgressRequest original = result;
+          result = new GetAuthProgressRequest();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override GetAuthProgressRequest MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.Descriptor; }
+      }
+      
+      public override GetAuthProgressRequest DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.DefaultInstance; }
+      }
+      
+      public override GetAuthProgressRequest BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is GetAuthProgressRequest) {
+          return MergeFrom((GetAuthProgressRequest) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(GetAuthProgressRequest other) {
+        if (other == global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.tokens_.Count != 0) {
+          result.tokens_.Add(other.tokens_);
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_getAuthProgressRequestFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _getAuthProgressRequestFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 10: {
+              input.ReadMessageArray(tag, field_name, result.tokens_, global::bnet.protocol.exchange.PartitionId.DefaultInstance, extensionRegistry);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+      
+      public pbc::IPopsicleList<global::bnet.protocol.exchange.PartitionId> TokensList {
+        get { return PrepareBuilder().tokens_; }
+      }
+      public int TokensCount {
+        get { return result.TokensCount; }
+      }
+      public global::bnet.protocol.exchange.PartitionId GetTokens(int index) {
+        return result.GetTokens(index);
+      }
+      public Builder SetTokens(int index, global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.tokens_[index] = value;
+        return this;
+      }
+      public Builder SetTokens(int index, global::bnet.protocol.exchange.PartitionId.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.tokens_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddTokens(global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.tokens_.Add(value);
+        return this;
+      }
+      public Builder AddTokens(global::bnet.protocol.exchange.PartitionId.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.tokens_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeTokens(scg::IEnumerable<global::bnet.protocol.exchange.PartitionId> values) {
+        PrepareBuilder();
+        result.tokens_.Add(values);
+        return this;
+      }
+      public Builder ClearTokens() {
+        PrepareBuilder();
+        result.tokens_.Clear();
+        return this;
+      }
+    }
+    static GetAuthProgressRequest() {
+      object.ReferenceEquals(global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class GetAuthProgressResponse : pb::GeneratedMessage<GetAuthProgressResponse, GetAuthProgressResponse.Builder> {
+    private GetAuthProgressResponse() { }
+    private static readonly GetAuthProgressResponse defaultInstance = new GetAuthProgressResponse().MakeReadOnly();
+    private static readonly string[] _getAuthProgressResponseFieldNames = new string[] { "progresses" };
+    private static readonly uint[] _getAuthProgressResponseFieldTags = new uint[] { 10 };
+    public static GetAuthProgressResponse DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override GetAuthProgressResponse DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override GetAuthProgressResponse ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<GetAuthProgressResponse, GetAuthProgressResponse.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_GetAuthProgressResponse__FieldAccessorTable; }
+    }
+    
+    public const int ProgressesFieldNumber = 1;
+    private pbc::PopsicleList<global::bnet.protocol.exchange_object_provider.AuthProgress> progresses_ = new pbc::PopsicleList<global::bnet.protocol.exchange_object_provider.AuthProgress>();
+    public scg::IList<global::bnet.protocol.exchange_object_provider.AuthProgress> ProgressesList {
+      get { return progresses_; }
+    }
+    public int ProgressesCount {
+      get { return progresses_.Count; }
+    }
+    public global::bnet.protocol.exchange_object_provider.AuthProgress GetProgresses(int index) {
+      return progresses_[index];
+    }
+    
+    public override bool IsInitialized {
+      get {
+        foreach (global::bnet.protocol.exchange_object_provider.AuthProgress element in ProgressesList) {
+          if (!element.IsInitialized) return false;
+        }
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _getAuthProgressResponseFieldNames;
+      if (progresses_.Count > 0) {
+        output.WriteMessageArray(1, field_names[0], progresses_);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        foreach (global::bnet.protocol.exchange_object_provider.AuthProgress element in ProgressesList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static GetAuthProgressResponse ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static GetAuthProgressResponse ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private GetAuthProgressResponse MakeReadOnly() {
+      progresses_.MakeReadOnly();
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(GetAuthProgressResponse prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<GetAuthProgressResponse, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(GetAuthProgressResponse cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private GetAuthProgressResponse result;
+      
+      private GetAuthProgressResponse PrepareBuilder() {
+        if (resultIsReadOnly) {
+          GetAuthProgressResponse original = result;
+          result = new GetAuthProgressResponse();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override GetAuthProgressResponse MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.Descriptor; }
+      }
+      
+      public override GetAuthProgressResponse DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.DefaultInstance; }
+      }
+      
+      public override GetAuthProgressResponse BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is GetAuthProgressResponse) {
+          return MergeFrom((GetAuthProgressResponse) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(GetAuthProgressResponse other) {
+        if (other == global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.progresses_.Count != 0) {
+          result.progresses_.Add(other.progresses_);
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_getAuthProgressResponseFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _getAuthProgressResponseFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 10: {
+              input.ReadMessageArray(tag, field_name, result.progresses_, global::bnet.protocol.exchange_object_provider.AuthProgress.DefaultInstance, extensionRegistry);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+      
+      public pbc::IPopsicleList<global::bnet.protocol.exchange_object_provider.AuthProgress> ProgressesList {
+        get { return PrepareBuilder().progresses_; }
+      }
+      public int ProgressesCount {
+        get { return result.ProgressesCount; }
+      }
+      public global::bnet.protocol.exchange_object_provider.AuthProgress GetProgresses(int index) {
+        return result.GetProgresses(index);
+      }
+      public Builder SetProgresses(int index, global::bnet.protocol.exchange_object_provider.AuthProgress value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.progresses_[index] = value;
+        return this;
+      }
+      public Builder SetProgresses(int index, global::bnet.protocol.exchange_object_provider.AuthProgress.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.progresses_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddProgresses(global::bnet.protocol.exchange_object_provider.AuthProgress value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.progresses_.Add(value);
+        return this;
+      }
+      public Builder AddProgresses(global::bnet.protocol.exchange_object_provider.AuthProgress.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.progresses_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeProgresses(scg::IEnumerable<global::bnet.protocol.exchange_object_provider.AuthProgress> values) {
+        PrepareBuilder();
+        result.progresses_.Add(values);
+        return this;
+      }
+      public Builder ClearProgresses() {
+        PrepareBuilder();
+        result.progresses_.Clear();
+        return this;
+      }
+    }
+    static GetAuthProgressResponse() {
+      object.ReferenceEquals(global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class AuthProgress : pb::GeneratedMessage<AuthProgress, AuthProgress.Builder> {
+    private AuthProgress() { }
+    private static readonly AuthProgress defaultInstance = new AuthProgress().MakeReadOnly();
+    private static readonly string[] _authProgressFieldNames = new string[] { "complete_progress", "completed", "current_progress", "deferred", "partition_id", "reason", "token", "total_progress" };
+    private static readonly uint[] _authProgressFieldTags = new uint[] { 40, 56, 32, 48, 18, 64, 10, 24 };
+    public static AuthProgress DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override AuthProgress DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override AuthProgress ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_AuthProgress__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<AuthProgress, AuthProgress.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.internal__static_bnet_protocol_exchange_object_provider_AuthProgress__FieldAccessorTable; }
+    }
+    
+    public const int TokenFieldNumber = 1;
+    private bool hasToken;
+    private global::bnet.protocol.exchange.PartitionId token_;
+    public bool HasToken {
+      get { return hasToken; }
+    }
+    public global::bnet.protocol.exchange.PartitionId Token {
+      get { return token_ ?? global::bnet.protocol.exchange.PartitionId.DefaultInstance; }
+    }
+    
+    public const int PartitionIdFieldNumber = 2;
+    private bool hasPartitionId;
+    private global::bnet.protocol.exchange.PartitionId partitionId_;
+    public bool HasPartitionId {
+      get { return hasPartitionId; }
+    }
+    public global::bnet.protocol.exchange.PartitionId PartitionId {
+      get { return partitionId_ ?? global::bnet.protocol.exchange.PartitionId.DefaultInstance; }
+    }
+    
+    public const int TotalProgressFieldNumber = 3;
+    private bool hasTotalProgress;
+    private ulong totalProgress_;
+    public bool HasTotalProgress {
+      get { return hasTotalProgress; }
+    }
+    public ulong TotalProgress {
+      get { return totalProgress_; }
+    }
+    
+    public const int CurrentProgressFieldNumber = 4;
+    private bool hasCurrentProgress;
+    private ulong currentProgress_;
+    public bool HasCurrentProgress {
+      get { return hasCurrentProgress; }
+    }
+    public ulong CurrentProgress {
+      get { return currentProgress_; }
+    }
+    
+    public const int CompleteProgressFieldNumber = 5;
+    private bool hasCompleteProgress;
+    private ulong completeProgress_;
+    public bool HasCompleteProgress {
+      get { return hasCompleteProgress; }
+    }
+    public ulong CompleteProgress {
+      get { return completeProgress_; }
+    }
+    
+    public const int DeferredFieldNumber = 6;
+    private bool hasDeferred;
+    private bool deferred_;
+    public bool HasDeferred {
+      get { return hasDeferred; }
+    }
+    public bool Deferred {
+      get { return deferred_; }
+    }
+    
+    public const int CompletedFieldNumber = 7;
+    private bool hasCompleted;
+    private ulong completed_;
+    public bool HasCompleted {
+      get { return hasCompleted; }
+    }
+    public ulong Completed {
+      get { return completed_; }
+    }
+    
+    public const int ReasonFieldNumber = 8;
+    private bool hasReason;
+    private ulong reason_;
+    public bool HasReason {
+      get { return hasReason; }
+    }
+    public ulong Reason {
+      get { return reason_; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        if (!hasToken) return false;
+        if (!hasPartitionId) return false;
+        if (!hasTotalProgress) return false;
+        if (!Token.IsInitialized) return false;
+        if (!PartitionId.IsInitialized) return false;
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _authProgressFieldNames;
+      if (hasToken) {
+        output.WriteMessage(1, field_names[6], Token);
+      }
+      if (hasPartitionId) {
+        output.WriteMessage(2, field_names[4], PartitionId);
+      }
+      if (hasTotalProgress) {
+        output.WriteUInt64(3, field_names[7], TotalProgress);
+      }
+      if (hasCurrentProgress) {
+        output.WriteUInt64(4, field_names[2], CurrentProgress);
+      }
+      if (hasCompleteProgress) {
+        output.WriteUInt64(5, field_names[0], CompleteProgress);
+      }
+      if (hasDeferred) {
+        output.WriteBool(6, field_names[3], Deferred);
+      }
+      if (hasCompleted) {
+        output.WriteUInt64(7, field_names[1], Completed);
+      }
+      if (hasReason) {
+        output.WriteUInt64(8, field_names[5], Reason);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        if (hasToken) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, Token);
+        }
+        if (hasPartitionId) {
+          size += pb::CodedOutputStream.ComputeMessageSize(2, PartitionId);
+        }
+        if (hasTotalProgress) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(3, TotalProgress);
+        }
+        if (hasCurrentProgress) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(4, CurrentProgress);
+        }
+        if (hasCompleteProgress) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(5, CompleteProgress);
+        }
+        if (hasDeferred) {
+          size += pb::CodedOutputStream.ComputeBoolSize(6, Deferred);
+        }
+        if (hasCompleted) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(7, Completed);
+        }
+        if (hasReason) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(8, Reason);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static AuthProgress ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static AuthProgress ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static AuthProgress ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static AuthProgress ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private AuthProgress MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(AuthProgress prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<AuthProgress, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(AuthProgress cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private AuthProgress result;
+      
+      private AuthProgress PrepareBuilder() {
+        if (resultIsReadOnly) {
+          AuthProgress original = result;
+          result = new AuthProgress();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override AuthProgress MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange_object_provider.AuthProgress.Descriptor; }
+      }
+      
+      public override AuthProgress DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange_object_provider.AuthProgress.DefaultInstance; }
+      }
+      
+      public override AuthProgress BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is AuthProgress) {
+          return MergeFrom((AuthProgress) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(AuthProgress other) {
+        if (other == global::bnet.protocol.exchange_object_provider.AuthProgress.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.HasToken) {
+          MergeToken(other.Token);
+        }
+        if (other.HasPartitionId) {
+          MergePartitionId(other.PartitionId);
+        }
+        if (other.HasTotalProgress) {
+          TotalProgress = other.TotalProgress;
+        }
+        if (other.HasCurrentProgress) {
+          CurrentProgress = other.CurrentProgress;
+        }
+        if (other.HasCompleteProgress) {
+          CompleteProgress = other.CompleteProgress;
+        }
+        if (other.HasDeferred) {
+          Deferred = other.Deferred;
+        }
+        if (other.HasCompleted) {
+          Completed = other.Completed;
+        }
+        if (other.HasReason) {
+          Reason = other.Reason;
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_authProgressFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _authProgressFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 10: {
+              global::bnet.protocol.exchange.PartitionId.Builder subBuilder = global::bnet.protocol.exchange.PartitionId.CreateBuilder();
+              if (result.hasToken) {
+                subBuilder.MergeFrom(Token);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              Token = subBuilder.BuildPartial();
+              break;
+            }
+            case 18: {
+              global::bnet.protocol.exchange.PartitionId.Builder subBuilder = global::bnet.protocol.exchange.PartitionId.CreateBuilder();
+              if (result.hasPartitionId) {
+                subBuilder.MergeFrom(PartitionId);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              PartitionId = subBuilder.BuildPartial();
+              break;
+            }
+            case 24: {
+              result.hasTotalProgress = input.ReadUInt64(ref result.totalProgress_);
+              break;
+            }
+            case 32: {
+              result.hasCurrentProgress = input.ReadUInt64(ref result.currentProgress_);
+              break;
+            }
+            case 40: {
+              result.hasCompleteProgress = input.ReadUInt64(ref result.completeProgress_);
+              break;
+            }
+            case 48: {
+              result.hasDeferred = input.ReadBool(ref result.deferred_);
+              break;
+            }
+            case 56: {
+              result.hasCompleted = input.ReadUInt64(ref result.completed_);
+              break;
+            }
+            case 64: {
+              result.hasReason = input.ReadUInt64(ref result.reason_);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+      
+      public bool HasToken {
+       get { return result.hasToken; }
+      }
+      public global::bnet.protocol.exchange.PartitionId Token {
+        get { return result.Token; }
+        set { SetToken(value); }
+      }
+      public Builder SetToken(global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasToken = true;
+        result.token_ = value;
+        return this;
+      }
+      public Builder SetToken(global::bnet.protocol.exchange.PartitionId.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.hasToken = true;
+        result.token_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeToken(global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        if (result.hasToken &&
+            result.token_ != global::bnet.protocol.exchange.PartitionId.DefaultInstance) {
+            result.token_ = global::bnet.protocol.exchange.PartitionId.CreateBuilder(result.token_).MergeFrom(value).BuildPartial();
+        } else {
+          result.token_ = value;
+        }
+        result.hasToken = true;
+        return this;
+      }
+      public Builder ClearToken() {
+        PrepareBuilder();
+        result.hasToken = false;
+        result.token_ = null;
+        return this;
+      }
+      
+      public bool HasPartitionId {
+       get { return result.hasPartitionId; }
+      }
+      public global::bnet.protocol.exchange.PartitionId PartitionId {
+        get { return result.PartitionId; }
+        set { SetPartitionId(value); }
+      }
+      public Builder SetPartitionId(global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasPartitionId = true;
+        result.partitionId_ = value;
+        return this;
+      }
+      public Builder SetPartitionId(global::bnet.protocol.exchange.PartitionId.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.hasPartitionId = true;
+        result.partitionId_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergePartitionId(global::bnet.protocol.exchange.PartitionId value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        if (result.hasPartitionId &&
+            result.partitionId_ != global::bnet.protocol.exchange.PartitionId.DefaultInstance) {
+            result.partitionId_ = global::bnet.protocol.exchange.PartitionId.CreateBuilder(result.partitionId_).MergeFrom(value).BuildPartial();
+        } else {
+          result.partitionId_ = value;
+        }
+        result.hasPartitionId = true;
+        return this;
+      }
+      public Builder ClearPartitionId() {
+        PrepareBuilder();
+        result.hasPartitionId = false;
+        result.partitionId_ = null;
+        return this;
+      }
+      
+      public bool HasTotalProgress {
+        get { return result.hasTotalProgress; }
+      }
+      public ulong TotalProgress {
+        get { return result.TotalProgress; }
+        set { SetTotalProgress(value); }
+      }
+      public Builder SetTotalProgress(ulong value) {
+        PrepareBuilder();
+        result.hasTotalProgress = true;
+        result.totalProgress_ = value;
+        return this;
+      }
+      public Builder ClearTotalProgress() {
+        PrepareBuilder();
+        result.hasTotalProgress = false;
+        result.totalProgress_ = 0UL;
+        return this;
+      }
+      
+      public bool HasCurrentProgress {
+        get { return result.hasCurrentProgress; }
+      }
+      public ulong CurrentProgress {
+        get { return result.CurrentProgress; }
+        set { SetCurrentProgress(value); }
+      }
+      public Builder SetCurrentProgress(ulong value) {
+        PrepareBuilder();
+        result.hasCurrentProgress = true;
+        result.currentProgress_ = value;
+        return this;
+      }
+      public Builder ClearCurrentProgress() {
+        PrepareBuilder();
+        result.hasCurrentProgress = false;
+        result.currentProgress_ = 0UL;
+        return this;
+      }
+      
+      public bool HasCompleteProgress {
+        get { return result.hasCompleteProgress; }
+      }
+      public ulong CompleteProgress {
+        get { return result.CompleteProgress; }
+        set { SetCompleteProgress(value); }
+      }
+      public Builder SetCompleteProgress(ulong value) {
+        PrepareBuilder();
+        result.hasCompleteProgress = true;
+        result.completeProgress_ = value;
+        return this;
+      }
+      public Builder ClearCompleteProgress() {
+        PrepareBuilder();
+        result.hasCompleteProgress = false;
+        result.completeProgress_ = 0UL;
+        return this;
+      }
+      
+      public bool HasDeferred {
+        get { return result.hasDeferred; }
+      }
+      public bool Deferred {
+        get { return result.Deferred; }
+        set { SetDeferred(value); }
+      }
+      public Builder SetDeferred(bool value) {
+        PrepareBuilder();
+        result.hasDeferred = true;
+        result.deferred_ = value;
+        return this;
+      }
+      public Builder ClearDeferred() {
+        PrepareBuilder();
+        result.hasDeferred = false;
+        result.deferred_ = false;
+        return this;
+      }
+      
+      public bool HasCompleted {
+        get { return result.hasCompleted; }
+      }
+      public ulong Completed {
+        get { return result.Completed; }
+        set { SetCompleted(value); }
+      }
+      public Builder SetCompleted(ulong value) {
+        PrepareBuilder();
+        result.hasCompleted = true;
+        result.completed_ = value;
+        return this;
+      }
+      public Builder ClearCompleted() {
+        PrepareBuilder();
+        result.hasCompleted = false;
+        result.completed_ = 0UL;
+        return this;
+      }
+      
+      public bool HasReason {
+        get { return result.hasReason; }
+      }
+      public ulong Reason {
+        get { return result.Reason; }
+        set { SetReason(value); }
+      }
+      public Builder SetReason(ulong value) {
+        PrepareBuilder();
+        result.hasReason = true;
+        result.reason_ = value;
+        return this;
+      }
+      public Builder ClearReason() {
+        PrepareBuilder();
+        result.hasReason = false;
+        result.reason_ = 0UL;
+        return this;
+      }
+    }
+    static AuthProgress() {
       object.ReferenceEquals(global::bnet.protocol.exchange_object_provider.ExchangeObjectProviderTypes.Descriptor, null);
     }
   }

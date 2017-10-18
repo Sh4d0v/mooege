@@ -134,6 +134,12 @@ namespace bnet.protocol.exchange {
       internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.HistoriesForCSRequest, global::bnet.protocol.exchange.HistoriesForCSRequest.Builder> internal__static_bnet_protocol_exchange_HistoriesForCSRequest__FieldAccessorTable;
       internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_HistoriesForCSResponse__Descriptor;
       internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.HistoriesForCSResponse, global::bnet.protocol.exchange.HistoriesForCSResponse.Builder> internal__static_bnet_protocol_exchange_HistoriesForCSResponse__FieldAccessorTable;
+      internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_EnterRequest__Descriptor;
+      internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.EnterRequest, global::bnet.protocol.exchange.EnterRequest.Builder> internal__static_bnet_protocol_exchange_EnterRequest__FieldAccessorTable;
+      internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_EnterResponse__Descriptor;
+      internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.EnterResponse, global::bnet.protocol.exchange.EnterResponse.Builder> internal__static_bnet_protocol_exchange_EnterResponse__FieldAccessorTable;
+      internal static pbd::MessageDescriptor internal__static_bnet_protocol_exchange_LeaveRequest__Descriptor;
+      internal static pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.LeaveRequest, global::bnet.protocol.exchange.LeaveRequest.Builder> internal__static_bnet_protocol_exchange_LeaveRequest__FieldAccessorTable;
       #endregion
       #region Descriptor
       public static pbd::FileDescriptor Descriptor {
@@ -302,172 +308,181 @@ namespace bnet.protocol.exchange {
             "Y2NvdW50GAUgASgLMhcuYm5ldC5wcm90b2NvbC5FbnRpdHlJZBI6ChBhY2Nv" + 
             "dW50X2Zvcl9pdGVtGAYgAigLMiAuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5C" + 
             "bG9iRnJvbRIQCghjc19ub3RlcxgHIAIoCRISCgpjc191c2VyX2lkGAggAigE" + 
-            "ItwCChhDcmVhdGVDU1RyYWRlSXRlbVJlcXVlc3QSOQoMcGFydGl0aW9uX2lk" + 
+            "IvkCChhDcmVhdGVDU1RyYWRlSXRlbVJlcXVlc3QSOQoMcGFydGl0aW9uX2lk" + 
             "GAEgASgLMiMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5QYXJ0aXRpb25JZBI1" + 
             "CgpvcmRlcl9ib29rGAIgAigLMiEuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5P" + 
             "cmRlckJvb2sSDgoGYW1vdW50GAMgAigNEi0KDGJuZXRfYWNjb3VudBgEIAIo" + 
             "CzIXLmJuZXQucHJvdG9jb2wuRW50aXR5SWQSLQoMZ2FtZV9hY2NvdW50GAUg" + 
             "ASgLMhcuYm5ldC5wcm90b2NvbC5FbnRpdHlJZBI6ChBhY2NvdW50X2Zvcl9p" + 
             "dGVtGAYgAigLMiAuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5CbG9iRnJvbRIQ" + 
-            "Cghjc19ub3RlcxgHIAIoCRISCgpjc191c2VyX2lkGAggAigEIpoDChlDcmVh" + 
-            "dGVDU1RyYWRlTW9uZXlSZXF1ZXN0EjkKDHBhcnRpdGlvbl9pZBgBIAEoCzIj" + 
-            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGFydGl0aW9uSWQSNQoKb3JkZXJf" + 
-            "Ym9vaxgCIAIoCzIhLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuT3JkZXJCb29r" + 
-            "Eg4KBmFtb3VudBgDIAIoDRItCgxibmV0X2FjY291bnQYBCACKAsyFy5ibmV0" + 
-            "LnByb3RvY29sLkVudGl0eUlkEi0KDGdhbWVfYWNjb3VudBgFIAEoCzIXLmJu" + 
-            "ZXQucHJvdG9jb2wuRW50aXR5SWQSOgoQYWNjb3VudF9mb3JfaXRlbRgGIAIo" + 
-            "CzIgLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmxvYkZyb20SEAoIY3Nfbm90" + 
-            "ZXMYByACKAkSEgoKY3NfdXNlcl9pZBgIIAIoBBI7ChFhY2NvdW50X2Zvcl9t" + 
-            "b25leRgJIAEoCzIgLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQmxvYkZyb20i" + 
-            "LgoVQ3JlYXRlQ1NUcmFkZVJlc3BvbnNlEhUKDW9yZGVyX2Jvb2tfaWQYASAB" + 
-            "KAQiuQEKFEdldE9yZGVyQ291bnRSZXF1ZXN0EhAKCGN1cnJlbmN5GAEgASgJ" + 
-            "Eg4KBnNvdXJjZRgCIAEoBxItCgxibmV0X2FjY291bnQYAyABKAsyFy5ibmV0" + 
-            "LnByb3RvY29sLkVudGl0eUlkEiUKFm5vdF9jbG9zZWRfb2ZmZXJfY291bnQY" + 
-            "BCABKAg6BWZhbHNlEikKGm9yZGVyX3dpdGhfY2xhaW1hYmxlX2NvdW50GAUg" + 
-            "ASgIOgVmYWxzZSKZAQoVR2V0T3JkZXJDb3VudFJlc3BvbnNlEj0KFm5vdF9j" + 
-            "bG9zZWRfb2ZmZXJfY291bnQYASABKAsyHS5ibmV0LnByb3RvY29sLmV4Y2hh" + 
-            "bmdlLkNvdW50EkEKGm9yZGVyX3dpdGhfY2xhaW1hYmxlX2NvdW50GAIgASgL" + 
-            "Mh0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5Db3VudCKAAQoVSGlzdG9yaWVz" + 
-            "Rm9yQ1NSZXF1ZXN0Ei0KDGJuZXRfYWNjb3VudBgBIAIoCzIXLmJuZXQucHJv" + 
-            "dG9jb2wuRW50aXR5SWQSDwoHcHJvZ3JhbRgCIAIoBxISCgpsb3dlcl90aW1l" + 
-            "GAMgAigEEhMKC2hpZ2hlcl90aW1lGAQgAigEIlMKFkhpc3Rvcmllc0ZvckNT" + 
-            "UmVzcG9uc2USOQoMaGlzdG9yeV9kYXRhGAEgAygLMiMuYm5ldC5wcm90b2Nv" + 
-            "bC5leGNoYW5nZS5IaXN0b3J5RGF0YTLiKwoPRXhjaGFuZ2VTZXJ2aWNlEngK" + 
-            "D0NyZWF0ZU9yZGVyQm9vaxIuLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ3Jl" + 
-            "YXRlT3JkZXJCb29rUmVxdWVzdBovLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
-            "Q3JlYXRlT3JkZXJCb29rUmVzcG9uc2UiBIC1GAESigEKFVBsYWNlT2ZmZXJP" + 
-            "bk9yZGVyQm9vaxI0LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGxhY2VPZmZl" + 
-            "ck9uT3JkZXJCb29rUmVxdWVzdBo1LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
-            "UGxhY2VPZmZlck9uT3JkZXJCb29rUmVzcG9uc2UiBIC1GAISrgEKIVBsYWNl" + 
-            "T2ZmZXJDcmVhdGVPcmRlckJvb2tJZk5lZWRlZBJALmJuZXQucHJvdG9jb2wu" + 
-            "ZXhjaGFuZ2UuUGxhY2VPZmZlckNyZWF0ZU9yZGVyQm9va0lmTmVlZGVkUmVx" + 
-            "dWVzdBpBLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGxhY2VPZmZlckNyZWF0" + 
-            "ZU9yZGVyQm9va0lmTmVlZGVkUmVzcG9uc2UiBIC1GAMShAEKE1BsYWNlQmlk" + 
-            "T25PcmRlckJvb2sSMi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlBsYWNlQmlk" + 
-            "T25PcmRlckJvb2tSZXF1ZXN0GjMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5Q" + 
-            "bGFjZUJpZE9uT3JkZXJCb29rUmVzcG9uc2UiBIC1GAQSqAEKH1BsYWNlQmlk" + 
-            "Q3JlYXRlT3JkZXJCb29rSWZOZWVkZWQSPi5ibmV0LnByb3RvY29sLmV4Y2hh" + 
-            "bmdlLlBsYWNlQmlkQ3JlYXRlT3JkZXJCb29rSWZOZWVkZWRSZXF1ZXN0Gj8u" + 
-            "Ym5ldC5wcm90b2NvbC5leGNoYW5nZS5QbGFjZUJpZENyZWF0ZU9yZGVyQm9v" + 
-            "a0lmTmVlZGVkUmVzcG9uc2UiBIC1GAUSjQEKFlF1ZXJ5T2ZmZXJzQnlPcmRl" + 
-            "ckJvb2sSNS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5T2ZmZXJzQnlP" + 
-            "cmRlckJvb2tSZXF1ZXN0GjYuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVy" + 
-            "eU9mZmVyc0J5T3JkZXJCb29rUmVzcG9uc2UiBIC1GAYShwEKFFF1ZXJ5Qmlk" + 
-            "c0J5T3JkZXJCb29rEjMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeUJp" + 
-            "ZHNCeU9yZGVyQm9va1JlcXVlc3QaNC5ibmV0LnByb3RvY29sLmV4Y2hhbmdl" + 
-            "LlF1ZXJ5Qmlkc0J5T3JkZXJCb29rUmVzcG9uc2UiBIC1GAcSnAEKG1F1ZXJ5" + 
-            "T2ZmZXJzQnlBY2NvdW50Rm9ySXRlbRI6LmJuZXQucHJvdG9jb2wuZXhjaGFu" + 
-            "Z2UuUXVlcnlPZmZlcnNCeUFjY291bnRGb3JJdGVtUmVxdWVzdBo7LmJuZXQu" + 
-            "cHJvdG9jb2wuZXhjaGFuZ2UuUXVlcnlPZmZlcnNCeUFjY291bnRGb3JJdGVt" + 
-            "UmVzcG9uc2UiBIC1GAgSlgEKGVF1ZXJ5Qmlkc0J5QWNjb3VudEZvckl0ZW0S" + 
-            "OC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5Qmlkc0J5QWNjb3VudEZv" + 
-            "ckl0ZW1SZXF1ZXN0GjkuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeUJp" + 
-            "ZHNCeUFjY291bnRGb3JJdGVtUmVzcG9uc2UiBIC1GAkSjQEKFlF1ZXJ5T3Jk" + 
-            "ZXJCb29rc1N1bW1hcnkSNS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5" + 
-            "T3JkZXJCb29rc1N1bW1hcnlSZXF1ZXN0GjYuYm5ldC5wcm90b2NvbC5leGNo" + 
-            "YW5nZS5RdWVyeU9yZGVyQm9va3NTdW1tYXJ5UmVzcG9uc2UiBIC1GAsSbgoP" + 
-            "UmVwb3J0QXV0aG9yaXplEj4uYm5ldC5wcm90b2NvbC5leGNoYW5nZV9vYmpl" + 
-            "Y3RfcHJvdmlkZXIuUmVwb3J0QXV0aG9yaXplUmVxdWVzdBoVLmJuZXQucHJv" + 
-            "dG9jb2wuTm9EYXRhIgSAtRgNEmgKDFJlcG9ydFNldHRsZRI7LmJuZXQucHJv" + 
-            "dG9jb2wuZXhjaGFuZ2Vfb2JqZWN0X3Byb3ZpZGVyLlJlcG9ydFNldHRsZVJl" + 
-            "cXVlc3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYDhJoCgxSZXBvcnRD" + 
-            "YW5jZWwSOy5ibmV0LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92aWRl" + 
-            "ci5SZXBvcnRDYW5jZWxSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEi" + 
-            "BIC1GA8SfAoeU3Vic2NyaWJlT3JkZXJCb29rU3RhdHVzQ2hhbmdlEj0uYm5l" + 
-            "dC5wcm90b2NvbC5leGNoYW5nZS5TdWJzY3JpYmVPcmRlckJvb2tTdGF0dXND" + 
-            "aGFuZ2VSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBASgAEK" + 
-            "IFVuc3Vic2NyaWJlT3JkZXJCb29rU3RhdHVzQ2hhbmdlEj8uYm5ldC5wcm90" + 
-            "b2NvbC5leGNoYW5nZS5VbnN1YnNjcmliZU9yZGVyQm9va1N0YXR1c0NoYW5n" + 
-            "ZVJlcXVlc3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYERJoChRTdWJz" + 
-            "Y3JpYmVPcmRlclVwZGF0ZRIzLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuU3Vi" + 
-            "c2NyaWJlT3JkZXJVcGRhdGVSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0Rh" + 
-            "dGEiBIC1GBISbAoWVW5zdWJzY3JpYmVPcmRlclVwZGF0ZRI1LmJuZXQucHJv" + 
-            "dG9jb2wuZXhjaGFuZ2UuVW5zdWJzY3JpYmVPcmRlclVwZGF0ZVJlcXVlc3Qa" + 
-            "FS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYExKeAQoRR2V0UGF5bWVudE1l" + 
-            "dGhvZHMSQC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92aWRl" + 
-            "ci5HZXRQYXltZW50TWV0aG9kc1JlcXVlc3QaQS5ibmV0LnByb3RvY29sLmV4" + 
-            "Y2hhbmdlX29iamVjdF9wcm92aWRlci5HZXRQYXltZW50TWV0aG9kc1Jlc3Bv" + 
-            "bnNlIgSAtRgUElEKDENsYWltQmlkSXRlbRIkLmJuZXQucHJvdG9jb2wuZXhj" + 
-            "aGFuZ2UuQ2xhaW1SZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1" + 
-            "GBUSUgoNQ2xhaW1CaWRNb25leRIkLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
-            "Q2xhaW1SZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBYSUwoO" + 
-            "Q2xhaW1PZmZlckl0ZW0SJC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkNsYWlt" + 
-            "UmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgXElQKD0NsYWlt" + 
-            "T2ZmZXJNb25leRIkLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ2xhaW1SZXF1" + 
-            "ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBgSTwoJQ2FuY2VsQmlk" + 
-            "EiUuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5DYW5jZWxSZXF1ZXN0GhUuYm5l" + 
-            "dC5wcm90b2NvbC5Ob0RhdGEiBIC1GBkSUQoLQ2FuY2VsT2ZmZXISJS5ibmV0" + 
-            "LnByb3RvY29sLmV4Y2hhbmdlLkNhbmNlbFJlcXVlc3QaFS5ibmV0LnByb3Rv" + 
-            "Y29sLk5vRGF0YSIEgLUYGhJ7ChBHZXRDb25maWd1cmF0aW9uEi8uYm5ldC5w" + 
-            "cm90b2NvbC5leGNoYW5nZS5HZXRDb25maWd1cmF0aW9uUmVxdWVzdBowLmJu" + 
-            "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0Q29uZmlndXJhdGlvblJlc3BvbnNl" + 
-            "IgSAtRgbEoEBChNHZXRCaWRGZWVFc3RpbWF0aW9uEjIuYm5ldC5wcm90b2Nv" + 
-            "bC5leGNoYW5nZS5HZXRCaWRGZWVFc3RpbWF0aW9uUmVxdWVzdBowLmJuZXQu" + 
-            "cHJvdG9jb2wuZXhjaGFuZ2UuR2V0RmVlRXN0aW1hdGlvblJlc3BvbnNlIgSA" + 
-            "tRgcEoUBChVHZXRPZmZlckZlZUVzdGltYXRpb24SNC5ibmV0LnByb3RvY29s" + 
-            "LmV4Y2hhbmdlLkdldE9mZmVyRmVlRXN0aW1hdGlvblJlcXVlc3QaMC5ibmV0" + 
-            "LnByb3RvY29sLmV4Y2hhbmdlLkdldEZlZUVzdGltYXRpb25SZXNwb25zZSIE" + 
-            "gLUYHRKcAQobUXVlcnlPcmRlcnNCeUFjY291bnRGb3JJdGVtEjouYm5ldC5w" + 
-            "cm90b2NvbC5leGNoYW5nZS5RdWVyeU9yZGVyc0J5QWNjb3VudEZvckl0ZW1S" + 
-            "ZXF1ZXN0GjsuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeU9yZGVyc0J5" + 
-            "QWNjb3VudEZvckl0ZW1SZXNwb25zZSIEgLUYHhJ5ChpSZXBvcnRBdXRob3Jp" + 
-            "emVSaXNrVmVyZGljdBI+LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Vfcmlzay5S" + 
-            "ZXBvcnRBdXRob3JpemVSaXNrVmVyZGljdFJlcXVlc3QaFS5ibmV0LnByb3Rv" + 
-            "Y29sLk5vRGF0YSIEgLUYHxJzChdSZXBvcnRTZXR0bGVSaXNrVmVyZGljdBI7" + 
-            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Vfcmlzay5SZXBvcnRTZXR0bGVSaXNr" + 
-            "VmVyZGljdFJlcXVlc3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYIBJx" + 
-            "ChZEZWxheVNldHRsZVJpc2tWZXJkaWN0EjouYm5ldC5wcm90b2NvbC5leGNo" + 
-            "YW5nZV9yaXNrLkRlbGF5U2V0dGxlUmlza1ZlcmRpY3RSZXF1ZXN0GhUuYm5l" + 
-            "dC5wcm90b2NvbC5Ob0RhdGEiBIC1GCEScgoNR2V0RmVlRGV0YWlscxIsLmJu" + 
-            "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0RmVlRGV0YWlsc1JlcXVlc3QaLS5i" + 
-            "bmV0LnByb3RvY29sLmV4Y2hhbmdlLkdldEZlZURldGFpbHNSZXNwb25zZSIE" + 
-            "gLUYIhKNAQoWR2V0T3JkZXJCb29rU3RhdGlzdGljcxI1LmJuZXQucHJvdG9j" + 
-            "b2wuZXhjaGFuZ2UuR2V0T3JkZXJCb29rU3RhdGlzdGljc1JlcXVlc3QaNi5i" + 
-            "bmV0LnByb3RvY29sLmV4Y2hhbmdlLkdldE9yZGVyQm9va1N0YXRpc3RpY3NS" + 
-            "ZXNwb25zZSIEgLUYIxJyCg1HZXRCaWREZXRhaWxzEiwuYm5ldC5wcm90b2Nv" + 
-            "bC5leGNoYW5nZS5HZXRCaWREZXRhaWxzUmVxdWVzdBotLmJuZXQucHJvdG9j" + 
-            "b2wuZXhjaGFuZ2UuR2V0QmlkRGV0YWlsc1Jlc3BvbnNlIgSAtRgkEngKD0dl" + 
-            "dE9mZmVyRGV0YWlscxIuLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0T2Zm" + 
-            "ZXJEZXRhaWxzUmVxdWVzdBovLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0" + 
-            "T2ZmZXJEZXRhaWxzUmVzcG9uc2UiBIC1GCUSWwoNR2V0U3lzdGVtVGltZRIV" + 
-            "LmJuZXQucHJvdG9jb2wuTm9EYXRhGi0uYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
-            "ZS5HZXRTeXN0ZW1UaW1lUmVzcG9uc2UiBIC1GCYSWgoNQ3JlYXRlQ1NUcmFk" + 
-            "ZRIsLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ3JlYXRlQ1NUcmFkZVJlcXVl" + 
-            "c3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYJxJPCglSZWZ1bmRCaWQS" + 
-            "JS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlJlZnVuZFJlcXVlc3QaFS5ibmV0" + 
-            "LnByb3RvY29sLk5vRGF0YSIEgLUYKBJoCgxSZXBvcnRSZWZ1bmQSOy5ibmV0" + 
-            "LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92aWRlci5SZXBvcnRSZWZ1" + 
-            "bmRSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GCkScgoNR2V0" + 
-            "T3JkZXJDb3VudBIsLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0T3JkZXJD" + 
-            "b3VudFJlcXVlc3QaLS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkdldE9yZGVy" + 
-            "Q291bnRSZXNwb25zZSIEgLUYKhJ4ChxTdWJzY3JpYmVBZHZhbmNlZE9yZGVy" + 
-            "VXBkYXRlEjsuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5TdWJzY3JpYmVBZHZh" + 
-            "bmNlZE9yZGVyVXBkYXRlUmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRh" + 
-            "IgSAtRgrEnwKHlVuc3Vic2NyaWJlQWR2YW5jZWRPcmRlclVwZGF0ZRI9LmJu" + 
-            "ZXQucHJvdG9jb2wuZXhjaGFuZ2UuVW5zdWJzY3JpYmVBZHZhbmNlZE9yZGVy" + 
-            "VXBkYXRlUmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgsEnsK" + 
-            "FFNldHRsZUhpc3Rvcmllc0ZvckNTEi0uYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
-            "ZS5IaXN0b3JpZXNGb3JDU1JlcXVlc3QaLi5ibmV0LnByb3RvY29sLmV4Y2hh" + 
-            "bmdlLkhpc3Rvcmllc0ZvckNTUmVzcG9uc2UiBIC1GC0SewoUQ2FuY2VsSGlz" + 
-            "dG9yaWVzRm9yQ1MSLS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkhpc3Rvcmll" + 
-            "c0ZvckNTUmVxdWVzdBouLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuSGlzdG9y" + 
-            "aWVzRm9yQ1NSZXNwb25zZSIEgLUYLhJ6ChFDcmVhdGVDU1RyYWRlSXRlbRIw" + 
-            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ3JlYXRlQ1NUcmFkZUl0ZW1SZXF1" + 
-            "ZXN0Gi0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5DcmVhdGVDU1RyYWRlUmVz" + 
-            "cG9uc2UiBIC1GC8SfAoSQ3JlYXRlQ1NUcmFkZU1vbmV5EjEuYm5ldC5wcm90" + 
-            "b2NvbC5leGNoYW5nZS5DcmVhdGVDU1RyYWRlTW9uZXlSZXF1ZXN0Gi0uYm5l" + 
-            "dC5wcm90b2NvbC5leGNoYW5nZS5DcmVhdGVDU1RyYWRlUmVzcG9uc2UiBIC1" + 
-            "GDAywQMKDkV4Y2hhbmdlTm90aWZ5EnUKG05vdGlmeU9yZGVyQm9va1N0YXR1" + 
-            "c0NoYW5nZRI0LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuT3JkZXJCb29rTm90" + 
-            "aWZpY2F0aW9uUmVxdWVzdBoaLmJuZXQucHJvdG9jb2wuTk9fUkVTUE9OU0Ui" + 
-            "BIC1GAESZwoRTm90aWZ5T2ZmZXJVcGRhdGUSMC5ibmV0LnByb3RvY29sLmV4" + 
-            "Y2hhbmdlLk9mZmVyTm90aWZpY2F0aW9uUmVxdWVzdBoaLmJuZXQucHJvdG9j" + 
-            "b2wuTk9fUkVTUE9OU0UiBIC1GAISYwoPTm90aWZ5QmlkVXBkYXRlEi4uYm5l" + 
-            "dC5wcm90b2NvbC5leGNoYW5nZS5CaWROb3RpZmljYXRpb25SZXF1ZXN0Ghou" + 
-            "Ym5ldC5wcm90b2NvbC5OT19SRVNQT05TRSIEgLUYAxJqChNOb3RpZnlDdXN0" + 
-            "b21NZXNzYWdlEjEuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5DdXN0b21Ob3Rp" + 
-            "ZmljYXRpb25SZXF1ZXN0GhouYm5ldC5wcm90b2NvbC5OT19SRVNQT05TRSIE" + 
-            "gLUYBEIDgAEA");
+            "Cghjc19ub3RlcxgHIAIoCRISCgpjc191c2VyX2lkGAggAigEEhsKDGlzX2Nv" + 
+            "bW1vZGl0eRgJIAEoCDoFZmFsc2UimgMKGUNyZWF0ZUNTVHJhZGVNb25leVJl" + 
+            "cXVlc3QSOQoMcGFydGl0aW9uX2lkGAEgASgLMiMuYm5ldC5wcm90b2NvbC5l" + 
+            "eGNoYW5nZS5QYXJ0aXRpb25JZBI1CgpvcmRlcl9ib29rGAIgAigLMiEuYm5l" + 
+            "dC5wcm90b2NvbC5leGNoYW5nZS5PcmRlckJvb2sSDgoGYW1vdW50GAMgAigN" + 
+            "Ei0KDGJuZXRfYWNjb3VudBgEIAIoCzIXLmJuZXQucHJvdG9jb2wuRW50aXR5" + 
+            "SWQSLQoMZ2FtZV9hY2NvdW50GAUgASgLMhcuYm5ldC5wcm90b2NvbC5FbnRp" + 
+            "dHlJZBI6ChBhY2NvdW50X2Zvcl9pdGVtGAYgAigLMiAuYm5ldC5wcm90b2Nv" + 
+            "bC5leGNoYW5nZS5CbG9iRnJvbRIQCghjc19ub3RlcxgHIAIoCRISCgpjc191" + 
+            "c2VyX2lkGAggAigEEjsKEWFjY291bnRfZm9yX21vbmV5GAkgASgLMiAuYm5l" + 
+            "dC5wcm90b2NvbC5leGNoYW5nZS5CbG9iRnJvbSIuChVDcmVhdGVDU1RyYWRl" + 
+            "UmVzcG9uc2USFQoNb3JkZXJfYm9va19pZBgBIAEoBCK5AQoUR2V0T3JkZXJD" + 
+            "b3VudFJlcXVlc3QSEAoIY3VycmVuY3kYASABKAkSDgoGc291cmNlGAIgASgH" + 
+            "Ei0KDGJuZXRfYWNjb3VudBgDIAEoCzIXLmJuZXQucHJvdG9jb2wuRW50aXR5" + 
+            "SWQSJQoWbm90X2Nsb3NlZF9vZmZlcl9jb3VudBgEIAEoCDoFZmFsc2USKQoa" + 
+            "b3JkZXJfd2l0aF9jbGFpbWFibGVfY291bnQYBSABKAg6BWZhbHNlIpkBChVH" + 
+            "ZXRPcmRlckNvdW50UmVzcG9uc2USPQoWbm90X2Nsb3NlZF9vZmZlcl9jb3Vu" + 
+            "dBgBIAEoCzIdLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ291bnQSQQoab3Jk" + 
+            "ZXJfd2l0aF9jbGFpbWFibGVfY291bnQYAiABKAsyHS5ibmV0LnByb3RvY29s" + 
+            "LmV4Y2hhbmdlLkNvdW50IoABChVIaXN0b3JpZXNGb3JDU1JlcXVlc3QSLQoM" + 
+            "Ym5ldF9hY2NvdW50GAEgAigLMhcuYm5ldC5wcm90b2NvbC5FbnRpdHlJZBIP" + 
+            "Cgdwcm9ncmFtGAIgAigHEhIKCmxvd2VyX3RpbWUYAyACKAQSEwoLaGlnaGVy" + 
+            "X3RpbWUYBCACKAQiUwoWSGlzdG9yaWVzRm9yQ1NSZXNwb25zZRI5CgxoaXN0" + 
+            "b3J5X2RhdGEYASADKAsyIy5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkhpc3Rv" + 
+            "cnlEYXRhIg4KDEVudGVyUmVxdWVzdCIPCg1FbnRlclJlc3BvbnNlIg4KDExl" + 
+            "YXZlUmVxdWVzdDK1LgoPRXhjaGFuZ2VTZXJ2aWNlEngKD0NyZWF0ZU9yZGVy" + 
+            "Qm9vaxIuLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ3JlYXRlT3JkZXJCb29r" + 
+            "UmVxdWVzdBovLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ3JlYXRlT3JkZXJC" + 
+            "b29rUmVzcG9uc2UiBIC1GAESigEKFVBsYWNlT2ZmZXJPbk9yZGVyQm9vaxI0" + 
+            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGxhY2VPZmZlck9uT3JkZXJCb29r" + 
+            "UmVxdWVzdBo1LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGxhY2VPZmZlck9u" + 
+            "T3JkZXJCb29rUmVzcG9uc2UiBIC1GAISrgEKIVBsYWNlT2ZmZXJDcmVhdGVP" + 
+            "cmRlckJvb2tJZk5lZWRlZBJALmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUGxh" + 
+            "Y2VPZmZlckNyZWF0ZU9yZGVyQm9va0lmTmVlZGVkUmVxdWVzdBpBLmJuZXQu" + 
+            "cHJvdG9jb2wuZXhjaGFuZ2UuUGxhY2VPZmZlckNyZWF0ZU9yZGVyQm9va0lm" + 
+            "TmVlZGVkUmVzcG9uc2UiBIC1GAMShAEKE1BsYWNlQmlkT25PcmRlckJvb2sS" + 
+            "Mi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlBsYWNlQmlkT25PcmRlckJvb2tS" + 
+            "ZXF1ZXN0GjMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5QbGFjZUJpZE9uT3Jk" + 
+            "ZXJCb29rUmVzcG9uc2UiBIC1GAQSqAEKH1BsYWNlQmlkQ3JlYXRlT3JkZXJC" + 
+            "b29rSWZOZWVkZWQSPi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlBsYWNlQmlk" + 
+            "Q3JlYXRlT3JkZXJCb29rSWZOZWVkZWRSZXF1ZXN0Gj8uYm5ldC5wcm90b2Nv" + 
+            "bC5leGNoYW5nZS5QbGFjZUJpZENyZWF0ZU9yZGVyQm9va0lmTmVlZGVkUmVz" + 
+            "cG9uc2UiBIC1GAUSjQEKFlF1ZXJ5T2ZmZXJzQnlPcmRlckJvb2sSNS5ibmV0" + 
+            "LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5T2ZmZXJzQnlPcmRlckJvb2tSZXF1" + 
+            "ZXN0GjYuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeU9mZmVyc0J5T3Jk" + 
+            "ZXJCb29rUmVzcG9uc2UiBIC1GAYShwEKFFF1ZXJ5Qmlkc0J5T3JkZXJCb29r" + 
+            "EjMuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeUJpZHNCeU9yZGVyQm9v" + 
+            "a1JlcXVlc3QaNC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5Qmlkc0J5" + 
+            "T3JkZXJCb29rUmVzcG9uc2UiBIC1GAcSnAEKG1F1ZXJ5T2ZmZXJzQnlBY2Nv" + 
+            "dW50Rm9ySXRlbRI6LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuUXVlcnlPZmZl" + 
+            "cnNCeUFjY291bnRGb3JJdGVtUmVxdWVzdBo7LmJuZXQucHJvdG9jb2wuZXhj" + 
+            "aGFuZ2UuUXVlcnlPZmZlcnNCeUFjY291bnRGb3JJdGVtUmVzcG9uc2UiBIC1" + 
+            "GAgSlgEKGVF1ZXJ5Qmlkc0J5QWNjb3VudEZvckl0ZW0SOC5ibmV0LnByb3Rv" + 
+            "Y29sLmV4Y2hhbmdlLlF1ZXJ5Qmlkc0J5QWNjb3VudEZvckl0ZW1SZXF1ZXN0" + 
+            "GjkuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeUJpZHNCeUFjY291bnRG" + 
+            "b3JJdGVtUmVzcG9uc2UiBIC1GAkSjQEKFlF1ZXJ5T3JkZXJCb29rc1N1bW1h" + 
+            "cnkSNS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLlF1ZXJ5T3JkZXJCb29rc1N1" + 
+            "bW1hcnlSZXF1ZXN0GjYuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeU9y" + 
+            "ZGVyQm9va3NTdW1tYXJ5UmVzcG9uc2UiBIC1GAsSbgoPUmVwb3J0QXV0aG9y" + 
+            "aXplEj4uYm5ldC5wcm90b2NvbC5leGNoYW5nZV9vYmplY3RfcHJvdmlkZXIu" + 
+            "UmVwb3J0QXV0aG9yaXplUmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRh" + 
+            "IgSAtRgNEmgKDFJlcG9ydFNldHRsZRI7LmJuZXQucHJvdG9jb2wuZXhjaGFu" + 
+            "Z2Vfb2JqZWN0X3Byb3ZpZGVyLlJlcG9ydFNldHRsZVJlcXVlc3QaFS5ibmV0" + 
+            "LnByb3RvY29sLk5vRGF0YSIEgLUYDhJoCgxSZXBvcnRDYW5jZWwSOy5ibmV0" + 
+            "LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92aWRlci5SZXBvcnRDYW5j" + 
+            "ZWxSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GA8SfAoeU3Vi" + 
+            "c2NyaWJlT3JkZXJCb29rU3RhdHVzQ2hhbmdlEj0uYm5ldC5wcm90b2NvbC5l" + 
+            "eGNoYW5nZS5TdWJzY3JpYmVPcmRlckJvb2tTdGF0dXNDaGFuZ2VSZXF1ZXN0" + 
+            "GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBASgAEKIFVuc3Vic2NyaWJl" + 
+            "T3JkZXJCb29rU3RhdHVzQ2hhbmdlEj8uYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
+            "ZS5VbnN1YnNjcmliZU9yZGVyQm9va1N0YXR1c0NoYW5nZVJlcXVlc3QaFS5i" + 
+            "bmV0LnByb3RvY29sLk5vRGF0YSIEgLUYERJoChRTdWJzY3JpYmVPcmRlclVw" + 
+            "ZGF0ZRIzLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuU3Vic2NyaWJlT3JkZXJV" + 
+            "cGRhdGVSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBISbAoW" + 
+            "VW5zdWJzY3JpYmVPcmRlclVwZGF0ZRI1LmJuZXQucHJvdG9jb2wuZXhjaGFu" + 
+            "Z2UuVW5zdWJzY3JpYmVPcmRlclVwZGF0ZVJlcXVlc3QaFS5ibmV0LnByb3Rv" + 
+            "Y29sLk5vRGF0YSIEgLUYExKeAQoRR2V0UGF5bWVudE1ldGhvZHMSQC5ibmV0" + 
+            "LnByb3RvY29sLmV4Y2hhbmdlX29iamVjdF9wcm92aWRlci5HZXRQYXltZW50" + 
+            "TWV0aG9kc1JlcXVlc3QaQS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlX29iamVj" + 
+            "dF9wcm92aWRlci5HZXRQYXltZW50TWV0aG9kc1Jlc3BvbnNlIgSAtRgUElEK" + 
+            "DENsYWltQmlkSXRlbRIkLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ2xhaW1S" + 
+            "ZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBUSUgoNQ2xhaW1C" + 
+            "aWRNb25leRIkLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ2xhaW1SZXF1ZXN0" + 
+            "GhUuYm5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GBYSUwoOQ2xhaW1PZmZlckl0" + 
+            "ZW0SJC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkNsYWltUmVxdWVzdBoVLmJu" + 
+            "ZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgXElQKD0NsYWltT2ZmZXJNb25leRIk" + 
+            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuQ2xhaW1SZXF1ZXN0GhUuYm5ldC5w" + 
+            "cm90b2NvbC5Ob0RhdGEiBIC1GBgSTwoJQ2FuY2VsQmlkEiUuYm5ldC5wcm90" + 
+            "b2NvbC5leGNoYW5nZS5DYW5jZWxSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5O" + 
+            "b0RhdGEiBIC1GBkSUQoLQ2FuY2VsT2ZmZXISJS5ibmV0LnByb3RvY29sLmV4" + 
+            "Y2hhbmdlLkNhbmNlbFJlcXVlc3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIE" + 
+            "gLUYGhJ7ChBHZXRDb25maWd1cmF0aW9uEi8uYm5ldC5wcm90b2NvbC5leGNo" + 
+            "YW5nZS5HZXRDb25maWd1cmF0aW9uUmVxdWVzdBowLmJuZXQucHJvdG9jb2wu" + 
+            "ZXhjaGFuZ2UuR2V0Q29uZmlndXJhdGlvblJlc3BvbnNlIgSAtRgbEoEBChNH" + 
+            "ZXRCaWRGZWVFc3RpbWF0aW9uEjIuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5H" + 
+            "ZXRCaWRGZWVFc3RpbWF0aW9uUmVxdWVzdBowLmJuZXQucHJvdG9jb2wuZXhj" + 
+            "aGFuZ2UuR2V0RmVlRXN0aW1hdGlvblJlc3BvbnNlIgSAtRgcEoUBChVHZXRP" + 
+            "ZmZlckZlZUVzdGltYXRpb24SNC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkdl" + 
+            "dE9mZmVyRmVlRXN0aW1hdGlvblJlcXVlc3QaMC5ibmV0LnByb3RvY29sLmV4" + 
+            "Y2hhbmdlLkdldEZlZUVzdGltYXRpb25SZXNwb25zZSIEgLUYHRKcAQobUXVl" + 
+            "cnlPcmRlcnNCeUFjY291bnRGb3JJdGVtEjouYm5ldC5wcm90b2NvbC5leGNo" + 
+            "YW5nZS5RdWVyeU9yZGVyc0J5QWNjb3VudEZvckl0ZW1SZXF1ZXN0GjsuYm5l" + 
+            "dC5wcm90b2NvbC5leGNoYW5nZS5RdWVyeU9yZGVyc0J5QWNjb3VudEZvckl0" + 
+            "ZW1SZXNwb25zZSIEgLUYHhJ5ChpSZXBvcnRBdXRob3JpemVSaXNrVmVyZGlj" + 
+            "dBI+LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Vfcmlzay5SZXBvcnRBdXRob3Jp" + 
+            "emVSaXNrVmVyZGljdFJlcXVlc3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIE" + 
+            "gLUYHxJzChdSZXBvcnRTZXR0bGVSaXNrVmVyZGljdBI7LmJuZXQucHJvdG9j" + 
+            "b2wuZXhjaGFuZ2Vfcmlzay5SZXBvcnRTZXR0bGVSaXNrVmVyZGljdFJlcXVl" + 
+            "c3QaFS5ibmV0LnByb3RvY29sLk5vRGF0YSIEgLUYIBJxChZEZWxheVNldHRs" + 
+            "ZVJpc2tWZXJkaWN0EjouYm5ldC5wcm90b2NvbC5leGNoYW5nZV9yaXNrLkRl" + 
+            "bGF5U2V0dGxlUmlza1ZlcmRpY3RSZXF1ZXN0GhUuYm5ldC5wcm90b2NvbC5O" + 
+            "b0RhdGEiBIC1GCEScgoNR2V0RmVlRGV0YWlscxIsLmJuZXQucHJvdG9jb2wu" + 
+            "ZXhjaGFuZ2UuR2V0RmVlRGV0YWlsc1JlcXVlc3QaLS5ibmV0LnByb3RvY29s" + 
+            "LmV4Y2hhbmdlLkdldEZlZURldGFpbHNSZXNwb25zZSIEgLUYIhKNAQoWR2V0" + 
+            "T3JkZXJCb29rU3RhdGlzdGljcxI1LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
+            "R2V0T3JkZXJCb29rU3RhdGlzdGljc1JlcXVlc3QaNi5ibmV0LnByb3RvY29s" + 
+            "LmV4Y2hhbmdlLkdldE9yZGVyQm9va1N0YXRpc3RpY3NSZXNwb25zZSIEgLUY" + 
+            "IxJyCg1HZXRCaWREZXRhaWxzEiwuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5H" + 
+            "ZXRCaWREZXRhaWxzUmVxdWVzdBotLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
+            "R2V0QmlkRGV0YWlsc1Jlc3BvbnNlIgSAtRgkEngKD0dldE9mZmVyRGV0YWls" + 
+            "cxIuLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0T2ZmZXJEZXRhaWxzUmVx" + 
+            "dWVzdBovLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0T2ZmZXJEZXRhaWxz" + 
+            "UmVzcG9uc2UiBIC1GCUSWwoNR2V0U3lzdGVtVGltZRIVLmJuZXQucHJvdG9j" + 
+            "b2wuTm9EYXRhGi0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5HZXRTeXN0ZW1U" + 
+            "aW1lUmVzcG9uc2UiBIC1GCYSWgoNQ3JlYXRlQ1NUcmFkZRIsLmJuZXQucHJv" + 
+            "dG9jb2wuZXhjaGFuZ2UuQ3JlYXRlQ1NUcmFkZVJlcXVlc3QaFS5ibmV0LnBy" + 
+            "b3RvY29sLk5vRGF0YSIEgLUYJxJPCglSZWZ1bmRCaWQSJS5ibmV0LnByb3Rv" + 
+            "Y29sLmV4Y2hhbmdlLlJlZnVuZFJlcXVlc3QaFS5ibmV0LnByb3RvY29sLk5v" + 
+            "RGF0YSIEgLUYKBJoCgxSZXBvcnRSZWZ1bmQSOy5ibmV0LnByb3RvY29sLmV4" + 
+            "Y2hhbmdlX29iamVjdF9wcm92aWRlci5SZXBvcnRSZWZ1bmRSZXF1ZXN0GhUu" + 
+            "Ym5ldC5wcm90b2NvbC5Ob0RhdGEiBIC1GCkScgoNR2V0T3JkZXJDb3VudBIs" + 
+            "LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuR2V0T3JkZXJDb3VudFJlcXVlc3Qa" + 
+            "LS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkdldE9yZGVyQ291bnRSZXNwb25z" + 
+            "ZSIEgLUYKhJ4ChxTdWJzY3JpYmVBZHZhbmNlZE9yZGVyVXBkYXRlEjsuYm5l" + 
+            "dC5wcm90b2NvbC5leGNoYW5nZS5TdWJzY3JpYmVBZHZhbmNlZE9yZGVyVXBk" + 
+            "YXRlUmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgrEnwKHlVu" + 
+            "c3Vic2NyaWJlQWR2YW5jZWRPcmRlclVwZGF0ZRI9LmJuZXQucHJvdG9jb2wu" + 
+            "ZXhjaGFuZ2UuVW5zdWJzY3JpYmVBZHZhbmNlZE9yZGVyVXBkYXRlUmVxdWVz" + 
+            "dBoVLmJuZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgsEnsKFFNldHRsZUhpc3Rv" + 
+            "cmllc0ZvckNTEi0uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5IaXN0b3JpZXNG" + 
+            "b3JDU1JlcXVlc3QaLi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkhpc3Rvcmll" + 
+            "c0ZvckNTUmVzcG9uc2UiBIC1GC0SewoUQ2FuY2VsSGlzdG9yaWVzRm9yQ1MS" + 
+            "LS5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkhpc3Rvcmllc0ZvckNTUmVxdWVz" + 
+            "dBouLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuSGlzdG9yaWVzRm9yQ1NSZXNw" + 
+            "b25zZSIEgLUYLhJ6ChFDcmVhdGVDU1RyYWRlSXRlbRIwLmJuZXQucHJvdG9j" + 
+            "b2wuZXhjaGFuZ2UuQ3JlYXRlQ1NUcmFkZUl0ZW1SZXF1ZXN0Gi0uYm5ldC5w" + 
+            "cm90b2NvbC5leGNoYW5nZS5DcmVhdGVDU1RyYWRlUmVzcG9uc2UiBIC1GC8S" + 
+            "fAoSQ3JlYXRlQ1NUcmFkZU1vbmV5EjEuYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
+            "ZS5DcmVhdGVDU1RyYWRlTW9uZXlSZXF1ZXN0Gi0uYm5ldC5wcm90b2NvbC5l" + 
+            "eGNoYW5nZS5DcmVhdGVDU1RyYWRlUmVzcG9uc2UiBIC1GDASYgoNRW50ZXJF" + 
+            "eGNoYW5nZRIkLmJuZXQucHJvdG9jb2wuZXhjaGFuZ2UuRW50ZXJSZXF1ZXN0" + 
+            "GiUuYm5ldC5wcm90b2NvbC5leGNoYW5nZS5FbnRlclJlc3BvbnNlIgSAtRgx" + 
+            "ElIKDUxlYXZlRXhjaGFuZ2USJC5ibmV0LnByb3RvY29sLmV4Y2hhbmdlLkxl" + 
+            "YXZlUmVxdWVzdBoVLmJuZXQucHJvdG9jb2wuTm9EYXRhIgSAtRgyEpgBCg9H" + 
+            "ZXRBdXRoUHJvZ3Jlc3MSPi5ibmV0LnByb3RvY29sLmV4Y2hhbmdlX29iamVj" + 
+            "dF9wcm92aWRlci5HZXRBdXRoUHJvZ3Jlc3NSZXF1ZXN0Gj8uYm5ldC5wcm90" + 
+            "b2NvbC5leGNoYW5nZV9vYmplY3RfcHJvdmlkZXIuR2V0QXV0aFByb2dyZXNz" + 
+            "UmVzcG9uc2UiBIC1GDMywQMKDkV4Y2hhbmdlTm90aWZ5EnUKG05vdGlmeU9y" + 
+            "ZGVyQm9va1N0YXR1c0NoYW5nZRI0LmJuZXQucHJvdG9jb2wuZXhjaGFuZ2Uu" + 
+            "T3JkZXJCb29rTm90aWZpY2F0aW9uUmVxdWVzdBoaLmJuZXQucHJvdG9jb2wu" + 
+            "Tk9fUkVTUE9OU0UiBIC1GAESZwoRTm90aWZ5T2ZmZXJVcGRhdGUSMC5ibmV0" + 
+            "LnByb3RvY29sLmV4Y2hhbmdlLk9mZmVyTm90aWZpY2F0aW9uUmVxdWVzdBoa" + 
+            "LmJuZXQucHJvdG9jb2wuTk9fUkVTUE9OU0UiBIC1GAISYwoPTm90aWZ5Qmlk" + 
+            "VXBkYXRlEi4uYm5ldC5wcm90b2NvbC5leGNoYW5nZS5CaWROb3RpZmljYXRp" + 
+            "b25SZXF1ZXN0GhouYm5ldC5wcm90b2NvbC5OT19SRVNQT05TRSIEgLUYAxJq" + 
+            "ChNOb3RpZnlDdXN0b21NZXNzYWdlEjEuYm5ldC5wcm90b2NvbC5leGNoYW5n" + 
+            "ZS5DdXN0b21Ob3RpZmljYXRpb25SZXF1ZXN0GhouYm5ldC5wcm90b2NvbC5O" + 
+            "T19SRVNQT05TRSIEgLUYBEIDgAEA");
         pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
           descriptor = root;
           internal__static_bnet_protocol_exchange_CreateOrderBookRequest__Descriptor = Descriptor.MessageTypes[0];
@@ -673,7 +688,7 @@ namespace bnet.protocol.exchange {
           internal__static_bnet_protocol_exchange_CreateCSTradeItemRequest__Descriptor = Descriptor.MessageTypes[50];
           internal__static_bnet_protocol_exchange_CreateCSTradeItemRequest__FieldAccessorTable = 
               new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.CreateCSTradeItemRequest, global::bnet.protocol.exchange.CreateCSTradeItemRequest.Builder>(internal__static_bnet_protocol_exchange_CreateCSTradeItemRequest__Descriptor,
-                  new string[] { "PartitionId", "OrderBook", "Amount", "BnetAccount", "GameAccount", "AccountForItem", "CsNotes", "CsUserId", });
+                  new string[] { "PartitionId", "OrderBook", "Amount", "BnetAccount", "GameAccount", "AccountForItem", "CsNotes", "CsUserId", "IsCommodity", });
           internal__static_bnet_protocol_exchange_CreateCSTradeMoneyRequest__Descriptor = Descriptor.MessageTypes[51];
           internal__static_bnet_protocol_exchange_CreateCSTradeMoneyRequest__FieldAccessorTable = 
               new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.CreateCSTradeMoneyRequest, global::bnet.protocol.exchange.CreateCSTradeMoneyRequest.Builder>(internal__static_bnet_protocol_exchange_CreateCSTradeMoneyRequest__Descriptor,
@@ -698,6 +713,18 @@ namespace bnet.protocol.exchange {
           internal__static_bnet_protocol_exchange_HistoriesForCSResponse__FieldAccessorTable = 
               new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.HistoriesForCSResponse, global::bnet.protocol.exchange.HistoriesForCSResponse.Builder>(internal__static_bnet_protocol_exchange_HistoriesForCSResponse__Descriptor,
                   new string[] { "HistoryData", });
+          internal__static_bnet_protocol_exchange_EnterRequest__Descriptor = Descriptor.MessageTypes[57];
+          internal__static_bnet_protocol_exchange_EnterRequest__FieldAccessorTable = 
+              new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.EnterRequest, global::bnet.protocol.exchange.EnterRequest.Builder>(internal__static_bnet_protocol_exchange_EnterRequest__Descriptor,
+                  new string[] { });
+          internal__static_bnet_protocol_exchange_EnterResponse__Descriptor = Descriptor.MessageTypes[58];
+          internal__static_bnet_protocol_exchange_EnterResponse__FieldAccessorTable = 
+              new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.EnterResponse, global::bnet.protocol.exchange.EnterResponse.Builder>(internal__static_bnet_protocol_exchange_EnterResponse__Descriptor,
+                  new string[] { });
+          internal__static_bnet_protocol_exchange_LeaveRequest__Descriptor = Descriptor.MessageTypes[59];
+          internal__static_bnet_protocol_exchange_LeaveRequest__FieldAccessorTable = 
+              new pb::FieldAccess.FieldAccessorTable<global::bnet.protocol.exchange.LeaveRequest, global::bnet.protocol.exchange.LeaveRequest.Builder>(internal__static_bnet_protocol_exchange_LeaveRequest__Descriptor,
+                  new string[] { });
           pb::ExtensionRegistry registry = pb::ExtensionRegistry.CreateInstance();
           RegisterAllExtensions(registry);
           global::bnet.protocol.Rpc.RegisterAllExtensions(registry);
@@ -19952,8 +19979,8 @@ namespace bnet.protocol.exchange {
   public sealed partial class CreateCSTradeItemRequest : pb::GeneratedMessage<CreateCSTradeItemRequest, CreateCSTradeItemRequest.Builder> {
     private CreateCSTradeItemRequest() { }
     private static readonly CreateCSTradeItemRequest defaultInstance = new CreateCSTradeItemRequest().MakeReadOnly();
-    private static readonly string[] _createCSTradeItemRequestFieldNames = new string[] { "account_for_item", "amount", "bnet_account", "cs_notes", "cs_user_id", "game_account", "order_book", "partition_id" };
-    private static readonly uint[] _createCSTradeItemRequestFieldTags = new uint[] { 50, 24, 34, 58, 64, 42, 18, 10 };
+    private static readonly string[] _createCSTradeItemRequestFieldNames = new string[] { "account_for_item", "amount", "bnet_account", "cs_notes", "cs_user_id", "game_account", "is_commodity", "order_book", "partition_id" };
+    private static readonly uint[] _createCSTradeItemRequestFieldTags = new uint[] { 50, 24, 34, 58, 64, 42, 72, 18, 10 };
     public static CreateCSTradeItemRequest DefaultInstance {
       get { return defaultInstance; }
     }
@@ -20054,6 +20081,16 @@ namespace bnet.protocol.exchange {
       get { return csUserId_; }
     }
     
+    public const int IsCommodityFieldNumber = 9;
+    private bool hasIsCommodity;
+    private bool isCommodity_;
+    public bool HasIsCommodity {
+      get { return hasIsCommodity; }
+    }
+    public bool IsCommodity {
+      get { return isCommodity_; }
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasOrderBook) return false;
@@ -20079,10 +20116,10 @@ namespace bnet.protocol.exchange {
       int size = SerializedSize;
       string[] field_names = _createCSTradeItemRequestFieldNames;
       if (hasPartitionId) {
-        output.WriteMessage(1, field_names[7], PartitionId);
+        output.WriteMessage(1, field_names[8], PartitionId);
       }
       if (hasOrderBook) {
-        output.WriteMessage(2, field_names[6], OrderBook);
+        output.WriteMessage(2, field_names[7], OrderBook);
       }
       if (hasAmount) {
         output.WriteUInt32(3, field_names[1], Amount);
@@ -20101,6 +20138,9 @@ namespace bnet.protocol.exchange {
       }
       if (hasCsUserId) {
         output.WriteUInt64(8, field_names[4], CsUserId);
+      }
+      if (hasIsCommodity) {
+        output.WriteBool(9, field_names[6], IsCommodity);
       }
       UnknownFields.WriteTo(output);
     }
@@ -20135,6 +20175,9 @@ namespace bnet.protocol.exchange {
         }
         if (hasCsUserId) {
           size += pb::CodedOutputStream.ComputeUInt64Size(8, CsUserId);
+        }
+        if (hasIsCommodity) {
+          size += pb::CodedOutputStream.ComputeBoolSize(9, IsCommodity);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -20286,6 +20329,9 @@ namespace bnet.protocol.exchange {
         if (other.HasCsUserId) {
           CsUserId = other.CsUserId;
         }
+        if (other.HasIsCommodity) {
+          IsCommodity = other.IsCommodity;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -20384,6 +20430,10 @@ namespace bnet.protocol.exchange {
             }
             case 64: {
               result.hasCsUserId = input.ReadUInt64(ref result.csUserId_);
+              break;
+            }
+            case 72: {
+              result.hasIsCommodity = input.ReadBool(ref result.isCommodity_);
               break;
             }
           }
@@ -20654,6 +20704,26 @@ namespace bnet.protocol.exchange {
         PrepareBuilder();
         result.hasCsUserId = false;
         result.csUserId_ = 0UL;
+        return this;
+      }
+      
+      public bool HasIsCommodity {
+        get { return result.hasIsCommodity; }
+      }
+      public bool IsCommodity {
+        get { return result.IsCommodity; }
+        set { SetIsCommodity(value); }
+      }
+      public Builder SetIsCommodity(bool value) {
+        PrepareBuilder();
+        result.hasIsCommodity = true;
+        result.isCommodity_ = value;
+        return this;
+      }
+      public Builder ClearIsCommodity() {
+        PrepareBuilder();
+        result.hasIsCommodity = false;
+        result.isCommodity_ = false;
         return this;
       }
     }
@@ -23308,6 +23378,699 @@ namespace bnet.protocol.exchange {
     }
   }
   
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class EnterRequest : pb::GeneratedMessage<EnterRequest, EnterRequest.Builder> {
+    private EnterRequest() { }
+    private static readonly EnterRequest defaultInstance = new EnterRequest().MakeReadOnly();
+    private static readonly string[] _enterRequestFieldNames = new string[] {  };
+    private static readonly uint[] _enterRequestFieldTags = new uint[] {  };
+    public static EnterRequest DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override EnterRequest DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override EnterRequest ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_EnterRequest__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<EnterRequest, EnterRequest.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_EnterRequest__FieldAccessorTable; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _enterRequestFieldNames;
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static EnterRequest ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static EnterRequest ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static EnterRequest ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static EnterRequest ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private EnterRequest MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(EnterRequest prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<EnterRequest, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(EnterRequest cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private EnterRequest result;
+      
+      private EnterRequest PrepareBuilder() {
+        if (resultIsReadOnly) {
+          EnterRequest original = result;
+          result = new EnterRequest();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override EnterRequest MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange.EnterRequest.Descriptor; }
+      }
+      
+      public override EnterRequest DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange.EnterRequest.DefaultInstance; }
+      }
+      
+      public override EnterRequest BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is EnterRequest) {
+          return MergeFrom((EnterRequest) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(EnterRequest other) {
+        if (other == global::bnet.protocol.exchange.EnterRequest.DefaultInstance) return this;
+        PrepareBuilder();
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_enterRequestFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _enterRequestFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+    }
+    static EnterRequest() {
+      object.ReferenceEquals(global::bnet.protocol.exchange.Proto.ExchangeService.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class EnterResponse : pb::GeneratedMessage<EnterResponse, EnterResponse.Builder> {
+    private EnterResponse() { }
+    private static readonly EnterResponse defaultInstance = new EnterResponse().MakeReadOnly();
+    private static readonly string[] _enterResponseFieldNames = new string[] {  };
+    private static readonly uint[] _enterResponseFieldTags = new uint[] {  };
+    public static EnterResponse DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override EnterResponse DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override EnterResponse ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_EnterResponse__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<EnterResponse, EnterResponse.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_EnterResponse__FieldAccessorTable; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _enterResponseFieldNames;
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static EnterResponse ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static EnterResponse ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static EnterResponse ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static EnterResponse ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private EnterResponse MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(EnterResponse prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<EnterResponse, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(EnterResponse cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private EnterResponse result;
+      
+      private EnterResponse PrepareBuilder() {
+        if (resultIsReadOnly) {
+          EnterResponse original = result;
+          result = new EnterResponse();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override EnterResponse MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange.EnterResponse.Descriptor; }
+      }
+      
+      public override EnterResponse DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange.EnterResponse.DefaultInstance; }
+      }
+      
+      public override EnterResponse BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is EnterResponse) {
+          return MergeFrom((EnterResponse) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(EnterResponse other) {
+        if (other == global::bnet.protocol.exchange.EnterResponse.DefaultInstance) return this;
+        PrepareBuilder();
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_enterResponseFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _enterResponseFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+    }
+    static EnterResponse() {
+      object.ReferenceEquals(global::bnet.protocol.exchange.Proto.ExchangeService.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+  public sealed partial class LeaveRequest : pb::GeneratedMessage<LeaveRequest, LeaveRequest.Builder> {
+    private LeaveRequest() { }
+    private static readonly LeaveRequest defaultInstance = new LeaveRequest().MakeReadOnly();
+    private static readonly string[] _leaveRequestFieldNames = new string[] {  };
+    private static readonly uint[] _leaveRequestFieldTags = new uint[] {  };
+    public static LeaveRequest DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override LeaveRequest DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override LeaveRequest ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_LeaveRequest__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<LeaveRequest, LeaveRequest.Builder> InternalFieldAccessors {
+      get { return global::bnet.protocol.exchange.Proto.ExchangeService.internal__static_bnet_protocol_exchange_LeaveRequest__FieldAccessorTable; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _leaveRequestFieldNames;
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static LeaveRequest ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static LeaveRequest ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static LeaveRequest ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static LeaveRequest ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private LeaveRequest MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(LeaveRequest prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ProtoGen", "2.4.1.473")]
+    public sealed partial class Builder : pb::GeneratedBuilder<LeaveRequest, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(LeaveRequest cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private LeaveRequest result;
+      
+      private LeaveRequest PrepareBuilder() {
+        if (resultIsReadOnly) {
+          LeaveRequest original = result;
+          result = new LeaveRequest();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override LeaveRequest MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::bnet.protocol.exchange.LeaveRequest.Descriptor; }
+      }
+      
+      public override LeaveRequest DefaultInstanceForType {
+        get { return global::bnet.protocol.exchange.LeaveRequest.DefaultInstance; }
+      }
+      
+      public override LeaveRequest BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is LeaveRequest) {
+          return MergeFrom((LeaveRequest) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(LeaveRequest other) {
+        if (other == global::bnet.protocol.exchange.LeaveRequest.DefaultInstance) return this;
+        PrepareBuilder();
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_leaveRequestFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _leaveRequestFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+    }
+    static LeaveRequest() {
+      object.ReferenceEquals(global::bnet.protocol.exchange.Proto.ExchangeService.Descriptor, null);
+    }
+  }
+  
   #endregion
   
   #region Services
@@ -23499,6 +24262,18 @@ namespace bnet.protocol.exchange {
         pb::IRpcController controller,
         global::bnet.protocol.exchange.CreateCSTradeMoneyRequest request,
         global::System.Action<global::bnet.protocol.exchange.CreateCSTradeResponse> done);
+    public abstract void EnterExchange(
+        pb::IRpcController controller,
+        global::bnet.protocol.exchange.EnterRequest request,
+        global::System.Action<global::bnet.protocol.exchange.EnterResponse> done);
+    public abstract void LeaveExchange(
+        pb::IRpcController controller,
+        global::bnet.protocol.exchange.LeaveRequest request,
+        global::System.Action<global::bnet.protocol.NoData> done);
+    public abstract void GetAuthProgress(
+        pb::IRpcController controller,
+        global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest request,
+        global::System.Action<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse> done);
     
     public static pbd::ServiceDescriptor Descriptor {
       get { return Proto.ExchangeService.Descriptor.Services[0]; }
@@ -23747,6 +24522,21 @@ namespace bnet.protocol.exchange {
               pb::RpcUtil.SpecializeCallback<global::bnet.protocol.exchange.CreateCSTradeResponse>(
               done));
           return;
+        case 46:
+          this.EnterExchange(controller, (global::bnet.protocol.exchange.EnterRequest) request,
+              pb::RpcUtil.SpecializeCallback<global::bnet.protocol.exchange.EnterResponse>(
+              done));
+          return;
+        case 47:
+          this.LeaveExchange(controller, (global::bnet.protocol.exchange.LeaveRequest) request,
+              pb::RpcUtil.SpecializeCallback<global::bnet.protocol.NoData>(
+              done));
+          return;
+        case 48:
+          this.GetAuthProgress(controller, (global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest) request,
+              pb::RpcUtil.SpecializeCallback<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse>(
+              done));
+          return;
         default:
           throw new global::System.InvalidOperationException("Can't get here.");
       }
@@ -23850,6 +24640,12 @@ namespace bnet.protocol.exchange {
           return global::bnet.protocol.exchange.CreateCSTradeItemRequest.DefaultInstance;
         case 45:
           return global::bnet.protocol.exchange.CreateCSTradeMoneyRequest.DefaultInstance;
+        case 46:
+          return global::bnet.protocol.exchange.EnterRequest.DefaultInstance;
+        case 47:
+          return global::bnet.protocol.exchange.LeaveRequest.DefaultInstance;
+        case 48:
+          return global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest.DefaultInstance;
         default:
           throw new global::System.InvalidOperationException("Can't get here.");
       }
@@ -23953,6 +24749,12 @@ namespace bnet.protocol.exchange {
           return global::bnet.protocol.exchange.CreateCSTradeResponse.DefaultInstance;
         case 45:
           return global::bnet.protocol.exchange.CreateCSTradeResponse.DefaultInstance;
+        case 46:
+          return global::bnet.protocol.exchange.EnterResponse.DefaultInstance;
+        case 47:
+          return global::bnet.protocol.NoData.DefaultInstance;
+        case 48:
+          return global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.DefaultInstance;
         default:
           throw new global::System.InvalidOperationException("Can't get here.");
       }
@@ -24388,6 +25190,33 @@ namespace bnet.protocol.exchange {
         channel.CallMethod(Descriptor.Methods[45],
             controller, request, global::bnet.protocol.exchange.CreateCSTradeResponse.DefaultInstance,
             pb::RpcUtil.GeneralizeCallback<global::bnet.protocol.exchange.CreateCSTradeResponse, global::bnet.protocol.exchange.CreateCSTradeResponse.Builder>(done, global::bnet.protocol.exchange.CreateCSTradeResponse.DefaultInstance));
+      }
+      
+      public override void EnterExchange(
+          pb::IRpcController controller,
+          global::bnet.protocol.exchange.EnterRequest request,
+          global::System.Action<global::bnet.protocol.exchange.EnterResponse> done) {
+        channel.CallMethod(Descriptor.Methods[46],
+            controller, request, global::bnet.protocol.exchange.EnterResponse.DefaultInstance,
+            pb::RpcUtil.GeneralizeCallback<global::bnet.protocol.exchange.EnterResponse, global::bnet.protocol.exchange.EnterResponse.Builder>(done, global::bnet.protocol.exchange.EnterResponse.DefaultInstance));
+      }
+      
+      public override void LeaveExchange(
+          pb::IRpcController controller,
+          global::bnet.protocol.exchange.LeaveRequest request,
+          global::System.Action<global::bnet.protocol.NoData> done) {
+        channel.CallMethod(Descriptor.Methods[47],
+            controller, request, global::bnet.protocol.NoData.DefaultInstance,
+            pb::RpcUtil.GeneralizeCallback<global::bnet.protocol.NoData, global::bnet.protocol.NoData.Builder>(done, global::bnet.protocol.NoData.DefaultInstance));
+      }
+      
+      public override void GetAuthProgress(
+          pb::IRpcController controller,
+          global::bnet.protocol.exchange_object_provider.GetAuthProgressRequest request,
+          global::System.Action<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse> done) {
+        channel.CallMethod(Descriptor.Methods[48],
+            controller, request, global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.DefaultInstance,
+            pb::RpcUtil.GeneralizeCallback<global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse, global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.Builder>(done, global::bnet.protocol.exchange_object_provider.GetAuthProgressResponse.DefaultInstance));
       }
     }
   }
