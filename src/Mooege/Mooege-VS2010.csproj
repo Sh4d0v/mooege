@@ -76,7 +76,7 @@
       <HintPath>..\..\dep\nhibernate\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="LibMooNet">
-      <HintPath>..\..\..\moooege necro\src\LibMooNet\bin\Debug\LibMooNet.dll</HintPath>
+      <HintPath>..\..\..\moooege\src\LibMooNet\bin\Debug\LibMooNet.dll</HintPath>
     </Reference>
     <Reference Include="ManagedOpenSsl">
       <HintPath>..\..\dep\openssl\ManagedOpenSsl.dll</HintPath>
