@@ -1,0 +1,7 @@
+(SNO of the quest/event. / Number of the quest advancements.)
+
+q1: The Fallen Star (87700 / 9)
+q2: The Legacy of Cain (72095 / 16)
+q3: A Shattered Crown (72221 / 11)
+q4: Reign of the Black King (72061 / 19)
+q5: ...
