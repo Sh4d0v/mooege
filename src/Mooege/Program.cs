@@ -319,10 +319,9 @@ namespace Mooege
         /// </summary>
         private static void PrintLicense()
         {
-            Console.WriteLine("Copyright (C) 2016-2017, D3Emu project by Necrosummon");
-            Console.WriteLine("Based on Mooege project Copyright (C) 2011-2012");
-            Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; see the LICENSE file for details.");
+            Console.WriteLine("                  Copyright (C) 2011-2017, Mooege project");
             Console.WriteLine();
+	    Console.WriteLine();
         }
 
         #endregion
