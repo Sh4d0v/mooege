@@ -228,8 +228,8 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug(" (OnTargeted) the npc has dynID {0}", DynamicID);
 
             player.SelectedNPC = this;
+			
 			var vendor = player.SelectedNPC as Vendor;
-
             var count = Interactions.Count + Conversations.Count;
             if (count == 0)
                 return;

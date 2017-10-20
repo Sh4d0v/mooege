@@ -47,7 +47,10 @@ namespace Mooege.Core.GS.Actors.Implementations
                 this.Attributes[GameAttribute.Level] = monsterData.Level.Normal;
                 this.Attributes[GameAttribute.Hitpoints_Max] = monsterLevels.MonsterLevel[monsterData.Level.Normal].F0;
                 this.Attributes[GameAttribute.Hitpoints_Cur] = this.Attributes[GameAttribute.Hitpoints_Max_Total];
-                this.WalkSpeed = 0.5f * monsterData.Floats[129];  // TODO: this is probably multiplied by something erekose the 0.3 is because he is way too fast otherwise
+                this.Attributes[GameAttribute.Attacks_Per_Second] = 1.0f;
+                this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
+                this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
+                this.WalkSpeed = 0.3f * monsterData.Floats[129];  // TODO: this is probably multiplied by something erekose the 0.3 is because he is way too fast otherwise
             }
         }
 
