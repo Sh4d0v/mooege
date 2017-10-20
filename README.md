@@ -6,7 +6,7 @@
 * Reign of the Black King quest working in 5%.
 * Skills working in 55%.
 * Drop is still bugged. Decrease of gold drop.
-* Working with 1.0.3.10057 (soon newer with new Patcher).
+* Working with 1.0.3.10485 (soon newer with new Patcher).
 * Shared Stash fixed. Now you can buy more rows and tabs.
 * Working commands: !tp, !save, !changename, !changegender, !speed, !addgold
 * Rates of server in Server.conf file.
@@ -16,7 +16,7 @@
 
 # Stay awhile and listen
 
-* All sites about mooege is dead, sorry :)
+* Join us: https://discord.gg/ES7G8VV
 * Check [RageZone Forums](http://ragezone.com/) for more informations.
 * First server is http://d3reflection.com
 * Community board soon (i hope)...
