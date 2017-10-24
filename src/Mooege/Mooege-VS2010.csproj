@@ -731,10 +731,6 @@
       <Link>database.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\assets\config.ini">
-      <Link>config.ini</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\..\assets\mpqdata.db">
       <Link>Assets\mpqdata.db</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -757,6 +753,9 @@
     </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="conf\Server.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
