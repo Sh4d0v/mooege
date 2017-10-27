@@ -21,6 +21,27 @@
 * First server is http://d3reflection.com
 * Community board soon (i hope)...
 
+# Tutorial
+* Install [.NET Framework 4](https://www.microsoft.com/en-in/download/details.aspx?id=17718) if not installed
+* Install [Visual Studio 2017 Community Edition](https://www.visualstudio.com/en/downloads)
+* Pick .Net Desktop Development for workload
+* Install [GIT](https://git-scm.com/downloads) - next next next
+* CMD
+* Choose parent folder for sources
+* git clone https://github.com/Sh4d0v/mooege.git
+* Open Visual Studio CE, login, if you like, File -> open -> project/solution
+* Open mooege/src/Mooege/Mooege-VS2010.sln
+* Somehow this solution not full, right click on solution in Solution Explorer -> Add -> Existing Project -> pick \LibMooNet\LibMooNet.csproj
+* In Solution Explorer unfold the References link of Mooege-VS2010 project
+* Remove LibMooNet reference
+* Right click on references -> Add Reference -> Pick Projects -> Pick LibMooNet checkbox -> OK
+* Download [Client](https://yadi.sk/d/g_aoGkXE3PACvC) -> unrar
+* Download [downgrade patch](https://yadi.sk/d/dfPqlIiM3PAD3z) -> unrar to client
+* Download [executable fixer](https://yadi.sk/d/0bMUbmXy3PAD8f) -> unrar to client
+* Copy MPQs from client\Data_D3\PC\MPQs\ - all of them
+* Now, you can build solution CTRL+Shift+B
+* It should build without errors
+
 # Welcome to mooege
 
 mooege (multi-node object oriented educational game emulator) is an open source reference game-server implementation

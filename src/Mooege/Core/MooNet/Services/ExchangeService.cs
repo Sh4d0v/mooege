@@ -23,6 +23,9 @@ using Mooege.Common.Logging;
 using Mooege.Net.MooNet;
 using Mooege.Core.MooNet.Helpers;
 using Mooege.Common.Extensions;
+using bnet.protocol.exchange_object_provider;
+using bnet.protocol.exchange;
+using bnet.protocol;
 
 namespace Mooege.Core.MooNet.Services
 {
@@ -378,6 +381,21 @@ namespace Mooege.Core.MooNet.Services
         }
 
         public override void CreateCSTradeMoney(IRpcController controller, bnet.protocol.exchange.CreateCSTradeMoneyRequest request, Action<bnet.protocol.exchange.CreateCSTradeResponse> done)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void GetAuthProgress(IRpcController controller, GetAuthProgressRequest request, Action<GetAuthProgressResponse> done)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void EnterExchange(IRpcController controller, EnterRequest request, Action<EnterResponse> done)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LeaveExchange(IRpcController controller, LeaveRequest request, Action<NoData> done)
         {
             throw new NotImplementedException();
         }
