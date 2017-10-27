@@ -787,4 +787,11 @@
       <Name>LibMooNet</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if exist Assets\MPQ\CoreData.mpq (
+   rem yo
+) else (
+    xcopy /y /s "..\..\..\..\assets\mpq\*" ".\Assets\MPQ"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

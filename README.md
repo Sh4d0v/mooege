@@ -38,9 +38,14 @@
 * Download [Client](https://yadi.sk/d/g_aoGkXE3PACvC) -> unrar
 * Download [downgrade patch](https://yadi.sk/d/dfPqlIiM3PAD3z) -> unrar to client
 * Download [executable fixer](https://yadi.sk/d/0bMUbmXy3PAD8f) -> unrar to client
-* Copy MPQs from client\Data_D3\PC\MPQs\ - all of them
-* Now, you can build solution CTRL+Shift+B
+* Copy MPQs from client\Data_D3\PC\MPQs\ - all of them to mooege/assets/MPQ
+* Now, you can build solution CTRL+Shift+B, it will copy all of MPQs to debug folder
 * It should build without errors
+* Now start hit f5 - it will start DEBUG process and should run without errors -> you can use breakpoints!yay (2017 year)
+* Start client
+* Enter @test login, 123456 as password
+* ...
+* PROFIT!!!
 
 # Welcome to mooege
 
