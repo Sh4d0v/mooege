@@ -75,9 +75,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dep\nhibernate\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="LibMooNet">
-      <HintPath>..\..\..\moooege\src\LibMooNet\bin\Debug\LibMooNet.dll</HintPath>
-    </Reference>
     <Reference Include="ManagedOpenSsl">
       <HintPath>..\..\dep\openssl\ManagedOpenSsl.dll</HintPath>
     </Reference>
@@ -784,5 +781,17 @@
   <ItemGroup>
     <Content Include="..\..\Assets\mooege.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LibMooNet\LibMooNet.csproj">
+      <Project>{4cc19847-6f24-4453-9e31-126f94308ab9}</Project>
+      <Name>LibMooNet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if exist Assets\MPQ\CoreData.mpq (
+   rem yo
+) else (
+    xcopy /y /s "..\..\..\..\assets\mpq\*" ".\Assets\MPQ"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
