@@ -39,7 +39,7 @@
 * Right click on Mooege-VS2010 project -> Build -> wait, it will copy all MPQs to build folder
 * Now start hit f5 - it will start DEBUG process and should run without errors -> you can use breakpoints!yay (2017 year)
 * Start client
-* Enter @test login, 123456 as password
+* Enter test@ login, 123456 as password
 * Create char, start the game
 * enter !commands in chat for full commands list
 * ...
