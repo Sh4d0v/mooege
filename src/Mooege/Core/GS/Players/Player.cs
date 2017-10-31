@@ -1076,6 +1076,7 @@ namespace Mooege.Core.GS.Players
             // save visual equipment
             this.Toon.HeroNameField.Value = this.Toon.Name; // Refresh Character Name when is changed for the !changename command [Necrosummon]
             this.Toon.HeroFlagsField.Value = this.Toon.Gender; // Refresh character gender when is changed with the !changesex command [Necrosummon]
+            this.Toon.HeroVisualEquipmentField.Value = this.Inventory.GetVisualEquipment(); // Visual equipment on game exit fix [Necrosummon]
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroVisualEquipmentField);
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroLevelField);
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroNameField); // Refresh character name when is changed with the !changename command [Necrosummon]
