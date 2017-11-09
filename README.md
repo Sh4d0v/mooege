@@ -19,7 +19,7 @@
 * Join us: https://discord.gg/ES7G8VV
 * Check [RageZone Forums](http://ragezone.com/) for more informations.
 * First server is http://d3reflection.com
-* Community board soon (i hope)...
+* Also check our built-in wiki: https://github.com/Sh4d0v/mooege/wiki
 
 # Tutorial
 * Install [.NET Framework 4](https://www.microsoft.com/en-in/download/details.aspx?id=17718) if not installed
