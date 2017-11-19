@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2012 mooege project - http://www.mooege.org
+ * Copyright (C) 2011 - 2018 mooege project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,7 @@ namespace Mooege.Common.Versions
             /// <summary>
             /// Main assemblies version.
             /// </summary>
-            public const string Version = "1.10485.*";
-			// public const string Version = "1.11327.*"; // soon
+            public const string Version = "1.10485.*"; // also 1.11327.*
         }
 
         /// <summary>
@@ -48,13 +47,10 @@ namespace Mooege.Common.Versions
             /// <summary>
             /// Required client version.
             /// </summary>
-            public const int RequiredClientVersion = 10485;
-			// public const int RequiredClientVersion = 11327; // soon
+            public const int RequiredClientVersion = 10485; // also 11327
 
             public static Dictionary<string, int> ClientVersionMaps = new Dictionary<string, int>
             {
-				// {"Aurora 1a3c949c86_public", 16603}, // soon
-				// {"Aurora d2b2e2dbd0_public", 11327},
                 {"Aurora ab0ebd5e2c_public", 10485}, // also 10057, 10235
                 {"Aurora 24e2d13e54_public", 9991},
                 {"Aurora 79fef7ae8e_public", 9950},
@@ -114,7 +110,7 @@ namespace Mooege.Common.Versions
             public static Dictionary<string, uint> Regions = new Dictionary<string, uint>()
             {
                 { "US", 0x5553 },
-                { "XX", 0x5858 }, //Beta Region
+                { "XX", 0x5858 },
             };
 
             public static string Region = "US";
@@ -154,8 +150,7 @@ namespace Mooege.Common.Versions
             /// <summary>
             /// Required MPQ patch version.
             /// </summary>
-            public const int RequiredPatchVersion = 10485;
-			// public const int RequiredPatchVersion = 11327; // soon
+            public const int RequiredPatchVersion = 10485; // also 11327
         }
 
         /// <summary>
@@ -166,16 +161,14 @@ namespace Mooege.Common.Versions
             /// <summary>
             /// Ingame protocol hash.
             /// </summary>
-            public const int ProtocolHash = unchecked((int)0xFDD6012B); //10057
-			// public const int ProtocolHash = unchecked((int)0xA3B7C936); // 11327 soon
+            public const int ProtocolHash = unchecked((int)0xFDD6012B);
+			// public const int ProtocolHash = unchecked((int)0xA3B7C936); // also 11327
 
 			/// <summary>
             /// Server version sent in VersionsMessage.
             /// </summary>
-            public const string MajorVersion = "1.0.3";
-            public const string ServerBuild = "10485";
-			// public const string MajorVersion = "1.0.4";
-            // public const string ServerBuild = "11327";
+            public const string MajorVersion = "1.0.3"; // also 1.0.4
+            public const string ServerBuild = "10485"; // also 11327
             public const string VersionString = MajorVersion + "." + ServerBuild;
 
         }
