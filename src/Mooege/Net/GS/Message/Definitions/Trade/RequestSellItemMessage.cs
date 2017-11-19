@@ -23,13 +23,13 @@ namespace Mooege.Net.GS.Message.Definitions.Trade
     /// <summary>
     /// Sent by the client, when the player sells an item to a vendor via trade window (not when using cauldron of jordan)
     /// </summary>
-    [Message(Opcodes.RequestSellItemMessage)]
+    [Message(Opcodes.RequestSellItemMessage, Consumers.Player)]
     public class RequestSellItemMessage : GameMessage
     {
-        public int ItemId;
+        public uint ItemId;
 
         public RequestSellItemMessage() { }
-        public RequestSellItemMessage(int itemID)
+        public RequestSellItemMessage(uint itemID)
             : base(Opcodes.RequestSellItemMessage)
         {
             ItemId = itemID;
@@ -37,12 +37,12 @@ namespace Mooege.Net.GS.Message.Definitions.Trade
 
         public override void Parse(GameBitBuffer buffer)
         {
-            ItemId = buffer.ReadInt(32);
+            ItemId = buffer.ReadUInt(32);
         }
 
         public override void Encode(GameBitBuffer buffer)
         {
-            buffer.WriteInt(32, ItemId);
+            buffer.WriteUInt(32, ItemId);
         }
 
         public override void AsText(StringBuilder b, int pad)

@@ -202,6 +202,20 @@ namespace Mooege.Core.GS.Players
             _inventoryGrid.AddItem(newItem);
         }
 
+        public void SellItem(Item item)
+        {
+            if (_equipment.IsItemEquipped(item))
+            {
+                _equipment.UnequipItem(item);
+                SendVisualInventory(_owner);
+            }
+            else
+            {
+                _inventoryGrid.RemoveItem(item);
+            }
+            item.Destroy();
+        }
+
         /// <summary>
         /// Handles a request to move an item within the inventory.
         /// This covers moving items within the backpack, from equipment

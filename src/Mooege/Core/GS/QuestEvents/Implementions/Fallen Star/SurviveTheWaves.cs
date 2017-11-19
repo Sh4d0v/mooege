@@ -58,10 +58,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             ////so you can trigger the event multiple times while the event is already running, therefor, we disable his interaction till the event is done.-Wesko
 
             setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
-
-            //Start the conversation between RumFord & Guard.
             StartConversation(world, 198199);
-            //After Conversations ends!.
             var wave1Actors = world.GetActorsInGroup("GizmoGroup1");
             monstersId.Clear();
             ActorsVector3D.Clear();
@@ -137,7 +134,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         }
 
-        //This is the way we Listen for mob killing events.
         private bool OnKillListener(Map.World world, string group)
         {
             while (world.HasActorsInGroup(group))
@@ -146,7 +142,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             return true;
         }
 
-        //HACK!,This is the way we wait if we need to trigger something after a conversation ends.
         private bool _status = false;
         private bool WaitConversation(Map.World world)
         {
@@ -157,7 +152,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     if (player.Value.Conversations.ConversationRunning() == true)
                     {
-                        Logger.Debug("Conversation Finished");
                         _status = false;
                         return true;
                     }
@@ -170,7 +164,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             return true;
         }
 
-        //Launch Conversations.
         private bool StartConversation(Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)
@@ -180,7 +173,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             return true;
         }
 
-        //Not Operable Rumford (To disable giving u the same quest while ur in the event)
         public static bool setActorOperable(Map.World world, Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);

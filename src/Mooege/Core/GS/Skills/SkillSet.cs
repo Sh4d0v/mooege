@@ -177,7 +177,6 @@ namespace Mooege.Core.GS.Skills
             dbToon.DBActiveSkills.Passive1 = PassiveSkills[1];
             dbToon.DBActiveSkills.Passive2 = PassiveSkills[2];
 
-            // PassiveSkillEffects when character Update the passives [Necrosummon]
             PassiveSkillsEffects(player);
 
             DBSessions.AccountSession.SaveOrUpdate(dbToon.DBActiveSkills);

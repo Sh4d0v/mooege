@@ -48,7 +48,6 @@ namespace Mooege.Core.GS.Actors.Implementations
             PopulateItems();
         }
 
-
         // TODO: Proper item loading from droplist?
         protected virtual List<Item> GetVendorItems()
         {
@@ -104,10 +103,10 @@ namespace Mooege.Core.GS.Actors.Implementations
             player.InGameClient.SendMessage(new OpenTradeWindowMessage((int)this.DynamicID));
         }
 
-        public virtual void OnRequestBuyItem(Players.Player player, uint itemId)
+        public virtual void OnRequestBuyItem(Player player, uint itemId)
         {
-            // TODO: Check gold here
             Item item = _vendorGrid.GetItem(itemId);
+
             if (item == null)
                 return;
 
@@ -116,9 +115,20 @@ namespace Mooege.Core.GS.Actors.Implementations
                 return;
             }
 
-            // TODO: Remove the gold
             player.Inventory.BuyItem(item);
-            player.Inventory.RemoveGoldAmount(item.ItemDefinition.BaseGoldValue); // Remove the gold amount for buy a item [Necrosummon]
+            player.Inventory.RemoveGoldAmount(item.ItemDefinition.BaseGoldValue);
+        }
+
+        public virtual void OnRequestSellItem(Player player, uint itemId)
+        {
+            Item item = player.Inventory.GetItem(itemId);
+
+            if (item == null)
+                return;
+
+            player.Inventory.SellItem(item);
+            player.Inventory.AddGoldAmount(item.ItemDefinition.BaseGoldValue); // it should be changed to sell price, not base value [sh4d0v]
+            _vendorGrid.AddItem(item);
         }
     }
 }

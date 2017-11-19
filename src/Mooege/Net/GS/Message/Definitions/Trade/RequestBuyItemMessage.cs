@@ -23,7 +23,7 @@ namespace Mooege.Net.GS.Message.Definitions.Trade
     /// <summary>
     /// Sent by the client, when the player buys an item from a vendor
     /// </summary>
-    [Message(Opcodes.RequestBuyItemMessage, Consumers.Player)] // Maybe consumers.Vendor? /fasbat
+    [Message(Opcodes.RequestBuyItemMessage, Consumers.Player)]
     public class RequestBuyItemMessage : GameMessage
     {
         public uint ItemId;

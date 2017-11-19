@@ -701,6 +701,7 @@ namespace Mooege.Core.GS.Players
             else if (message is ACDClientTranslateMessage) OnPlayerMovement(client, (ACDClientTranslateMessage)message);
             else if (message is TryWaypointMessage) OnTryWaypoint(client, (TryWaypointMessage)message);
             else if (message is RequestBuyItemMessage) OnRequestBuyItem(client, (RequestBuyItemMessage)message);
+            else if (message is RequestSellItemMessage) OnRequestSellItem(client, (RequestSellItemMessage)message);
             //else if (message is RequestAddSocketMessage) OnRequestAddSocket(client, (RequestAddSocketMessage)message);
             else if (message is HirelingDismissMessage) OnHirelingDismiss();
             //else if (message is SocketSpellMessage) OnSocketSpell(client, (SocketSpellMessage)message);
@@ -967,6 +968,18 @@ namespace Mooege.Core.GS.Players
             if (vendor == null)
                 return;
             vendor.OnRequestBuyItem(this, requestBuyItemMessage.ItemId);
+        }
+
+        private void OnRequestSellItem(GameClient client, RequestSellItemMessage requestSellItemMessage)
+        {
+            var player = this.InGameClient.Player;
+            var vendor = this.SelectedNPC as Vendor;
+
+            var item = this.Inventory.GetItem(requestSellItemMessage.ItemId);
+            if (item == null)
+                return;
+
+            vendor.OnRequestSellItem(player, requestSellItemMessage.ItemId);
         }
 
         //private void OnRequestAddSocket(GameClient client, RequestAddSocketMessage requestAddSocketMessage)
