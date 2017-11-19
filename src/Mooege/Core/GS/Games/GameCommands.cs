@@ -18,31 +18,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
-using Mooege.Common.Helpers;
 using Mooege.Common.Helpers.Math;
 using Mooege.Common.MPQ;
 using Mooege.Common.MPQ.FileFormats;
+using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Common.Storage;
+using Mooege.Core.MooNet.Accounts;
+using Mooege.Core.MooNet.Commands;
+using Mooege.Core.MooNet.Toons;
+using Mooege.Core.GS.Players;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Common.Types.SNO;
 using Mooege.Core.GS.Items;
-using Mooege.Core.GS.Map;
-using Mooege.Core.MooNet.Commands;
-using Mooege.Core.MooNet.Games;
 using Mooege.Net.GS.Message.Definitions.Inventory;
 using Mooege.Net.MooNet;
 using System.Text;
 using Monster = Mooege.Core.GS.Actors.Monster;
-
-using Mooege.Common.Storage.AccountDataBase.Entities;
-using Mooege.Common.Storage;
-using Mooege.Core.MooNet.Toons;
-using NHibernate.Linq;
-using Mooege.Core.MooNet.Accounts;
-using Mooege.Core.GS.Players;
 
 namespace Mooege.Core.GS.Games
 {
@@ -169,30 +161,6 @@ namespace Mooege.Core.GS.Games
         }
     }
 
-    //[CommandGroup("killall", "Kills monsters in range.")]
-    //public class KillAllCommand : CommandGroup
-    //{
-    //    [DefaultCommand]
-    //    public string KillAll(string[] @params, MooNetClient invokerClient)
-    //    {
-    //        if (invokerClient == null)
-    //            return "You can not invoke this command from console.";
-
-    //        if (invokerClient.InGameClient == null)
-    //            return "You can only invoke this command while ingame.";
-
-    //        var player = invokerClient.InGameClient.Player;
-
-    //        var monstersInRange = player.GetActorsInRange<Monster>();
-    //        foreach (var monster in monstersInRange)
-    //        {
-    //            monster.Die(player);
-    //        }
-
-    //        return string.Format("Killed {0} monsters in range.", monstersInRange.Count);
-    //    }
-    //}
-
     [CommandGroup("levelup", "Levels your character.\nOptionally specify the number of levels: !levelup [count]")]
     public class LevelUpCommand : CommandGroup
     {
@@ -221,6 +189,28 @@ namespace Mooege.Core.GS.Games
 
             player.Toon.GameAccount.NotifyUpdate();
             return string.Format("New level: {0}", player.Toon.Level);
+        }
+    }
+
+    [CommandGroup("coords", "Coords of your character.\nUsage:: !coords")]
+    public class CoordsCommand : CommandGroup
+    {
+        [DefaultCommand]
+        public string Coords(string[] @params, MooNetClient invokerClient)
+        {
+            if (invokerClient == null)
+                return "You can not invoke this command from console.";
+
+            if (invokerClient.InGameClient == null)
+                return "You can only invoke this command while ingame.";
+
+            var player = invokerClient.InGameClient.Player;
+
+            var position = new Vector3D(player.Position.X,
+                                        player.Position.Y,
+                                        player.Position.Z);
+
+            return string.Format("Coords: {0}", position);
         }
     }
 
@@ -426,7 +416,6 @@ namespace Mooege.Core.GS.Games
         }
 
     }
-
 
     [CommandGroup("lookup", "Searches in sno databases.\nUsage: lookup [actor|npc|mob|power|scene] <pattern>")]
     public class LookupCommand : CommandGroup
