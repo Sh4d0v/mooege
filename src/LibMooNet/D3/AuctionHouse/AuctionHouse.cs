@@ -43,35 +43,35 @@ namespace D3.AuctionHouse {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           "ChJBdWN0aW9uSG91c2UucHJvdG8SD0QzLkF1Y3Rpb25Ib3VzZRoOR0JIYW5k" + 
           "bGUucHJvdG8aE09ubGluZVNlcnZpY2UucHJvdG8aC0l0ZW1zLnByb3RvGgpI" + 
-          "ZXJvLnByb3RvIqMCChJJbnZlbnRvcnlPcGVyYXRpb24SQAoJb3BlcmF0aW9u" + 
+          "ZXJvLnByb3RvIqsCChJJbnZlbnRvcnlPcGVyYXRpb24SQAoJb3BlcmF0aW9u" + 
           "GAEgAigOMi0uRDMuQXVjdGlvbkhvdXNlLkludmVudG9yeU9wZXJhdGlvbi5P" + 
-          "cGVyYXRpb24SLwoLbG9jYXRpb25faWQYAiACKAsyGi5EMy5PbmxpbmVTZXJ2" + 
-          "aWNlLkVudGl0eUlkEiQKAmlkGAMgAigLMhguRDMuT25saW5lU2VydmljZS5J" + 
-          "dGVtSWQSEQoJaXRlbV9zbG90GAQgASgREhQKDHNxdWFyZV9pbmRleBgFIAEo" + 
-          "ERImCglnZW5lcmF0b3IYBiABKAsyEy5EMy5JdGVtcy5HZW5lcmF0b3IiIwoJ" + 
-          "T3BlcmF0aW9uEgoKBlJFTU9WRRAAEgoKBlVQREFURRABIk4KE0ludmVudG9y" + 
-          "eU9wZXJhdGlvbnMSNwoKb3BlcmF0aW9ucxgBIAMoCzIjLkQzLkF1Y3Rpb25I" + 
-          "b3VzZS5JbnZlbnRvcnlPcGVyYXRpb24iVAoESXRlbRIkCgJpZBgBIAIoCzIY" + 
-          "LkQzLk9ubGluZVNlcnZpY2UuSXRlbUlkEiYKCWdlbmVyYXRvchgCIAIoCzIT" + 
-          "LkQzLkl0ZW1zLkdlbmVyYXRvciK9AQoGRXNjcm93Eg8KB3ZlcnNpb24YASAC" + 
-          "KA0SKwoMYXVjdGlvbl9pdGVtGAIgASgLMhUuRDMuQXVjdGlvbkhvdXNlLkl0" + 
-          "ZW0SIAoEaGVybxgDIAEoCzISLkQzLkhlcm8uU2F2ZWREYXRhEjMKD3NlcnZp" + 
-          "Y2VkX3Rva2VucxgEIAMoCzIaLkQzLk9ubGluZVNlcnZpY2UuRW50aXR5SWQi" + 
-          "HgoHVmVyc2lvbhITCg9DVVJSRU5UX1ZFUlNJT04QASKkAQoNQXV0aG9yaXpl" + 
-          "SW5mbxIvCgtsb2NhdGlvbl9pZBgBIAIoCzIaLkQzLk9ubGluZVNlcnZpY2Uu" + 
-          "RW50aXR5SWQSNwoTdHJhbnNhY3Rpb25faGVyb19pZBgCIAIoCzIaLkQzLk9u" + 
-          "bGluZVNlcnZpY2UuRW50aXR5SWQSKQoHaXRlbV9pZBgDIAEoCzIYLkQzLk9u" + 
-          "bGluZVNlcnZpY2UuSXRlbUlkIkQKCUNsYWltSW5mbxI3ChN0cmFuc2FjdGlv" + 
-          "bl9oZXJvX2lkGAEgAigLMhouRDMuT25saW5lU2VydmljZS5FbnRpdHlJZCJs" + 
-          "CgtBY2NvdW50SW5mbxIuCgphY2NvdW50X2lkGAEgAigLMhouRDMuT25saW5l" + 
-          "U2VydmljZS5FbnRpdHlJZBItCgllc2Nyb3dfaWQYAiACKAsyGi5EMy5Pbmxp" + 
-          "bmVTZXJ2aWNlLkVudGl0eUlk");
+          "cGVyYXRpb24SNwoTdHJhbnNhY3Rpb25faGVyb19pZBgCIAIoCzIaLkQzLk9u" + 
+          "bGluZVNlcnZpY2UuRW50aXR5SWQSJAoCaWQYAyACKAsyGC5EMy5PbmxpbmVT" + 
+          "ZXJ2aWNlLkl0ZW1JZBIRCglpdGVtX3Nsb3QYBCABKBESFAoMc3F1YXJlX2lu" + 
+          "ZGV4GAUgASgREiYKCWdlbmVyYXRvchgGIAEoCzITLkQzLkl0ZW1zLkdlbmVy" + 
+          "YXRvciIjCglPcGVyYXRpb24SCgoGUkVNT1ZFEAASCgoGVVBEQVRFEAEiTgoT" + 
+          "SW52ZW50b3J5T3BlcmF0aW9ucxI3CgpvcGVyYXRpb25zGAEgAygLMiMuRDMu" + 
+          "QXVjdGlvbkhvdXNlLkludmVudG9yeU9wZXJhdGlvbiJUCgRJdGVtEiQKAmlk" + 
+          "GAEgAigLMhguRDMuT25saW5lU2VydmljZS5JdGVtSWQSJgoJZ2VuZXJhdG9y" + 
+          "GAIgAigLMhMuRDMuSXRlbXMuR2VuZXJhdG9yIr0BCgZFc2Nyb3cSDwoHdmVy" + 
+          "c2lvbhgBIAIoDRIrCgxhdWN0aW9uX2l0ZW0YAiABKAsyFS5EMy5BdWN0aW9u" + 
+          "SG91c2UuSXRlbRIgCgRoZXJvGAMgASgLMhIuRDMuSGVyby5TYXZlZERhdGES" + 
+          "MwoPc2VydmljZWRfdG9rZW5zGAQgAygLMhouRDMuT25saW5lU2VydmljZS5F" + 
+          "bnRpdHlJZCIeCgdWZXJzaW9uEhMKD0NVUlJFTlRfVkVSU0lPThABIqQBCg1B" + 
+          "dXRob3JpemVJbmZvEi8KC2xvY2F0aW9uX2lkGAEgAigLMhouRDMuT25saW5l" + 
+          "U2VydmljZS5FbnRpdHlJZBI3ChN0cmFuc2FjdGlvbl9oZXJvX2lkGAIgAigL" + 
+          "MhouRDMuT25saW5lU2VydmljZS5FbnRpdHlJZBIpCgdpdGVtX2lkGAMgASgL" + 
+          "MhguRDMuT25saW5lU2VydmljZS5JdGVtSWQiRAoJQ2xhaW1JbmZvEjcKE3Ry" + 
+          "YW5zYWN0aW9uX2hlcm9faWQYASACKAsyGi5EMy5PbmxpbmVTZXJ2aWNlLkVu" + 
+          "dGl0eUlkImwKC0FjY291bnRJbmZvEi4KCmFjY291bnRfaWQYASACKAsyGi5E" + 
+          "My5PbmxpbmVTZXJ2aWNlLkVudGl0eUlkEi0KCWVzY3Jvd19pZBgCIAIoCzIa" + 
+          "LkQzLk9ubGluZVNlcnZpY2UuRW50aXR5SWQ=");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_D3_AuctionHouse_InventoryOperation__Descriptor = Descriptor.MessageTypes[0];
         internal__static_D3_AuctionHouse_InventoryOperation__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::D3.AuctionHouse.InventoryOperation, global::D3.AuctionHouse.InventoryOperation.Builder>(internal__static_D3_AuctionHouse_InventoryOperation__Descriptor,
-                new string[] { "Operation", "LocationId", "Id", "ItemSlot", "SquareIndex", "Generator", });
+                new string[] { "Operation", "TransactionHeroId", "Id", "ItemSlot", "SquareIndex", "Generator", });
         internal__static_D3_AuctionHouse_InventoryOperations__Descriptor = Descriptor.MessageTypes[1];
         internal__static_D3_AuctionHouse_InventoryOperations__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::D3.AuctionHouse.InventoryOperations, global::D3.AuctionHouse.InventoryOperations.Builder>(internal__static_D3_AuctionHouse_InventoryOperations__Descriptor,
@@ -116,8 +116,8 @@ namespace D3.AuctionHouse {
   public sealed partial class InventoryOperation : pb::GeneratedMessage<InventoryOperation, InventoryOperation.Builder> {
     private InventoryOperation() { }
     private static readonly InventoryOperation defaultInstance = new InventoryOperation().MakeReadOnly();
-    private static readonly string[] _inventoryOperationFieldNames = new string[] { "generator", "id", "item_slot", "location_id", "operation", "square_index" };
-    private static readonly uint[] _inventoryOperationFieldTags = new uint[] { 50, 26, 32, 18, 8, 40 };
+    private static readonly string[] _inventoryOperationFieldNames = new string[] { "generator", "id", "item_slot", "operation", "square_index", "transaction_hero_id" };
+    private static readonly uint[] _inventoryOperationFieldTags = new uint[] { 50, 26, 32, 8, 40, 18 };
     public static InventoryOperation DefaultInstance {
       get { return defaultInstance; }
     }
@@ -163,14 +163,14 @@ namespace D3.AuctionHouse {
       get { return operation_; }
     }
     
-    public const int LocationIdFieldNumber = 2;
-    private bool hasLocationId;
-    private global::D3.OnlineService.EntityId locationId_;
-    public bool HasLocationId {
-      get { return hasLocationId; }
+    public const int TransactionHeroIdFieldNumber = 2;
+    private bool hasTransactionHeroId;
+    private global::D3.OnlineService.EntityId transactionHeroId_;
+    public bool HasTransactionHeroId {
+      get { return hasTransactionHeroId; }
     }
-    public global::D3.OnlineService.EntityId LocationId {
-      get { return locationId_ ?? global::D3.OnlineService.EntityId.DefaultInstance; }
+    public global::D3.OnlineService.EntityId TransactionHeroId {
+      get { return transactionHeroId_ ?? global::D3.OnlineService.EntityId.DefaultInstance; }
     }
     
     public const int IdFieldNumber = 3;
@@ -216,9 +216,9 @@ namespace D3.AuctionHouse {
     public override bool IsInitialized {
       get {
         if (!hasOperation) return false;
-        if (!hasLocationId) return false;
+        if (!hasTransactionHeroId) return false;
         if (!hasId) return false;
-        if (!LocationId.IsInitialized) return false;
+        if (!TransactionHeroId.IsInitialized) return false;
         if (!Id.IsInitialized) return false;
         if (HasGenerator) {
           if (!Generator.IsInitialized) return false;
@@ -231,10 +231,10 @@ namespace D3.AuctionHouse {
       int size = SerializedSize;
       string[] field_names = _inventoryOperationFieldNames;
       if (hasOperation) {
-        output.WriteEnum(1, field_names[4], (int) Operation, Operation);
+        output.WriteEnum(1, field_names[3], (int) Operation, Operation);
       }
-      if (hasLocationId) {
-        output.WriteMessage(2, field_names[3], LocationId);
+      if (hasTransactionHeroId) {
+        output.WriteMessage(2, field_names[5], TransactionHeroId);
       }
       if (hasId) {
         output.WriteMessage(3, field_names[1], Id);
@@ -243,7 +243,7 @@ namespace D3.AuctionHouse {
         output.WriteSInt32(4, field_names[2], ItemSlot);
       }
       if (hasSquareIndex) {
-        output.WriteSInt32(5, field_names[5], SquareIndex);
+        output.WriteSInt32(5, field_names[4], SquareIndex);
       }
       if (hasGenerator) {
         output.WriteMessage(6, field_names[0], Generator);
@@ -261,8 +261,8 @@ namespace D3.AuctionHouse {
         if (hasOperation) {
           size += pb::CodedOutputStream.ComputeEnumSize(1, (int) Operation);
         }
-        if (hasLocationId) {
-          size += pb::CodedOutputStream.ComputeMessageSize(2, LocationId);
+        if (hasTransactionHeroId) {
+          size += pb::CodedOutputStream.ComputeMessageSize(2, TransactionHeroId);
         }
         if (hasId) {
           size += pb::CodedOutputStream.ComputeMessageSize(3, Id);
@@ -405,8 +405,8 @@ namespace D3.AuctionHouse {
         if (other.HasOperation) {
           Operation = other.Operation;
         }
-        if (other.HasLocationId) {
-          MergeLocationId(other.LocationId);
+        if (other.HasTransactionHeroId) {
+          MergeTransactionHeroId(other.TransactionHeroId);
         }
         if (other.HasId) {
           MergeId(other.Id);
@@ -477,11 +477,11 @@ namespace D3.AuctionHouse {
             }
             case 18: {
               global::D3.OnlineService.EntityId.Builder subBuilder = global::D3.OnlineService.EntityId.CreateBuilder();
-              if (result.hasLocationId) {
-                subBuilder.MergeFrom(LocationId);
+              if (result.hasTransactionHeroId) {
+                subBuilder.MergeFrom(TransactionHeroId);
               }
               input.ReadMessage(subBuilder, extensionRegistry);
-              LocationId = subBuilder.BuildPartial();
+              TransactionHeroId = subBuilder.BuildPartial();
               break;
             }
             case 26: {
@@ -540,43 +540,43 @@ namespace D3.AuctionHouse {
         return this;
       }
       
-      public bool HasLocationId {
-       get { return result.hasLocationId; }
+      public bool HasTransactionHeroId {
+       get { return result.hasTransactionHeroId; }
       }
-      public global::D3.OnlineService.EntityId LocationId {
-        get { return result.LocationId; }
-        set { SetLocationId(value); }
+      public global::D3.OnlineService.EntityId TransactionHeroId {
+        get { return result.TransactionHeroId; }
+        set { SetTransactionHeroId(value); }
       }
-      public Builder SetLocationId(global::D3.OnlineService.EntityId value) {
+      public Builder SetTransactionHeroId(global::D3.OnlineService.EntityId value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasLocationId = true;
-        result.locationId_ = value;
+        result.hasTransactionHeroId = true;
+        result.transactionHeroId_ = value;
         return this;
       }
-      public Builder SetLocationId(global::D3.OnlineService.EntityId.Builder builderForValue) {
+      public Builder SetTransactionHeroId(global::D3.OnlineService.EntityId.Builder builderForValue) {
         pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasLocationId = true;
-        result.locationId_ = builderForValue.Build();
+        result.hasTransactionHeroId = true;
+        result.transactionHeroId_ = builderForValue.Build();
         return this;
       }
-      public Builder MergeLocationId(global::D3.OnlineService.EntityId value) {
+      public Builder MergeTransactionHeroId(global::D3.OnlineService.EntityId value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        if (result.hasLocationId &&
-            result.locationId_ != global::D3.OnlineService.EntityId.DefaultInstance) {
-            result.locationId_ = global::D3.OnlineService.EntityId.CreateBuilder(result.locationId_).MergeFrom(value).BuildPartial();
+        if (result.hasTransactionHeroId &&
+            result.transactionHeroId_ != global::D3.OnlineService.EntityId.DefaultInstance) {
+            result.transactionHeroId_ = global::D3.OnlineService.EntityId.CreateBuilder(result.transactionHeroId_).MergeFrom(value).BuildPartial();
         } else {
-          result.locationId_ = value;
+          result.transactionHeroId_ = value;
         }
-        result.hasLocationId = true;
+        result.hasTransactionHeroId = true;
         return this;
       }
-      public Builder ClearLocationId() {
+      public Builder ClearTransactionHeroId() {
         PrepareBuilder();
-        result.hasLocationId = false;
-        result.locationId_ = null;
+        result.hasTransactionHeroId = false;
+        result.transactionHeroId_ = null;
         return this;
       }
       

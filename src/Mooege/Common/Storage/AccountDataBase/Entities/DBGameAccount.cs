@@ -39,6 +39,8 @@ namespace Mooege.Common.Storage.AccountDataBase.Entities
         public virtual IList<DBInventory> DBInventories { get; protected set; }
         public virtual DBToon LastPlayedHero { get; set; }
         public virtual int Gold { get; set; }
+        public virtual int GoldHC { get; set; }
         public virtual int StashSize { get; set; }
+        public virtual int StashSizeHC { get; set; }
     }
 }

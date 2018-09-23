@@ -277,6 +277,9 @@ namespace Mooege.Core.GS.Actors
 
         public void EnterWorld(Vector3D position)
         {
+            if (this is NPC && this.ActorSNO.Id == 141508)
+                return;
+
             if (this.Spawned)
                 return;
 

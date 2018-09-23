@@ -29,6 +29,8 @@ namespace Mooege.Common.Storage
     {
         public static SQLiteConnection MPQMirror { get; private set; }
 
+        public static SQLiteConnection Connection { get; private set; }
+
         public static readonly Logger Logger = LogManager.CreateLogger();
 
         public static string AssetDirectory
@@ -47,6 +49,7 @@ namespace Mooege.Common.Storage
         static DBManager()
         {
             Connect();
+            ConnectAccounts();
         }
 
         private static void Connect()
@@ -56,6 +59,20 @@ namespace Mooege.Common.Storage
 
                 MPQMirror = new SQLiteConnection(String.Format("Data Source={0}/mpqdata.db", AssetDirectory));
                 MPQMirror.Open();
+            }
+            catch (Exception e)
+            {
+                Logger.FatalException(e, "Connect()");
+            }
+        }
+
+        private static void ConnectAccounts()
+        {
+            try
+            {
+
+                Connection = new SQLiteConnection(String.Format("Data Source={0}/accountDB.db", AssetDirectory));
+                Connection.Open();
             }
             catch (Exception e)
             {

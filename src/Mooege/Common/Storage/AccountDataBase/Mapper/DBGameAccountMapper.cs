@@ -37,7 +37,9 @@ namespace Mooege.Common.Storage.AccountDataBase.Mapper
             HasMany(e => e.DBInventories).Cascade.All();
             References(e => e.LastPlayedHero).Nullable();
             Map(e => e.Gold);
+            Map(e => e.GoldHC);
             Map(e => e.StashSize);
+            Map(e => e.StashSizeHC);
         }
     }
 }

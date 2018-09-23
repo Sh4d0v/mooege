@@ -31,6 +31,7 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Net.GS.Message.Definitions.ACD;
 using Mooege.Net.GS.Message.Definitions.Player;
 using Mooege.Net.GS.Message.Definitions.Trade;
+using Mooege.Core.MooNet.Toons;
 
 namespace Mooege.Core.GS.Powers.Payloads
 {
@@ -122,8 +123,17 @@ namespace Mooege.Core.GS.Powers.Payloads
 
                     player.ExpBonusData.Update(player.GBHandle.Type, this.Target.GBHandle.Type);
                     this.Target.World.SpawnGold(this.Target, player);
+
+                    if (player.PoundOfFleshPassive()) // Barbarian Pound of Flesh passive (25% health globe drop chance) [Necrosummon]
+                    {
+                        if (Mooege.Common.Helpers.Math.RandomHelper.NextDouble() < Mooege.Net.GS.Config.Instance.HealthGlobeDropRate / 100 + Mooege.Net.GS.Config.Instance.HealthGlobeDropRate * 0.25f)
+                            this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
+                    }
+                    else // Normal chance
+                    {
                         if (Mooege.Common.Helpers.Math.RandomHelper.NextDouble() < Mooege.Net.GS.Config.Instance.HealthGlobeDropRate / 100)
                             this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
+                    }
                 }
             }
 
@@ -140,11 +150,27 @@ namespace Mooege.Core.GS.Powers.Payloads
             this.Target.World.BuffManager.RemoveAllBuffs(this.Target);
             this.Target.World.PowerManager.CancelAllPowers(this.Target);
 
-            this.Target.World.BuffManager.AddBuff(this.Target, this.Target, new Implementations.ActorGhostedBuff());
-
             Player player = (Player)this.Target;
-            player.Teleport(player.CheckPointPosition);
-            player.AddPercentageHP(100);
+
+            if (player.Toon.Hardcore)
+            {
+                if (player.Toon.DBToon.Class == ToonClass.Barbarian && player.Toon.DBToon.Flags == ToonFlags.Male) // Male Barbarian is the biggest character, his animation is more long? [Necrosummon]
+                    this.Target.PlayAnimation(11, _FindBestDeathAnimationSNO(), 1.6f, 2);
+                else
+                    this.Target.PlayAnimation(11, _FindBestDeathAnimationSNO(), 1f, 2);
+
+                this.Target.Attributes[GameAttribute.Deleted_On_Server] = true;
+                this.Target.Attributes[GameAttribute.Could_Have_Ragdolled] = true;
+                this.Target.Attributes.BroadcastChangedIfRevealed();
+
+                player.Toon.Dead = true;
+            }
+            else
+            {
+                this.Target.World.BuffManager.AddBuff(this.Target, this.Target, new Implementations.ActorGhostedBuff());
+                player.Teleport(player.CheckPointPosition);
+                player.AddPercentageHP(100);
+            }
         }
 
         private int _FindBestDeathAnimationSNO()

@@ -177,11 +177,20 @@ namespace Mooege.Core.GS.Skills
             dbToon.DBActiveSkills.Passive1 = PassiveSkills[1];
             dbToon.DBActiveSkills.Passive2 = PassiveSkills[2];
 
+            // PassiveSkillEffects when character Update the passives [Necrosummon]
             PassiveSkillsEffects(player);
 
             DBSessions.AccountSession.SaveOrUpdate(dbToon.DBActiveSkills);
             DBSessions.AccountSession.Flush();
 
+        }
+
+        public bool PassiveEffect(int PassiveID)
+        {
+            if (this.Toon.DBToon.DBActiveSkills.Passive0 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive1 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive2 == PassiveID)
+                return true;
+            else
+                return false;
         }
 
         public void PassiveSkillsEffects(Player player)
@@ -190,11 +199,30 @@ namespace Mooege.Core.GS.Skills
 
             // Barbarian
             if (player.RuthlessPassive())
-                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
-            //player.Attributes[GameAttribute.Crit_Damage_Percent] += 50; // Doesn't work [Necrosummon]
+            {
+                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.55f;
+                player.Attributes[GameAttribute.Crit_Damage_Percent] += 0.5f;
+            }
 
             if (player.NervesOfSteelPassive())
                 player.Attributes[GameAttribute.Armor] += (int)player.Attributes[GameAttribute.Vitality_Total];
+
+            #endregion
+        }
+
+        public void PassiveSkillsRemoveEffect(Player player)
+        {
+            #region Barbarian
+
+            // Barbarian
+            if (player.RuthlessPassive())
+            {
+                player.Attributes[GameAttribute.Crit_Percent_Base] -= 0.05f;
+                player.Attributes[GameAttribute.Crit_Damage_Percent] -= 0.5f;
+            }
+
+            if (player.NervesOfSteelPassive())
+                player.Attributes[GameAttribute.Armor] -= (int)player.Attributes[GameAttribute.Vitality_Total];
 
             #endregion
         }

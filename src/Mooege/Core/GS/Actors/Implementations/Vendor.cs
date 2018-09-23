@@ -25,6 +25,8 @@ using Mooege.Net.GS.Message.Definitions.Trade;
 using Mooege.Net.GS.Message.Definitions.World;
 using Mooege.Core.GS.Common;
 using Mooege.Core.GS.Common.Types.TagMap;
+using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Core.GS.Actors;
 
 namespace Mooege.Core.GS.Actors.Implementations
 {
@@ -36,6 +38,7 @@ namespace Mooege.Core.GS.Actors.Implementations
         177319, 178388, 178390, 178392, 229367, 229368, 229369, 229370, 229371,
         // Collector_InTown + variations
         107535, 178362, 178383, 178385, 229362, 229363, 229364, 229365, 229366)]
+
     public class Vendor : InteractiveNPC
     {
         private InventoryGrid _vendorGrid;
@@ -47,6 +50,7 @@ namespace Mooege.Core.GS.Actors.Implementations
             _vendorGrid = new InventoryGrid(this, 1, 20, (int)EquipmentSlotId.Vendor);
             PopulateItems();
         }
+
 
         // TODO: Proper item loading from droplist?
         protected virtual List<Item> GetVendorItems()
@@ -105,8 +109,8 @@ namespace Mooege.Core.GS.Actors.Implementations
 
         public virtual void OnRequestBuyItem(Player player, uint itemId)
         {
+            // TODO: Check gold here
             Item item = _vendorGrid.GetItem(itemId);
-
             if (item == null)
                 return;
 
@@ -116,7 +120,7 @@ namespace Mooege.Core.GS.Actors.Implementations
             }
 
             player.Inventory.BuyItem(item);
-            player.Inventory.RemoveGoldAmount(item.ItemDefinition.BaseGoldValue);
+            player.Inventory.RemoveGoldAmount(item.ItemDefinition.BaseGoldValue); // Remove the gold amount for buy a item [Necrosummon]
         }
 
         public virtual void OnRequestSellItem(Player player, uint itemId)
@@ -126,8 +130,16 @@ namespace Mooege.Core.GS.Actors.Implementations
             if (item == null)
                 return;
 
+            int SellGoldValue = item.ItemDefinition.BaseGoldValue/25; // Cost of item to sell is splitted into 25 of her BaseGoldValue (Buy price) [Necrosummon]
+            decimal.Floor(SellGoldValue);
+
             player.Inventory.SellItem(item);
-            player.Inventory.AddGoldAmount(item.ItemDefinition.BaseGoldValue); // it should be changed to sell price, not base value [sh4d0v]
+
+            if(SellGoldValue <= 1) // if the operation have like a result less than 1, always vendor give you 1 gold for the item.
+                player.Inventory.AddGoldAmount(1);
+            else
+                player.Inventory.AddGoldAmount(SellGoldValue);
+
             _vendorGrid.AddItem(item);
         }
     }

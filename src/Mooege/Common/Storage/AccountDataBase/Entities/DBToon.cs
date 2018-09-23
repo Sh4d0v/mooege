@@ -31,6 +31,8 @@ namespace Mooege.Common.Storage.AccountDataBase.Entities
         public virtual string Name { get; set; }
         public virtual ToonClass Class { get; set; }
         public virtual ToonFlags Flags { get; set; }
+        public virtual bool Hardcore { get; set; }
+        public virtual bool Dead{ get; set; }
         public virtual byte Level { get; set; }
         public virtual int Experience { get; set; }
         public virtual DBGameAccount DBGameAccount { get; set; }

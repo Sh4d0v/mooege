@@ -32,6 +32,7 @@ namespace Mooege.Common.Storage.AccountDataBase.Mapper
             Id(e => e.Id).GeneratedBy.Native();
             References(e => e.DBGameAccount).Nullable();
             References(e => e.DBToon).Nullable();
+            Map(e => e.Hardcore);
             Map(e => e.EquipmentSlot);
             //Map(e => e.ItemId);
             Map(e => e.LocationX);

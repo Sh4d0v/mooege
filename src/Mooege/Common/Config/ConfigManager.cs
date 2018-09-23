@@ -26,32 +26,31 @@ namespace Mooege.Common.Config
     public sealed class ConfigurationManager
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
-        private static readonly IniConfigSource Parser;
+        private static readonly IniConfigSource Parser; // the ini parser.
         private static readonly string ConfigFile;
-        private static bool _fileExists = false;
+        private static bool _fileExists = false; // does the ini file exists?
 
         static ConfigurationManager()
         {
             try
             {
-                /// <summary>
-                /// Path to config file.
-                /// </summary>
-                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Server.conf");
-                Parser = new IniConfigSource(ConfigFile);
+                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Server.conf"); // the config file's location.
+                Parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
                 _fileExists = true;
             }
             catch (Exception)
             {
-                Parser = new IniConfigSource();
+                Parser = new IniConfigSource(); // initiate a new .ini source.
                 _fileExists = false;
                 Logger.Warn("Error loading settings Server.ini, will be using default settings.");
             }
             finally
             {
+                // adds aliases so we can use On and Off directives in ini files.
                 Parser.Alias.AddAlias("On", true);
                 Parser.Alias.AddAlias("Off", false);
 
+                // logger level aliases.
                 Parser.Alias.AddAlias("MinimumLevel", Logger.Level.Trace);
                 Parser.Alias.AddAlias("MaximumLevel", Logger.Level.Trace);
             }
@@ -59,17 +58,66 @@ namespace Mooege.Common.Config
             Parser.ExpandKeyValues();
         }
 
-        static internal IConfig Section(string section)
+        static internal IConfig Section(string section) // Returns the asked config section.
         {
             return Parser.Configs[section];
         }
 
-        static internal IConfig AddSection(string section)
+        static internal IConfig AddSection(string section) // Adds a config section.
         {
             return Parser.AddConfig(section);
         }
 
-        static internal void Save()
+        static internal void Save() //  Saves the settings.
+        {
+            if (_fileExists) Parser.Save();
+            else
+            {
+                Parser.Save(ConfigFile);
+                _fileExists = true;
+            }
+        }
+    }
+}
+
+namespace Mooege.Common.BarbarianSkillsConfig
+{
+    public sealed class ConfigurationManager
+    {
+        private static readonly Logger Logger = LogManager.CreateLogger();
+        private static readonly IniConfigSource Parser; // the ini parser.
+        private static readonly string ConfigFile;
+        private static bool _fileExists = false; // does the ini file exists?
+
+        static ConfigurationManager()
+        {
+            try
+            {
+                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Skills/BarbarianSkills.conf"); // the config file's location.
+                Parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
+                _fileExists = true;
+            }
+            catch (Exception)
+            {
+                Parser = new IniConfigSource(); // initiate a new .ini source.
+                _fileExists = false;
+                Logger.Warn("Error loading settings BarbarianSkills.conf, will be using default settings.");
+            }
+
+            Parser.ExpandKeyValues();
+        }
+
+        static internal IConfig Section(string section) // Returns the asked config section.
+        {
+            return Parser.Configs[section];
+        }
+
+        static internal IConfig AddSection(string section) // Adds a config section.
+        {
+            return Parser.AddConfig(section);
+        }
+
+        static internal void Save() //  Saves the settings.
         {
             if (_fileExists) Parser.Save();
             else

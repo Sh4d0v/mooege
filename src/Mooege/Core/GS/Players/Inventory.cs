@@ -674,7 +674,7 @@ namespace Mooege.Core.GS.Players
         {
             int maxGoldValue = 2147483647; // Max int value [Necrosummon]
 
-            if (_inventoryGold.Attributes[GameAttribute.Gold] == maxGoldValue)
+            if (_inventoryGold.Attributes[GameAttribute.Gold] >= maxGoldValue)
                 amount = 0;
             else
             {
@@ -704,42 +704,77 @@ namespace Mooege.Core.GS.Players
             //load everything and make a switch on slot_id
             Item item = null;
             int goldAmount = _owner.Toon.GameAccount.DBGameAccount.Gold;
+            int goldHCAmount = _owner.Toon.GameAccount.DBGameAccount.GoldHC;
             // Clear already present items
             // LoadFromDB is called every time World is changed, even entering a dungeon
             _stashGrid.Clear();
             _inventoryGrid.Clear();
 
-
-
             // first of all load stash size
 
             var slots = this._owner.Toon.GameAccount.DBGameAccount.StashSize;
-            if (slots > 0)
+            var slotsHC = this._owner.Toon.GameAccount.DBGameAccount.StashSizeHC;
+
+            if (slots > 0 && !_owner.Toon.DBToon.Hardcore)
             {
                 _owner.Attributes[GameAttribute.Shared_Stash_Slots] = slots;
                 _owner.Attributes.BroadcastChangedIfRevealed();
                 // To be applied before loading items, to have all the space needed
                 _stashGrid.ResizeGrid(_owner.Attributes[GameAttribute.Shared_Stash_Slots] / 7, 7);
             }
+            else if (slotsHC > 0 && _owner.Toon.DBToon.Hardcore)
+            {
+                _owner.Attributes[GameAttribute.Shared_Stash_Slots] = slotsHC;
+                _owner.Attributes.BroadcastChangedIfRevealed();
+                // To be applied before loading items, to have all the space needed
+                _stashGrid.ResizeGrid(_owner.Attributes[GameAttribute.Shared_Stash_Slots] / 7, 7);
+            }
 
             // next load all stash items
-            var stashInventoryItems =
-                _dbInventories.Where(
-                    dbi =>
-                    dbi.DBGameAccount.Id == _owner.Toon.GameAccount.PersistentID && dbi.DBToon == null &&
-                    dbi.DBItemInstance != null).ToList();
 
-            foreach (var inv in stashInventoryItems)
+            if (!_owner.Toon.DBToon.Hardcore)
             {
-                var slot = inv.EquipmentSlot;
+                var stashInventoryItems =
+                    _dbInventories.Where(
+                        dbi =>
+                        dbi.DBGameAccount.Id == _owner.Toon.GameAccount.PersistentID && dbi.DBToon == null &&
+                        dbi.DBItemInstance != null && !dbi.Hardcore).ToList();
 
-                if (slot == (int)EquipmentSlotId.Stash)
+                foreach (var inv in stashInventoryItems)
                 {
-                    // load stash
-                    item = ItemGenerator.LoadFromDBInstance(_owner, inv.DBItemInstance);
-                    item.DBInventory = inv;
-                    item.DBItemInstance = inv.DBItemInstance;
-                    this._stashGrid.AddItem(item, inv.LocationY, inv.LocationX);
+                    var slot = inv.EquipmentSlot;
+
+                    if (slot == (int)EquipmentSlotId.Stash)
+                    {
+                        // load stash
+                        item = ItemGenerator.LoadFromDBInstance(_owner, inv.DBItemInstance);
+                        item.DBInventory = inv;
+                        item.DBItemInstance = inv.DBItemInstance;
+                        this._stashGrid.AddItem(item, inv.LocationY, inv.LocationX);
+                    }
+                }
+            }
+
+            if (_owner.Toon.DBToon.Hardcore)
+            {
+                var stashInventoryItemsHC =
+                    _dbInventories.Where(
+                     dbi =>
+                     dbi.DBGameAccount.Id == _owner.Toon.GameAccount.PersistentID && dbi.DBToon == null &&
+                     dbi.DBItemInstance != null && dbi.Hardcore).ToList();
+
+                foreach (var inv in stashInventoryItemsHC)
+                {
+                    var slot = inv.EquipmentSlot;
+
+                    if (slot == (int)EquipmentSlotId.Stash)
+                    {
+                        // load stash
+                        item = ItemGenerator.LoadFromDBInstance(_owner, inv.DBItemInstance);
+                        item.DBInventory = inv;
+                        item.DBItemInstance = inv.DBItemInstance;
+                        this._stashGrid.AddItem(item, inv.LocationY, inv.LocationX);
+                    }
                 }
             }
 
@@ -768,12 +803,22 @@ namespace Mooege.Core.GS.Players
                 }
             }
 
-
-            this._inventoryGold = ItemGenerator.CreateGold(this._owner, goldAmount);
-            this._inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = goldAmount; // This is the attribute that makes the gold visible in game
-            this._inventoryGold.Owner = _owner;
-            this._inventoryGold.SetInventoryLocation((int)EquipmentSlotId.Gold, 0, 0);
-            this.Loaded = true;
+            if (!_owner.Toon.DBToon.Hardcore)
+            {
+                this._inventoryGold = ItemGenerator.CreateGold(this._owner, goldAmount);
+                this._inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = goldAmount; // This is the attribute that makes the gold visible in game
+                this._inventoryGold.Owner = _owner;
+                this._inventoryGold.SetInventoryLocation((int)EquipmentSlotId.Gold, 0, 0);
+                this.Loaded = true;
+            }
+            else
+            {
+                this._inventoryGold = ItemGenerator.CreateGold(this._owner, goldHCAmount);
+                this._inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = goldHCAmount; // This is the attribute that makes the gold visible in game
+                this._inventoryGold.Owner = _owner;
+                this._inventoryGold.SetInventoryLocation((int)EquipmentSlotId.Gold, 0, 0);
+                this.Loaded = true;
+            }
         }
 
         public void RefreshInventoryToClient()
@@ -820,29 +865,37 @@ namespace Mooege.Core.GS.Players
             // save equipment
             for (int i = 1; i <= 13; i++) // from Helm = 1 to Neck = 13 in EquipmentSlotId
             {
-                SaveItemToDB(dbGameAccount, dbToon, (EquipmentSlotId)i, _equipment.GetEquipment((EquipmentSlotId)i));
+                SaveItemToDB(dbGameAccount, dbToon, _owner.Toon.DBToon.Hardcore, (EquipmentSlotId)i, _equipment.GetEquipment((EquipmentSlotId)i));
             }
 
             // save inventory
             foreach (Item itm in _inventoryGrid.Items.Values)
             {
-                SaveItemToDB(dbGameAccount, dbToon, EquipmentSlotId.Inventory, itm);
+                SaveItemToDB(dbGameAccount, dbToon, _owner.Toon.DBToon.Hardcore, EquipmentSlotId.Inventory, itm);
             }
 
             // save stash
-            dbGameAccount.StashSize = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
+            if(!_owner.Toon.DBToon.Hardcore)
+                dbGameAccount.StashSize = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
+            else
+                dbGameAccount.StashSizeHC = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
+
             foreach (Item itm in _stashGrid.Items.Values)
             {
-                SaveItemToDB(dbGameAccount, null, EquipmentSlotId.Stash, itm);
+                SaveItemToDB(dbGameAccount, null, _owner.Toon.DBToon.Hardcore,  EquipmentSlotId.Stash, itm);
             }
 
             // save gold
-            dbGameAccount.Gold = GetGoldAmount();
+            if(!_owner.Toon.DBToon.Hardcore)
+                dbGameAccount.Gold = GetGoldAmount();
+            else
+                dbGameAccount.GoldHC = GetGoldAmount();
+
             DBSessions.AccountSession.SaveOrUpdate(dbGameAccount);
             DBSessions.AccountSession.Flush();
         }
 
-        private void SaveItemToDB(DBGameAccount dbGameAccount, DBToon dbToon, EquipmentSlotId slotId, Item item)
+        private void SaveItemToDB(DBGameAccount dbGameAccount, DBToon dbToon, bool hardcore, EquipmentSlotId slotId, Item item)
         {
             if (item == null)
                 return;
@@ -851,6 +904,7 @@ namespace Mooege.Core.GS.Players
 
             item.DBInventory.DBGameAccount = dbGameAccount;
             item.DBInventory.DBToon = dbToon;
+            item.DBInventory.Hardcore = hardcore;
             item.DBInventory.LocationX = item.InventoryLocation.X;
             item.DBInventory.LocationY = item.InventoryLocation.Y;
             item.DBInventory.EquipmentSlot = (int)slotId;

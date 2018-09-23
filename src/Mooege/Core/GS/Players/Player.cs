@@ -53,6 +53,7 @@ using Mooege.Common.Helpers;
 using Mooege.Net.GS.Message.Definitions.ACD;
 using Mooege.Net.GS.Message.Definitions.Animation;
 using Mooege.Net.GS.Message.Definitions.Tutorial;
+using Mooege.Core.GS.Skills;
 
 namespace Mooege.Core.GS.Players
 {
@@ -302,6 +303,7 @@ namespace Mooege.Core.GS.Players
             SetAttributesMisc();
             SetAttributesSkillSets();
             SetAttributesOther();
+            SetAttributesPassiveSkills();
             if (this.Inventory == null)
                 this.Inventory = new Inventory(this);
             SetAttributesByItems();//needs the Inventory
@@ -560,6 +562,7 @@ namespace Mooege.Core.GS.Players
             //this.Attributes[GameAttribute.Attacks_Per_Second_Item] = 1.199219f;
             this.Attributes[GameAttribute.Crit_Percent_Base] = 0.05f; //5% Critical Chance Base of all classes [Necrosummon]
             this.Attributes[GameAttribute.Crit_Percent_Cap] = Toon.HeroTable.CritPercentCap;
+            this.Attributes[GameAttribute.Crit_Damage_Percent] = 0; // Always starts with 50% CD, if this isn't here, Ruthless passive bonus will double his CD bonus. [Necrosummon]
             //scripted //this.Attributes[GameAttribute.Casting_Speed_Total] = 1f;
             this.Attributes[GameAttribute.Casting_Speed] = 1f;
 
@@ -589,7 +592,7 @@ namespace Mooege.Core.GS.Players
         public void SetAttributesPassiveSkills()
         {
             // Passive Bonus activate when you enter in the game [Necrosummon]
-            BarbarianPassivesActivated();
+            this.SkillSet.PassiveSkillsEffects(this);
         }
 
 
@@ -786,6 +789,7 @@ namespace Mooege.Core.GS.Players
                         this.Attributes[GameAttribute.Trait, oldSNOSkill] = 0;
                         this.Attributes[GameAttribute.Skill, oldSNOSkill] = 0;
                         //scripted //this.Attributes[GameAttribute.Skill_Total, oldSNOSkill] = 0;
+                        this.SkillSet.PassiveSkillsRemoveEffect(this); // Remove effect when you quit the passive [Necrosummon]
                     }
 
                     if (message.SNOPowers[i] != -1)
@@ -1015,6 +1019,13 @@ namespace Mooege.Core.GS.Players
             _UpdateResources();
         }
 
+        public bool IsPlayerDead()
+        {
+            if (this.Attributes[GameAttribute.Hitpoints_Cur] == 0)
+                return true;
+            else
+                return false;
+        }
         #endregion
 
         #region enter, leave, reveal handling
@@ -1085,16 +1096,16 @@ namespace Mooege.Core.GS.Players
         public override void OnLeave(World world)
         {
             this.Conversations.StopAll();
+            this.Inventory.RefreshInventoryToClient();
 
             // save visual equipment
             this.Toon.HeroNameField.Value = this.Toon.Name; // Refresh Character Name when is changed for the !changename command [Necrosummon]
             this.Toon.HeroFlagsField.Value = this.Toon.Gender; // Refresh character gender when is changed with the !changesex command [Necrosummon]
-            this.Toon.HeroVisualEquipmentField.Value = this.Inventory.GetVisualEquipment(); // Visual equipment on game exit fix [Necrosummon]
+            this.Toon.HeroVisualEquipmentField.Value = this.Inventory.GetVisualEquipment(); // Refresh the character visual equipment when you logout [Necrosummon]
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroVisualEquipmentField);
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroLevelField);
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroNameField); // Refresh character name when is changed with the !changename command [Necrosummon]
             this.Toon.GameAccount.ChangedFields.SetPresenceFieldValue(this.Toon.HeroFlagsField); // Refresh character gender when is changed with the !changesex command [Necrosummon]
-
             // save all inventory items
             this.Inventory.SaveToDB();
             world.CleanupItemInstances();
@@ -1424,7 +1435,7 @@ namespace Mooege.Core.GS.Players
                     case ToonClass.Wizard:
                         return 1.3f;
                 }
-                return 1.43f;
+                    return 1.43f;
             }
         }
 
@@ -1647,7 +1658,11 @@ namespace Mooege.Core.GS.Players
         public void AddPercentageHP(int percentage)
         {
             float quantity = (percentage * this.Attributes[GameAttribute.Hitpoints_Max_Total]) / 100;
-            this.AddHP(quantity);
+
+            if (PoundOfFleshPassive()) // Barbarian Pound of Flesh passive (+100% additional life from health globes) [Necrosummon]
+                this.AddHP(quantity*2);
+            else
+                this.AddHP(quantity);
         }
 
         public void AddHP(float quantity)
@@ -1730,8 +1745,7 @@ namespace Mooege.Core.GS.Players
                 UsePrimaryResource(tickSeconds * 0.9f);
 
                 if (UnforgivingPassive()) // Barbarian Unforgiving Passive [Necrosummon]
-                    //GeneratePrimaryResource(tickSeconds * 1.5f);
-                    GeneratePrimaryResource(tickSeconds * 20.5f);
+                    GeneratePrimaryResource(tickSeconds * 1.5f);
             }
 
         }
@@ -1798,6 +1812,7 @@ namespace Mooege.Core.GS.Players
 
         #region PassiveSkillEffects
 
+        #region PassiveCheck
         public bool PassiveEffect(int PassiveID)
         {
             if (this.Toon.DBToon.DBActiveSkills.Passive0 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive1 == PassiveID || this.Toon.DBToon.DBActiveSkills.Passive2 == PassiveID)
@@ -1805,29 +1820,18 @@ namespace Mooege.Core.GS.Players
             else
                 return false;
         }
-
-        // Barbarian Passives
+        #endregion
 
         #region BarbarianPassives
-
-        public void BarbarianPassivesActivated()
+        #region PoundOfFlesh
+        public bool PoundOfFleshPassive()
         {
-            if (RuthlessPassive())
-                Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
-
-            if (NervesOfSteelPassive())
-                Attributes[GameAttribute.Armor] += (int)Attributes[GameAttribute.Vitality_Total];
+            if (PassiveEffect(205205))
+                return true;
+            else
+                return false;
         }
-
-        public void BarbarianPassivesUnActivated()
-        {
-            if (RuthlessPassive())
-                Attributes[GameAttribute.Crit_Percent_Base] -= 0.05f;
-
-            if (NervesOfSteelPassive())
-                Attributes[GameAttribute.Armor] -= (int)Attributes[GameAttribute.Vitality_Total];
-        }
-
+        #endregion
         #region Unforgiving
         public bool UnforgivingPassive()
         {
@@ -1837,7 +1841,6 @@ namespace Mooege.Core.GS.Players
                 return false;
         }
         #endregion
-
         #region Ruthless
         public bool RuthlessPassive()
         {
@@ -1848,7 +1851,6 @@ namespace Mooege.Core.GS.Players
         }
 
         #endregion
-
         #region NervesOfSteel
         public bool NervesOfSteelPassive()
         {
@@ -1858,9 +1860,9 @@ namespace Mooege.Core.GS.Players
                 return false;
         }
         #endregion
-        #endregion
+        #endregion // end BarbarianPassives region
 
-        #endregion
+        #endregion // end PassiveSkillEffects region
 
     }
 }

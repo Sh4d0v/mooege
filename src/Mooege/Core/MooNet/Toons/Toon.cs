@@ -46,7 +46,7 @@ namespace Mooege.Core.MooNet.Toons
         {
             get
             {
-                var val = new IntPresenceField(FieldKeyHelper.Program.D3, FieldKeyHelper.OriginatingClass.Hero, 4, 0, (int)this.DBToon.Flags);
+                var val = new IntPresenceField(FieldKeyHelper.Program.D3, FieldKeyHelper.OriginatingClass.Hero, 4, 0, (int)this.DBToon.Flags + Convert.ToUInt16(DBToon.Hardcore)); // Hardcore mode add +1 to flags [Necrosummon]
                 return val;
             }
         }
@@ -64,6 +64,7 @@ namespace Mooege.Core.MooNet.Toons
 
 
 
+
         public ByteStringPresenceField<D3.Hero.VisualEquipment> HeroVisualEquipmentField = new ByteStringPresenceField<D3.Hero.VisualEquipment>(FieldKeyHelper.Program.D3, FieldKeyHelper.OriginatingClass.Hero, 3, 0);
 
 
@@ -74,6 +75,7 @@ namespace Mooege.Core.MooNet.Toons
         public IntPresenceField HighestUnlockedAct = new IntPresenceField(FieldKeyHelper.Program.D3, FieldKeyHelper.OriginatingClass.Hero, 6, 0, 0);
 
         public IntPresenceField HighestUnlockedDifficulty = new IntPresenceField(FieldKeyHelper.Program.D3, FieldKeyHelper.OriginatingClass.Hero, 7, 0, 0);
+
 
         /// <summary>
         /// D3 EntityID encoded id.
@@ -159,6 +161,21 @@ namespace Mooege.Core.MooNet.Toons
         }
 
         /// <summary>
+        /// Is a hardcore character.
+        /// </summary>
+        public bool Hardcore
+        {
+            get { return this.DBToon.Hardcore; }
+            set { this.DBToon.Hardcore = value; }
+        }
+
+        public bool Dead
+        {
+            get { return this.DBToon.Dead; }
+            set { this.DBToon.Dead = value; }
+        }
+
+        /// <summary>
         /// Toon's flags.
         /// </summary>
         public ToonFlags Flags
@@ -231,7 +248,7 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetHeroId(this.D3EntityID)
                                 .SetHeroName(this.Name)
                                 .SetGbidClass((int)this.ClassID)
-                                .SetPlayerFlags((uint)this.Flags)
+                                .SetPlayerFlags((uint)this.Flags + Convert.ToUInt16(Hardcore)) // If is hardcore character, add +1 to Flags. [Necrosummon]
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
                                 .SetLastPlayedAct(0)
@@ -253,11 +270,10 @@ namespace Mooege.Core.MooNet.Toons
             get
             {
                 return D3.Profile.HeroProfile.CreateBuilder()
-                    .SetHardcore(false)
+                    .SetHardcore(this.Hardcore)
                     .SetHeroId(this.D3EntityID)
                     .SetHighestDifficulty(0)
                     .SetHighestLevel(this.Level)
-                    .SetMonstersKilled(923)
                     .Build();
             }
         }
@@ -537,8 +553,8 @@ namespace Mooege.Core.MooNet.Toons
         #region DB
 
 
-        /*
-        private bool VisualItemExistsInDb(int slot)
+        
+        /*private bool VisualItemExistsInDb(int slot)
         {
             var query = string.Format("SELECT toon_id FROM inventory WHERE toon_id = {0} AND equipment_slot = {1}", this.PersistentID, slot);
             var cmd = new SQLiteCommand(query, DBManager.Connection);

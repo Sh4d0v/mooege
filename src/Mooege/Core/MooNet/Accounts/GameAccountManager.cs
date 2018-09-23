@@ -90,8 +90,13 @@ namespace Mooege.Core.MooNet.Accounts
             var newDBGameAccount = new DBGameAccount
                                        {
                                            DBAccount = DBSessions.AccountSession.Get<DBAccount>(account.PersistentID),
-                                           StashSize = Mooege.Net.GS.Config.Instance.StarterStash, // Stash size when you create a game account. [Necrosummon]
-                                           Gold = Mooege.Net.GS.Config.Instance.StarterGold // Starter gold when you create a game account. [Necrosummon]
+                                           //StashSize = Mooege.Net.GS.Config.Instance.StarterStash, // Stash size when you create a game account. [Necrosummon]
+                                           StashSize = 14, // Stash size when you create a game account. [Necrosummon]
+                                           StashSizeHC = 14,
+                                           //Gold = Mooege.Net.GS.Config.Instance.StarterGold // Starter gold when you create a game account. [Necrosummon]
+                                           //GoldHC = Mooege.Net.GS.Config.Instance.StarterGold // Starter gold when you create a game account. [Necrosummon]
+                                           Gold = 0,
+                                           GoldHC = 0
                                        };
 
             DBSessions.AccountSession.SaveOrUpdate(newDBGameAccount);

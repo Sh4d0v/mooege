@@ -30,13 +30,15 @@ namespace Mooege.Common.Storage.AccountDataBase.Mapper
         public DBToonMapper()
         {
             Id(e => e.Id).GeneratedBy.Native();
+            Map(e => e.Name);
             Map(e => e.Class);
-            References(e => e.DBGameAccount);
-            Map(e => e.Deleted);
+            Map(e => e.Level);
             Map(e => e.Experience);
             Map(e => e.Flags);
-            Map(e => e.Level);
-            Map(e => e.Name);
+            Map(e => e.Hardcore);
+            References(e => e.DBGameAccount);
+            Map(e => e.Dead);
+            Map(e => e.Deleted);
             Map(e => e.TimePlayed);
 
             HasOne(e => e.DBActiveSkills).Cascade.All();

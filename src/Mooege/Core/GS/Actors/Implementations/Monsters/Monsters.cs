@@ -1,5 +1,5 @@
 ﻿﻿/*
- * Copyright (C) 2011 mooege project
+ * Copyright (C) 2011 - 2018 mooege project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -277,7 +277,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
     }
     #endregion
     #region Skeleton
-    [HandledSNO(539)]
+    [HandledSNO(5393)]
     public class Skeleton : Monster
     {
         public Skeleton(World world, int snoId, TagMap tags)
@@ -550,6 +550,15 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             (Brain as MonsterBrain).AddPresetPower(110518);
             //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
             //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
+        }
+    }
+
+    [HandledSNO(3337)] //Beast A
+    public class Beast : Monster
+    {
+        public Beast(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
         }
     }
     #endregion

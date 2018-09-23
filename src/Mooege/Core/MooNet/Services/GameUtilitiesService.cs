@@ -206,8 +206,7 @@ namespace Mooege.Core.MooNet.Services
 
         private ByteString CreateHero(D3.OnlineService.HeroCreateParams createPrams)
         {
-
-            var newToon = ToonManager.CreateNewToon(createPrams.Name, createPrams.GbidClass, createPrams.IsFemale ? ToonFlags.Female : ToonFlags.Male, 1, Client.Account.CurrentGameAccount);
+            var newToon = ToonManager.CreateNewToon(createPrams.Name, createPrams.GbidClass, createPrams.IsHardcore, createPrams.IsFemale ? ToonFlags.Female : ToonFlags.Male, 1, Client.Account.CurrentGameAccount);
             return newToon.D3EntityID.ToByteString();
         }
 

@@ -24,7 +24,6 @@ using Mooege.Core.GS.Players;
 using Mooege.Net.GS.Message;
 using Mooege.Net.GS.Message.Definitions.World;
 using Mooege.Core.GS.Actors.Interactions;
-using Mooege.Core.GS.Actors.Implementations;
 using Mooege.Net.GS.Message.Fields;
 using Mooege.Net.GS.Message.Definitions.NPC;
 using Mooege.Net.GS;
@@ -33,6 +32,7 @@ using Mooege.Core.GS.Games;
 using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Net.GS.Message.Definitions.Artisan;
 using Mooege.Common.Logging;
+using Mooege.Core.GS.Actors.Implementations;
 
 
 namespace Mooege.Core.GS.Actors
@@ -228,9 +228,11 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug(" (OnTargeted) the npc has dynID {0}", DynamicID);
 
             player.SelectedNPC = this;
-			
-			var vendor = player.SelectedNPC as Vendor;
+
+            var vendor = player.SelectedNPC as Vendor;
+
             var count = Interactions.Count + Conversations.Count;
+
             if (count == 0)
                 return;
 
@@ -243,20 +245,19 @@ namespace Mooege.Core.GS.Actors
                 return;
             }
 
-
             NPCInteraction[] npcInters = new NPCInteraction[count];
 
             var it = 0;
-            foreach (var conv in Conversations)            
-			{               
-              if (this == vendor)                    
-                  return;                
-              else                
-              {                    
-                  npcInters[it] = conv.AsNPCInteraction(this, player);                    
-                  it++;                
-              }            
-			}
+            foreach (var conv in Conversations)
+            {
+                if (this == vendor)
+                    return;
+                else
+                {
+                    npcInters[it] = conv.AsNPCInteraction(this, player);
+                    it++;
+                }
+            }
 
             foreach (var inter in Interactions)
             {

@@ -20,6 +20,9 @@ using System.Collections.Generic;
 using Mooege.Common.Logging;
 using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Actors.Actions;
+using Mooege.Core.GS.Players;
+using Mooege.Net.GS.Message;
+
 
 namespace Mooege.Core.GS.AI
 {

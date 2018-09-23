@@ -92,8 +92,8 @@ namespace Mooege.Core.GS.Actors
                 this.Attributes[GameAttribute.Hitpoints_Max] = monsterLevels.MonsterLevel[monsterData.Level.Normal].F0 * Config.Instance.MonsterHPRate;
                 this.Attributes[GameAttribute.Hitpoints_Cur] = this.Attributes[GameAttribute.Hitpoints_Max_Total];
                 this.Attributes[GameAttribute.Attacks_Per_Second] = 1.2f;
-                this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
-                this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
+                this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f * Config.Instance.MonsterDamageMultiplier;
+                this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f * Config.Instance.MonsterDamageMultiplier;
                 this.WalkSpeed = monsterData.Floats[129];  // TODO: this is probably multiplied by something
             }
         }
@@ -107,7 +107,14 @@ namespace Mooege.Core.GS.Actors
             if (this.Brain == null)
                 return;
 
-            this.Brain.Update(tickCounter);
+            var players = this.GetPlayersInRange();
+            if (players != null)
+            {
+                foreach (var player in players.Where(player => !player.IsPlayerDead())) // if the character is dead, the monster will be idle.
+                {
+                    this.Brain.Update(tickCounter);
+                }
+            }
         }
 
         /// <summary>

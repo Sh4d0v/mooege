@@ -72,7 +72,7 @@ namespace Mooege.Net.GS
 
                 client.Game = game;
 
-                if (toon.GameAccount.LoggedInClient == null)
+                if (toon.GameAccount.LoggedInClient == null || toon.Dead)
                 {
                     Logger.Warn("Client doesn't seem to be connected to moonet, dropping him..");
                     client.Connection.Disconnect();

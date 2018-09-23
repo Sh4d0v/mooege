@@ -33,6 +33,7 @@ using Mooege.Net.GS.Message.Definitions.Game;
 using Mooege.Net.GS.Message.Definitions.Misc;
 using Mooege.Net.GS.Message.Definitions.Player;
 using Mooege.Net.GS.Message.Fields;
+using Mooege.Core.GS.Common.Types.Math;
 
 namespace Mooege.Core.GS.Games
 {
@@ -281,8 +282,10 @@ namespace Mooege.Core.GS.Games
 
             //joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.First().Position);
             joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.Find(x => x.ActorSNO.Name == "Start_Location_Team_0").Position);
-
+            //joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.Find(x => x.ActorSNO.Name == "Start_Location_0").Position); // Tristam Zone
             joinedPlayer.InGameClient.TickingEnabled = true; // it seems bnet-servers only start ticking after player is completely in-game. /raist
+
+            //joinedPlayer.World.SpawnMonster(6652, new Vector3D(2967, 2859, 24)); // Spawn a monster when the player login
         }
 
         /// <summary>
