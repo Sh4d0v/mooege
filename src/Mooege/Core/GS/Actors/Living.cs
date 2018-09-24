@@ -38,7 +38,7 @@ namespace Mooege.Core.GS.Actors
         /// <summary>
         /// The brain for 
         /// </summary>
-        public AI.Brain Brain { get; protected set; }
+        public AI.Brain Brain { get; set; }
 
         public Living(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)

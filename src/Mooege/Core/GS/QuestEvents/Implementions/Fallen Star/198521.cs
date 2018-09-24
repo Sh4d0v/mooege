@@ -60,6 +60,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
             }
 
+
+
             //okay now we send a notify with QuestEvent for every one
             //force leah to have a specific conversation list :p
             //world.GetActorBySNO(4580).Tags.Add(MarkerKeys.ConversationList, new TagMapEntry(198541, 108832, 2));
@@ -82,7 +84,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             };
 
             // starting second quest
-            //StartConversation(world, 198541);
+            StartConversation(world, 198541);
         }
 
         //Launch Conversations.

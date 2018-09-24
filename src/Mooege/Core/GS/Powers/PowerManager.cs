@@ -116,7 +116,7 @@ namespace Mooege.Core.GS.Powers
             {
                 if(target.ActorSNO.Id == 90419)
                 {
-
+                    
                 }
             } catch { }
             

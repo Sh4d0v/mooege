@@ -31,8 +31,11 @@ using System.Threading;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Implementations.Hirelings;
-
-
+using Mooege.Core.GS.Actors.Implementations.Minions;
+using Mooege.Core.GS.Powers.Implementations;
+using Mooege.Net.GS.Message;
+using Mooege.Core.GS.Actors;
+//
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
     class _198541 : QuestEvent
@@ -46,6 +49,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         }
         private Boolean HadConversation = true;
         private bool FinishedToMove = false;
+        private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
+        public static Random Rand { get { return _threadRand.Value; } }
         List<Vector3D> monstersAlive = new List<Vector3D> { };
 
         public override void Execute(Map.World world)
@@ -56,7 +61,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 world.GetActorByDynamicId(72).Destroy();
             }
 
-
             if (HadConversation)
             {
                 HadConversation = false;
@@ -66,7 +70,36 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             //Logger.Debug(" Conversation(190404) ");
             //StartConversation(world, 190404);
+            //Берём Лею
+            var LeahBrains = world.GetActorByDynamicId(83);
 
+            Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+            
+            var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
+            LeahFriend.Attributes[GameAttribute.Untargetable] = false;
+            
+            foreach (var player in world.Players)
+            {
+                if (player.Value.PlayerIndex == 0)
+                {
+                    LeahFriend.GBHandle.Type = 4;
+                    LeahFriend.GBHandle.GBID = 717705071;
+
+                    LeahFriend.Attributes[GameAttribute.Pet_Creator] = player.Value.PlayerIndex;
+                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
+                    LeahFriend.Attributes[GameAttribute.Pet_Owner] = player.Value.PlayerIndex;
+                    LeahFriend.Position = RandomDirection(player.Value.Position, 3f, 8f);
+                    LeahFriend.RotationW = LeahBrains.RotationW;
+                    LeahFriend.RotationAxis = LeahBrains.RotationAxis;
+                    LeahFriend.EnterWorld(NewPoint);
+                    LeahFriend.Attributes[GameAttribute.Level] = 6;
+                    player.Value.ActiveHireling = LeahFriend;
+                    player.Value.SelectedNPC = null;
+                    (LeahFriend as Hireling).Brain.Activate();
+
+                }
+            }
+                
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
@@ -76,10 +109,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             };
-            //Берём Лею
-            //var LeahBrains = world.GetActorByDynamicId(83);
-          //  Hireling hireling = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
-          //  var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
+            
+
           //  hireling.Teleport(NewPoint);
             
             //LeahBrains.Destroy();
@@ -110,7 +141,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             
                                     
         }
-        
+        public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
+        {
+            float angle = (float)(Rand.NextDouble() * Math.PI * 2);
+            float radius = minRadius + (float)Rand.NextDouble() * (maxRadius - minRadius);
+            return new Vector3D(position.X + (float)Math.Cos(angle) * radius,
+                                position.Y + (float)Math.Sin(angle) * radius,
+                                position.Z);
+        }
+
         private bool StartConversation(Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)
@@ -119,5 +158,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             return true;
         }
+       
     }
 }

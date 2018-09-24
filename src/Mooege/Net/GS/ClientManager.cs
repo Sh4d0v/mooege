@@ -30,6 +30,9 @@ using System;
 using Mooege.Common.Extensions;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Core.GS.Actors.Implementations.Hirelings;
+using Mooege.Core.GS.Common.Types.Math;
+using Mooege.Core.GS.AI.Brains;
 
 namespace Mooege.Net.GS
 {
@@ -66,7 +69,7 @@ namespace Mooege.Net.GS
                 if (dbQuestProgress.StepOfQuest > 0)
                 {
                      // Вышибаем лею                      
-                     var actorToShoot = world.GetActorByDynamicId(72);
+                    var actorToShoot = world.GetActorByDynamicId(72);
                     if (dbQuestProgress.ActiveQuest == 87700)
                     {
                         if (actorToShoot != null)
@@ -77,6 +80,43 @@ namespace Mooege.Net.GS
                         else
                         {
                             Logger.Debug("Вышибать некого");
+                        }
+                    }
+                    if (dbQuestProgress.ActiveQuest == 72095)
+                    {
+                        var LeahBrains = world.GetActorByDynamicId(72);
+                        if (actorToShoot != null)
+                        {
+                            Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
+                            world.Leave(LeahBrains);
+                        }
+                        Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+                        LeahFriend.Brain = new AggressiveNPCBrain(LeahFriend);
+                        var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
+                        LeahFriend.Attributes[GameAttribute.Untargetable] = false;
+                        if (dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
+                        {
+                            foreach (var player in world.Players)
+                            {
+                                if (player.Value.PlayerIndex == 0)
+                                {
+                                    LeahFriend.GBHandle.Type = 4;
+                                    LeahFriend.GBHandle.GBID = 717705071;
+
+                                    LeahFriend.Attributes[GameAttribute.Pet_Creator] = player.Value.PlayerIndex;
+                                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
+                                    LeahFriend.Attributes[GameAttribute.Pet_Owner] = player.Value.PlayerIndex;
+                                    LeahFriend.Position = RandomDirection(player.Value.Position, 3f, 8f);
+                                    LeahFriend.RotationW = LeahBrains.RotationW;
+                                    LeahFriend.RotationAxis = LeahBrains.RotationAxis;
+                                    LeahFriend.EnterWorld(NewPoint);
+                                    LeahFriend.Attributes[GameAttribute.Level] = 6;
+                                    player.Value.ActiveHireling = LeahFriend;
+                                    player.Value.SelectedNPC = null;
+                                    LeahFriend.Brain.Activate();
+
+                                }
+                            }
                         }
                     }
                     
@@ -97,7 +137,14 @@ namespace Mooege.Net.GS
             }
             DBSessions.AccountSession.Flush();
         }
-
+        public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
+        {
+            float angle = (float)(Mooege.Core.GS.QuestEvents.Implementations._198541.Rand.NextDouble() * Math.PI * 2);
+            float radius = minRadius + (float)Mooege.Core.GS.QuestEvents.Implementations._198541.Rand.NextDouble() * (maxRadius - minRadius);
+            return new Vector3D(position.X + (float)Math.Cos(angle) * radius,
+                                position.Y + (float)Math.Sin(angle) * radius,
+                                position.Z);
+        }
         private void OnJoinGame(GameClient client, JoinBNetGameMessage message)
         {
             var game = GameManager.GetGameById(message.GameId);
