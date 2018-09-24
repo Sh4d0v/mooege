@@ -37,7 +37,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 * Используйте команду: git clone https://github.com/Sh4d0v/mooege.git
 * Откройте Visual Studio CE, залогиньтесь, если хотите, File -> open -> project/solution
 * Откройте mooege/src/Mooege/Mooege-VS2010.sln
-* Загрузите [клиент](https://yadi.sk/d/g_aoGkXE3PACvC) -> Установите
+* Загрузите [клиент](https://mega.nz/#!wUd1UCTa!VTg0OIo-uRqjAofsHDQvFusEgHwCqSWL_V9-RbdnxFA) -> Установите
 * Загрузите [пропатченный exe-файл](https://mega.nz/#!lcUTzSZY!ugfOa8jldBy9f99gBLjRvoXyZE707Tf49tYkDeNP8kA) -> распакуйте в папку с клиентом
 * Скопируйте все файлы MPQs из клиент\Data_D3\PC\MPQs\ - в папку mooege/assets/MPQ
 * Теперь вы можете собрать целеком проект CTRL+Shift+B
