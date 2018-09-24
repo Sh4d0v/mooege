@@ -19,6 +19,7 @@
 using System;
 using System.Linq;
 using Mooege.Common.Logging;
+using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Games;
 using Mooege.Core.GS.Players;
@@ -83,17 +84,35 @@ namespace Mooege.Net.GS
                         // Кустарный перехват портала
                         else if (message.Id == 87)
                         {
-                            Logger.Warn("Кустарный перехват портала. В город.", message.GetType(), message.Id);
                             MooNetClient mooNetClient = BnetClient;
+                            Logger.Warn("Кустарный перехват портала. Версия 2.0.", message.GetType(), message.Id);
                             Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
 
-                            //if (mooNetClient.InGameClient.Game.GetWorld(71150) != mooNetClient.InGameClient.Player.World)
+
+                            try
+                            {
+                                //Search Old Portals
+                                var OldOTG = Player.World.GetActorsBySNO(5648);
+                                foreach (var OldP in OldOTG)
+                                {
+                                    OldP.Destroy();
+                                }
+                            }catch{ }
+                            
+                            var ToHome = new Portal(Player.World, 5648, Player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
+                            ToHome.Scale = 0.9f;
+                            Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
+                            ToHome.Position = (PositionToPortal);
+                            ToHome.EnterWorld(PositionToPortal);
+                            
+                      /*      
+                            //Первая версия телепорта
                             if (mooNetClient.InGameClient.Game.GetWorld(71150) != mooNetClient.InGameClient.Player.World)
-                                //mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(71150), mooNetClient.InGameClient.Game.GetWorld(71150).StartingPoints.First().Position);
                                 mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(71150), ToPortal);
-                                //mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(73261), mooNetClient.InGameClient.Game.GetWorld(71150).StartingPoints.First().Position);
                             else
                                 mooNetClient.InGameClient.Player.Teleport(ToPortal);
+                      */
+
                         }
                         else Logger.Warn("{0} - ID:{1} has no consumer or self-handler.", message.GetType(), message.Id);
 

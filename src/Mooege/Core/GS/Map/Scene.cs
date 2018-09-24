@@ -237,6 +237,7 @@ namespace Mooege.Core.GS.Map
                             break;
 
                         case Mooege.Common.MPQ.FileFormats.MarkerType.MinimapMarker:
+                            //Front Gate - 5502
                             Logger.Trace("Ignoring marker {0} in {1} ({2}) because minimap marker are not handled yet", marker.Name, markerSetData.FileName, markerSetData.Header.SNOId);
 
                             break;

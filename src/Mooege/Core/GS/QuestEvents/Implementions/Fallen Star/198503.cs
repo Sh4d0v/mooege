@@ -128,8 +128,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     {
                         // Пытаемся привязать статус босса
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                        actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
                         // actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true; // there also an attribute about QuestMonster
-                        // DOES NOT WORK it hsould be champion affixes or shit of this kind ...
+                        // DOES NOT WORK it should be champion affixes or shit of this kind ...
 
                         //Запуск отслеживания убийства королевы
                         var ListenerWQMTask = Task<bool>.Factory.StartNew(() => OnWMQKillListener(actorWQM.DynamicID, world));

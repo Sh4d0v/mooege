@@ -35,6 +35,7 @@ using Mooege.Core.GS.Actors.Implementations.Minions;
 using Mooege.Core.GS.Powers.Implementations;
 using Mooege.Net.GS.Message;
 using Mooege.Core.GS.Actors;
+using Mooege.Core.GS.AI.Brains;
 //
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -72,11 +73,12 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //StartConversation(world, 190404);
             //Берём Лею
             var LeahBrains = world.GetActorByDynamicId(83);
-
+            LeahBrains.OnLeave(world);
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
-            
+            LeahFriend.Brain = new MinionBrain(LeahFriend);
             var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
             LeahFriend.Attributes[GameAttribute.Untargetable] = false;
+            
             
             foreach (var player in world.Players)
             {
@@ -95,7 +97,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     LeahFriend.Attributes[GameAttribute.Level] = 6;
                     player.Value.ActiveHireling = LeahFriend;
                     player.Value.SelectedNPC = null;
-                    (LeahFriend as Hireling).Brain.Activate();
+                    LeahFriend.Brain.Activate();
 
                 }
             }

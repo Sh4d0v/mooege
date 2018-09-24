@@ -28,6 +28,7 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using System.Collections.Generic;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Core.GS.Common.Types.Math;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -85,6 +86,17 @@ namespace Mooege.Core.GS.Actors
                         MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
                     }
                     Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
+                }else if (this.ActorSNO.Id == 5648)
+                {
+                    //Generate Portal
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 71150,
+                        DestLevelAreaSNO = 172,
+                        StartingPointActorTag = 1
+                    };
+                    
+                    Logger.Warn("Portal to Home {0} created", this.ActorSNO.Id);
                 }
                 else
                 {
@@ -226,12 +238,27 @@ namespace Mooege.Core.GS.Actors
                 return;
             }
 
-            var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
 
-            if (startingPoint != null)
-                player.ChangeWorld(world, startingPoint);
+            //Portal to New Tristram
+            if (this.Destination.StartingPointActorTag == 1)
+            {
+                this.Scale = 0.8f;
+
+                Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
+                if (player.World.Game.GetWorld(71150) != player.World)
+                    player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
+                else
+                    player.Teleport(ToPortal);
+            }
             else
-                Logger.Warn("Portal's tagged starting point does not exist (Tag = {0})", this.Destination.StartingPointActorTag);
+            {
+                var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
+                if (startingPoint != null)
+                    player.ChangeWorld(world, startingPoint);
+                else
+                    Logger.Warn("Portal's tagged starting point does not exist (Tag = {0})", this.Destination.StartingPointActorTag);
+            }
+
         }
     }
 }
