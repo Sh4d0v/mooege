@@ -228,8 +228,8 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug(" (OnTargeted) the npc has dynID {0}", DynamicID);
 
             player.SelectedNPC = this;
-
-            var vendor = player.SelectedNPC as Vendor;
+			
+			var vendor = player.SelectedNPC as Vendor;
 
             var count = Interactions.Count + Conversations.Count;
 
@@ -239,25 +239,34 @@ namespace Mooege.Core.GS.Actors
             // If there is only one conversation option, immediatly select it without showing menu
             if (Interactions.Count == 0 && Conversations.Count == 1 && this != vendor)
             {
-                player.Conversations.StartConversation(Conversations[0].ConversationSNO);
-                Conversations[0].MarkAsRead();
-                UpdateConversationList();
+                // No start bugged conv!
+                if (Conversations[0].ConversationSNO == 141849 || Conversations[0].ConversationSNO == 141856)
+                {
+
+                }
+                else
+                {
+                    player.Conversations.StartConversation(Conversations[0].ConversationSNO);
+                    Conversations[0].MarkAsRead();
+                    UpdateConversationList();
+                }
                 return;
             }
+
 
             NPCInteraction[] npcInters = new NPCInteraction[count];
 
             var it = 0;
-            foreach (var conv in Conversations)
-            {
-                if (this == vendor)
-                    return;
-                else
-                {
-                    npcInters[it] = conv.AsNPCInteraction(this, player);
-                    it++;
-                }
-            }
+            foreach (var conv in Conversations)            
+			{               
+              if (this == vendor)                    
+                  return;                
+              else                
+              {                    
+                  npcInters[it] = conv.AsNPCInteraction(this, player);                    
+                  it++;                
+              }            
+			}
 
             foreach (var inter in Interactions)
             {
@@ -312,12 +321,18 @@ namespace Mooege.Core.GS.Actors
             var conversation = Conversations.FirstOrDefault(conv => conv.ConversationSNO == message.ConversationSNO);
             if (conversation == null)
                 return;
+            if (Conversations[0].ConversationSNO == 141849 || Conversations[0].ConversationSNO == 141856)
+            {
 
-            player.Conversations.StartConversation(conversation.ConversationSNO);
-            conversation.MarkAsRead();
+            }
+            else
+            {
 
-            UpdateConversationList(); // erekose now the dialogs shit are updated properly :D yay !
+                player.Conversations.StartConversation(conversation.ConversationSNO);
+                conversation.MarkAsRead();
 
+                UpdateConversationList(); // erekose now the dialogs shit are updated properly :D yay !
+            }
         }
     }
 }

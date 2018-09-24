@@ -85,11 +85,20 @@ namespace Mooege.Core.GS.Actors
                             //Prevent Development Hell portal from showing
                             if (tags[MarkerKeys.DestinationWorld].Id != 222591)
                                 return new Portal(world, snoId, tags);
+                                //return null;
                             else
                                 return null;
                         case GizmoGroup.BossPortal:
-                            Logger.Warn("Skipping loading of boss portals");
-                            return null;
+                           // if (tags[MarkerKeys.DestinationWorld].Id != 222591)
+                            try{
+                                Logger.Warn("Try loading of boss portals");
+                                return new Portal(world, snoId, tags);
+                            }
+                            catch
+                            {
+                                Logger.Warn("Try loading.. NO! Skipping loading of boss portals");
+                                return null;
+                            }
                         case GizmoGroup.CheckPoint:
                             return new Checkpoint(world, snoId, tags);
                         case GizmoGroup.Waypoint:

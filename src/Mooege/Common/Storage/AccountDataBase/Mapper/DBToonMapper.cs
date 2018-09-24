@@ -42,6 +42,7 @@ namespace Mooege.Common.Storage.AccountDataBase.Mapper
             Map(e => e.TimePlayed);
 
             HasOne(e => e.DBActiveSkills).Cascade.All();
+            HasOne(e => e.DBProgressToon).Cascade.All();
         }
     }
 }

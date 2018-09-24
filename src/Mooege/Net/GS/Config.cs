@@ -57,7 +57,7 @@ namespace Mooege.Net.GS.BarbarianPrimarySkills
         private static readonly BarbarianPrimarySkillsConfig _instance = new BarbarianPrimarySkillsConfig();
         public static BarbarianPrimarySkillsConfig Instance { get { return _instance; } }
         private BarbarianPrimarySkillsConfig() : base("Primary-Skills") { }
-    }   
+    }
 }
 
 namespace Mooege.Net.GS.BarbarianSecondarySkills

@@ -33,6 +33,8 @@ using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Objects;
 using Mooege.Core.GS.Actors.Implementations;
 using Mooege.Core.GS.AI;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
@@ -59,6 +61,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
             StartConversation(world, 198199);
+            foreach (var player in world.Players)
+            {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                dbQuestProgress.ActiveQuest = 87700;
+                dbQuestProgress.StepOfQuest = 1;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            };
             var wave1Actors = world.GetActorsInGroup("GizmoGroup1");
             monstersId.Clear();
             ActorsVector3D.Clear();
@@ -96,6 +106,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     StartConversation(world, 151102);
                     world.Game.Quests.Advance(87700);
+                    foreach (var player in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 87700;
+                        dbQuestProgress.StepOfQuest = 2;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    };
                     Logger.Debug("Event finished");
                     // wyjebanie leah                      
                     var actorToShoot = world.GetActorByDynamicId(72);

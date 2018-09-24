@@ -47,10 +47,35 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 HadConversation = false;
                 world.Game.Quests.Advance(72095);
+                //Logger.Debug(" Второй квест окончен. ");
+                world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 72095);
+
             }
+            foreach (var player in world.Players)
+            {
+                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
+                {
+                    snoQuest = 87700,
+                    Field1 = 2,
+                    Field2 = 10.0f
+
+                });
+            };
+            Logger.Debug(" Второй квест окончен. ");
+            // starting third quest
+            //StartConversation(world, 198292);
+            //world.Game.Quests.Advance(72221);
 
         }
 
 
+        private bool StartConversation(Map.World world, Int32 conversationId)
+        {
+            foreach (var player in world.Players)
+            {
+                player.Value.Conversations.StartConversation(conversationId);
+            }
+            return true;
+        }
     }
 }

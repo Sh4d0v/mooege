@@ -26,6 +26,8 @@ using Mooege.Net.GS.Message.Fields;
 using Mooege.Net.GS.Message.Definitions.Map;
 using Mooege.Core.GS.Common.Types.TagMap;
 using System.Collections.Generic;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -65,7 +67,31 @@ namespace Mooege.Core.GS.Actors
             }
             catch (KeyNotFoundException)
             {
-                Logger.Warn("Portal {0} has incomplete definition", this.ActorSNO.Id);
+                if (this.ActorSNO.Id == 168932)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 60713,
+                        DestLevelAreaSNO = 172,
+                        StartingPointActorTag = 1
+                    };
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                    Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
+                }
+                else
+                {
+                    Logger.Warn("Portal {0} has incomplete definition", this.ActorSNO.Id);
+                }
+                
+                
             }
             this.Field2 = 16;
 
@@ -133,8 +159,66 @@ namespace Mooege.Core.GS.Actors
         public override void OnTargeted(Player player, TargetMessage message)
         {
             Logger.Debug("(OnTargeted) Portal has been activated ");
-
+            
             var world = this.World.Game.GetWorld(this.Destination.WorldSNO);
+
+            if (this.Destination.WorldSNO == 62751)
+            {
+                //Enter в Adrian's Hut
+                bool QuestEnter = false;
+
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72095)
+                {
+                    dbQuestProgress.ActiveQuest = 72095;
+                    if (dbQuestProgress.StepOfQuest == 5)
+                    {
+                        dbQuestProgress.StepOfQuest = 6;
+                        QuestEnter = true;
+                    }
+
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+
+                if (QuestEnter == true)
+                {
+                    world.Game.Quests.Advance(72095);
+                    QuestEnter = false;
+                }
+            }
+
+            if (this.Destination.WorldSNO == 50579)
+            {
+                //Enter в Cathedral level 1
+                bool QuestEnter = false;
+                
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72095)
+                {
+                    dbQuestProgress.ActiveQuest = 72095;
+                    if (dbQuestProgress.StepOfQuest == 10)
+                    {
+                        dbQuestProgress.StepOfQuest = 11;
+                        QuestEnter = true;
+                    }
+
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+
+                if (QuestEnter == true)
+                {
+                    world.Game.Quests.Advance(72095);
+                    QuestEnter = false;
+                }                
+            }
+
+            if (this.Destination.WorldSNO == 60395)
+            {
+                //Enter to Drowned Temple
+                
+            }
 
             if (world == null)
             {

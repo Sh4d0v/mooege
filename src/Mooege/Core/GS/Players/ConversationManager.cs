@@ -260,12 +260,26 @@ namespace Mooege.Core.GS.Players
                 {
                     logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event, it should be implemented ", this.SNOId);
                 }
+            }else if (this.SNOId == 167115)  // КАААААААААСТЫЛИ
+            {
+                logger.Debug("Запуск диалога: {0}", this.SNOId);
+                if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
+                {
+                    logger.Info("(Диалог) Запуск скрипта");
+                    this.manager.QuestEventDict[(uint)this.SNOId].Execute(this.player.World); // Запуск квеста
+                }
+                else
+                {
+                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event, it should be implemented ", this.SNOId);
+                }
             }
             else
             {
                 logger.Debug("  (EndConversation) Conversation type {0} for Conversation: {1} not implemented", this.asset.ConversationType, this.SNOId);
 
             }
+           
+            
 
             if (ConversationEnded != null)
                 ConversationEnded(this, null);
@@ -376,24 +390,31 @@ namespace Mooege.Core.GS.Players
             // this is were we store the active quests when they are implemented 
             // warning the number here should match that of conversation which ARE considered as QuestEvent from the asset db
 
-            // protector of tristam 87700
-            this.QuestEventDict.Add(151087, new SurviveTheWaves());
-            this.QuestEventDict.Add(151123, new LeahInn());
-            this.QuestEventDict.Add(151167, new LeahInnAfterKilling());
-            this.QuestEventDict.Add(198503, new _198503()); // erekose
-            this.QuestEventDict.Add(198521, new _198521()); // erekose
+            // Fallen Star 87700
+            this.QuestEventDict.Add(151087, new SurviveTheWaves()); //Defend of New Tristram
+            this.QuestEventDict.Add(151123, new LeahInn()); // Inn and Killing Zombie
+            this.QuestEventDict.Add(151167, new LeahInnAfterKilling()); //Talking With Leah
+            this.QuestEventDict.Add(198503, new _198503()); // Killing WM and QWM + Teleport  
+            this.QuestEventDict.Add(198521, new _198521()); // Teleport and End.
 
-            // rescue Cain 72095
-            this.QuestEventDict.Add(198541, new _198541()); // erekose
-            this.QuestEventDict.Add(198617, new _198617()); // erekose
+            // Rescue Cain 72095
+            this.QuestEventDict.Add(198541, new _198541()); // Start Quest
+            this.QuestEventDict.Add(190404, new _190404()); // Диалог перед телепортацией
+            this.QuestEventDict.Add(166678, new _166678()); // Открытие ворот
+            this.QuestEventDict.Add(167115, new _167115()); // Призыв и убийство капитана Далтина
+            this.QuestEventDict.Add(198588, new _198588()); // Разговор с Леей под домом после убийства
+            this.QuestEventDict.Add(198617, new _198617()); // Завершение квеста
 
-            // skeleton king 72061
-            this.QuestEventDict.Add(154570, new _154570());
+            // Crown 72221
+            this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
+
+            // Skeleton King 72061
+            this.QuestEventDict.Add(154570, new _154570());  // Начало квеста
 
         }
 
         /// <summary>
-        /// Stops all conversations
+        /// Остановка всех диалогов
         /// </summary>
         public void StopAll()
         {
@@ -410,9 +431,9 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Starts and plays a conversation
+        /// Запуск и исполнение диалога
         /// </summary>
-        /// <param name="snoConversation">SnoID of the conversation</param>
+        /// <param name="snoConversation">SnoID - номер диалога</param>
         public void StartConversation(int snoConversation)
         {
             if (!Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.Conversation].ContainsKey(snoConversation))
@@ -457,7 +478,7 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Returns true when the conversation playing finishes.
+        /// Возвращать true - если диалог завершён правильно.
         /// </summary>
         private bool _conversationTrigger = false;
         public bool ConversationRunning()
@@ -468,7 +489,7 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Update all open conversations
+        /// Обновление доступных диалогов
         /// </summary>
         /// <param name="gameTick"></param>
         public void Update(int tickCounter)

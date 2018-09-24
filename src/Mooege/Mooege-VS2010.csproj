@@ -8,7 +8,7 @@
     <ProjectGuid>{41BB6B2D-BD3F-42B6-860C-D21DC74B33CD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Mooege</RootNamespace>
-    <AssemblyName>Mooege</AssemblyName>
+    <AssemblyName>DiIiS</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -130,12 +130,14 @@
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBGameAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBInventory.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBItemInstance.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBProgressToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBActiveSkillsMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBGameAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBInventoryMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBItemInstanceMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBProgressToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\SessionProvider.cs" />
     <Compile Include="Common\Storage\DBSessions.cs" />
@@ -336,12 +338,17 @@
     <Compile Include="Core\GS\Players\Equipment.cs" />
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\198292.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198503.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198521.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\LeahInn.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\LeahInnAfterKilling.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\SurviveTheWaves.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\166678.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\167115.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\190404.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198541.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198588.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198617.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\154570.cs" />
     <Compile Include="Core\GS\QuestEvents\QuestEvent.cs" />

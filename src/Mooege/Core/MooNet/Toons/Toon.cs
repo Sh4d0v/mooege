@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mooege.Common.MPQ;
@@ -244,6 +244,9 @@ namespace Mooege.Core.MooNet.Toons
         {
             get
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(this.PersistentID);
+                int ActiveQuest = dbQuestProgress.ActiveQuest;
+                DBSessions.AccountSession.Flush();
                 return D3.Hero.Digest.CreateBuilder().SetVersion(902)
                                 .SetHeroId(this.D3EntityID)
                                 .SetHeroName(this.Name)
@@ -255,7 +258,7 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetHighestUnlockedAct(0)
                                 .SetLastPlayedDifficulty(0)
                                 .SetHighestUnlockedDifficulty(0)
-                                .SetLastPlayedQuest(-1)
+                                .SetLastPlayedQuest(ActiveQuest)
                                 .SetLastPlayedQuestStep(-1)
                                 .SetTimePlayed(this.TimePlayed)
                                 .Build();
@@ -553,7 +556,7 @@ namespace Mooege.Core.MooNet.Toons
         #region DB
 
 
-        
+
         /*private bool VisualItemExistsInDb(int slot)
         {
             var query = string.Format("SELECT toon_id FROM inventory WHERE toon_id = {0} AND equipment_slot = {1}", this.PersistentID, slot);
@@ -562,7 +565,7 @@ namespace Mooege.Core.MooNet.Toons
             return reader.HasRows;
         }*/
     }
-        #endregion
+    #endregion
 
     #region Definitions and Enums
     //Order is important as actor voices and saved data is based on enum index

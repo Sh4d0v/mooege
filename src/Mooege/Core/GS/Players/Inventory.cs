@@ -875,18 +875,18 @@ namespace Mooege.Core.GS.Players
             }
 
             // save stash
-            if(!_owner.Toon.DBToon.Hardcore)
+            if (!_owner.Toon.DBToon.Hardcore)
                 dbGameAccount.StashSize = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
             else
                 dbGameAccount.StashSizeHC = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
 
             foreach (Item itm in _stashGrid.Items.Values)
             {
-                SaveItemToDB(dbGameAccount, null, _owner.Toon.DBToon.Hardcore,  EquipmentSlotId.Stash, itm);
+                SaveItemToDB(dbGameAccount, null, _owner.Toon.DBToon.Hardcore, EquipmentSlotId.Stash, itm);
             }
 
             // save gold
-            if(!_owner.Toon.DBToon.Hardcore)
+            if (!_owner.Toon.DBToon.Hardcore)
                 dbGameAccount.Gold = GetGoldAmount();
             else
                 dbGameAccount.GoldHC = GetGoldAmount();

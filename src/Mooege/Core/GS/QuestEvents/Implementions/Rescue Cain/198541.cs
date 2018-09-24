@@ -28,6 +28,9 @@ using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
 using System.Threading;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Core.GS.Actors.Implementations.Hirelings;
 
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
@@ -41,6 +44,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             : base(198541)
         {
         }
+        private Boolean HadConversation = true;
+        private bool FinishedToMove = false;
+        List<Vector3D> monstersAlive = new List<Vector3D> { };
 
         public override void Execute(Map.World world)
         {
@@ -49,15 +55,62 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 world.GetActorByDynamicId(72).Destroy();
             }
-            Logger.Debug(" RESCUE CAIN QUEST STARTED ");
-            //Logger.Debug(" Quests.Advance(72095) ");
-            //world.Game.Quests.Advance(72095);
-            Logger.Debug(" Conversation(190404) ");
-            StartConversation(world, 190404);
-            Logger.Debug(" Conversation(166678) ");
-            StartConversation(world, 166678); // "let me open the gate" need if in Old Ruins
-        }
 
+
+            if (HadConversation)
+            {
+                HadConversation = false;
+                Logger.Debug(" RESCUE CAIN QUEST STARTED ");
+                Logger.Debug(" Quests.Advance(72095) ");
+                world.Game.Quests.Advance(72095);
+            }
+            //Logger.Debug(" Conversation(190404) ");
+            //StartConversation(world, 190404);
+
+            foreach (var player in world.Players)
+            {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+
+                dbQuestProgress.ActiveQuest = 72095;
+                dbQuestProgress.StepOfQuest = 1;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            };
+            //Берём Лею
+            //var LeahBrains = world.GetActorByDynamicId(83);
+          //  Hireling hireling = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+          //  var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
+          //  hireling.Teleport(NewPoint);
+            
+            //LeahBrains.Destroy();
+            //Берем портал
+            //var NewTristramPortal = world.GetActorByDynamicId(34);
+
+          /*  var WaitingOfWalk = Task<bool>.Factory.StartNew(() => OnKillListener(LeahBrains,NewTristramPortal, world));
+            WaitingOfWalk.ContinueWith(delegate
+            {
+                //StartConversation(world, 151156);
+                if (world.HasActor(83))
+                {
+                    LeahBrains.Destroy();
+                    Logger.Debug(" Удаляем Лею ");
+                }
+                //world.Game.Quests.Advance(72095);
+            });*/
+
+            
+            //Тупо кординаты портала
+            //Vector3D ToPortal = new Vector3D(2981.73f, 2835.009f, 24.66344f);
+
+            //Создаём направляющий угол для движения Леи
+            //float Angle = MovementHelpers.GetFacingAngle(LeahBrains.Position, NewTristramPortal.Position);
+            
+            //Отправляю Лею к порталу под нужным углом)) Profit ;)
+            //LeahBrains.Move(NewTristramPortal.Position, Angle);
+            
+                                    
+        }
+        
         private bool StartConversation(Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)

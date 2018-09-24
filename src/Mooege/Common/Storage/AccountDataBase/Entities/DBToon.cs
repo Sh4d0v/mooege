@@ -40,5 +40,6 @@ namespace Mooege.Common.Storage.AccountDataBase.Entities
         public virtual bool Deleted { get; set; }
 
         public virtual DBActiveSkills DBActiveSkills { get; set; }
+        public virtual DBProgressToon DBProgressToon { get; set; }
     }
 }

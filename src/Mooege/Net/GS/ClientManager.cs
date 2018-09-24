@@ -28,6 +28,8 @@ using Mooege.Net.GS.Message.Definitions.Hero;
 using Mooege.Net.GS.Message.Definitions.Misc;
 using System;
 using Mooege.Common.Extensions;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Net.GS
 {
@@ -55,6 +57,45 @@ namespace Mooege.Net.GS
         public void Consume(GameClient client, GameMessage message)
         {
             if (message is JoinBNetGameMessage) OnJoinGame(client, (JoinBNetGameMessage)message);
+
+            //Тестовая проверка прохождения
+            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(client.Player.Toon.PersistentID);
+            var world = client.Player.World;
+            if (dbQuestProgress.ActiveQuest != -1)
+            {
+                if (dbQuestProgress.StepOfQuest > 0)
+                {
+                     // Вышибаем лею                      
+                     var actorToShoot = world.GetActorByDynamicId(72);
+                    if (dbQuestProgress.ActiveQuest == 87700)
+                    {
+                        if (actorToShoot != null)
+                        {
+                            Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
+                            world.Leave(actorToShoot);
+                        }
+                        else
+                        {
+                            Logger.Debug("Вышибать некого");
+                        }
+                    }
+                    
+                    Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
+                    for (int CS = 0; CS < dbQuestProgress.StepOfQuest; CS++)
+                    {
+                        world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
+                        //Logger.Warn("Обнаруженно прохождение квеста {0}, шаг квеста {1]", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
+                    }
+                    Logger.Warn("Обнаружено Прохождение квеста {0}, шаг - {1}", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
+                }
+                else
+                {
+                    world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
+                    Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
+                }
+
+            }
+            DBSessions.AccountSession.Flush();
         }
 
         private void OnJoinGame(GameClient client, JoinBNetGameMessage message)

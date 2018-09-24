@@ -219,12 +219,12 @@ namespace Mooege.Net.MooNet
         {
             return false; // comment this line to enable EULA & TOS agreements.
 
-            foreach (AvailableAgreements x in Enum.GetValues(typeof(AvailableAgreements)))
+            /*foreach (AvailableAgreements x in Enum.GetValues(typeof(AvailableAgreements)))
             {
                 if (x != AvailableAgreements.None && !Agreements.ContainsKey(x))
                     return true;
             }
-            return false;
+            return false;*/
         }
 
         public void SendAgreements()
@@ -317,7 +317,7 @@ namespace Mooege.Net.MooNet
 
             if (AuthenticationErrorCode != AuthManager.AuthenticationErrorCodes.None)
             {
-                Logger.Info("Authentication failed for {0} because of invalid credentals.", LoginEmail);
+                Logger.Info("Аутентификация пользователем {0} непройдена.", LoginEmail);
                 logonResponseBuilder.SetErrorCode(6); //Logon failed, please try again (Error 6)
 
                 this.MakeRPC(() =>
@@ -326,7 +326,7 @@ namespace Mooege.Net.MooNet
                 return;
             }
 
-            Logger.Info("User {0} authenticated successfuly.", LoginEmail);
+            Logger.Info("Пользователь {0} прошел аутентификацию.", LoginEmail);
 
             this.EnableEncryption();
         }
@@ -657,7 +657,7 @@ namespace Mooege.Net.MooNet
 
         public override string ToString()
         {
-            return String.Format("{{ Client: {0} }}", this.Account == null ? "??" : this.Account.Email);
+            return String.Format("{{ Клиент: {0} }}", this.Account == null ? "??" : this.Account.Email);
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace Mooege.Core.MooNet.Games
 
         public void StartGame(List<MooNetClient> clients, ulong objectId)
         {
-            this.InGame = GameManager.CreateGame((int)this.DynamicId); // create the ingame.
+            this.InGame = GameManager.CreateGame((int)this.DynamicId, clients); // create the ingame.
 
             foreach (var client in clients) // get all clients in game.
             {

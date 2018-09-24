@@ -97,135 +97,183 @@ namespace Mooege.Core.MooNet.Toons
             // Create Character
             var dbGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID);
             var newDBToon = new DBToon
-                                {
-                                    Class = @Toon.GetClassByID(classId),
-                                    Name = name,
-                                    /*HashCode = GetUnusedHashCodeForToonName(name),*/
-                                    Hardcore = isHardcore,
-                                    Flags = flags,
-                                    Level = level,
-                                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID)
-                                };
+            {
+                Class = @Toon.GetClassByID(classId),
+                Name = name,
+                /*HashCode = GetUnusedHashCodeForToonName(name),*/
+                Hardcore = isHardcore,
+                Flags = flags,
+                Level = level,
+
+                DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID)
+            };
+
 
             dbGameAccount.DBToons.Add(newDBToon);
-            DBSessions.AccountSession.SaveOrUpdate(dbGameAccount);
-            DBSessions.AccountSession.Flush();
 
-            // Creating Starting Items (hardcoded :P) [Necrosummon]
-            #region Starter Items
-            int lastId; // Item id
 
-            if(gameAccount.DBGameAccount.DBInventories.Count == 0) // is the database empty?
-                lastId = 1;
-            else // if database has entries, get last id and add items with new id
-                lastId = (int)gameAccount.DBGameAccount.DBInventories.Last<DBInventory>().Id + 1; // Item id
 
-            // Barbarian Starter Items (WEATHERED HAND AXE + BUCKLER)
+            //Стандартные Предметы
+            #region Стандартные предметы Barbarian
             if (newDBToon.Class == ToonClass.Barbarian)
             {
-                // DBItemInstance
-                var bucklerItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'1815806857','','295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:978984494|0,0008320537;48,:1090519040|8;51,:1090519040|8;52,:1090519040|8;53,:1090519040|8;207,:1040522936|0,13;208,:1040522936|0,13;205,:1040522936|0,13;213,:1088421888|7;211,:1088421888|7;212,:1094713344|12;214,:1084227584|5;297,:1|1,401298E-45')", lastId);
-                var weatheredHandAxeItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'1661412389','','295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:281445791|7,830311E-29;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45')", lastId + 1);                
-                using (var bucklerQuery = new SQLiteCommand(bucklerItem, DBManager.Connection))
+                #region Топор
+                //Структура сущности предмета
+                DBItemInstance BARAxeInstance = new DBItemInstance
                 {
-                    bucklerQuery.ExecuteNonQuery();
-                }
-                using (var weatheredHandAxeQuery = new SQLiteCommand(weatheredHandAxeItem, DBManager.Connection))
+                    GbId = 1661412390, // 
+                    Affixes = "",
+                    Attributes = "295,:1|" +
+                    "1.401298E-45;91,:0|" +
+                    "0;308,:1|" +
+                    "1.401298E-45;312,:1371713298|" +
+                    "1.045201E+11;157,:1067869798|" +
+                    "1.3;159,:1067869798|" +
+                    "1.3;161,:1067869798|" +
+                    "1.3;412,:1067869798|" +
+                    "1.3;414,:1067869798|" +
+                    "1.3;420,:1067869798|" +
+                    "1.3;164,:1067869798|" +
+                    "1.3;326,:0|" +
+                    "0;327,:0|" +
+                    "0;328,:0|" +
+                    "0;329,:0|" +
+                    "0;413,:0|" +
+                    "0;415,:0|" +
+                    "0;183,0:1073741824|" +
+                    "2;177,0:1077936128|" +
+                    "3;184,0:1073741824|" +
+                    "2;178,0:1077936128|" +
+                    "3;179,:1077936128|" +
+                    "3;185,:1073741824|" +
+                    "2;416,0:1073741824|" +
+                    "2;421,0:1073741824|" +
+                    "2;173,0:1073741824|" +
+                    "2;172,0:1073741824|" +
+                    "2;172,:0|" +
+                    "0;417,0:0|" +
+                    "0;175,0:1065353216|" +
+                    "1;176,0:1065353216|" +
+                    "1;180,0:1065353216|" +
+                    "1;181,:1065353216|" +
+                    "1;418,0:1065353216|" +
+                    "1;422,0:1065353216|" +
+                    "1;169,0:1065353216|" +
+                    "1;419,0:0|" +
+                    "0;89,30592:1|" +
+                    "1.401298E-45;90,30592:1|" +
+                    "1.401298E-45;297,:1|" +
+                    "1.401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(BARAxeInstance);
+                // Структура предмета
+                DBInventory BARAxeFirstWeapon = new DBInventory
                 {
-                    weatheredHandAxeQuery.ExecuteNonQuery();
-                }
-
-                // DBInventory
-                var bucklerInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '3', '0', '0', {2}, {3}, {0})", lastId, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                var weatheredHandAxeInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '4', '0', '0', {2}, {3}, {0})", lastId + 1, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                using (var bucklerQuery = new SQLiteCommand(bucklerInventory, DBManager.Connection))
-                {
-                    bucklerQuery.ExecuteNonQuery();
-                }
-                using (var weatheredHandAxeQuery = new SQLiteCommand(weatheredHandAxeInventory, DBManager.Connection))
-                {
-                    weatheredHandAxeQuery.ExecuteNonQuery();
-                }
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = BARAxeInstance, // Использовать свеже созданную сущность предмета
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    EquipmentSlot = 4, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(BARAxeFirstWeapon);
+                #endregion
             }
+            #endregion 
 
-            // Demon Hunter Starter Item (INITIATE'S HAND CROSSBOW)
+            #region Стандартные предметы Demon Hunter
             if (newDBToon.Class == ToonClass.DemonHunter)
             {
-                // DBItemInstance
-                var initiatesHandCrossbowItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'-363391670','','295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:889997518|5,226001E-07;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30599:1|1,401298E-45;90,30599:1|1,401298E-45;377,:1065353216|1;378,:1065353216|1;398,:1065353216|1;400,:1065353216|1;297,:1|1,401298E-45')", lastId);
-                using (var initiatesHandCrossbowQuery = new SQLiteCommand(initiatesHandCrossbowItem, DBManager.Connection))
+                #region Арбалет
+                //Структура сущности предмета
+                DBItemInstance DHFWInstance = new DBItemInstance
                 {
-                    initiatesHandCrossbowQuery.ExecuteNonQuery();
-                }
+                    GbId = -1647832978, // 
+                    Affixes = "",
+                    Attributes = "295,:0 |" + //Item Quality Level
+                    " 2,802597E-45; 91,:0 |" + //TeamID
+                    " 0; 308,:1 |" + // ItemStackQuantityLo
+                    " 1,401298E-45; 312,:1381516818 |" + // Seed
+                    " 1,767016E+35; 157,:1070386381 |" + // Attacks_Per_Second_Item
+                    " 1,6; 159,:1070386381 |" + // Attacks_Per_Second_Item_Subtotal
+                    " 1,6; 161,:1070386381 |" + // Attacks_Per_Second_Item_Total
+                    " 1,6; 412,:1070386381 |" + // Attacks_Per_Second_Item_MainHand
+                    " 1,6; 414,:1070386381 |" + // Attacks_Per_Second_Item_Total_MainHand
+                    " 1,6; 420,:1070386381 |" + // Attacks_Per_Second_Item_CurrentHand
+                    " 1,6; 164,:1070386381 |" + // Attacks_Per_Second_Total
+                    " 1; 326,:0 |" + // InitialCooldownMinTotal
+                    " 0; 327,:0 |" + // InitialCooldownDeltaTotal
+                    " 0; 328,:0 |" + // Attack_Cooldown_Min_Total
+                    " 0; 329,:0 |" + // Attack_Cooldown_Delta_Total
+                    " 0; 413,:0 |" + // Attacks_Per_Second_Item_OffHand
+                    " 0; 415,:0 |" + // Attacks_Per_Second_Item_Total_OffHand
+                    " 0;183,0:1073741824 |" + // Damage_Weapon_Min
+                    " 2;177,0:1096810496 |" + // Damage_Weapon_Max
+                    " 14;184,0:1073741824 |" + // Damage_Weapon_Min_Total
+                    " 2;178,0:1096810496 |" + // Damage_Weapon_Max_Total
+                    " 14;179,:1096810496 |" + // Damage_Weapon_Max_Total_All
+                    " 14;185,:1073741824 |" + // Damage_Weapon_Min_Total_All
+                    " 2;416,0:1073741824 |" + // Damage_Weapon_Min_Total_MainHand
+                    " 2;421,0:1073741824 |" + // Damage_Weapon_Min_Total_CurrentHand
+                    " 2;173,0:1073741824 |" + // Damage_Min_Subtotal
+                    " 2;172,0:1073741824 |" + // Damage_Min_Total
+                    " 2;172,:0 |" + // Damage_Min_Total
+                    " 0;417,0:0 |" + // Damage_Weapon_Min_Total_OffHand
+                    " 0;175,0:1094713344 |" + // Damage_Weapon_Delta
+                    " 12;176,0:1094713344 |" + // Damage_Weapon_Delta_SubTotal
+                    " 12;180,0:1094713344 |" + // Damage_Weapon_Delta_Total
+                    " 12;181,:1094713344 |" + // Damage_Weapon_Delta_Total_All
+                    " 12;418,0:1094713344 |" + // Damage_Weapon_Delta_Total_MainHand
+                    " 12;422,0:1094713344 |" + // Damage_Weapon_Delta_Total_CurrentHand
+                    " 12;169,0:1094713344 |" + // Damage_Delta_Total
+                    " 12;419,0:0|" + // Damage_Weapon_Delta_Total_OffHand  
+                    " 0; 89,30599:1 |" + // Skill
+                    " 1,401298E-45; 90,30599:1 |" +  // Skill_Total
+                    " 1,401298E-45; 297,:1 |" + // Item_Equipped
+                    " 1,401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(DHFWInstance);
+                // Структура предмета
+                DBInventory DHFirstWeapon = new DBInventory
+                {
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = DHFWInstance, // Использовать свеже созданную сущность предмета
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    EquipmentSlot = 4, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(DHFirstWeapon);
+                #endregion
 
-                // DBInventory
-                var initiatesHandCrossbowInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '4', '0', '0', {2}, {3}, {0})", lastId, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                using (var initiatesHandCrossbowQuery = new SQLiteCommand(initiatesHandCrossbowInventory, DBManager.Connection))
-                {
-                    initiatesHandCrossbowQuery.ExecuteNonQuery();
-                }
+                
             }
-
-            // Monk Starter Item (WORN KNUCKLES)
-            if (newDBToon.Class == ToonClass.Monk)
-            {
-                // DBItemInstance
-                var wornKnucklesItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'1236604967','','295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:277358000|5,370061E-29;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45')", lastId);
-                using (var wornKnucklesQuery = new SQLiteCommand(wornKnucklesItem, DBManager.Connection))
-                {
-                    wornKnucklesQuery.ExecuteNonQuery();
-                }
-
-                // DBInventory
-                var wornKnucklesInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '4', '0', '0', {2}, {3}, {0})", lastId, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                using (var wornKnucklesQuery = new SQLiteCommand(wornKnucklesInventory, DBManager.Connection))
-                {
-                    wornKnucklesQuery.ExecuteNonQuery();
-                }
-            }
-
-            // Witch Doctor Starter Item (SIMPLE KNIFE)
-            if (newDBToon.Class == ToonClass.WitchDoctor)
-            {
-                // DBItemInstance
-                var simpleKnifeItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'-635269584','','295,:1|1,401298E-45;91,:0|0;308,:1|1,401298E-45;312,:233363062|1,434973E-30;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45')", lastId);
-                using (var simpleKnifeQuery = new SQLiteCommand(simpleKnifeItem, DBManager.Connection))
-                {
-                    simpleKnifeQuery.ExecuteNonQuery();
-                }
-
-                // DBInventory
-                var simpleKnifeInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '4', '0', '0', {2}, {3}, {0})", lastId, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                using (var simpleKnifeQuery = new SQLiteCommand(simpleKnifeInventory, DBManager.Connection))
-                {
-                    simpleKnifeQuery.ExecuteNonQuery();
-                }
-            }
-
-            // Wizard Starter Item (APPRENTICE'S WAND)
-            if (newDBToon.Class == ToonClass.Wizard)
-            {
-                // DBItemInstance
-                var apprenticesWandItem = string.Format("INSERT INTO dbiteminstance (id, gbid, affixes, attributes) VALUES({0},'88665049','','295,:1|1,401298E-45;91,:0|0;308,:1|1,401298E-45;312,:1184309910|19345,29;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30601:1|1,401298E-45;90,30601:1|1,401298E-45;297,:1|1,401298E-45')", lastId);
-                using (var apprenticesWandQuery = new SQLiteCommand(apprenticesWandItem, DBManager.Connection))
-                {
-                    apprenticesWandQuery.ExecuteNonQuery();
-                }
-
-                // DBInventory
-                var apprenticesWandInventory = string.Format("INSERT INTO dbinventory (id, hardcore, equipmentslot, locationx, locationy, dbgameaccount_id, dbtoon_id, dbiteminstance_id) VALUES({0}, {1}, '4', '0', '0', {2}, {3}, {0})", lastId, Convert.ToInt32(isHardcore), dbGameAccount.Id, newDBToon.Id);
-                using (var apprenticesWandQuery = new SQLiteCommand(apprenticesWandInventory, DBManager.Connection))
-                {
-                    apprenticesWandQuery.ExecuteNonQuery();
-                }
-            }
-
             #endregion
 
-            DBSessions.AccountSession.Refresh(dbGameAccount); // Refresh db
+            #region Начало прогресса. 1 Акт, Пока не взятый квест.
+            DBProgressToon StartProgress = new DBProgressToon
+            {
+                DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                DBToon = newDBToon, // Выдать созданному персонажу
+                LastQuest = 0, // Последний выполненный квест
+                StepOfQuest = 0, //Текущий шаг квеста
+                ActiveAct = 1, // Активный акт
+                ActiveQuest = -1 // Активный квест
+            };
+            DBSessions.AccountSession.SaveOrUpdate(StartProgress);
+            #endregion
 
+            DBSessions.AccountSession.Flush();
+            DBSessions.AccountSession.Refresh(dbGameAccount);
             return GetToonByLowID(newDBToon.Id);
         }
+
 
         public static void DeleteToon(Toon toon)
         {

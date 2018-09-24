@@ -1,5 +1,5 @@
 ﻿﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2011 mooege project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -552,13 +552,46 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
         }
     }
+    #endregion
 
+    #region Beast A
     [HandledSNO(3337)] //Beast A
     public class Beast : Monster
     {
         public Beast(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+        }
+    }
+    #endregion
+
+    #region Queen Of Wretched Mothers
+    [HandledSNO(176889)] // ZombieFemale_A_TristramQuest_Unique.acr
+    public class QueenWretchedMother : Monster
+    {
+        public QueenWretchedMother(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).RemovePresetPower(30592); // Only distance attack
+            (Brain as MonsterBrain).AddPresetPower(94734);
+            (Brain as MonsterBrain).AddPresetPower(110518);
+            (Brain as MonsterBrain).Body.Quality = 5;
+            //this.Attributes[GameAttribute.Health]
+            Quality = (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
+            
+            //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
+            //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
+        }
+    }
+    #endregion
+    #region Goatman's
+    [HandledSNO(4282)] // Goatman_Moonclan_Melee_A.acr
+    public class Goatman_Moonclan_Melee_A : Monster
+    {
+        public Goatman_Moonclan_Melee_A(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            
         }
     }
     #endregion

@@ -23,6 +23,8 @@ using Mooege.Core.MooNet.Channels;
 using Mooege.Core.MooNet.Commands;
 using Mooege.Net.MooNet;
 using Mooege.Core.MooNet.Accounts;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.MooNet.Services
 {
@@ -105,7 +107,23 @@ namespace Mooege.Core.MooNet.Services
                             .SetName("D3.Party.GameCreateParams")
                             .SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetMessageValue(gameCreateParams.ToByteString()).Build());
                         channelState.AddAttribute(attr);
-                        Logger.Trace("D3.Party.GameCreateParams: {0}", gameCreateParams.ToString());
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(channel.Owner.Account.CurrentGameAccount.CurrentToon.PersistentID);
+                        if (gameCreateParams.Coop.SnoQuest == 87700 && gameCreateParams.Coop.QuestStepId == -1)
+                        {
+                            if(dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.StepOfQuest != 0)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+                            else if(dbQuestProgress.ActiveQuest == 87000 && dbQuestProgress.StepOfQuest == 0)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+
+
+                        }
+                        else
+                        {
+                            dbQuestProgress.ActiveQuest = gameCreateParams.Coop.SnoQuest;
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                            Logger.Trace("D3.Party.GameCreateParams: {0}", gameCreateParams.ToString());
                     }
                 }
                 else if (attribute.Name == "D3.Party.SearchForPublicGame.Params")

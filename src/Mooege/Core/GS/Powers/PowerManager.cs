@@ -16,12 +16,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mooege.Common.Logging;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Common.Types.Math;
+using Mooege.Core.GS.Players;
 using Mooege.Core.GS.Ticker;
+using Mooege.Net.GS.Message.Definitions.Effect;
 using Mooege.Net.GS.Message.Definitions.World;
 
 namespace Mooege.Core.GS.Powers
@@ -46,6 +51,8 @@ namespace Mooege.Core.GS.Powers
         // applied causes the effects to stay around forever.
         private Dictionary<Actor, TickTimer> _deletingActors = new Dictionary<Actor, TickTimer>();
 
+        private bool UseActorOnKotel72095 = false;
+        private bool UseDoor72095 = false;
         public PowerManager()
         {
         }
@@ -101,9 +108,169 @@ namespace Mooege.Core.GS.Powers
 
                 targetPosition = target.Position;
             }
-
+            
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
+            #region Южные ворота в тристрам.
+            try
+            {
+                if(target.ActorSNO.Id == 90419)
+                {
+
+                }
+            } catch { }
+            
+            #endregion
+
+            #region Не Лекарь, а мужик неподалёку)
+            try
+            {
+                if(target.ActorSNO.Id == 205665)
+                {
+                    
+                    var playersAffected = user.GetPlayersInRange(26f);
+                    foreach (Player player in playersAffected)
+                    {
+                        foreach (Player targetAffected in playersAffected)
+                        {
+                            player.InGameClient.SendMessage(new PlayEffectMessage()
+                            {
+                                ActorId = targetAffected.DynamicID,
+                                Effect = Effect.HealthOrbPickup
+                            });
+                        }
+
+                        //every summon and mercenary owned by you must broadcast their green text to you /H_DANILO
+                        player.AddPercentageHP(100);
+                    }
+                    //player.UpdateExp(player.Attributes[Net.GS.Message.GameAttribute.Experience_Next]);
+                }
+            }catch { }
+            #endregion
+
+            #region Активация баннера игрока для телепортации
+            try
+            {
+                var TeleportToPlayer = new Vector3D();
+                if(target.ActorSNO.Name == "Banner_Player_1")
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 0)
+                            if(player.Value.Position != user.Position)
+                                TeleportToPlayer = player.Value.Position;
+                                Logger.Warn("Перенос пользователя с помощью флага к игроку № {0}",player.Value.PlayerIndex);
+                    }
+                    if (TeleportToPlayer.Z != 0)
+                        user.Teleport(TeleportToPlayer);
+                        
+                }
+                else if (target.ActorSNO.Name == "Banner_Player_2")
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 1)
+                            if (player.Value.Position != user.Position)
+                                TeleportToPlayer = player.Value.Position;
+                                Logger.Warn("Перенос пользователя с помощью флага к игроку № {0}", player.Value.Position);
+                    }
+                    if (TeleportToPlayer.Z != 0)
+                        user.Teleport(TeleportToPlayer);
+                }
+                else if (target.ActorSNO.Name == "Banner_Player_3")
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 2)
+                            if (player.Value.Position != user.Position)
+                                TeleportToPlayer = player.Value.Position;
+                                Logger.Warn("Перенос пользователя с помощью флага к игроку № {0}", player.Value.Position);  
+                    }
+                    if (TeleportToPlayer.Z != 0)
+                        user.Teleport(TeleportToPlayer);
+                }
+                else if (target.ActorSNO.Name == "Banner_Player_4")
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 3)
+                            if (player.Value.Position != user.Position)
+                                TeleportToPlayer = player.Value.Position;
+                                Logger.Warn("Перенос пользователя с помощью флага к игроку № {0}", player.Value.Position);
+                    }
+                    if (TeleportToPlayer.Z != 0)
+                        user.Teleport(TeleportToPlayer);
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Квестовые события
+            try
+            {
+                if (target.DynamicID == 1543 || target.ActorSNO.Id == 167289)
+                {
+
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72095)
+                        {
+                            dbQuestProgress.ActiveQuest = 72095;
+                            if (dbQuestProgress.StepOfQuest == 9)
+                            {
+                                dbQuestProgress.StepOfQuest = 10;
+                                UseDoor72095 = true;
+                            }
+
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+
+                    if (this.UseDoor72095 == true)
+                    {
+                        user.World.Game.Quests.Advance(72095);
+                        UseDoor72095 = false;
+                    }
+
+                }
+            }
+            catch{}
+            try
+            {
+                
+                if (target.DynamicID == 1859 || target.ActorSNO.Id == 131123)
+                {
+                    //Отлавливаем котёл в потойном подвале
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72095)
+                        {
+                            dbQuestProgress.ActiveQuest = 72095;
+                            if (dbQuestProgress.StepOfQuest == 6)
+                            {
+                                //dbQuestProgress.StepOfQuest = 7;
+                                UseActorOnKotel72095 = true;
+                            }
+
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+
+                    if (this.UseActorOnKotel72095 == true)
+                    {
+                        user.World.Game.Quests.Advance(72095);
+                        UseActorOnKotel72095 = false;
+                        StartConversation(user.World, 167115); 
+                    }
+                }
+            }
+            catch{}
+            #endregion
+
             if (implementation != null)
             {
                 return RunPower(user, implementation, target, targetPosition, targetMessage);
@@ -131,6 +298,15 @@ namespace Mooege.Core.GS.Powers
                     return false;
                 }
             });
+        }
+
+        private bool StartConversation(Map.World world, Int32 conversationId)
+        {
+            foreach (var player in world.Players)
+            {
+                player.Value.Conversations.StartConversation(conversationId);
+            }
+            return true;
         }
 
         public void CancelChanneledSkill(Actor user, int powerSNO)

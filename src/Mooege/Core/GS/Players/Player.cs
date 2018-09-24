@@ -1435,7 +1435,7 @@ namespace Mooege.Core.GS.Players
                     case ToonClass.Wizard:
                         return 1.3f;
                 }
-                    return 1.43f;
+                return 1.43f;
             }
         }
 
@@ -1660,7 +1660,7 @@ namespace Mooege.Core.GS.Players
             float quantity = (percentage * this.Attributes[GameAttribute.Hitpoints_Max_Total]) / 100;
 
             if (PoundOfFleshPassive()) // Barbarian Pound of Flesh passive (+100% additional life from health globes) [Necrosummon]
-                this.AddHP(quantity*2);
+                this.AddHP(quantity * 2);
             else
                 this.AddHP(quantity);
         }

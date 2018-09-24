@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +27,8 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -46,6 +48,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         List<Vector3D> ActorsVector3D = new List<Vector3D> { }; //We fill this with the vectors of the actors that transform, so we spwan zombies in the same location.
         List<uint> monstersAlive = new List<uint> { }; //We use this for the killeventlistener.
         private Boolean HadConversation = true;
+        private bool killed = false;
 
 
         public override void Execute(Map.World world)
@@ -55,6 +58,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 StartConversation(world, 204113);
                 world.Game.Quests.Advance(87700);
+                foreach (var player in world.Players)
+                {
+                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                    dbQuestProgress.ActiveQuest = 87700;
+                    dbQuestProgress.StepOfQuest = 3;
+                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                    DBSessions.AccountSession.Flush();
+                };
                 var transformActors = Task<bool>.Factory.StartNew(() => HoudiniVsZombies(world, 204605));
                 transformActors.Wait();
                 var zombieWave = Task<bool>.Factory.StartNew(() => LaunchWave(ActorsVector3D, world, 203121));
@@ -65,17 +76,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     StartConversation(world, 151156);
                 });
 
-                //GameMessage(0x0051)
-                //AttributeSetValueMessage:
-                //{
-                // ActorID: 0x7A580122  Leah.acr (2052587810)
-                // NetAttributeKeyValue:
-                // {
-                //  Field0.Value: 0x00000000 (0)
-                //  Conversation_Icon (366): 0x00000001 (1)
-                // }
-                //}
-                world.Game.Quests.Advance(87700);
             }
         }
 
@@ -171,6 +171,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         monstersAlive.RemoveAt(i);
                         monstersKilled++;
                     }
+                }
+            }
+            // –егистраци€ всех убийств = продвижение по квесту)
+            if(monstersKilled == monsterCount)
+            {
+                if (killed == false)
+                {
+                    killed = true; world.Game.Quests.Advance(87700);
+                    foreach (var player in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 87700;
+                        dbQuestProgress.StepOfQuest = 4;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    };
                 }
             }
             return true;

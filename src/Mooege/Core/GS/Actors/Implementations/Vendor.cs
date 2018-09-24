@@ -130,12 +130,12 @@ namespace Mooege.Core.GS.Actors.Implementations
             if (item == null)
                 return;
 
-            int SellGoldValue = item.ItemDefinition.BaseGoldValue/25; // Cost of item to sell is splitted into 25 of her BaseGoldValue (Buy price) [Necrosummon]
+            int SellGoldValue = item.ItemDefinition.BaseGoldValue / 25; // Cost of item to sell is splitted into 25 of her BaseGoldValue (Buy price) [Necrosummon]
             decimal.Floor(SellGoldValue);
 
             player.Inventory.SellItem(item);
 
-            if(SellGoldValue <= 1) // if the operation have like a result less than 1, always vendor give you 1 gold for the item.
+            if (SellGoldValue <= 1) // if the operation have like a result less than 1, always vendor give you 1 gold for the item.
                 player.Inventory.AddGoldAmount(1);
             else
                 player.Inventory.AddGoldAmount(SellGoldValue);

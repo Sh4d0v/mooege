@@ -55,7 +55,7 @@ namespace Mooege.Core.MooNet.Services
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("min_players").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetIntValue(min_players)).Build(),
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("max_players").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetIntValue(max_players)).Build(),
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("num_teams").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetIntValue(num_teams)).Build(),
-                    bnet.protocol.attribute.Attribute.CreateBuilder().SetName("version").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetStringValue(version)).Build(), 
+                    bnet.protocol.attribute.Attribute.CreateBuilder().SetName("version").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetStringValue(version)).Build(),
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("PlayerGroup").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetIntValue(playergroup)).Build(),
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("Game.CurrentQuest").SetValue(bnet.protocol.attribute.Variant.CreateBuilder()).Build(),
                     bnet.protocol.attribute.Attribute.CreateBuilder().SetName("DifficultyLevel").SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetIntValue(difficultylevel)).Build(),

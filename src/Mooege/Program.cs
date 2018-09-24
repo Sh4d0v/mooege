@@ -79,12 +79,12 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            //string Revision = "9"; // Actual revision
-            //string date = "08/21/2017";
+            string Revision = "16"; // Ревизия
+            string date = "24/09/2018";
 
-            //string title = "D3Emu - Revision [" + Revision + "] - Date [" + date + "] - By Necrosummon";
+            string title = "D3IIIS - Revision [" + Revision + "] - Date [" + date + "] - By AiDiE";
 
-            //Console.Title = title;
+            Console.Title = title;
             Console.ForegroundColor = ConsoleColor.Red;
             PrintBanner(); // print ascii banner.
             Console.ResetColor(); // reset color back to default.
@@ -115,8 +115,11 @@ namespace Mooege
             {
                 Logger.Info("Initing new database, creating first owner account (test@,123456)");
                 var account = AccountManager.CreateAccount("test@", "123456", "test", Account.UserLevels.Owner);
+                var account1 = AccountManager.CreateAccount("AiDiE@", "13061994", "One", Account.UserLevels.Owner);
                 var gameAccount = GameAccountManager.CreateGameAccount(account);
+                var gameAccount1 = GameAccountManager.CreateGameAccount(account1);
                 account.DBAccount.DBGameAccounts.Add(gameAccount.DBGameAccount);
+                account.DBAccount.DBGameAccounts.Add(gameAccount1.DBGameAccount);
                 account.SaveToDB();
             }
 
@@ -303,15 +306,7 @@ namespace Mooege
         /// </summary>
         private static void PrintBanner()
         {
-            Console.WriteLine();
-            Console.WriteLine(@"       \------.     _           __      ,-.___     _   _        ,---.  ");
-            Console.WriteLine(@"        \ .--. \    \'-,      ,',.'.     \ ._ \    \'-'/       / .-. \ ");
-            Console.WriteLine(@"        | |  | |     | |     J /__\ L    | |_)(     | |       f /   \ l");
-            Console.WriteLine(@"        | |  | |     | |     | |  ] ]    | .-. \    | |   ,   t \   / j");
-            Console.WriteLine(@"        / '--' /    ,'_'.   .'_'. F F    / |__)/    / '--'/    \ '-' / ");
-            Console.WriteLine(@"       /_,----'      ' '     ' ' /,'    '-----'    '-----'      '---'  ");
-            Console.WriteLine(@"      ('                        ''                    ");
-            Console.WriteLine();
+            
         }
 
         /// <summary>
@@ -319,9 +314,10 @@ namespace Mooege
         /// </summary>
         private static void PrintLicense()
         {
-            Console.WriteLine("                  Copyright (C) 2011-2017, Mooege project");
+            Console.WriteLine("                         Copyright (C) 2018. Created by AiDiE.                ");
+            Console.WriteLine("                        Based on Mooege, Copyright (C) 2011-2012                ");
             Console.WriteLine();
-	    Console.WriteLine();
+            Console.WriteLine();
         }
 
         #endregion

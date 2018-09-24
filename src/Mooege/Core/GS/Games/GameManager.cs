@@ -23,6 +23,7 @@ using Mooege.Common.Logging;
 using Mooege.Core.GS.Players;
 using Mooege.Core.MooNet.Toons;
 using Mooege.Net.GS.Message;
+using Mooege.Net.MooNet;
 
 namespace Mooege.Core.GS.Games
 {
@@ -31,12 +32,12 @@ namespace Mooege.Core.GS.Games
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly Dictionary<int, Game> Games = new Dictionary<int, Game>();
 
-        public static Game CreateGame(int gameId)
+        public static Game CreateGame(int gameId, List<MooNetClient> clients)
         {
             if (Games.ContainsKey(gameId))
                 return Games[gameId];
 
-            var game = new Game(gameId);
+            var game = new Game(gameId, clients);
             Games.Add(gameId, game);
             return game;
         }
