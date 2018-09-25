@@ -49,8 +49,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
         }
         private Boolean HadConversation = true;
-        private bool FinishedToMove = false;
         private int portalAID;
+        private Players.Player MasterPlayer;
         private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
         public static Random Rand { get { return _threadRand.Value; } }
         List<Vector3D> monstersAlive = new List<Vector3D> { };
@@ -79,22 +79,26 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             portalAID = NewTristramPortal.ActorSNO.Id;
             // Away Leah
             world.Leave(LeahBrains);
+            
             //LeahBrains.OnLeave(world);
             // Create Friend Leah for Party
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
             LeahFriend.Brain = new MinionBrain(LeahFriend);
+            
             // Point to spawn Leah
             var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
-
+            //LeahBrains.EnterWorld(NewPoint);
             foreach (var player in world.Players)
             {
                 if (player.Value.PlayerIndex == 0)
                 {
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
-
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = player.Value.PlayerIndex;
-                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
+                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0x8;
+                    LeahFriend.Attributes[GameAttribute.Hitpoints_Max] = 100f;
+                    LeahFriend.Attributes[GameAttribute.Hitpoints_Cur] = 80f;
+                    LeahFriend.Attributes[GameAttribute.Attacks_Per_Second] = 1.6f;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = player.Value.PlayerIndex;
                     LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                     LeahFriend.Position = RandomDirection(player.Value.Position, 3f, 8f);
@@ -105,7 +109,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     player.Value.ActiveHireling = LeahFriend;
                     player.Value.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
-
+                    MasterPlayer = player.Value;
                 }
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
 
@@ -122,10 +126,13 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_OldTristram
             });
 
-        }
+            
+            var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
 
-        //just for the use of the portal
-        private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
+        }
+        
+            //just for the use of the portal
+            private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
         {
             if (world.HasActor(actorDynID))
             {
@@ -142,6 +149,21 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     }
                 }
             }
+            return true;
+        }
+
+        private bool OnListenerToEnter(Players.Player player, Map.World world)
+        {
+            var scene = player.CurrentScene;
+            while (true)
+            {
+                if (scene.SceneSNO.Id == 33355)
+                {
+                    world.Game.Quests.Advance(72095);
+                    break;
+                }
+            }
+        
             return true;
         }
 

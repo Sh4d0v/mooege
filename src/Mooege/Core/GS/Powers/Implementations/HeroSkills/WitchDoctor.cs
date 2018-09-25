@@ -1120,8 +1120,8 @@ namespace Mooege.Core.GS.Powers.Implementations
             const float _damageRate = 1f;
             TickTimer _damageTimer = null;
 
-            float _jumpRate = 3f;
-            TickTimer _jumpTimer = null;
+            //float _jumpRate = 3f;
+            //TickTimer _jumpTimer = null;
 
             public LocustSwarmer(TickTimer timeout)
             {

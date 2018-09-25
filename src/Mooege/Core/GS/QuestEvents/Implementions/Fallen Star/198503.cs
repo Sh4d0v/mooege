@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Net.GS.Message;
 
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
@@ -45,6 +46,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         }
 
         static int wretchedMotherAID = 219725;
+        private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
+        public static Random Rand { get { return _threadRand.Value; } }
         static int wretchedMotherQueenAID = 176889;
         static int portalAID = 192164; // 176007
         static int bonusTaskID = 1; // this is the specific ID to be send to client for updates regarding this very FUCKIN bonus objective (like how hard it was to find..doh')
@@ -106,7 +109,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     // ugly hack to get all actors with the same snoID..no idea if it is lmegit or if game will crash and summon diablo on my pc...
                     var actorsWM = world.GetActorsBySNO(wretchedMotherAID); // this is the List of wretched mother ACTOR ID
                     var actorWQM = world.GetActorBySNO(wretchedMotherQueenAID); // this is the wretched queen mother ACTOR ID
-
+                    
                     Logger.Debug(" world contains {0} WM ", actorsWM.Count);
 
                     if (actorsWM.Count > 0)
@@ -126,11 +129,13 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     }
                     if (actorWQM != null)
                     {
-                        // Пытаемся привязать статус босса
+                        // Пытаемся привязать статус босса!
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
-                        // actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true; // there also an attribute about QuestMonster
                         // DOES NOT WORK it should be champion affixes or shit of this kind ...
+                        // Увеличиваем здоровье босса!
+                        actorWQM.Attributes[GameAttribute.Hitpoints_Max] = 300f;
+                        actorWQM.Attributes[GameAttribute.Hitpoints_Cur] = 300f;
 
                         //Запуск отслеживания убийства королевы
                         var ListenerWQMTask = Task<bool>.Factory.StartNew(() => OnWMQKillListener(actorWQM.DynamicID, world));
@@ -254,7 +259,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             return true;
         }
-
+        
         //Launch Conversations.
         private bool StartConversation(Map.World world, Int32 conversationId)
         {
@@ -263,6 +268,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 player.Value.Conversations.StartConversation(conversationId);
             }
             return true;
-        }
+        }        
     }
 }

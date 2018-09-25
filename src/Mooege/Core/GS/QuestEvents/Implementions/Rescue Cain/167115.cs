@@ -41,8 +41,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         static int CapitanDaltynAID = 156801; //Actor ID Капитана Далтина
         List<uint> CapitanDaltynKiller = new List<uint> { }; // Используем для отслеживания убийства
-        private Boolean HadConversation = true;
-
+        
 
         public override void Execute(Map.World world)
         {

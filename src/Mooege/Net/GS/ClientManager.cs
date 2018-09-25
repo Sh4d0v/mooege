@@ -33,6 +33,7 @@ using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Implementations.Hirelings;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.AI.Brains;
+using System.Threading;
 
 namespace Mooege.Net.GS
 {
@@ -41,6 +42,8 @@ namespace Mooege.Net.GS
         protected static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly ClientManager _instance = new ClientManager();
         public static ClientManager Instance { get { return _instance; } }
+        private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
+        public static Random Rand { get { return _threadRand.Value; } }
 
 
         public void OnConnect(object sender, ConnectionEventArgs e)
@@ -96,7 +99,6 @@ namespace Mooege.Net.GS
                 {
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
-
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
                     LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
@@ -151,6 +153,32 @@ namespace Mooege.Net.GS
             }
             #endregion
 
+
+            #region Заполним немного локации))
+            Vector3D[] Points = new Vector3D[4];
+            Points[0] = new Vector3D(2427.788f, 2852.193f, 27.1f);
+            Points[1] = new Vector3D(2356.931f, 2528.715f, 27.1f);
+            Points[2] = new Vector3D(2119.563f, 2489.693f, 27.1f);
+            Points[3] = new Vector3D(2021.855f, 2774.645f, 40.05685f);
+            int FatZombieAID = 6652;
+            int RisenZombieAID = 6644;
+            int wretchedMotherAID = 219725;
+            //Ugly add monster, скучно))
+            Vector3D[] MobPosSpawn = new Vector3D[50];
+            foreach (Vector3D Point in Points)
+            {
+                for (int a = 0; a < 6; a++)
+                {
+                    world.SpawnMonster(RisenZombieAID, RandomDirection(Point, 10f, 80f));
+                }
+                for (int a = 0; a < 4; a++)
+                {
+                    world.SpawnMonster(FatZombieAID, RandomDirection(Point, 10f, 80f));                    
+                }
+                world.SpawnMonster(wretchedMotherAID, RandomDirection(Point, 10f, 80f));
+            }
+
+            #endregion
             DBSessions.AccountSession.Flush();
         }
         public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
