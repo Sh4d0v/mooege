@@ -50,6 +50,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         }
         private Boolean HadConversation = true;
         private bool FinishedToMove = false;
+        private int portalAID;
         private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
         public static Random Rand { get { return _threadRand.Value; } }
         List<Vector3D> monstersAlive = new List<Vector3D> { };
@@ -71,15 +72,20 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             //Logger.Debug(" Conversation(190404) ");
             //StartConversation(world, 190404);
-            //Берём Лею
+            //Get Leah
             var LeahBrains = world.GetActorByDynamicId(83);
-            LeahBrains.OnLeave(world);
+            //Get Portal
+            var NewTristramPortal = world.GetActorByDynamicId(34);
+            portalAID = NewTristramPortal.ActorSNO.Id;
+            // Away Leah
+            world.Leave(LeahBrains);
+            //LeahBrains.OnLeave(world);
+            // Create Friend Leah for Party
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
             LeahFriend.Brain = new MinionBrain(LeahFriend);
+            // Point to spawn Leah
             var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
-            LeahFriend.Attributes[GameAttribute.Untargetable] = false;
-            
-            
+
             foreach (var player in world.Players)
             {
                 if (player.Value.PlayerIndex == 0)
@@ -90,6 +96,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = player.Value.PlayerIndex;
                     LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = player.Value.PlayerIndex;
+                    LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                     LeahFriend.Position = RandomDirection(player.Value.Position, 3f, 8f);
                     LeahFriend.RotationW = LeahBrains.RotationW;
                     LeahFriend.RotationAxis = LeahBrains.RotationAxis;
@@ -100,49 +107,44 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     LeahFriend.Brain.Activate();
 
                 }
-            }
-                
-            foreach (var player in world.Players)
-            {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
 
                 dbQuestProgress.ActiveQuest = 72095;
-                dbQuestProgress.StepOfQuest = 1;
+                dbQuestProgress.StepOfQuest = 2;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
-            };
-            
+            }
 
-          //  hireling.Teleport(NewPoint);
-            
-            //LeahBrains.Destroy();
-            //Берем портал
-            //var NewTristramPortal = world.GetActorByDynamicId(34);
-
-          /*  var WaitingOfWalk = Task<bool>.Factory.StartNew(() => OnKillListener(LeahBrains,NewTristramPortal, world));
-            WaitingOfWalk.ContinueWith(delegate
+            var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
+            //Wait for portal to be used .
+            ListenerUsePortalTask.ContinueWith(delegate //Once killed:
             {
-                //StartConversation(world, 151156);
-                if (world.HasActor(83))
-                {
-                    LeahBrains.Destroy();
-                    Logger.Debug(" Удаляем Лею ");
-                }
-                //world.Game.Quests.Advance(72095);
-            });*/
+                Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_OldTristram
+            });
 
-            
-            //Тупо кординаты портала
-            //Vector3D ToPortal = new Vector3D(2981.73f, 2835.009f, 24.66344f);
-
-            //Создаём направляющий угол для движения Леи
-            //float Angle = MovementHelpers.GetFacingAngle(LeahBrains.Position, NewTristramPortal.Position);
-            
-            //Отправляю Лею к порталу под нужным углом)) Profit ;)
-            //LeahBrains.Move(NewTristramPortal.Position, Angle);
-            
-                                    
         }
+
+        //just for the use of the portal
+        private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
+        {
+            if (world.HasActor(actorDynID))
+            {
+                var actor = world.GetActorByDynamicId(actorDynID); // it is not null :p
+
+                //Logger.Debug(" supposed portal has type {3} has name {0} and state {1} , has gizmo  been operated ? {2} ", actor.NameSNOId, actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_State], actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated], actor.GetType());
+
+                while (true)
+                {
+                    if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
+                    {
+                        world.Game.Quests.Advance(72095);
+                        break;
+                    }
+                }
+            }
+            return true;
+        }
+
         public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
         {
             float angle = (float)(Rand.NextDouble() * Math.PI * 2);

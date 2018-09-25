@@ -109,6 +109,7 @@ namespace Mooege.Core.MooNet.Toons
             };
 
 
+
             dbGameAccount.DBToons.Add(newDBToon);
 
 
@@ -267,6 +268,16 @@ namespace Mooege.Core.MooNet.Toons
                 ActiveQuest = -1 // Активный квест
             };
             DBSessions.AccountSession.SaveOrUpdate(StartProgress);
+            DBPortalOfToon NullPortal = new DBPortalOfToon
+            {
+                DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID),
+                DBToon = newDBToon,
+                X = 0,
+                Y = 0,
+                Z = 0,
+                WorldDest = 0
+            };
+            DBSessions.AccountSession.SaveOrUpdate(NullPortal);
             #endregion
 
             DBSessions.AccountSession.Flush();

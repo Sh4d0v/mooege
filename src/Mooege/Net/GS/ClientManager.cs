@@ -61,29 +61,38 @@ namespace Mooege.Net.GS
         {
             if (message is JoinBNetGameMessage) OnJoinGame(client, (JoinBNetGameMessage)message);
 
-            //Тестовая проверка прохождения
+            //Остреливаем левый портал
+            var FalsePortal = client.Player.World.GetActorBySNO(5648);
+            //client.Player.World.Leave(FalsePortal);
+            //FalsePortal.Destroy();
+            //Тестовая проверка прохождения // Пока только синг.
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(client.Player.Toon.PersistentID);
             var world = client.Player.World;
+            
+
             #region Акт 1 Квест 2 - Наследие декарда каина
             if (dbQuestProgress.ActiveQuest == 72095)
             {
-          /*      #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 9; Rem++)
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 8; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
-                #endregion*/
+                #endregion
                 var LeahBrains = world.GetActorByDynamicId(72);
                 Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
                 if (LeahBrains != null)
                 {
                     Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", LeahBrains.ActorSNO, world.GetActorsBySNO(3739).Count);
                     world.Leave(LeahBrains);
+                    world.Leave(world.GetActorByDynamicId(75));
+                    world.Leave(world.GetActorByDynamicId(83));
+
                 }
                 LeahFriend.Brain = new MinionBrain(LeahFriend);
                 var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
                 LeahFriend.Attributes[GameAttribute.Untargetable] = false;
-                if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
+                if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
@@ -99,11 +108,12 @@ namespace Mooege.Net.GS
                     client.Player.ActiveHireling = LeahFriend;
                     client.Player.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
+                    
                 }
-            
             }
+            
             #endregion
-
+            
             #region Основная проверка
             if (dbQuestProgress.ActiveQuest != -1)
             {

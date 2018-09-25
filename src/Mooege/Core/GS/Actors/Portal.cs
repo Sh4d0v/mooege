@@ -92,10 +92,10 @@ namespace Mooege.Core.GS.Actors
                     this.Destination = new ResolvedPortalDestination
                     {
                         WorldSNO = 71150,
-                        DestLevelAreaSNO = 172,
-                        StartingPointActorTag = 1
+                        DestLevelAreaSNO = 33357,
+                        StartingPointActorTag = -100
                     };
-                    
+
                     Logger.Warn("Portal to Home {0} created", this.ActorSNO.Id);
                 }
                 else
@@ -173,7 +173,8 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug("(OnTargeted) Portal has been activated ");
             
             var world = this.World.Game.GetWorld(this.Destination.WorldSNO);
-
+            var now_world = player.World;
+            
             if (this.Destination.WorldSNO == 62751)
             {
                 //Enter в Adrian's Hut
@@ -239,14 +240,70 @@ namespace Mooege.Core.GS.Actors
             }
 
 
+
             //Portal to New Tristram
-            if (this.Destination.StartingPointActorTag == 1)
+            if (this.Destination.StartingPointActorTag == -100)
             {
-                this.Scale = 0.8f;
 
                 Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
+                //Сохраняем в базу координаты для обратного портала.
+                var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
+                dbPortalOfToon.WorldDest = now_world.WorldSNO.Id;
+                dbPortalOfToon.X = this.Position.X;
+                dbPortalOfToon.Y = this.Position.Y;
+                dbPortalOfToon.Z = this.Position.Z;
+                DBSessions.AccountSession.SaveOrUpdate(dbPortalOfToon);
+
+                Logger.Warn("Data for back portal Saved.");
+
                 if (player.World.Game.GetWorld(71150) != player.World)
+                {
+                    try
+                    {
+                        if (player.ActiveHireling != null)
+                        {
+                            var HirelingToLeave = player.ActiveHireling;
+                            now_world.Leave(HirelingToLeave);
+                        }
+
+                    }
+                    catch { }
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
+                }
+                else
+                    player.Teleport(ToPortal);
+
+                //Create Back Portal
+                var TristramHome = player.World.Game.GetWorld(71150);
+                var OldPortal = TristramHome.GetActorsBySNO(5648);
+                foreach (var OldP in OldPortal)
+                {
+                    OldP.Destroy();
+                }
+                var ToHome = new Portal(player.World.Game.GetWorld(71150), 5648, player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
+                ToHome.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = dbPortalOfToon.WorldDest,
+                    DestLevelAreaSNO = 172,
+                    StartingPointActorTag = -101
+                };
+                ToHome.EnterWorld(ToPortal);
+
+                DBSessions.AccountSession.Flush();
+            }
+            else if(this.Destination.StartingPointActorTag == -101)
+            {
+                var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
+                Vector3D ToPortal = new Vector3D(dbPortalOfToon.X, dbPortalOfToon.Y, dbPortalOfToon.Z);
+                var DestWorld = player.World.Game.GetWorld(dbPortalOfToon.WorldDest);
+                var oldPortals = DestWorld.GetActorsBySNO(5648);
+                foreach (var OldP in oldPortals)
+                {
+                    OldP.Destroy();
+                }
+
+                if (player.World.Game.GetWorld(dbPortalOfToon.WorldDest) != player.World)
+                    player.ChangeWorld(player.World.Game.GetWorld(dbPortalOfToon.WorldDest), ToPortal);
                 else
                     player.Teleport(ToPortal);
             }
@@ -254,7 +311,19 @@ namespace Mooege.Core.GS.Actors
             {
                 var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
                 if (startingPoint != null)
+                {
+                    try
+                    {
+                        if (player.ActiveHireling != null)
+                        {
+                            var HirelingToLeave = player.ActiveHireling;
+                            now_world.Leave(HirelingToLeave);
+                        }
+
+                    }
+                    catch { }
                     player.ChangeWorld(world, startingPoint);
+                }
                 else
                     Logger.Warn("Portal's tagged starting point does not exist (Tag = {0})", this.Destination.StartingPointActorTag);
             }

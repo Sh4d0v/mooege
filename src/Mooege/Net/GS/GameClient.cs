@@ -85,9 +85,8 @@ namespace Mooege.Net.GS
                         else if (message.Id == 87)
                         {
                             MooNetClient mooNetClient = BnetClient;
-                            Logger.Warn("Кустарный перехват портала. Версия 2.0.", message.GetType(), message.Id);
+                            Logger.Warn("Portal to New Tristram. Version 2.0.", message.GetType(), message.Id);
                             Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
-
 
                             try
                             {
@@ -102,7 +101,6 @@ namespace Mooege.Net.GS
                             var ToHome = new Portal(Player.World, 5648, Player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
                             ToHome.Scale = 0.9f;
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
-                            ToHome.Position = (PositionToPortal);
                             ToHome.EnterWorld(PositionToPortal);
                             
                       /*      

@@ -130,6 +130,7 @@
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBGameAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBInventory.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBItemInstance.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBPortalOfToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBProgressToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBAccountMapper.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBGameAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBInventoryMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBItemInstanceMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBPortalOfToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBProgressToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\SessionProvider.cs" />

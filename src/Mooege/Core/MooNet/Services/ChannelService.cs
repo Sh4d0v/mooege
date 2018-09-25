@@ -110,7 +110,9 @@ namespace Mooege.Core.MooNet.Services
                         var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(channel.Owner.Account.CurrentGameAccount.CurrentToon.PersistentID);
                         if (gameCreateParams.Coop.SnoQuest == 87700 && gameCreateParams.Coop.QuestStepId == -1)
                         {
-                            if(dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.StepOfQuest != 0)
+                            if(dbQuestProgress.ActiveQuest != 87700)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+                            else if (dbQuestProgress.ActiveQuest == 87700 && dbQuestProgress.StepOfQuest == -1)
                             { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
                             else if(dbQuestProgress.ActiveQuest == 87000 && dbQuestProgress.StepOfQuest == 0)
                             { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
