@@ -34,6 +34,7 @@ using Mooege.Core.GS.Actors.Implementations.Hirelings;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.AI.Brains;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mooege.Net.GS
 {
@@ -83,20 +84,20 @@ namespace Mooege.Net.GS
                 }
                 #endregion
                 var LeahBrains = world.GetActorByDynamicId(72);
-                Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
                 if (LeahBrains != null)
                 {
                     Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", LeahBrains.ActorSNO, world.GetActorsBySNO(3739).Count);
                     world.Leave(LeahBrains);
                     world.Leave(world.GetActorByDynamicId(75));
-                    world.Leave(world.GetActorByDynamicId(83));
-
+                
                 }
-                LeahFriend.Brain = new MinionBrain(LeahFriend);
-                var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
-                LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
+                    world.Leave(world.GetActorByDynamicId(83));
+                    Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+                    var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
+                    LeahFriend.Brain = new MinionBrain(LeahFriend);
+                    LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
@@ -110,7 +111,29 @@ namespace Mooege.Net.GS
                     client.Player.ActiveHireling = LeahFriend;
                     client.Player.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
+                }
+                if (dbQuestProgress.StepOfQuest == 1)
+                {
+                    var NewTristramPortal = world.GetActorByDynamicId(34);
+                    Player MasterPlayer = client.Player;
+                    var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
                     
+                }
+                if (dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
+                {
+                    
+                    Player MasterPlayer = client.Player;
+                    var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
+                    ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
+                    {
+                        Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
+                        var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
+                    });
+                }
+                if (dbQuestProgress.StepOfQuest == 3)
+                {
+                    Player MasterPlayer = client.Player;
+                    var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
                 }
             }
             
@@ -162,7 +185,6 @@ namespace Mooege.Net.GS
             Points[3] = new Vector3D(2021.855f, 2774.645f, 40.05685f);
             int FatZombieAID = 6652;
             int RisenZombieAID = 6644;
-            int wretchedMotherAID = 219725;
             //Ugly add monster, скучно))
             Vector3D[] MobPosSpawn = new Vector3D[50];
             foreach (Vector3D Point in Points)
@@ -175,7 +197,6 @@ namespace Mooege.Net.GS
                 {
                     world.SpawnMonster(FatZombieAID, RandomDirection(Point, 10f, 80f));                    
                 }
-                world.SpawnMonster(wretchedMotherAID, RandomDirection(Point, 10f, 80f));
             }
 
             #endregion
@@ -188,6 +209,96 @@ namespace Mooege.Net.GS
             return new Vector3D(position.X + (float)Math.Cos(angle) * radius,
                                 position.Y + (float)Math.Sin(angle) * radius,
                                 position.Z);
+        }
+        private bool OnUseTeleporterListener(uint actorDynID, Core.GS.Map.World world)
+        {
+            if (world.HasActor(actorDynID))
+            {
+                var actor = world.GetActorByDynamicId(actorDynID); // it is not null :p
+
+                //Logger.Debug(" supposed portal has type {3} has name {0} and state {1} , has gizmo  been operated ? {2} ", actor.NameSNOId, actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_State], actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated], actor.GetType());
+
+                while (true)
+                {
+                    if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
+                    {
+                        world.Game.Quests.Advance(72095);
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 72095;
+                            dbQuestProgress.StepOfQuest = 2;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        break;
+
+
+                    }
+                }
+            }
+            return true;
+        }
+        private bool OnListenerToEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 90198) //90923 - Adria House
+                {
+                    bool ActivePortal = true;
+                    
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 1)
+                            ActivePortal = false;
+                        dbQuestProgress.ActiveQuest = 72095;
+                        dbQuestProgress.StepOfQuest = 3;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if(ActivePortal == true)
+                        world.Game.Quests.Advance(72095);
+                    else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
+                    StartConversation(world, 166678);
+                    break;
+                }
+            }
+
+            return true;
+        }
+        private bool OnListenerToAndriaEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 90293)
+                {
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 72095;
+                        dbQuestProgress.StepOfQuest = 5;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095);
+                    break;
+                }
+            }
+
+            return true;
+        }
+        private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
+        {
+            foreach (var player in world.Players)
+            {
+                player.Value.Conversations.StartConversation(conversationId);
+            }
+            return true;
         }
         private void OnJoinGame(GameClient client, JoinBNetGameMessage message)
         {

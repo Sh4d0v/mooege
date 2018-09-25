@@ -318,6 +318,8 @@ namespace Mooege.Core.GS.Actors
                         {
                             var HirelingToLeave = player.ActiveHireling;
                             now_world.Leave(HirelingToLeave);
+                            var Leah_Back = now_world.GetActorByDynamicId(83);
+                            Leah_Back.EnterWorld(Leah_Back.Position);
                         }
 
                     }

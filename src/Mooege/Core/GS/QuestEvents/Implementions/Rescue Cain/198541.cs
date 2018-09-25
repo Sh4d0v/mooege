@@ -114,25 +114,31 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
 
                 dbQuestProgress.ActiveQuest = 72095;
-                dbQuestProgress.StepOfQuest = 2;
+                dbQuestProgress.StepOfQuest = 1;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
+
 
             var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
             //Wait for portal to be used .
             ListenerUsePortalTask.ContinueWith(delegate //Once killed:
             {
                 Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_OldTristram
+
             });
 
             
             var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
-
+            ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
+            {
+                Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
+                var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
+            });
         }
-        
-            //just for the use of the portal
-            private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
+
+        //just for the use of the portal
+        private bool OnUseTeleporterListener(uint actorDynID, Map.World world)
         {
             if (world.HasActor(actorDynID))
             {
@@ -145,7 +151,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
                     {
                         world.Game.Quests.Advance(72095);
+                        foreach (var player in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 72095;
+                            dbQuestProgress.StepOfQuest = 2;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
                         break;
+
+
                     }
                 }
             }
@@ -154,19 +170,57 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         private bool OnListenerToEnter(Players.Player player, Map.World world)
         {
-            var scene = player.CurrentScene;
+            int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                if (scene.SceneSNO.Id == 33355)
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 90198)
                 {
-                    world.Game.Quests.Advance(72095);
+                    bool ActivePortal = true;
+
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 1)
+                            ActivePortal = false;
+                        dbQuestProgress.ActiveQuest = 72095;
+                        dbQuestProgress.StepOfQuest = 3;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if (ActivePortal == true)
+                        world.Game.Quests.Advance(72095);
+                    else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
+                    StartConversation(world, 166678);
                     break;
                 }
             }
         
             return true;
         }
+        private bool OnListenerToAndriaEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 90293)
+                {
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 72095;
+                        dbQuestProgress.StepOfQuest = 5;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095);
+                    break;
+                }
+            }
 
+            return true;
+        }
         public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
         {
             float angle = (float)(Rand.NextDouble() * Math.PI * 2);
