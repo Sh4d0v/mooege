@@ -24,56 +24,11 @@ using System.Collections.Generic;
 using System.Collections;
 using Mooege.Common.MPQ.FileFormats.Types;
 using System.Linq;
+using Npgsql;
 
 namespace Mooege.Common.Storage
 {
 
-    /*********************************************************************************************
-    Table layout:
-    Class name -> Table name
-    Class.Property.Type -> Column name
-     
-    If the property is not a simple class (defined in System namespace), and there is a 1:1
-    relation of Class and the Property, the Class is 'inlined'
-     
-    Class Foo
-    {
-        int Borks { get; set; }
-        Bar BarProperty { get; set; }
-    }
-     
-    Class Bar
-    {
-        int Barf { get; set; }
-    }
-     
-    Table FOO, Columns: Borks, BarProperty_Barf
-     
-    If the Property of the class is a generic list or dictionary, a MN Table with name
-    Type_PropertyType_InlinePrefix_PropertyName is created
-     
-    Dont know if that inling was such a good idea...
-     
-     
-     
-    Issues:
-     
-    - References are ignored... if two persistend properties point to the same object, they will not do after loading
-    - Circular references will cause stack overflows
-    - Dictionary can only use basic types as strings
-    - No dynamic arrays (except for bytes)
-    - No arrays of nonbasic classes (use lists instead)
-   **********************************************************************************************/
-
-
-
-    /// <summary>
-    /// This attribute is used to tag properties that are persisted by the persistance manager.
-    /// The class is mapped to a table with the same name as the class, and by default, each property is
-    /// mapped to a column with the same name as the property (property, not the type of the property...)
-    /// unless you override it by setting another name. To save and load arrays, you also have to define how
-    /// many elements the array has.
-    /// 
     public class PersistentPropertyAttribute : Attribute
     {
         public string Name { get; private set; }

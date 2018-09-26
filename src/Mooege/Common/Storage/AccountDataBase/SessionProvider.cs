@@ -57,8 +57,8 @@ namespace Mooege.Common.Storage.AccountDataBase
                 {
                     _config = new Configuration();
                     _config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "database.Account.config"));
-
-
+                    //_config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "database.Account - mysql.config"));
+                    //_config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "database.Account-postgres.config"));
                     var replacedProperties = new Dictionary<string, string>();
                     foreach (var prop in _config.Properties)
                     {

@@ -211,6 +211,8 @@ namespace Mooege.Net.GS
                                 position.Y + (float)Math.Sin(angle) * radius,
                                 position.Z);
         }
+
+        #region Отслеживания для Акт 1 - Квест 2
         private bool OnUseTeleporterListener(uint actorDynID, Core.GS.Map.World world)
         {
             if (world.HasActor(actorDynID))
@@ -293,6 +295,8 @@ namespace Mooege.Net.GS
 
             return true;
         }
+        #endregion
+
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)

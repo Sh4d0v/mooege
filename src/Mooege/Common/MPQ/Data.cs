@@ -28,12 +28,15 @@ using Mooege.Common.Versions;
 using Mooege.Core.GS.Common.Types.SNO;
 using System.Linq;
 using System.Data.SQLite;
+using Npgsql;
+
 using Mooege.Common.Storage;
 
 namespace Mooege.Common.MPQ
 {
     public class Data : MPQPatchChain
     {
+        
         public Dictionary<SNOGroup, ConcurrentDictionary<int, Asset>> Assets = new Dictionary<SNOGroup, ConcurrentDictionary<int, Asset>>();
         public readonly Dictionary<SNOGroup, Type> Parsers = new Dictionary<SNOGroup, Type>();
         private readonly List<Task> _tasks = new List<Task>();

@@ -63,13 +63,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 world.GetActorByDynamicId(72).Destroy();
             }
 
-            if (HadConversation)
-            {
-                HadConversation = false;
-                Logger.Debug(" RESCUE CAIN QUEST STARTED ");
-                Logger.Debug(" Quests.Advance(72095) ");
-                world.Game.Quests.Advance(72095);
-            }
             //Logger.Debug(" Conversation(190404) ");
             //StartConversation(world, 190404);
             //Get Leah
@@ -78,13 +71,21 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             var NewTristramPortal = world.GetActorByDynamicId(34);
             portalAID = NewTristramPortal.ActorSNO.Id;
             // Away Leah
-            world.Leave(LeahBrains);
+            //world.Leave(LeahBrains);
             
+
             //LeahBrains.OnLeave(world);
             // Create Friend Leah for Party
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
             LeahFriend.Brain = new MinionBrain(LeahFriend);
-            
+
+            if (HadConversation)
+            {
+                HadConversation = false;
+                Logger.Debug(" RESCUE CAIN QUEST STARTED ");
+                Logger.Debug(" Quests.Advance(72095) ");
+                world.Game.Quests.Advance(72095);
+            }
             // Point to spawn Leah
             var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
             //LeahBrains.EnterWorld(NewPoint);
@@ -105,12 +106,13 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     LeahFriend.RotationW = LeahBrains.RotationW;
                     LeahFriend.RotationAxis = LeahBrains.RotationAxis;
                     LeahFriend.EnterWorld(NewPoint);
-                    LeahFriend.Attributes[GameAttribute.Level] = 6;
+                    LeahFriend.Attributes[GameAttribute.Level]++;
                     player.Value.ActiveHireling = LeahFriend;
                     player.Value.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
                     MasterPlayer = player.Value;
                 }
+
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
 
                 dbQuestProgress.ActiveQuest = 72095;
@@ -119,7 +121,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 DBSessions.AccountSession.Flush();
             }
 
-
+            LeahBrains.OnLeave(world);
             var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
             //Wait for portal to be used .
             ListenerUsePortalTask.ContinueWith(delegate //Once killed:
@@ -135,6 +137,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
                 var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
             });
+
+           
+
         }
 
         //just for the use of the portal

@@ -21,7 +21,7 @@ using System.Data.SQLite;
 using System.IO;
 using Mooege.Common.Helpers.IO;
 using Mooege.Common.Logging;
-
+using Npgsql;
 namespace Mooege.Common.Storage
 {
     // just a quick hack - not to be meant a final layer.
@@ -29,9 +29,11 @@ namespace Mooege.Common.Storage
     {
         public static SQLiteConnection MPQMirror { get; private set; }
 
-        public static SQLiteConnection Connection { get; private set; }
+        public static NpgsqlConnection Connection { get; private set; }
 
         public static readonly Logger Logger = LogManager.CreateLogger();
+        public static string LoginSQL = "postgres";
+        public static string PassWSQL = "postgres";
 
         public static string AssetDirectory
         {
@@ -70,9 +72,17 @@ namespace Mooege.Common.Storage
         {
             try
             {
-
-                Connection = new SQLiteConnection(String.Format("Data Source={0}/accountDB.db", AssetDirectory));
-                Connection.Open();
+                Connection = new NpgsqlConnection(String.Format("Server=localhost;Port=5432;User Id={0};Password={1};DataBase=accountDB;", LoginSQL, PassWSQL));
+                Logger.Warn("Тестовое соединение с AccountDB в PostgreSQL ");
+                //Connection = new SQLiteConnection(String.Format("Data Source={0}/accountDB.db", AssetDirectory));
+                try {
+                    Connection.Open();
+                    Logger.Warn("PostgreSQL Работает, база найденна.");
+                }
+                catch
+                {
+                    Logger.Warn("PostgreSQL error, use SQLite");
+                }
             }
             catch (Exception e)
             {
