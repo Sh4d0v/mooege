@@ -39,6 +39,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
         }
 
+        static int RiseZombieAID = 6644;
         static int CapitanDaltynAID = 156801; //Actor ID Капитана Далтина
         List<uint> CapitanDaltynKiller = new List<uint> { }; // Используем для отслеживания убийства
         
@@ -46,18 +47,35 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         public override void Execute(Map.World world)
         {
 
-            var actor = world.GetActorBySNO(CapitanDaltynAID);
-            if (actor == null)
+            var boss = world.GetActorBySNO(CapitanDaltynAID);
+            var minions = world.GetActorsBySNO(RiseZombieAID);
+            if (boss == null)
             {
                 Logger.Debug("Не найдено: Капитан Далтин - {0}", CapitanDaltynAID);
-                Vector3D CapitanDaltyn = new Vector3D(156.3844f, 53.71516f, 3.051758E-05f);
+                Vector3D CapitanDaltyn = new Vector3D(51.12595f, 100.2664f, 0.1000305f);
+                Vector3D[] Zombie = new Vector3D[4];
+                Zombie[0] = new Vector3D(50.00065f, 125.4087f, 0.1000305f);
+                Zombie[1] = new Vector3D(54.88688f, 62.24541f, 0.1000305f);
+                Zombie[2] = new Vector3D(86.45869f, 77.09571f, 0.1000305f);
+                Zombie[3] = new Vector3D(102.117f, 97.59058f, 0.1000305f);
                 world.SpawnMonster(CapitanDaltynAID, CapitanDaltyn);
-                actor = world.GetActorBySNO(CapitanDaltynAID);
-                CapitanDaltynKiller.Add(actor.DynamicID);
+                foreach (Vector3D point in Zombie)
+                {
+                    world.SpawnMonster(RiseZombieAID, point);
+                }
+                boss = world.GetActorBySNO(CapitanDaltynAID);
+                minions = world.GetActorsBySNO(RiseZombieAID);
+                CapitanDaltynKiller.Add(boss.DynamicID);
+
+                foreach(var minion in minions)
+                {
+                    CapitanDaltynKiller.Add(minion.DynamicID);
+                }
+                
             }
             else
             {
-                CapitanDaltynKiller.Add(actor.DynamicID);
+                CapitanDaltynKiller.Add(boss.DynamicID);
             }
 
             //Запуск отслеживания убийства

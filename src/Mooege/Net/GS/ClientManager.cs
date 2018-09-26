@@ -119,11 +119,12 @@ namespace Mooege.Net.GS
                     var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
                     
                 }
-                if (dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
+                if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
                     
                     Player MasterPlayer = client.Player;
                     var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
+
                     ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
                     {
                         Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
@@ -252,7 +253,7 @@ namespace Mooege.Net.GS
                     foreach (var playerN in world.Players)
                     {
                         var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        if (dbQuestProgress.StepOfQuest == 1)
+                        if (dbQuestProgress.StepOfQuest < 2)
                             ActivePortal = false;
                         dbQuestProgress.ActiveQuest = 72095;
                         dbQuestProgress.StepOfQuest = 3;
