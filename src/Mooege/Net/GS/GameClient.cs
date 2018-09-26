@@ -99,6 +99,7 @@ namespace Mooege.Net.GS
                             }catch{ }
                             
                             var ToHome = new Portal(Player.World, 5648, Player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
+                            ToHome.NameSNOId = 71150;
                             ToHome.Scale = 0.9f;
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
                             ToHome.EnterWorld(PositionToPortal);

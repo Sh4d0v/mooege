@@ -110,6 +110,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public DarkCultists(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
         }
     }
     [HandledSNO(6035)]
@@ -119,6 +120,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             : base(world, snoId, tags)
         {
             (Brain as MonsterBrain).AddPresetPower(30592);
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
         }
     }
     #endregion

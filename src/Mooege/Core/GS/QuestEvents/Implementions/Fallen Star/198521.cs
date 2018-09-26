@@ -56,7 +56,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if(HadConversation)
             {
                 world.Game.Quests.Advance(87700);
-                world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
+                //world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
+
+                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
                 HadConversation = false;
             }
 

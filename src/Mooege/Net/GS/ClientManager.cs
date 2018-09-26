@@ -84,6 +84,7 @@ namespace Mooege.Net.GS
                 }
                 #endregion
                 var LeahBrains = world.GetActorByDynamicId(72);
+
                 if (LeahBrains != null)
                 {
                     Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", LeahBrains.ActorSNO, world.GetActorsBySNO(3739).Count);
@@ -112,7 +113,7 @@ namespace Mooege.Net.GS
                     client.Player.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
                 }
-                if (dbQuestProgress.StepOfQuest == 1)
+                if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1)
                 {
                     var NewTristramPortal = world.GetActorByDynamicId(34);
                     Player MasterPlayer = client.Player;
@@ -135,6 +136,10 @@ namespace Mooege.Net.GS
                 {
                     Player MasterPlayer = client.Player;
                     var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
+                }
+                if(dbQuestProgress.StepOfQuest > 3)
+                {
+                    LeahBrains.EnterWorld(LeahBrains.Position);
                 }
             }
             
@@ -159,6 +164,10 @@ namespace Mooege.Net.GS
                             Logger.Debug("Вышибать некого");
                         }
                     }
+                    var DownGate = world.GetActorBySNO(5502);
+                    
+
+                    DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
 
                     Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
                     for (int CS = 0; CS < dbQuestProgress.StepOfQuest; CS++)
@@ -177,7 +186,16 @@ namespace Mooege.Net.GS
             }
             #endregion
 
+            #region Сырые локации
 
+            #region Зал Леорика
+            var CainWorld = client.Player.World.Game.GetWorld(60713);
+            //CainScene 60885
+            Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
+            Core.GS.Map.Scene CainScene = new Core.GS.Map.Scene(CainWorld, PointToScene, 60885, null);
+            #endregion
+
+            #endregion
             #region Заполним немного локации))
             Vector3D[] Points = new Vector3D[4];
             Points[0] = new Vector3D(2427.788f, 2852.193f, 27.1f);

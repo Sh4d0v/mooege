@@ -30,6 +30,7 @@ using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Common.Types.Math;
 
+
 namespace Mooege.Core.GS.Actors
 {
     public class Portal : Actor
@@ -37,7 +38,7 @@ namespace Mooege.Core.GS.Actors
         static readonly Logger Logger = LogManager.CreateLogger();
 
         public override ActorType ActorType { get { return ActorType.Gizmo; } }
-
+        private bool FirstEnter = true;
         private ResolvedPortalDestination Destination { get; set; }
         private int MinimapIcon;
 
@@ -70,10 +71,12 @@ namespace Mooege.Core.GS.Actors
             {
                 if (this.ActorSNO.Id == 168932)
                 {
+                    
                     this.Destination = new ResolvedPortalDestination
                     {
+                        
                         WorldSNO = 60713,
-                        DestLevelAreaSNO = 172,
+                        DestLevelAreaSNO = 60885,
                         StartingPointActorTag = 1
                     };
                     // Override minimap icon in merkerset tags
@@ -85,13 +88,18 @@ namespace Mooege.Core.GS.Actors
                     {
                         MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
                     }
+                    
+                    var FakePortal = this;
+
+
+                    
                     Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
                 }else if (this.ActorSNO.Id == 5648)
                 {
                     //Generate Portal
                     this.Destination = new ResolvedPortalDestination
                     {
-                        WorldSNO = 71150,
+                        WorldSNO = 60713,
                         DestLevelAreaSNO = 33357,
                         StartingPointActorTag = -100
                     };
@@ -108,7 +116,7 @@ namespace Mooege.Core.GS.Actors
             this.Field2 = 16;
 
             // FIXME: Hardcoded crap; probably don't need to set most of these. /komiga
-            //this.Attributes[GameAttribute.MinimapActive] = true;
+            this.Attributes[Net.GS.Message.GameAttribute.MinimapActive] = true;
             //this.Attributes[GameAttribute.Hitpoints_Max_Total] = 1f;
             //this.Attributes[GameAttribute.Hitpoints_Max] = 0.0009994507f;
             //this.Attributes[GameAttribute.Hitpoints_Total_From_Level] = 3.051758E-05f;
@@ -121,6 +129,16 @@ namespace Mooege.Core.GS.Actors
             // Logger.Debug(" (Portal ctor) is in scene SNO {0}", this.CurrentScene.SceneSNO);            
             //Logger.Debug(" (Portal Ctor) portal used has actor SNO {3}, SNO Name {0}, exists in world sno {1}, has dest world sno {2}", this.ActorSNO.Name, tags[MarkerKeys.DestinationWorld].Id, tags[MarkerKeys.DestinationWorld].Id, snoId);
 
+        }
+
+        public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
+        {
+            var actor = world.GetActorBySNO(snoId);
+            foreach (var player in world.Players)
+            {
+                actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = status;
+            }
+            return true;
         }
 
         public override bool Reveal(Player player)
@@ -205,7 +223,7 @@ namespace Mooege.Core.GS.Actors
             {
                 //Enter в Cathedral level 1
                 bool QuestEnter = false;
-                
+
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
                 if (dbQuestProgress.ActiveQuest == 72095)
                 {
@@ -224,7 +242,27 @@ namespace Mooege.Core.GS.Actors
                 {
                     world.Game.Quests.Advance(72095);
                     QuestEnter = false;
-                }                
+
+                }
+                //waypoint_is_activation.Attributes[G]
+                //waypoint_is_activation.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
+                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = true;
+                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
+                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Untargetable] = true;
+                //waypoint_is_activation.Attributes[Net.GS.Message.GameAttribute.Untargetable] = false;
+
+                
+                var FakePortal = world.GetActorBySNO(168932);
+                
+                Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
+                RealPortal.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = 60713,
+                    DestLevelAreaSNO = 60885,
+                    StartingPointActorTag = -102
+                };
+                RealPortal.EnterWorld(FakePortal.Position);
+                FirstEnter = false;
             }
 
             if (this.Destination.WorldSNO == 60395)
@@ -268,6 +306,9 @@ namespace Mooege.Core.GS.Actors
 
                     }
                     catch { }
+                    
+                    //CainWorld.AddScene(CainScene);
+
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                 }
                 else
@@ -287,6 +328,8 @@ namespace Mooege.Core.GS.Actors
                     DestLevelAreaSNO = 172,
                     StartingPointActorTag = -101
                 };
+                // Название локации, не работает(
+                ToHome.NameSNOId = now_world.WorldSNO.Id;
                 ToHome.EnterWorld(ToPortal);
 
                 DBSessions.AccountSession.Flush();
@@ -307,6 +350,12 @@ namespace Mooege.Core.GS.Actors
                 else
                     player.Teleport(ToPortal);
             }
+            else if (this.Destination.StartingPointActorTag == -102)
+            {
+                Vector3D Point = new Vector3D(237.3005f,200.94f,31.17498f);
+                player.ChangeWorld(player.World.Game.GetWorld(60713), Point);
+                
+            }
             else
             {
                 var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
@@ -318,7 +367,8 @@ namespace Mooege.Core.GS.Actors
                         {
                             var HirelingToLeave = player.ActiveHireling;
                             now_world.Leave(HirelingToLeave);
-                            var Leah_Back = now_world.GetActorByDynamicId(83);
+                            var NewTristram = player.InGameClient.Game.GetWorld(71150);
+                            var Leah_Back = NewTristram.GetActorByDynamicId(83);
                             Leah_Back.EnterWorld(Leah_Back.Position);
                         }
 

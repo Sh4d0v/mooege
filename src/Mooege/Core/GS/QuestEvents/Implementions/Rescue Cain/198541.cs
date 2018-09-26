@@ -70,8 +70,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //Get Portal
             var NewTristramPortal = world.GetActorByDynamicId(34);
             portalAID = NewTristramPortal.ActorSNO.Id;
+            if (HadConversation)
+            {
+                HadConversation = false;
+                Logger.Debug(" RESCUE CAIN QUEST STARTED ");
+                Logger.Debug(" Quests.Advance(72095) ");
+                
+                world.Game.Quests.Advance(72095);
+            }
             // Away Leah
-            //world.Leave(LeahBrains);
+            try { world.Leave(LeahBrains); }
+            catch { }
             
 
             //LeahBrains.OnLeave(world);
@@ -79,13 +88,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
             LeahFriend.Brain = new MinionBrain(LeahFriend);
 
-            if (HadConversation)
-            {
-                HadConversation = false;
-                Logger.Debug(" RESCUE CAIN QUEST STARTED ");
-                Logger.Debug(" Quests.Advance(72095) ");
-                world.Game.Quests.Advance(72095);
-            }
+            
             // Point to spawn Leah
             var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
             //LeahBrains.EnterWorld(NewPoint);

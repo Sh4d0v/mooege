@@ -72,17 +72,8 @@ namespace Mooege.Common.Storage
         {
             try
             {
-                Connection = new NpgsqlConnection(String.Format("Server=localhost;Port=5432;User Id={0};Password={1};DataBase=accountDB;", LoginSQL, PassWSQL));
-                Logger.Warn("Тестовое соединение с AccountDB в PostgreSQL ");
-                //Connection = new SQLiteConnection(String.Format("Data Source={0}/accountDB.db", AssetDirectory));
-                try {
-                    Connection.Open();
-                    Logger.Warn("PostgreSQL Работает, база найденна.");
-                }
-                catch
-                {
-                    Logger.Warn("PostgreSQL error, use SQLite");
-                }
+                Logger.Info("Attention! This version is experimental, the database for accounts has moved to MySQL.");
+                Logger.Info("");
             }
             catch (Exception e)
             {
