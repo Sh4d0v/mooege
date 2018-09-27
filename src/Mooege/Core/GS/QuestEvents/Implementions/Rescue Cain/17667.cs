@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Core.GS.Common.Types.TagMap;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -42,9 +43,33 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(CainBrains, CainPath);
 
             CainBrains.Move(CainPath, facingAngle);
+            //BookShelf - 5723
+            var BookShelf = world.GetActorBySNO(5723);
+            world.BroadcastIfRevealed(new PlayAnimationMessage
+            {
+                ActorID = BookShelf.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                {
+                    new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                    {
+                        Duration = 100,
+                        AnimationSNO = BookShelf.AnimationSet.TagMapAnimDefault[AnimationSetKeys.Opening],
+                        PermutationIndex = 0,
+                        Speed = 1
+                    }
+                }
+            }, BookShelf);
+            
+            world.BroadcastIfRevealed(new SetIdleAnimationMessage
+            {
+                ActorID = BookShelf.DynamicID,
+                AnimationSNO = AnimationSetKeys.Open.ID
+            }, BookShelf);
             foreach (var player in world.Players)
             {
-
+                
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 dbQuestProgress.ActiveQuest = 72095;
                 dbQuestProgress.StepOfQuest = 14;

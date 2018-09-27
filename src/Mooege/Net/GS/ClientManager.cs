@@ -194,31 +194,13 @@ namespace Mooege.Net.GS
             {
                 #region Нижнии ворота тристрама
                 var DownGate = world.GetActorBySNO(90419);
-                world.BroadcastIfRevealed(new Message.Definitions.Animation.PlayAnimationMessage
-                {
-                    ActorID = DownGate.DynamicID,
-                    Field1 = 5,
-                    Field2 = 0,
-                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                {
-                    new Net.GS.Message.Fields.PlayAnimationMessageSpec()
-                    {
-                        Duration = 50,
-                        AnimationSNO = DownGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
-                        PermutationIndex = 0,
-                        Speed = 1
-                    }
-                                }
-
-                }, DownGate);
-
+                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                DownGate.Attributes.BroadcastChangedIfRevealed();
                 world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
                 {
                     ActorID = DownGate.DynamicID,
                     AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
                 }, DownGate);
-                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
-                DownGate.Attributes.BroadcastChangedIfRevealed();
                 #endregion
 
                 if (dbQuestProgress.StepOfQuest > 0)

@@ -403,11 +403,12 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(166678, new _166678()); // Открытие ворот
             this.QuestEventDict.Add(167115, new _167115()); // Призыв и убийство капитана Далтина
             this.QuestEventDict.Add(198588, new _198588()); // Разговор с Леей под домом после убийства
-            this.QuestEventDict.Add(17667, new _17667()); // Разговор с Каином после спасения
+            this.QuestEventDict.Add(17667, new _17667());   // Разговор с Каином после спасения
             this.QuestEventDict.Add(198617, new _198617()); // Завершение квеста
 
             // Crown 72221
             this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
+            this.QuestEventDict.Add(198312, new _198312()); // Диалог после убийства миры с кузнецом
 
             // Skeleton King 72061
             this.QuestEventDict.Add(154570, new _154570());  // Начало квеста

@@ -111,6 +111,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             : base(world, snoId, tags)
         {
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
         }
     }
     [HandledSNO(6035)]
@@ -121,6 +123,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         {
             (Brain as MonsterBrain).AddPresetPower(30592);
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
         }
     }
     #endregion
@@ -357,6 +361,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public TombGuardian(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            
             (Brain as MonsterBrain).AddPresetPower(30592);
             (Brain as MonsterBrain).AddPresetPower(30503);
             (Brain as MonsterBrain).AddPresetPower(30543); //Summon Skeletons

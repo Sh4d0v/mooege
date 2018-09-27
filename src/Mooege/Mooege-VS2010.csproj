@@ -344,6 +344,7 @@
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\198292.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\198312.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198503.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198521.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\LeahInn.cs" />

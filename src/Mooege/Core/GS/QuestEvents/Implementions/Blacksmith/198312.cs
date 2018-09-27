@@ -14,13 +14,13 @@ using Mooege.Core.GS.Map;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _198292 : QuestEvent
+    class _198312 : QuestEvent
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         private Boolean HadConversation = true;
 
-        public _198292() 
-            : base(198292)
+        public _198312()
+            : base(198312)
         {
         }
 
@@ -29,9 +29,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if (HadConversation)
             {
                 HadConversation = false;
+                world.Game.Quests.Advance(72221);
                 Logger.Debug(" Quests.Advance(72221) ");
-                //198312 - had Conv
-                //156381 - Chancellor Eamon
             }
 
         }

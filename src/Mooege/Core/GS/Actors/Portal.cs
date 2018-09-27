@@ -322,6 +322,35 @@ namespace Mooege.Core.GS.Actors
                 //Enter to Drowned Temple
                 
             }
+            if (this.Destination.WorldSNO == 60713)
+            {
+                //Enter to Leoric Hall
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if(dbQuestProgress.StepOfQuest > 12 || dbQuestProgress.ActiveQuest != 72095)
+                {
+                    var BookShelf = world.GetActorBySNO(5723);
+                    world.BroadcastIfRevealed(new Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                    {
+                        ActorID = BookShelf.DynamicID,
+                        AnimationSNO = AnimationSetKeys.Open.ID
+                    }, BookShelf);
+                    var minions = world.GetActorsBySNO(80652);
+                    foreach (var minion in minions)
+                    {
+                        minion.Destroy();
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
+            if (this.Destination.WorldSNO == 50582)
+            {
+                //Enter to Cathedral Level 2
+                
+                Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
+                if(world.Game.GetWorld(50582).StartingPoints ==null)
+                    player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
+            }
 
             if (world == null)
             {
