@@ -20,7 +20,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         private Boolean HadConversation = true;
-        static int portalAID = 188743; // Exit
+        
 
         public _17667()
             : base(17667)

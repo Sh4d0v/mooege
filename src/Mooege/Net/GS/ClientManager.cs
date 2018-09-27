@@ -167,6 +167,27 @@ namespace Mooege.Net.GS
 
             #endregion
 
+            #region Акт 1 Квест 3 - Сломанная корона
+            if(dbQuestProgress.ActiveQuest == 72221)
+            {
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 8; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                world.Leave(world.GetActorByDynamicId(75));
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                world.Leave(world.GetActorByDynamicId(25));
+                //world.Game.Quests.Advance(72095);
+                #endregion
+            }
+            #endregion
+
             #endregion
             #region Основная проверка
             if (dbQuestProgress.ActiveQuest != -1)

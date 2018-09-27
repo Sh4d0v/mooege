@@ -25,9 +25,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
             Logger.Debug(" Разговор с Леей закончен ");
             world.Game.Quests.Advance(72095);
-
-            //Logger.Debug(" Conversation(166678) ");
-            //StartConversation(world, 166678); // "Открыть ворота" нужно использовать в Old Ruins
         }
 
 

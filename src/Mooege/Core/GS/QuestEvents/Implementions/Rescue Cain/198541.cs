@@ -62,9 +62,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 world.GetActorByDynamicId(72).Destroy();
             }
-
-            //Logger.Debug(" Conversation(190404) ");
-            //StartConversation(world, 190404);
             //Get Leah
             var LeahBrains = world.GetActorByDynamicId(83);
 
@@ -83,7 +80,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             try { world.Leave(LeahBrains); }
             catch { }
             
-
             //LeahBrains.OnLeave(world);
             // Create Friend Leah for Party
             Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
@@ -133,7 +129,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_NewTristram
 
             });
-
             
             var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
             ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
@@ -146,9 +141,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     world.Game.Quests.Advance(72095);
                 });
             });
-
-
-            
         }
 
         //just for the use of the portal
@@ -157,8 +149,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if (world.HasActor(actorDynID))
             {
                 var actor = world.GetActorByDynamicId(actorDynID); // it is not null :p
-
-                //Logger.Debug(" supposed portal has type {3} has name {0} and state {1} , has gizmo  been operated ? {2} ", actor.NameSNOId, actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_State], actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated], actor.GetType());
 
                 while (true)
                 {
@@ -174,8 +164,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                             DBSessions.AccountSession.Flush();
                         }
                         break;
-
-
                     }
                 }
             }

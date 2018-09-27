@@ -100,10 +100,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             private bool OnKillListener(List<uint> monstersAlive, Map.World world)
             {
                 Int32 monstersKilled = 0;
-                var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+                var monsterCount = monstersAlive.Count;
                 while (monstersKilled != monsterCount)
                 {
-                    //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
                     for (int i = monstersAlive.Count - 1; i >= 0; i--)
                     {
                         if (world.HasMonster(monstersAlive[i]))

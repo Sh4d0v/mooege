@@ -26,13 +26,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         
         public override void Execute(Map.World world)
         {
-            
             Logger.Debug(" Ворота открыты ");
-
             world.Game.Quests.Advance(72095);
             Logger.Debug(" Quests.Advance(72095) ");
-            
-
         }
 
         private bool StartConversation(Map.World world, Int32 conversationId)

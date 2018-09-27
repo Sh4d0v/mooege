@@ -49,15 +49,11 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 HadConversation = false;
                 world.Game.Quests.Advance(72095);
-                //Logger.Debug(" Второй квест окончен. ");
                 world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 72095);
-
             }
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
-
-                
                 dbQuestProgress.LastQuest = 72095;
                 dbQuestProgress.ActiveQuest = 72221;
                 dbQuestProgress.StepOfQuest = -1;
@@ -72,10 +68,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 });
             };
             Logger.Debug(" Второй квест окончен. ");
-            // starting third quest
-            //StartConversation(world, 198292);
-            //world.Game.Quests.Advance(72221);
 
+            // starting third quest
+            //world.Game.Quests.Advance(72221);
         }
 
 

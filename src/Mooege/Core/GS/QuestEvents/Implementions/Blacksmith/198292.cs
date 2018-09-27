@@ -30,7 +30,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 HadConversation = false;
                 Logger.Debug(" Quests.Advance(72221) ");
-                //world.Game.Quests.Advance(72221);
             }
 
         }
