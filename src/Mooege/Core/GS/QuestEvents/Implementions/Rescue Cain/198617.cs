@@ -27,6 +27,8 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -53,9 +55,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             foreach (var player in world.Players)
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+
+                
+                dbQuestProgress.LastQuest = 72095;
+                dbQuestProgress.ActiveQuest = 72221;
+                dbQuestProgress.StepOfQuest = -1;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
                 player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
                 {
-                    snoQuest = 87700,
+                    snoQuest = 72095,
                     Field1 = 2,
                     Field2 = 10.0f
 

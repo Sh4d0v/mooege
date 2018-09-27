@@ -111,11 +111,16 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
+            
             #region Южные ворота в тристрам.
             try
             {
                 if(target.ActorSNO.Id == 90419)
                 {
+                    foreach(var player in user.World.Players)
+                    {
+
+                    }
                     
                 }
             } catch { }
@@ -204,8 +209,40 @@ namespace Mooege.Core.GS.Powers
             }
             catch { }
             #endregion
-
+            
             #region Квестовые события
+            //188743
+            try
+            {
+                if (target.ActorSNO.Id == 188743)
+                {
+
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72095)
+                        {
+                            dbQuestProgress.ActiveQuest = 72095;
+                            if (dbQuestProgress.StepOfQuest == 14)
+                            {
+                                dbQuestProgress.StepOfQuest = 15;
+                                UseDoor72095 = true;
+                            }
+
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+
+                    if (this.UseDoor72095 == true)
+                    {
+                        user.World.Game.Quests.Advance(72095);
+                        UseDoor72095 = false;
+                    }
+
+                }
+            }
+            catch { }
             try
             {
                 if (target.DynamicID == 1543 || target.ActorSNO.Id == 167289)
@@ -262,9 +299,9 @@ namespace Mooege.Core.GS.Powers
 
                     if (this.UseActorOnKotel72095 == true)
                     {
+                        StartConversation(user.World, 167115);
                         user.World.Game.Quests.Advance(72095);
                         UseActorOnKotel72095 = false;
-                        StartConversation(user.World, 167115); 
                     }
                 }
             }

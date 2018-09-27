@@ -233,7 +233,7 @@ namespace Mooege.Core.GS.Games
                             client.Player.Inventory.Consume(client, message);
                             break;
                         case Consumers.Player:
-                            client.Player.Consume(client, message);
+                            client.Player.Consume(client, message);                            
                             break;
 
                         case Consumers.Conversations:

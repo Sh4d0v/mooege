@@ -87,9 +87,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dep\nhibernate\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>packages\Npgsql.2.2.7\lib\net40\Npgsql.dll</HintPath>
-    </Reference>
     <Reference Include="System">
     </Reference>
     <Reference Include="System.Core">
@@ -354,6 +351,7 @@
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\SurviveTheWaves.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\166678.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\167115.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\17667.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\190404.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198541.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198588.cs" />
@@ -768,9 +766,6 @@
     </None>
     <None Include="conf\Server.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

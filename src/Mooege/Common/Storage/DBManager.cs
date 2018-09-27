@@ -21,7 +21,7 @@ using System.Data.SQLite;
 using System.IO;
 using Mooege.Common.Helpers.IO;
 using Mooege.Common.Logging;
-using Npgsql;
+
 namespace Mooege.Common.Storage
 {
     // just a quick hack - not to be meant a final layer.
@@ -29,7 +29,7 @@ namespace Mooege.Common.Storage
     {
         public static SQLiteConnection MPQMirror { get; private set; }
 
-        public static NpgsqlConnection Connection { get; private set; }
+        
 
         public static readonly Logger Logger = LogManager.CreateLogger();
         public static string LoginSQL = "postgres";

@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Collections;
 using Mooege.Common.MPQ.FileFormats.Types;
 using System.Linq;
-using Npgsql;
 
 namespace Mooege.Common.Storage
 {

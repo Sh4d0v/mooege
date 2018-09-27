@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Common.Types.Math;
-
+using System.Threading.Tasks;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -38,7 +38,6 @@ namespace Mooege.Core.GS.Actors
         static readonly Logger Logger = LogManager.CreateLogger();
 
         public override ActorType ActorType { get { return ActorType.Gizmo; } }
-        private bool FirstEnter = true;
         private ResolvedPortalDestination Destination { get; set; }
         private int MinimapIcon;
 
@@ -71,13 +70,14 @@ namespace Mooege.Core.GS.Actors
             {
                 if (this.ActorSNO.Id == 168932)
                 {
-                    
+                    var dest = world.Game.GetWorld(60713);
+
                     this.Destination = new ResolvedPortalDestination
                     {
                         
-                        WorldSNO = 60713,
-                        DestLevelAreaSNO = 60885,
-                        StartingPointActorTag = 1
+                        WorldSNO = 60713,//tags[MarkerKeys.DestinationWorld].Id,
+                        DestLevelAreaSNO = 60885,//tags[MarkerKeys.DestinationLevelArea].Id,
+                        StartingPointActorTag = -102
                     };
                     // Override minimap icon in merkerset tags
                     if (tags.ContainsKey(MarkerKeys.MinimapTexture))
@@ -89,12 +89,45 @@ namespace Mooege.Core.GS.Actors
                         MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
                     }
                     
-                    var FakePortal = this;
-
-
                     
                     Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
-                }else if (this.ActorSNO.Id == 5648)
+                }
+                else if (this.ActorSNO.Id == 221031)
+                {
+                    try
+                    {
+                        this.Destination = new ResolvedPortalDestination
+                        {
+                            WorldSNO = tags[MarkerKeys.DestinationWorld].Id,
+                            DestLevelAreaSNO = tags[MarkerKeys.DestinationLevelArea].Id,
+                            StartingPointActorTag = tags[MarkerKeys.DestinationActorTag]
+
+                        };
+                    }
+                    catch
+                    {
+                        this.Destination = new ResolvedPortalDestination
+                        {
+                            WorldSNO = 71150,
+                            DestLevelAreaSNO = 60885,
+                            StartingPointActorTag = -103
+
+                        };
+                    }
+                   
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+
+                    Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
+                }
+                else if (this.ActorSNO.Id == 5648)
                 {
                     //Generate Portal
                     this.Destination = new ResolvedPortalDestination
@@ -130,7 +163,30 @@ namespace Mooege.Core.GS.Actors
             //Logger.Debug(" (Portal Ctor) portal used has actor SNO {3}, SNO Name {0}, exists in world sno {1}, has dest world sno {2}", this.ActorSNO.Name, tags[MarkerKeys.DestinationWorld].Id, tags[MarkerKeys.DestinationWorld].Id, snoId);
 
         }
-
+        private bool OnKillListenerCain(List<uint> monstersAlive, Core.GS.Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);
@@ -170,7 +226,7 @@ namespace Mooege.Core.GS.Actors
                     Position = this.Position,
                     WorldID = this.World.DynamicID
                 },
-                Field2 = MinimapIcon, //   0x00018FB0,  /* Marker_DungeonEntrance.tex */          // TODO Dont mark all portals as dungeon entrances... some may be exits too (although d3 does not necesarrily use the correct markers). Also i have found no hacky way to determine whether a portal is entrance or exit - farmy
+                Field2 =  0x00018FB0,  /* Marker_DungeonEntrance.tex */          // TODO Dont mark all portals as dungeon entrances... some may be exits too (although d3 does not necesarrily use the correct markers). Also i have found no hacky way to determine whether a portal is entrance or exit - farmy
                 m_snoStringList = 0x0000CB2E, /* LevelAreaNames.stl */          // TODO Dont use hardcoded numbers
 
                 Field3 = StringHashHelper.HashNormal(markerName),
@@ -244,17 +300,13 @@ namespace Mooege.Core.GS.Actors
                     QuestEnter = false;
 
                 }
-                //waypoint_is_activation.Attributes[G]
-                //waypoint_is_activation.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
-                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = true;
-                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
-                //BossPortal.Attributes[Net.GS.Message.GameAttribute.Untargetable] = true;
-                //waypoint_is_activation.Attributes[Net.GS.Message.GameAttribute.Untargetable] = false;
-
                 
                 var FakePortal = world.GetActorBySNO(168932);
                 
                 Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
+               // FakePortal.Destroy();
+               //80652 
+                Vector3D RealPosition = new Vector3D(643.384f, 339.6074f, -6.970252f);
                 RealPortal.Destination = new ResolvedPortalDestination
                 {
                     WorldSNO = 60713,
@@ -262,7 +314,7 @@ namespace Mooege.Core.GS.Actors
                     StartingPointActorTag = -102
                 };
                 RealPortal.EnterWorld(FakePortal.Position);
-                FirstEnter = false;
+                
             }
 
             if (this.Destination.WorldSNO == 60395)
@@ -306,9 +358,7 @@ namespace Mooege.Core.GS.Actors
 
                     }
                     catch { }
-                    
-                    //CainWorld.AddScene(CainScene);
-
+                   
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                 }
                 else
@@ -342,7 +392,7 @@ namespace Mooege.Core.GS.Actors
                 var oldPortals = DestWorld.GetActorsBySNO(5648);
                 foreach (var OldP in oldPortals)
                 {
-                    OldP.Destroy();
+            //        OldP.Destroy();
                 }
 
                 if (player.World.Game.GetWorld(dbPortalOfToon.WorldDest) != player.World)
@@ -352,9 +402,72 @@ namespace Mooege.Core.GS.Actors
             }
             else if (this.Destination.StartingPointActorTag == -102)
             {
+                var dest = world.Game.GetWorld(60713);
                 Vector3D Point = new Vector3D(237.3005f,200.94f,31.17498f);
-                player.ChangeWorld(player.World.Game.GetWorld(60713), Point);
                 
+                bool QuestEnter = false;
+
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72095)
+                {
+                    dbQuestProgress.ActiveQuest = 72095;
+                    if (dbQuestProgress.StepOfQuest == 11)
+                    {
+                        dbQuestProgress.StepOfQuest = 12;
+                        QuestEnter = true;
+                        var minions = dest.GetActorsBySNO(80652);
+                        List<uint> SkilletKiller = new List<uint> { };
+                        var CainBrains = world.GetActorBySNO(102386);
+                        foreach (var minion in minions)
+                        {
+                            SkilletKiller.Add(minion.DynamicID);
+
+                            var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(minion, CainBrains.Position);
+
+                            minion.Move(CainBrains.Position, facingAngle);
+                        }
+
+
+                        var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerCain(SkilletKiller, dest));
+                        CainKillerEvent.ContinueWith(delegate
+                        {
+                        if (dbQuestProgress.StepOfQuest == 12)
+                        {
+                            world.Game.Quests.Advance(72095);
+                                dbQuestProgress.StepOfQuest = 13;
+                        }
+                        });
+                    }
+                    else { QuestEnter = false; }
+
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+
+                if (QuestEnter == true)
+                {
+                    world.Game.Quests.Advance(72095);
+                    QuestEnter = false;
+
+                }
+
+
+
+                player.ChangeWorld(player.World.Game.GetWorld(60713), Point);
+
+
+            }
+            else if (this.Destination.StartingPointActorTag == -103)
+            {
+                Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
+                player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
+
+            }
+            else if (this.Destination.StartingPointActorTag == -104)
+            {
+                Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
+                player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
+
             }
             else
             {

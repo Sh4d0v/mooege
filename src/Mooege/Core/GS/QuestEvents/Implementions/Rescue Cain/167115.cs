@@ -64,9 +64,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     world.SpawnMonster(RiseZombieAID, point);
                 }
                 boss = world.GetActorBySNO(CapitanDaltynAID);
-                minions = world.GetActorsBySNO(RiseZombieAID);
                 CapitanDaltynKiller.Add(boss.DynamicID);
-
+                minions = world.GetActorsBySNO(RiseZombieAID);
+                
                 foreach(var minion in minions)
                 {
                     CapitanDaltynKiller.Add(minion.DynamicID);

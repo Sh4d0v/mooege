@@ -67,6 +67,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //StartConversation(world, 190404);
             //Get Leah
             var LeahBrains = world.GetActorByDynamicId(83);
+
             //Get Portal
             var NewTristramPortal = world.GetActorByDynamicId(34);
             portalAID = NewTristramPortal.ActorSNO.Id;
@@ -75,7 +76,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 Logger.Debug(" RESCUE CAIN QUEST STARTED ");
                 Logger.Debug(" Quests.Advance(72095) ");
-                
+                world.Game.Quests.HasCurrentQuest(72095, -1);
                 world.Game.Quests.Advance(72095);
             }
             // Away Leah
@@ -129,7 +130,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //Wait for portal to be used .
             ListenerUsePortalTask.ContinueWith(delegate //Once killed:
             {
-                Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_OldTristram
+                Logger.Debug(" Waypoint_NewTristram Objective done "); // Waypoint_NewTristram
 
             });
 
@@ -137,12 +138,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
             ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
             {
-                Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
+                Logger.Debug("Enter to Road Objective done "); 
                 var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
+                ListenerEnterToAdriaEnter.ContinueWith(delegate //Once killed:
+                {
+                    Logger.Debug("Enter to Adria Objective done ");
+                    world.Game.Quests.Advance(72095);
+                });
             });
 
-           
 
+            
         }
 
         //just for the use of the portal
@@ -222,7 +228,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     }
-                    world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095);
+                    world.Game.Quests.Advance(72095); 
                     break;
                 }
             }

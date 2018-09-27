@@ -93,6 +93,7 @@ namespace Mooege.Core.GS.Actors
                             try{
                                 Logger.Warn("Try loading of boss portals");
                                 return new Portal(world, snoId, tags);
+                                    
                             }
                             catch
                             {

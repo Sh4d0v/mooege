@@ -35,6 +35,7 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.AI.Brains;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Mooege.Net.GS
 {
@@ -72,7 +73,8 @@ namespace Mooege.Net.GS
             //Тестовая проверка прохождения // Пока только синг.
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(client.Player.Toon.PersistentID);
             var world = client.Player.World;
-            
+          
+            #region Акт 1
 
             #region Акт 1 Квест 2 - Наследие декарда каина
             if (dbQuestProgress.ActiveQuest == 72095)
@@ -90,7 +92,7 @@ namespace Mooege.Net.GS
                     Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", LeahBrains.ActorSNO, world.GetActorsBySNO(3739).Count);
                     world.Leave(LeahBrains);
                     world.Leave(world.GetActorByDynamicId(75));
-                
+
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
@@ -118,11 +120,11 @@ namespace Mooege.Net.GS
                     var NewTristramPortal = world.GetActorByDynamicId(34);
                     Player MasterPlayer = client.Player;
                     var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
-                    
+
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
-                    
+
                     Player MasterPlayer = client.Player;
                     var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
 
@@ -137,20 +139,70 @@ namespace Mooege.Net.GS
                     Player MasterPlayer = client.Player;
                     var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
                 }
-                if(dbQuestProgress.StepOfQuest > 3)
+                if (dbQuestProgress.StepOfQuest > 3 && dbQuestProgress.StepOfQuest < 11)
                 {
                     LeahBrains.EnterWorld(LeahBrains.Position);
                 }
+                
+                if (dbQuestProgress.StepOfQuest == 12)
+                {
+                    Player MasterPlayer = client.Player;
+                    var CainIntroWorld = client.Player.World.Game.GetWorld(60713);
+                    //var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, CainIntroWorld));
+                    var minions = CainIntroWorld.GetActorsBySNO(80652);
+                    List<uint> SkilletKiller = new List<uint> { };
+
+                    foreach (var minion in minions)
+                    {
+                        SkilletKiller.Add(minion.DynamicID);
+                    }
+                    var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerCain(SkilletKiller, CainIntroWorld));
+                    CainKillerEvent.ContinueWith(delegate
+                    {
+                        world.Game.Quests.Advance(72095);
+                        dbQuestProgress.StepOfQuest = 13;
+                    });
+                }
             }
-            
+
             #endregion
-            
+
+            #endregion
             #region Основная проверка
             if (dbQuestProgress.ActiveQuest != -1)
             {
+                #region Нижнии ворота тристрама
+                var DownGate = world.GetActorBySNO(90419);
+                world.BroadcastIfRevealed(new Message.Definitions.Animation.PlayAnimationMessage
+                {
+                    ActorID = DownGate.DynamicID,
+                    Field1 = 5,
+                    Field2 = 0,
+                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                {
+                    new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                    {
+                        Duration = 50,
+                        AnimationSNO = DownGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                        PermutationIndex = 0,
+                        Speed = 1
+                    }
+                                }
+
+                }, DownGate);
+
+                world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
+                {
+                    ActorID = DownGate.DynamicID,
+                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                }, DownGate);
+                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                DownGate.Attributes.BroadcastChangedIfRevealed();
+                #endregion
+
                 if (dbQuestProgress.StepOfQuest > 0)
                 {
-                     // Вышибаем лею                      
+                    // Вышибаем лею                      
                     var actorToShoot = world.GetActorByDynamicId(72);
                     if (dbQuestProgress.ActiveQuest == 87700)
                     {
@@ -164,10 +216,6 @@ namespace Mooege.Net.GS
                             Logger.Debug("Вышибать некого");
                         }
                     }
-                    var DownGate = world.GetActorBySNO(5502);
-                    
-
-                    DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
 
                     Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
                     for (int CS = 0; CS < dbQuestProgress.StepOfQuest; CS++)
@@ -182,18 +230,19 @@ namespace Mooege.Net.GS
                     world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
                     Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
                 }
-
+                if (dbQuestProgress.ActiveQuest == 87700)
+                {
+                    if (dbQuestProgress.StepOfQuest == 8)
+                    {
+                        world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 192164);
+                    }
+                }
             }
             #endregion
 
             #region Сырые локации
 
-            #region Зал Леорика
-            var CainWorld = client.Player.World.Game.GetWorld(60713);
-            //CainScene 60885
-            Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
-            Core.GS.Map.Scene CainScene = new Core.GS.Map.Scene(CainWorld, PointToScene, 60885, null);
-            #endregion
+          
 
             #endregion
             #region Заполним немного локации))
@@ -313,6 +362,30 @@ namespace Mooege.Net.GS
 
             return true;
         }
+            private bool OnKillListenerCain(List<uint> monstersAlive, Core.GS.Map.World world)
+            {
+                Int32 monstersKilled = 0;
+                var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+                while (monstersKilled != monsterCount)
+                {
+                    //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                    for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                    {
+                        if (world.HasMonster(monstersAlive[i]))
+                        {
+                            //Alive: Nothing.
+                        }
+                        else
+                        {
+                            //If dead we remove it from the list and keep iterating.
+                            Logger.Debug(monstersAlive[i] + " has been killed");
+                            monstersAlive.RemoveAt(i);
+                            monstersKilled++;
+                        }
+                    }
+                }
+                return true;
+            }
         #endregion
 
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)

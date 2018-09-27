@@ -28,7 +28,7 @@ using Mooege.Common.Versions;
 using Mooege.Core.GS.Common.Types.SNO;
 using System.Linq;
 using System.Data.SQLite;
-using Npgsql;
+
 
 using Mooege.Common.Storage;
 
