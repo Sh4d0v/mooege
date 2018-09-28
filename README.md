@@ -59,3 +59,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ## Ветки:
 * Здесь только одна ветка.
 * Да море костылей, все в процессе, постоянно будет меняться и так далее.. И вообще это тупо весело)
+
+## To run without MySQL
+* Download the file [database.Account.config](https://mega.nz/#!9VsFxSKA!7w5Lt7chupYD6txogBZNotb5pSDGBFjEv688j1rhE7I)
+* Put in the folder with the finished program.
