@@ -234,7 +234,8 @@ namespace Mooege.Core.GS.Powers
                     }
                     if (Dialog72221 == true)
                     {
-                        user.World.Game.Quests.Advance(72221);
+                        //user.World.Game.Quests.Advance(72221);
+                        user.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 121241);
                         Dialog72221 = false;
                     }
                 }
@@ -376,6 +377,8 @@ namespace Mooege.Core.GS.Powers
             catch{}
             #endregion
 
+            #region 
+            #endregion
             #endregion
 
             if (implementation != null)

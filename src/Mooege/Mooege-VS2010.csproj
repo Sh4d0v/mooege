@@ -358,6 +358,7 @@
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198541.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198588.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198617.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Side_BrotherRescue\129751.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\154570.cs" />
     <Compile Include="Core\GS\QuestEvents\QuestEvent.cs" />
     <Compile Include="Core\GS\Ticker\SteppedTickTimer.cs" />

@@ -235,7 +235,96 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnListenerToEnterGraveyard(Players.Player player, Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
+                {
+                    bool ActivePortal = true;
 
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 6)
+                        {
+                            ActivePortal = true;
+                            dbQuestProgress.ActiveQuest = 72221;
+                            dbQuestProgress.StepOfQuest = 7;
+                        }
+                        else
+                        { ActivePortal = false; }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+
+                    if (ActivePortal == true)
+                        world.Game.Quests.Advance(72221);
+                    break;
+                }
+            }
+
+            return true;
+        }
+        private bool OnListenerToEnterBossScene(Players.Player player, Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 61126) //trOut_wilderness_MainGraveyard_E02_S03
+                {
+                    bool ActivePortal = true;
+
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 7)
+                        {
+                            ActivePortal = true;
+                            dbQuestProgress.ActiveQuest = 72221;
+                            dbQuestProgress.StepOfQuest = 8;
+                        }
+                        else
+                        { ActivePortal = false; }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+
+                    if (ActivePortal == true)
+                        world.Game.Quests.Advance(72221);
+                    break;
+                }
+            }
+
+            return true;
+        }
+        private bool OnKillListenerBossEamon(List<uint> monstersAlive, Core.GS.Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);
@@ -245,7 +334,7 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
-
+        
         public override bool Reveal(Player player)
         {
             //Logger.Debug(" (Reveal) portal {0} has location {1}", this.ActorSNO, this._position);
@@ -298,6 +387,77 @@ namespace Mooege.Core.GS.Actors
             var world = this.World.Game.GetWorld(this.Destination.WorldSNO);
             var now_world = player.World;
             
+            if(this.Destination.WorldSNO == 71150)
+            {
+                if (this.ActorSNO.Id == 241660)
+                {
+                    Vector3D Point = new Vector3D(2867.382f, 2398.66f, 1.813717f);
+                    player.Teleport(Point);
+                    //OnListenerToEnterGraveyard
+                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                    if (dbQuestProgress.StepOfQuest == 6)
+                    {
+                        var ListenerEnterToGraveyard = Task<bool>.Factory.StartNew(() => OnListenerToEnterGraveyard(player, world));
+                        ListenerEnterToGraveyard.ContinueWith(delegate
+                        {
+                            Logger.Debug("Enter to Road Objective done ");
+
+                        });
+                    }
+                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                    DBSessions.AccountSession.Flush();
+
+                }
+                if (this.ActorSNO.Id == 241661)
+                {
+                    Vector3D Point = new Vector3D(2870.336f,2498.836f,3.700585f);
+                    player.Teleport(Point);
+
+                }
+            }
+
+            if (this.Destination.WorldSNO == 72637)
+            {
+                // Вход в Оскверненный склеп
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72221)
+                {
+                    if (dbQuestProgress.StepOfQuest == 7)
+                    {
+                        var Crypto = world.Game.GetWorld(72637);
+                        var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
+                        player.ChangeWorld(world, startingPoint);
+                        var ListenerEnterToBossZone = Task<bool>.Factory.StartNew(() => OnListenerToEnterBossScene(player, Crypto));
+                        ListenerEnterToBossZone.ContinueWith(delegate
+                        {
+                            Logger.Debug("Founding Zone Objective done ");
+                            //156381 - Chancellor Eamon 
+                            var Summoner = world.GetActorBySNO(5387);
+                            Crypto.SpawnMonster(156383, Summoner.Position);
+                            var ChancellorEamon = world.GetActorBySNO(156383);
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                            // DOES NOT WORK it should be champion affixes or shit of this kind ...
+                            // Увеличиваем здоровье босса!
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200f;
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200f;
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+                            ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                            List<uint> Boss = new List<uint> { };
+                            Boss.Add(ChancellorEamon.DynamicID);
+                            var BossKillEvent = Task<bool>.Factory.StartNew(() => OnKillListenerBossEamon(Boss, Crypto));
+                            BossKillEvent.ContinueWith(delegate
+                            {
+                                dbQuestProgress.StepOfQuest = 9;
+                                
+                            });
+                        });
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
+
             if (this.Destination.WorldSNO == 62751)
             {
                 //Enter в Adrian's Hut
@@ -352,7 +512,7 @@ namespace Mooege.Core.GS.Actors
                 
                 var FakePortal = world.GetActorBySNO(168932);
                 
-                Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
+               Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
                // FakePortal.Destroy();
                //80652 
                 Vector3D RealPosition = new Vector3D(643.384f, 339.6074f, -6.970252f);
@@ -669,6 +829,7 @@ namespace Mooege.Core.GS.Actors
             else
             {
                 var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
+
                 if (startingPoint != null)
                 {
                     try

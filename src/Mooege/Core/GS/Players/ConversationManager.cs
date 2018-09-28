@@ -410,8 +410,11 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
             this.QuestEventDict.Add(198312, new _198312()); // Диалог после убийства миры с кузнецом
 
+            // Highlands VendorRescue 129801
+            this.QuestEventDict.Add(129751, new _129751()); // Начало квеста
+
             // Skeleton King 72061
-            this.QuestEventDict.Add(154570, new _154570());  // Начало квеста
+            this.QuestEventDict.Add(154570, new _154570()); // Начало квеста
 
         }
 

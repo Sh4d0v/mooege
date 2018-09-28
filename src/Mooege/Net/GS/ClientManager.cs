@@ -195,10 +195,18 @@ namespace Mooege.Net.GS
                     BlacksmithQuest.RotationW = BlacksmithVendor.RotationW;
                     world.Leave(BlacksmithVendor);
                 }
-                
+                if(dbQuestProgress.StepOfQuest == 6)
+                {
+                    var ListenerEnterToGraveyard = Task<bool>.Factory.StartNew(() => OnListenerToEnterGraveyard(client.Player, world));
+                    ListenerEnterToGraveyard.ContinueWith(delegate
+                    {
+                        Logger.Debug("Enter to Road Objective done ");
+                    });
+                }
                 
 
             }
+
             #endregion
 
             #endregion
@@ -391,7 +399,7 @@ namespace Mooege.Net.GS
 
             return true;
         }
-            private bool OnKillListenerCain(List<uint> monstersAlive, Core.GS.Map.World world)
+        private bool OnKillListenerCain(List<uint> monstersAlive, Core.GS.Map.World world)
             {
                 Int32 monstersKilled = 0;
                 var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
@@ -415,6 +423,45 @@ namespace Mooege.Net.GS
                 }
                 return true;
             }
+        #endregion
+
+        #region Отслеживания для Акт 1 - Квест 3
+        private bool OnListenerToEnterGraveyard(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                sceneID = player.CurrentScene.SceneSNO.Id;
+                if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
+                {
+                    bool ActivePortal = true;
+
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 6)
+                        {
+                            ActivePortal = true;
+                            dbQuestProgress.ActiveQuest = 72221;
+                            dbQuestProgress.StepOfQuest = 7;
+                        }else
+                        { ActivePortal = false; }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        
+                    }
+
+                    if (ActivePortal == true)
+                    {
+                        world.Game.Quests.Advance(72221);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    break;
+                }
+            }
+
+            return true;
+        }
+
         #endregion
 
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
