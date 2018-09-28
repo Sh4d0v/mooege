@@ -187,6 +187,55 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnKillListenerDeadly(List<uint> monstersAlive, Core.GS.Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
+        private bool OnKillListenerBossSmithWife(List<uint> monstersAlive, Core.GS.Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
+
         public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);
@@ -317,11 +366,130 @@ namespace Mooege.Core.GS.Actors
                 
             }
 
+            if (this.Destination.WorldSNO == 136441)
+            {
+                //Входим в погреб проклятых
+                var dest = world.Game.GetWorld(136441);
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72221)
+                {
+                    if (dbQuestProgress.StepOfQuest == 2)
+                    {
+                        //98888 - BlacksmithWife
+                        //85900 - Mira Eamon Monster
+                        //174023,204605,204615,204607,204608,204606,204616,174023,204605
+                        //6646 - Ravenous Dead 
+                        List<uint> Deadly = new List<uint> { };
+                        List<uint> Boss = new List<uint> { };
+                        #region Собираем всех!
+                        var Preminions1 = dest.GetActorsBySNO(174023);
+                        var Preminions2 = dest.GetActorsBySNO(204605);
+                        var Preminions3 = dest.GetActorsBySNO(204615);
+                        var Preminions4 = dest.GetActorsBySNO(204607);
+                        var Preminions5 = dest.GetActorsBySNO(204608);
+                        var Preminions6 = dest.GetActorsBySNO(204606);
+                        var Preminions7 = dest.GetActorsBySNO(204616);
+                        var Preminions8 = dest.GetActorsBySNO(174023);
+                        var Preminions9 = dest.GetActorsBySNO(204605);
+                        var PreBoss = dest.GetActorBySNO(98888);
+                        #endregion
+                        #region Убираем мирных и заменяем их злыми)
+                        foreach (var minion in Preminions1)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions2)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions3)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions4)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions5)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions6)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions7)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions8)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        foreach (var minion in Preminions9)
+                        {
+                            dest.SpawnMonster(6646, minion.Position);
+                            dest.Leave(minion);
+                        }
+                        #endregion
+                        #region Заполняем массив монстрами
+                        var Minions = dest.GetActorsBySNO(6646);
+                        foreach (var Minion in Minions)
+                        {
+                            Deadly.Add(Minion.DynamicID);
+                        }
+                        #endregion
+
+                        var DeadlyKillEvent = Task<bool>.Factory.StartNew(() => OnKillListenerDeadly(Deadly, dest));
+                        DeadlyKillEvent.ContinueWith(delegate
+                        {
+                            if (dbQuestProgress.StepOfQuest == 2)
+                            {
+                                world.Game.Quests.Advance(72221);
+                                dest.SpawnMonster(85900, PreBoss.Position);
+                                dest.Leave(PreBoss);
+                                var BOSSMira = dest.GetActorBySNO(85900);
+                                // Пытаемся привязать статус босса!
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                                // DOES NOT WORK it should be champion affixes or shit of this kind ...
+                                // Увеличиваем здоровье босса!
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200f;
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200f;
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+                                BOSSMira.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                                Boss.Add(BOSSMira.DynamicID);
+                                var BossSmithWifeKillEvent = Task<bool>.Factory.StartNew(() => OnKillListenerBossSmithWife(Boss, dest));
+
+                                BossSmithWifeKillEvent.ContinueWith(delegate
+                                {
+                                    world.Game.Quests.Advance(72221);
+                                    dbQuestProgress.StepOfQuest = 4;
+                                });
+                            }
+                        });
+                    }
+                    
+                    
+
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
             if (this.Destination.WorldSNO == 60395)
             {
                 //Enter to Drowned Temple
-                
+
             }
+
             if (this.Destination.WorldSNO == 60713)
             {
                 //Enter to Leoric Hall
@@ -348,7 +516,7 @@ namespace Mooege.Core.GS.Actors
                 //Enter to Cathedral Level 2
                 
                 Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
-                if(world.Game.GetWorld(50582).StartingPoints ==null)
+                if(world.Game.GetWorld(50582).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
             }
 

@@ -27,6 +27,7 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
+using Mooege.Net.GS.Message;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -77,7 +78,16 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 CapitanDaltynKiller.Add(boss.DynamicID);
             }
-
+            // Пытаемся привязать статус босса!
+            boss = world.GetActorBySNO(CapitanDaltynAID);
+            boss.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+            boss.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+            // DOES NOT WORK it should be champion affixes or shit of this kind ...
+            // Увеличиваем здоровье босса!
+            boss.Attributes[GameAttribute.Hitpoints_Max] = 200f;
+            boss.Attributes[GameAttribute.Hitpoints_Cur] = 200f;
+            boss.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+            boss.Attributes[GameAttribute.Quest_Monster] = true;
             //Запуск отслеживания убийства
             var ListenerDaltyn = Task<bool>.Factory.StartNew(() => OnKillListener(CapitanDaltynKiller, world));
             //Ждём пока убьют

@@ -11,6 +11,8 @@ using Mooege.Common.Logging;
 using System.Threading.Tasks;
 using System.Threading;
 using Mooege.Core.GS.Map;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -32,7 +34,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 world.Game.Quests.Advance(72221);
                 Logger.Debug(" Quests.Advance(72221) ");
             }
+            foreach (var player in world.Players)
+            {
 
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                dbQuestProgress.ActiveQuest = 72221;
+                dbQuestProgress.StepOfQuest = 5;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+                Logger.Debug(" Progress Saved ");
+
+            };
         }
         private bool StartConversation(Map.World world, Int32 conversationId)
         {

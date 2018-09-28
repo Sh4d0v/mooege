@@ -185,10 +185,24 @@ namespace Mooege.Net.GS
                 world.Leave(world.GetActorByDynamicId(25));
                 //world.Game.Quests.Advance(72095);
                 #endregion
+                if(dbQuestProgress.StepOfQuest >= 0 && dbQuestProgress.StepOfQuest < 5)
+                {
+                    var BlacksmithVendor = world.GetActorBySNO(56947);
+                    Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                    //world.SpawnMonster(65036, position);// NonVendor - 65036
+                    var BlacksmithQuest = world.GetActorBySNO(65036);
+                    BlacksmithQuest.RotationAxis = BlacksmithVendor.RotationAxis;
+                    BlacksmithQuest.RotationW = BlacksmithVendor.RotationW;
+                    world.Leave(BlacksmithVendor);
+                }
+                
+                
+
             }
             #endregion
 
             #endregion
+
             #region Основная проверка
             if (dbQuestProgress.ActiveQuest != -1)
             {
@@ -203,6 +217,18 @@ namespace Mooege.Net.GS
                 }, DownGate);
                 #endregion
 
+                #region Убираем телегу
+                if(dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095)
+                {
+                    var TELEGAS = world.GetActorsBySNO(112131);
+                    Vector3D LastTelega = new Vector3D();
+                    foreach (var TELEGA in TELEGAS)
+                    {
+                        TELEGA.Destroy();
+                        LastTelega = TELEGA.Position;
+                    }
+                }
+                #endregion
                 if (dbQuestProgress.StepOfQuest > 0)
                 {
                     // Вышибаем лею                      

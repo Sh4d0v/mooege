@@ -79,8 +79,8 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            string Revision = "21"; // Ревизия
-            string date = "27/09/2018";
+            string Revision = "22"; // Ревизия
+            string date = "28/09/2018";
 
             string title = "D3IIIS - Revision [" + Revision + "] - Date [" + date + "] - By AiDiE";
 

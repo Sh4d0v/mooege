@@ -134,8 +134,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
                         // DOES NOT WORK it should be champion affixes or shit of this kind ...
                         // Увеличиваем здоровье босса!
-                        actorWQM.Attributes[GameAttribute.Hitpoints_Max] = 300f;
-                        actorWQM.Attributes[GameAttribute.Hitpoints_Cur] = 300f;
+                        actorWQM.Attributes[GameAttribute.Hitpoints_Max] = 150f;
+                        actorWQM.Attributes[GameAttribute.Hitpoints_Cur] = 150f;
 
                         //Запуск отслеживания убийства королевы
                         var ListenerWQMTask = Task<bool>.Factory.StartNew(() => OnWMQKillListener(actorWQM.DynamicID, world));

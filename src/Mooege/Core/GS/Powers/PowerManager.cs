@@ -53,6 +53,7 @@ namespace Mooege.Core.GS.Powers
 
         private bool UseActorOnKotel72095 = false;
         private bool UseDoor72095 = false;
+        private bool Dialog72221 = false;
         public PowerManager()
         {
         }
@@ -209,9 +210,70 @@ namespace Mooege.Core.GS.Powers
             }
             catch { }
             #endregion
-            
+
             #region Квестовые события
-            //188743
+
+            #region Северные ворота
+            try
+            {
+                if (target.ActorSNO.Id == 121241)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 5)
+                            {
+                                dbQuestProgress.StepOfQuest = 6;
+                                Dialog72221 = true;
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if (Dialog72221 == true)
+                    {
+                        user.World.Game.Quests.Advance(72221);
+                        Dialog72221 = false;
+                    }
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Разговор с кузнецом
+            try
+            {
+                if(target.ActorSNO.Id == 65036)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            dbQuestProgress.ActiveQuest = 72221;
+                            if (dbQuestProgress.StepOfQuest == 1)
+                            {
+                                Dialog72221 = true;
+                               dbQuestProgress.StepOfQuest = 2;
+                            }
+
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if (Dialog72221 == true)
+                    {
+                        Dialog72221 = false;
+                        StartConversation(target.World, 198292);
+                    }
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Выход через шкаф)
             try
             {
                 if (target.ActorSNO.Id == 188743)
@@ -239,10 +301,13 @@ namespace Mooege.Core.GS.Powers
                         user.World.Game.Quests.Advance(72095);
                         UseDoor72095 = false;
                     }
-
+                    // 136291 - Houser_Door_trOut_newTristram
                 }
             }
             catch { }
+            #endregion
+
+            #region Двери собора
             try
             {
                 if (target.DynamicID == 1543 || target.ActorSNO.Id == 167289)
@@ -274,6 +339,9 @@ namespace Mooege.Core.GS.Powers
                 }
             }
             catch{}
+            #endregion
+
+            #region Котёл в хижине
             try
             {
                 
@@ -306,6 +374,8 @@ namespace Mooege.Core.GS.Powers
                 }
             }
             catch{}
+            #endregion
+
             #endregion
 
             if (implementation != null)
