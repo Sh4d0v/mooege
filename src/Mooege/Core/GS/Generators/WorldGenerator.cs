@@ -235,7 +235,7 @@ namespace Mooege.Core.GS.Generators
                 if (worldSNO == 161961)
                 {
                     entrance = tiles[131902];
-                    tiles.Remove(131902);
+                    //tiles.Remove(131902);
                 }
                 else
                     entrance = GetTileInfo(tiles, TileTypes.Entrance);

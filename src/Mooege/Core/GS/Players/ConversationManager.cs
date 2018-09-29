@@ -248,7 +248,7 @@ namespace Mooege.Core.GS.Players
             });
 
             //TODO: Handle each conversation type
-            if (this.asset.ConversationType == ConversationTypes.QuestEvent)
+            if (this.asset.ConversationType == ConversationTypes.QuestEvent || this.asset.ConversationType == ConversationTypes.QuestFloat)
             {
                 logger.Debug("Handling conversation type QuestEvent for Conversation: {0}", this.SNOId);
                 if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
@@ -258,7 +258,7 @@ namespace Mooege.Core.GS.Players
                 }
                 else
                 {
-                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event, it should be implemented ", this.SNOId);
+                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float, it should be implemented ", this.SNOId);
                 }
             }else if (this.SNOId == 167115)  //  ¿¿¿¿¿¿¿¿¿—“€À»
             {

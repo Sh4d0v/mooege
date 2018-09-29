@@ -205,19 +205,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 90293)
+                if (player.World.WorldSNO.Id == 71150)
                 {
-                    foreach (var playerN in world.Players)
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 90293)
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        dbQuestProgress.ActiveQuest = 72095;
-                        dbQuestProgress.StepOfQuest = 5;
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 72095;
+                            dbQuestProgress.StepOfQuest = 5;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        world.Game.Quests.Advance(72095);
+                        break;
                     }
-                    world.Game.Quests.Advance(72095); 
-                    break;
                 }
             }
 

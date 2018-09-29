@@ -240,29 +240,32 @@ namespace Mooege.Core.GS.Actors
             int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
+                if (player.World.WorldSNO.Id == 71150)
                 {
-                    bool ActivePortal = true;
-
-                    foreach (var playerN in world.Players)
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        if (dbQuestProgress.StepOfQuest == 6)
-                        {
-                            ActivePortal = true;
-                            dbQuestProgress.ActiveQuest = 72221;
-                            dbQuestProgress.StepOfQuest = 7;
-                        }
-                        else
-                        { ActivePortal = false; }
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
-                    }
+                        bool ActivePortal = true;
 
-                    if (ActivePortal == true)
-                        world.Game.Quests.Advance(72221);
-                    break;
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            if (dbQuestProgress.StepOfQuest == 6)
+                            {
+                                ActivePortal = true;
+                                dbQuestProgress.ActiveQuest = 72221;
+                                dbQuestProgress.StepOfQuest = 7;
+                            }
+                            else
+                            { ActivePortal = false; }
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+
+                        if (ActivePortal == true)
+                            world.Game.Quests.Advance(72221);
+                        break;
+                    }
                 }
             }
 
@@ -270,32 +273,35 @@ namespace Mooege.Core.GS.Actors
         }
         private bool OnListenerToEnterBossScene(Players.Player player, Map.World world)
         {
-            int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 61126) //trOut_wilderness_MainGraveyard_E02_S03
+                //72637 World
+                if (player.World.WorldSNO.Id == 72637)
                 {
-                    bool ActivePortal = true;
-
-                    foreach (var playerN in world.Players)
+                    int sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 61126) //trOut_wilderness_MainGraveyard_E02_S03
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        if (dbQuestProgress.StepOfQuest == 7)
-                        {
-                            ActivePortal = true;
-                            dbQuestProgress.ActiveQuest = 72221;
-                            dbQuestProgress.StepOfQuest = 8;
-                        }
-                        else
-                        { ActivePortal = false; }
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
-                    }
+                        bool ActivePortal = true;
 
-                    if (ActivePortal == true)
-                        world.Game.Quests.Advance(72221);
-                    break;
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            if (dbQuestProgress.StepOfQuest == 7)
+                            {
+                                ActivePortal = true;
+                                dbQuestProgress.ActiveQuest = 72221;
+                                dbQuestProgress.StepOfQuest = 8;
+                            }
+                            else
+                            { ActivePortal = false; }
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+
+                        if (ActivePortal == true)
+                            world.Game.Quests.Advance(72221);
+                        break;
+                    }
                 }
             }
 
@@ -425,16 +431,14 @@ namespace Mooege.Core.GS.Actors
                     if (dbQuestProgress.StepOfQuest == 7)
                     {
                         var Crypto = world.Game.GetWorld(72637);
-                        var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
-                        player.ChangeWorld(world, startingPoint);
                         var ListenerEnterToBossZone = Task<bool>.Factory.StartNew(() => OnListenerToEnterBossScene(player, Crypto));
                         ListenerEnterToBossZone.ContinueWith(delegate
                         {
                             Logger.Debug("Founding Zone Objective done ");
                             //156381 - Chancellor Eamon 
                             var Summoner = world.GetActorBySNO(5387);
-                            Crypto.SpawnMonster(156383, Summoner.Position);
-                            var ChancellorEamon = world.GetActorBySNO(156383);
+                            Crypto.SpawnMonster(156353, Summoner.Position);
+                            var ChancellorEamon = world.GetActorBySNO(156353);
                             ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
                             ChancellorEamon.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
                             // DOES NOT WORK it should be champion affixes or shit of this kind ...
@@ -700,7 +704,7 @@ namespace Mooege.Core.GS.Actors
                 dbPortalOfToon.Y = this.Position.Y;
                 dbPortalOfToon.Z = this.Position.Z;
                 DBSessions.AccountSession.SaveOrUpdate(dbPortalOfToon);
-
+                
                 Logger.Warn("Data for back portal Saved.");
 
                 if (player.World.Game.GetWorld(71150) != player.World)
@@ -747,6 +751,7 @@ namespace Mooege.Core.GS.Actors
                 Vector3D ToPortal = new Vector3D(dbPortalOfToon.X, dbPortalOfToon.Y, dbPortalOfToon.Z);
                 var DestWorld = player.World.Game.GetWorld(dbPortalOfToon.WorldDest);
                 var oldPortals = DestWorld.GetActorsBySNO(5648);
+                
                 foreach (var OldP in oldPortals)
                 {
             //        OldP.Destroy();

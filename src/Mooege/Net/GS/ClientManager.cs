@@ -148,7 +148,6 @@ namespace Mooege.Net.GS
                 {
                     Player MasterPlayer = client.Player;
                     var CainIntroWorld = client.Player.World.Game.GetWorld(60713);
-                    //var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, CainIntroWorld));
                     var minions = CainIntroWorld.GetActorsBySNO(80652);
                     List<uint> SkilletKiller = new List<uint> { };
 
@@ -274,6 +273,7 @@ namespace Mooege.Net.GS
                         world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 192164);
                     }
                 }
+
             }
             #endregion
 
@@ -351,26 +351,29 @@ namespace Mooege.Net.GS
             int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 90196) //90923 - Adria House
+                if (player.World.WorldSNO.Id == 71150)
                 {
-                    bool ActivePortal = true;
-                    
-                    foreach (var playerN in world.Players)
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 90196) //90923 - Adria House
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        if (dbQuestProgress.StepOfQuest < 2)
-                            ActivePortal = false;
-                        dbQuestProgress.ActiveQuest = 72095;
-                        dbQuestProgress.StepOfQuest = 3;
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
+                        bool ActivePortal = true;
+
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            if (dbQuestProgress.StepOfQuest < 2)
+                                ActivePortal = false;
+                            dbQuestProgress.ActiveQuest = 72095;
+                            dbQuestProgress.StepOfQuest = 3;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        if (ActivePortal == true)
+                            world.Game.Quests.Advance(72095);
+                        else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
+                        StartConversation(world, 166678);
+                        break;
                     }
-                    if(ActivePortal == true)
-                        world.Game.Quests.Advance(72095);
-                    else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
-                    StartConversation(world, 166678);
-                    break;
                 }
             }
 
@@ -381,19 +384,22 @@ namespace Mooege.Net.GS
             int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 90293)
+                if (player.World.WorldSNO.Id == 71150)
                 {
-                    foreach (var playerN in world.Players)
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 90293)
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        dbQuestProgress.ActiveQuest = 72095;
-                        dbQuestProgress.StepOfQuest = 5;
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 72095;
+                            dbQuestProgress.StepOfQuest = 5;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095);
+                        break;
                     }
-                    world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095);
-                    break;
                 }
             }
 
@@ -431,31 +437,35 @@ namespace Mooege.Net.GS
             int sceneID = player.CurrentScene.SceneSNO.Id;
             while (true)
             {
-                sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
+                if (player.World.WorldSNO.Id == 71150)
                 {
-                    bool ActivePortal = true;
-
-                    foreach (var playerN in world.Players)
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
                     {
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                        if (dbQuestProgress.StepOfQuest == 6)
+                        bool ActivePortal = true;
+
+                        foreach (var playerN in world.Players)
                         {
-                            ActivePortal = true;
-                            dbQuestProgress.ActiveQuest = 72221;
-                            dbQuestProgress.StepOfQuest = 7;
-                        }else
-                        { ActivePortal = false; }
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        
-                    }
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            if (dbQuestProgress.StepOfQuest == 6)
+                            {
+                                ActivePortal = true;
+                                dbQuestProgress.ActiveQuest = 72221;
+                                dbQuestProgress.StepOfQuest = 7;
+                            }
+                            else
+                            { ActivePortal = false; }
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
 
-                    if (ActivePortal == true)
-                    {
-                        world.Game.Quests.Advance(72221);
-                        DBSessions.AccountSession.Flush();
+                        }
+
+                        if (ActivePortal == true)
+                        {
+                            world.Game.Quests.Advance(72221);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        break;
                     }
-                    break;
                 }
             }
 

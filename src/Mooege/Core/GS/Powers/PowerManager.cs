@@ -377,7 +377,34 @@ namespace Mooege.Core.GS.Powers
             catch{}
             #endregion
 
-            #region 
+            #region Корона короля-скелета
+            try
+            {
+                if (target.ActorSNO.Id == 159446)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 9)
+                            {
+                                dbQuestProgress.StepOfQuest = 10;
+                                Dialog72221 = true;
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if (Dialog72221 == true)
+                    {
+                        user.World.Game.Quests.Advance(72221);
+                        //user.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, 005356);
+                        Dialog72221 = false;
+                    }
+                }
+            }
+            catch { }
             #endregion
             #endregion
 
