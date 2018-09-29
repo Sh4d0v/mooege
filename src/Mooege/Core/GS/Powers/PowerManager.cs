@@ -381,6 +381,33 @@ namespace Mooege.Core.GS.Powers
             #endregion
             #endregion
 
+            #region Книги
+            try
+            {
+                #region Книга Лии - первый журнал
+                if (target.ActorSNO.Id == 86817)
+                {
+                    Vector3D PointToItem = new Vector3D(93.56282f, 111.3167f, 0.5335404f);
+                    //user.World.
+                    //LeahJorunal First Book
+                    string Leah_Diary_in_room = "LeahJournal_PartOne";
+                    target.Destroy();
+                    foreach (var player in user.World.Players)
+                    {
+                        var item = Items.ItemGenerator.Cook(player.Value, Leah_Diary_in_room);
+                        item.EnterWorld(PointToItem);
+                    }
+                }
+                #endregion
+                #region Книга Декарда - 
+                else if(target.ActorSNO.Id == 80)
+                {
+
+                }
+                #endregion
+            }
+            catch { }
+            #endregion
             if (implementation != null)
             {
                 return RunPower(user, implementation, target, targetPosition, targetMessage);

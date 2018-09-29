@@ -352,7 +352,7 @@ namespace Mooege.Net.GS
             while (true)
             {
                 sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 90198) //90923 - Adria House
+                if (sceneID == 90196) //90923 - Adria House
                 {
                     bool ActivePortal = true;
                     

@@ -176,7 +176,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             while (true)
             {
                 sceneID = player.CurrentScene.SceneSNO.Id;
-                if (sceneID == 90198)
+                if (sceneID == 90196)
                 {
                     bool ActivePortal = true;
 

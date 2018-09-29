@@ -89,8 +89,11 @@ namespace Mooege.Core.GS.Actors
                             else
                                 return null;
                         case GizmoGroup.BossPortal:
-                           // if (tags[MarkerKeys.DestinationWorld].Id != 222591)
-                            try{
+                            // if (tags[MarkerKeys.DestinationWorld].Id != 222591)
+                            //073120 - BossEnter UI
+                            //
+                            try
+                            {
                                 Logger.Warn("Try loading of boss portals");
                                 return new Portal(world, snoId, tags);
                                     
