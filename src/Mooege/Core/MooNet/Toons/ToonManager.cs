@@ -182,6 +182,32 @@ namespace Mooege.Core.MooNet.Toons
                 // Добавляем предмет в базу
                 DBSessions.AccountSession.SaveOrUpdate(BARAxeFirstWeapon);
                 #endregion
+
+                #region Щиток
+                //Структура сущности предмета
+                DBItemInstance BARBuckInstance = new DBItemInstance
+                {
+                    GbId = 1815806857, // 
+                    Affixes = "",
+                    Attributes = "295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:978984494|0,0008320537;48,:1090519040|8;51,:1090519040|8;52,:1090519040|8;53,:1090519040|8;207,:1040522936|0,13;208,:1040522936|0,13;205,:1040522936|0,13;213,:1088421888|7;211,:1088421888|7;212,:1094713344|12;214,:1084227584|5;297,:1|1,401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(BARBuckInstance);
+                // Структура предмета
+                DBInventory BARBuckler = new DBInventory
+                {
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = BARBuckInstance, // Использовать свеже созданную сущность предмета
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    EquipmentSlot = 3, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(BARBuckler);
+                #endregion
+
             }
             #endregion 
 
@@ -256,6 +282,103 @@ namespace Mooege.Core.MooNet.Toons
                 
             }
             #endregion
+
+            #region Стандартные предметы Monk
+            if (newDBToon.Class == ToonClass.Monk)
+            {
+                #region Перчатки
+                //Структура сущности предмета
+                DBItemInstance MKKnuckInstance = new DBItemInstance
+                {
+                    GbId = 1236604967, // 
+                    Affixes = "",
+                    Attributes = "295,:2|2,802597E-45;91,:0|0;308,:1|1,401298E-45;312,:277358000|5,370061E-29;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(MKKnuckInstance);
+                // Структура предмета
+                DBInventory MKKnucktWeapon = new DBInventory
+                {
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = MKKnuckInstance, // Использовать свеже созданную сущность предмета
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    EquipmentSlot = 4, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(MKKnucktWeapon);
+                #endregion
+
+
+            }
+            #endregion
+
+            #region Стандартные предметы Witch Doctor
+            if (newDBToon.Class == ToonClass.WitchDoctor)
+            {
+                #region Нож
+                //Структура сущности предмета
+                DBItemInstance WDKnifeInstance = new DBItemInstance
+                {
+                    GbId = -635269584, // 
+                    Affixes = "",
+                    Attributes = "295,:1|1,401298E-45;91,:0|0;308,:1|1,401298E-45;312,:233363062|1,434973E-30;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(WDKnifeInstance);
+                // Структура предмета
+                DBInventory WDKnifeWeapon = new DBInventory
+                {
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = WDKnifeInstance, // Использовать свеже созданную сущность предмета
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    EquipmentSlot = 4, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(WDKnifeWeapon);
+                #endregion
+
+
+            }
+            #endregion
+
+            #region Стандартные предметы Wizzard
+            if (newDBToon.Class == ToonClass.Wizard)
+            {
+                #region Палочка
+                //Структура сущности предмета
+                DBItemInstance WWandInstance = new DBItemInstance
+                {
+                    GbId = -635269584, // 
+                    Affixes = "",
+                    Attributes = "295,:1|1,401298E-45;91,:0|0;308,:1|1,401298E-45;312,:233363062|1,434973E-30;157,:1067030938|1,2;159,:1067030938|1,2;161,:1067030938|1,2;412,:1067030938|1,2;414,:1067030938|1,2;420,:1067030938|1,2;164,:1067030938|1,2;326,:0|0;327,:0|0;328,:0|0;329,:0|0;413,:0|0;415,:0|0;183,0:1073741824|2;177,0:1077936128|3;184,0:1073741824|2;178,0:1077936128|3;179,:1077936128|3;185,:1073741824|2;416,0:1073741824|2;421,0:1073741824|2;173,0:1073741824|2;172,0:1073741824|2;172,:0|0;417,0:0|0;175,0:1065353216|1;176,0:1065353216|1;180,0:1065353216|1;181,:1065353216|1;418,0:1065353216|1;422,0:1065353216|1;169,0:1065353216|1;419,0:0|0;89,30592:1|1,401298E-45;90,30592:1|1,401298E-45;297,:1|1,401298E-45"
+                };
+                // Добавляем сущность в базу
+                DBSessions.AccountSession.SaveOrUpdate(WWandInstance);
+                // Структура предмета
+                DBInventory WWandWeapon = new DBInventory
+                {
+                    DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
+                    DBItemInstance = WWandInstance, // Использовать свеже созданную сущность предмета
+                    DBToon = newDBToon, // Выдать созданному персонажу
+                    Hardcore = isHardcore, // Хардкорный или нет персонаж
+                    EquipmentSlot = 4, // Вооружить в первую руку
+                    LocationX = 0,
+                    LocationY = 0
+                };
+                // Добавляем предмет в базу
+                DBSessions.AccountSession.SaveOrUpdate(WWandWeapon);
+                #endregion
+
+
+            }
+            #endregion
+
 
             #region Начало прогресса. 1 Акт, Пока не взятый квест.
             DBProgressToon StartProgress = new DBProgressToon
