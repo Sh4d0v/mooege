@@ -18,6 +18,7 @@
 
 using System;
 using System.Data.SQLite;
+
 using System.IO;
 using Mooege.Common.Helpers.IO;
 using Mooege.Common.Logging;
@@ -73,7 +74,7 @@ namespace Mooege.Common.Storage
             try
             {
                 Logger.Info("Attention! This version is experimental, the database for accounts has moved to MySQL.");
-                Logger.Info("");
+                Logger.Info("No use SSL Mode, standard user and password: mooege. ");
             }
             catch (Exception e)
             {

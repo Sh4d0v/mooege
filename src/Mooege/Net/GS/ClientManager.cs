@@ -169,12 +169,13 @@ namespace Mooege.Net.GS
             #region Акт 1 Квест 3 - Сломанная корона
             if(dbQuestProgress.ActiveQuest == 72221)
             {
+                world.Leave(world.GetActorByDynamicId(72));
                 #region Перемотка ко второму квесту
                 for (int Rem = 0; Rem < 8; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
-                world.Leave(world.GetActorByDynamicId(75));
+                //world.Leave(world.GetActorByDynamicId(75));
                 #endregion
                 #region Перемотка ко третьему квесту
                 for (int Rem = 0; Rem < 15; Rem++)

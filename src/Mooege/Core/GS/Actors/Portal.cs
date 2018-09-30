@@ -276,7 +276,7 @@ namespace Mooege.Core.GS.Actors
             while (true)
             {
                 //72637 World
-                if (player.World.WorldSNO.Id == 72637)
+                try
                 {
                     int sceneID = player.CurrentScene.SceneSNO.Id;
                     if (sceneID == 61126) //trOut_wilderness_MainGraveyard_E02_S03
@@ -303,6 +303,7 @@ namespace Mooege.Core.GS.Actors
                         break;
                     }
                 }
+                catch { }
             }
 
             return true;
@@ -453,7 +454,7 @@ namespace Mooege.Core.GS.Actors
                             BossKillEvent.ContinueWith(delegate
                             {
                                 dbQuestProgress.StepOfQuest = 9;
-                                
+                                world.Game.Quests.Advance(72221);
                             });
                         });
                     }
@@ -699,6 +700,7 @@ namespace Mooege.Core.GS.Actors
                 Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
                 //Сохраняем в базу координаты для обратного портала.
                 var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
                 dbPortalOfToon.WorldDest = now_world.WorldSNO.Id;
                 dbPortalOfToon.X = this.Position.X;
                 dbPortalOfToon.Y = this.Position.Y;
@@ -719,7 +721,8 @@ namespace Mooege.Core.GS.Actors
 
                     }
                     catch { }
-                   
+                    if (dbQuestProgress.ActiveQuest == 72221 && dbQuestProgress.StepOfQuest == 10)
+                    { player.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1); }
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                 }
                 else
@@ -758,6 +761,7 @@ namespace Mooege.Core.GS.Actors
                 }
 
                 if (player.World.Game.GetWorld(dbPortalOfToon.WorldDest) != player.World)
+                    
                     player.ChangeWorld(player.World.Game.GetWorld(dbPortalOfToon.WorldDest), ToPortal);
                 else
                     player.Teleport(ToPortal);

@@ -132,6 +132,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         // Пытаемся привязать статус босса!
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
                         actorWQM.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                        //actorWQM.Attributes[Net.GS.Message.GameAttribute.Si]
                         // DOES NOT WORK it should be champion affixes or shit of this kind ...
                         // Увеличиваем здоровье босса!
                         actorWQM.Attributes[GameAttribute.Hitpoints_Max] = 150f;

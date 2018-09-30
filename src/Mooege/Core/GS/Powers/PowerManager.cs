@@ -398,12 +398,71 @@ namespace Mooege.Core.GS.Powers
                     }
                     if (Dialog72221 == true)
                     {
-                        user.World.Game.Quests.Advance(72221);
-                        //user.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, 005356);
+                        //user.World.Game.Quests.Advance(72221);
+                        string BrokenCrown = "SkeletonKing_BrokenCrown";
+                        //target.Destroy();
+                        foreach (var player in user.World.Players)
+                        {
+                            var item = Items.ItemGenerator.Cook(player.Value, BrokenCrown);
+                            item.EnterWorld(player.Value.Position);
+                        }
+                        user.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                        
                         Dialog72221 = false;
                     }
                 }
+                else if (target.ActorSNO.Id == 92168)
+                {
+                    
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 10)
+                            {
+                                user.World.Game.Quests.Advance(72221);
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    
+                }
+                else if (target.ActorSNO.Id == 199642)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 9)
+                            {
+                                dbQuestProgress.StepOfQuest = 10;
+                                Dialog72221 = true;
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                    if (Dialog72221 == true)
+                    {
+                        //user.World.Game.Quests.Advance(72221);
+                        string BrokenCrown = "SkeletonKing_BrokenCrown";
+                        //target.Destroy();
+                        foreach (var player in user.World.Players)
+                        {
+                            var item = Items.ItemGenerator.Cook(player.Value, BrokenCrown);
+                            item.EnterWorld(player.Value.Position);
+                        }
+                        user.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+
+                        Dialog72221 = false;
+                    }
+
+                }
             }
+
             catch { }
             #endregion
             #endregion
@@ -415,7 +474,6 @@ namespace Mooege.Core.GS.Powers
                 if (target.ActorSNO.Id == 86817)
                 {
                     Vector3D PointToItem = new Vector3D(93.56282f, 111.3167f, 0.5335404f);
-                    //user.World.
                     //LeahJorunal First Book
                     string Leah_Diary_in_room = "LeahJournal_PartOne";
                     target.Destroy();
@@ -426,10 +484,17 @@ namespace Mooege.Core.GS.Powers
                     }
                 }
                 #endregion
-                #region Книга Декарда - 
-                else if(target.ActorSNO.Id == 80)
+                #region История нового тристрама
+                else if(target.ActorSNO.Id == 230232)
                 {
-
+                    Vector3D PointToItem = new Vector3D(84.39566f, 100.7473f, 7.900131f);
+                    string HistoryNewTristram = "Lore_NewTRistram";
+                    target.Destroy();
+                    foreach (var player in user.World.Players)
+                    {
+                        var item = Items.ItemGenerator.Cook(player.Value, HistoryNewTristram);
+                        item.EnterWorld(PointToItem);
+                    }
                 }
                 #endregion
             }

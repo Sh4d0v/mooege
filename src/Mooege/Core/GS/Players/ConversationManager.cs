@@ -409,6 +409,8 @@ namespace Mooege.Core.GS.Players
             // Crown 72221
             this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
             this.QuestEventDict.Add(198312, new _198312()); // Диалог после убийства миры с кузнецом
+            this.QuestEventDict.Add(196041, new _196041()); // Диалог с кузнецом для починки короны
+            this.QuestEventDict.Add(196043, new _196043()); // Завершение квеста
 
             // Highlands VendorRescue 129801
             this.QuestEventDict.Add(129751, new _129751()); // Начало квеста

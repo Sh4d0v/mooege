@@ -156,10 +156,11 @@ namespace Mooege.Core.GS.Games
             if (clients != null)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(clients[0].Account.CurrentGameAccount.CurrentToon.PersistentID);
-                if (dbQuestProgress.ActiveAct == 1)
+                if (dbQuestProgress.ActiveAct == 70015)
                     this.StartingWorldSNOId = 71150;
-                else if (dbQuestProgress.ActiveAct == 2)
-                    this.StartingWorldSNOId = 00000;
+                else if (dbQuestProgress.ActiveAct == 70016)
+                    this.StartingWorldSNOId = 71150;
+                // Леорик 1 - 2824, 2 - 58982, 3 - 58983
                 DBSessions.AccountSession.Flush();
             }
             else
@@ -305,7 +306,7 @@ namespace Mooege.Core.GS.Games
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(joinedPlayer.Toon.PersistentID);
             if (dbQuestProgress.ActiveQuest != -1)
             {
-                if(dbQuestProgress.ActiveAct == 1)
+                if(dbQuestProgress.ActiveAct == 70015)
                     joinedPlayer.EnterWorld(ToPortal1Act);
             }
             else

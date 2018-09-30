@@ -246,6 +246,7 @@ namespace Mooege.Core.MooNet.Toons
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(this.PersistentID);
                 int ActiveQuest = dbQuestProgress.ActiveQuest;
+                int ActiveAct = dbQuestProgress.ActiveAct;
                 DBSessions.AccountSession.Flush();
                 return D3.Hero.Digest.CreateBuilder().SetVersion(902)
                                 .SetHeroId(this.D3EntityID)
@@ -254,7 +255,7 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetPlayerFlags((uint)this.Flags + Convert.ToUInt16(Hardcore)) // If is hardcore character, add +1 to Flags. [Necrosummon]
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
-                                .SetLastPlayedAct(0)
+                                .SetLastPlayedAct(0)//ActiveAct)
                                 .SetHighestUnlockedAct(0)
                                 .SetLastPlayedDifficulty(0)
                                 .SetHighestUnlockedDifficulty(0)

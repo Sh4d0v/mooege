@@ -79,7 +79,7 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            string Revision = "24"; // Ревизия
+            string Revision = "25"; // Ревизия
             string date = "30/09/2018";
 
             string title = "D3IIIS - Revision [" + Revision + "] - Date [" + date + "] - By AiDiE";
@@ -94,7 +94,7 @@ namespace Mooege
 
             InitLoggers(); // init logging facility.
 
-            //Logger.Info("D3Emu revision {0}. {1}", Revision, date);
+            Logger.Info("DiIiS revision {0}. {1}", Revision, date);
             Logger.Info("Required client version: 1.0.3.{0}.", VersionInfo.MooNet.RequiredClientVersion);
 
             // init openssl & wrapper.

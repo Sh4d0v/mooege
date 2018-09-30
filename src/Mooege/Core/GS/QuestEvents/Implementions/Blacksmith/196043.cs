@@ -16,13 +16,13 @@ using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _196041 : QuestEvent
+    class _196043 : QuestEvent
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         private Boolean HadConversation = true;
 
-        public _196041()
-            : base(196041)
+        public _196043()
+            : base(196043)
         {
         }
 
@@ -31,10 +31,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if (HadConversation)
             {
                 HadConversation = false;
-                StartConversation(world, 196043);
+                Logger.Debug(" Quests.Advance(72221) ");
+                world.Game.Quests.Advance(72221);
             }
-           
-            
+            foreach (var player in world.Players)
+            {
+
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                dbQuestProgress.LastQuest = 72221;
+                dbQuestProgress.ActiveQuest = 72061;
+                dbQuestProgress.StepOfQuest = 0;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+                Logger.Debug(" Progress Saved ");
+                
+
+            };
 
 
         }

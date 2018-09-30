@@ -149,6 +149,27 @@ namespace Mooege.Core.GS.Games
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillGroup:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PlayerFlagSet:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem:
+                            {
+                                if (value == objective.SNOName1.Id)
+                                {
+                                    Logger.Debug(" %%%%%%% AN EVENT OCCURED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ");
+                                    Logger.Debug(" (Notify) objective SNOName1  Name : {0}, Id {1}, Valid {2} ", objective.SNOName1.Name, objective.SNOName1.Id, objective.SNOName1.IsValid);
+                                    Logger.Debug(" (Notify) objective SNOName2  Name : {0}, Id {1}, Valid {2} ", objective.SNOName2.Name, objective.SNOName2.Id, objective.SNOName2.IsValid);
+                                    Logger.Debug(" (Notify) objective Group1Name : {0} ", objective.Group1Name);
+                                    Logger.Debug(" (Notify) objective I0 : {0} ", objective.I0);
+                                    Logger.Debug(" (Notify) objective I2 : {0} ", objective.I2);
+                                    Logger.Debug(" (Notify) objective I4 : {0} ", objective.I4);
+                                    Logger.Debug(" (Notify) objective I5 : {0} ", objective.I5);
+                                    Logger.Debug(" -> (Notify) objectiveType : {0} ", objective.ObjectiveType);
+                                    Logger.Debug(" (Notify) objective GBID1 : {0} ", objective.GBID1);
+                                    Logger.Debug(" (Notify) objective GBID2 : {0} ", objective.GBID2);
+                                    Logger.Debug(" (Notify) NOW CALLING UPDATE COUNTER ");
+
+                                    Counter++;
+                                    questStep.UpdateCounter(this);
+                                }
+                                break;
+                            }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.TimedEventExpired:
                             throw new NotImplementedException();
                     }
