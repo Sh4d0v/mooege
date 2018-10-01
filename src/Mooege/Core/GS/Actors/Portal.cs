@@ -143,7 +143,7 @@ namespace Mooege.Core.GS.Actors
                 {
                     this.Destination = new ResolvedPortalDestination
                     {
-                        WorldSNO = 30021,
+                        WorldSNO = 50582,
                         DestLevelAreaSNO = 33357,
                         StartingPointActorTag = -105
                     };
@@ -911,10 +911,47 @@ namespace Mooege.Core.GS.Actors
             }
             else if (this.Destination.StartingPointActorTag == -105)
             {
+                //var BossWorld = player.World.Game.GetWorld(73261);
+                //Второй уровень собора: 50582
+                //Третий уровень собора: 105406
+                //Гробница 1: 50584
+                //Гробница 2: 50585
+                //Босс-Зона: 73261
+                //Покои: 117405
+                // To Tyrael Zone
+                /*
+                [148748] a1dun_Leor_Tyrael_Back_Skybox_01
+                [135396] a1dun_Leor_Tyrael_jail_01
+                [135521] a1dun_Leor_Tyrael_Stairs_A_01
+                [135710] a1dun_Leor_Tyrael_Filler_02
+                */
+
+                //Leoric Ghost - 5365
+                var BossWorld = player.World.Game.GetWorld(50585);
+                Vector3D EnterToKing = new Vector3D(1060.87f, 493.0155f, 0.100031f);
+                player.ChangeWorld(BossWorld, EnterToKing);
+                //PointToPortal
+                //Boss_Portal_SkeletonKing 159573
+                var NotWorkBossPortal = BossWorld.GetActorBySNO(159573);
+                Portal RealPortal = new Portal(world.Game.GetWorld(50585), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                RealPortal.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = 73261,
+                    DestLevelAreaSNO = 60885,
+                    StartingPointActorTag = -106
+                };
+                RealPortal.EnterWorld(NotWorkBossPortal.Position);
+                for (int i = 0; i < 8; i++) { world.Game.Quests.Advance(72061); }
+                /*
+                
+                */
+            }
+            else if (this.Destination.StartingPointActorTag == -106)
+            {
                 var BossWorld = player.World.Game.GetWorld(73261);
                 Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);
+                world.Game.Quests.Advance(72061);
                 player.ChangeWorld(BossWorld, Point);
-                for (int i = 0; i < 9; i++) { world.Game.Quests.Advance(72061); }
                 Vector3D FistPoint = new Vector3D(291.9193f, 428.6796f, 0.1f);
                 Vector3D SecondPoint = new Vector3D(270.9105f, 426.223f, 0.1000026f);
                 Vector3D ThirdPoint = new Vector3D(241.2828f, 425.616f, 0.1f);
@@ -958,7 +995,6 @@ namespace Mooege.Core.GS.Actors
                         AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
                     }, SkeletonGate);
                 });
-
             }
             else
             {

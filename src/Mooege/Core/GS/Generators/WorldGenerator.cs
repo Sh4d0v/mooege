@@ -182,7 +182,11 @@ namespace Mooege.Core.GS.Generators
 
                 }
                 scene.Specification = sceneChunk.SceneSpecification;
-                scene.LoadMarkers();
+                try
+                {
+                    scene.LoadMarkers();
+                }
+                catch { }
 
                 // add scene to level area dictionary
                 foreach (var levelArea in scene.Specification.SNOLevelAreas)
