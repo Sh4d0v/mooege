@@ -318,6 +318,30 @@ namespace Mooege.Core.GS.Actors
 
             return true;
         }
+        private bool OnKillKingSkeletonsListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         private bool OnKillListenerBossEamon(List<uint> monstersAlive, Core.GS.Map.World world)
         {
             System.Int32 monstersKilled = 0;
@@ -527,9 +551,7 @@ namespace Mooege.Core.GS.Actors
                 
                 var FakePortal = world.GetActorBySNO(168932);
                 
-               Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
-               // FakePortal.Destroy();
-               //80652 
+                Portal RealPortal = new Portal(world.Game.GetWorld(50579), 5648, world.Game.GetWorld(60713).StartingPoints[0].Tags);
                 Vector3D RealPosition = new Vector3D(643.384f, 339.6074f, -6.970252f);
                 RealPortal.Destination = new ResolvedPortalDestination
                 {
@@ -704,6 +726,28 @@ namespace Mooege.Core.GS.Actors
 
                         }                        
                     }
+                    if(dbQuestProgress.ActiveQuest == 72061)
+                    {
+                        if (dbQuestProgress.StepOfQuest == 2)
+                        {
+                            dbQuestProgress.StepOfQuest = 3;
+                            world.Game.Quests.Advance(72061);
+                           
+                        }
+                        if (dbQuestProgress.StepOfQuest <= 3)
+                        {
+                            Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                            // 73261 TagMap[ActorKeys.GizmoGroup]
+                            Portal RealPortal = new Portal(world.Game.GetWorld(60713), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                            RealPortal.Destination = new ResolvedPortalDestination
+                            {
+                                WorldSNO = 60713,
+                                DestLevelAreaSNO = 60885,
+                                StartingPointActorTag = -105
+                            };
+                            RealPortal.EnterWorld(SpawnPortalPosition);
+                        }
+                    }
                 }
                 catch { }
 
@@ -740,7 +784,7 @@ namespace Mooege.Core.GS.Actors
                 dbPortalOfToon.Y = this.Position.Y;
                 dbPortalOfToon.Z = this.Position.Z;
                 DBSessions.AccountSession.SaveOrUpdate(dbPortalOfToon);
-                
+
                 Logger.Warn("Data for back portal Saved.");
 
                 if (player.World.Game.GetWorld(71150) != player.World)
@@ -782,20 +826,20 @@ namespace Mooege.Core.GS.Actors
 
                 DBSessions.AccountSession.Flush();
             }
-            else if(this.Destination.StartingPointActorTag == -101)
+            else if (this.Destination.StartingPointActorTag == -101)
             {
                 var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
                 Vector3D ToPortal = new Vector3D(dbPortalOfToon.X, dbPortalOfToon.Y, dbPortalOfToon.Z);
                 var DestWorld = player.World.Game.GetWorld(dbPortalOfToon.WorldDest);
                 var oldPortals = DestWorld.GetActorsBySNO(5648);
-                
+
                 foreach (var OldP in oldPortals)
                 {
-            //        OldP.Destroy();
+                    //        OldP.Destroy();
                 }
 
                 if (player.World.Game.GetWorld(dbPortalOfToon.WorldDest) != player.World)
-                    
+
                     player.ChangeWorld(player.World.Game.GetWorld(dbPortalOfToon.WorldDest), ToPortal);
                 else
                     player.Teleport(ToPortal);
@@ -803,8 +847,8 @@ namespace Mooege.Core.GS.Actors
             else if (this.Destination.StartingPointActorTag == -102)
             {
                 var dest = world.Game.GetWorld(60713);
-                Vector3D Point = new Vector3D(237.3005f,200.94f,31.17498f);
-                
+                Vector3D Point = new Vector3D(237.3005f, 200.94f, 31.17498f);
+
                 bool QuestEnter = false;
 
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
@@ -827,11 +871,11 @@ namespace Mooege.Core.GS.Actors
 
                         CainKillerEvent.ContinueWith(delegate
                         {
-                        if (dbQuestProgress.StepOfQuest == 12)
-                        {
-                            world.Game.Quests.Advance(72095);
-                            dbQuestProgress.StepOfQuest = 13;
-                        }
+                            if (dbQuestProgress.StepOfQuest == 12)
+                            {
+                                world.Game.Quests.Advance(72095);
+                                dbQuestProgress.StepOfQuest = 13;
+                            }
                         });
                     }
                     else { QuestEnter = false; }
@@ -867,8 +911,54 @@ namespace Mooege.Core.GS.Actors
             }
             else if (this.Destination.StartingPointActorTag == -105)
             {
+                var BossWorld = player.World.Game.GetWorld(73261);
                 Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);
-                player.ChangeWorld(player.World.Game.GetWorld(73261), Point);
+                player.ChangeWorld(BossWorld, Point);
+                for (int i = 0; i < 9; i++) { world.Game.Quests.Advance(72061); }
+                Vector3D FistPoint = new Vector3D(291.9193f, 428.6796f, 0.1f);
+                Vector3D SecondPoint = new Vector3D(270.9105f, 426.223f, 0.1000026f);
+                Vector3D ThirdPoint = new Vector3D(241.2828f, 425.616f, 0.1f);
+                Vector3D FourPoint = new Vector3D(241.2051f, 435.0545f, 0.1f);
+                BossWorld.SpawnMonster(87012, FistPoint);
+                BossWorld.SpawnMonster(87012, SecondPoint);
+                BossWorld.SpawnMonster(87012, ThirdPoint);
+                BossWorld.SpawnMonster(87012, FourPoint);
+                var AllSkeletons = BossWorld.GetActorsBySNO(87012);
+                List<uint> SkeletonsList = new List<uint> { };
+                foreach (var Skelet in AllSkeletons)
+                {
+                    SkeletonsList.Add(Skelet.DynamicID);
+                }
+                var ListenerKingSkeletons = Task<bool>.Factory.StartNew(() => OnKillKingSkeletonsListener(SkeletonsList, BossWorld));
+                //Ждём пока убьют
+                ListenerKingSkeletons.ContinueWith(delegate
+                {
+                    world.Game.Quests.Advance(72061);
+                    //5765 - Gate
+                    var SkeletonGate = BossWorld.GetActorBySNO(5765);
+                    BossWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                    {
+                        ActorID = SkeletonGate.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = SkeletonGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 0.5f
+                            }
+                            }
+                    }, SkeletonGate);
+                    BossWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                    {
+                        ActorID = SkeletonGate.DynamicID,
+                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                    }, SkeletonGate);
+                });
+
             }
             else
             {
@@ -889,8 +979,9 @@ namespace Mooege.Core.GS.Actors
 
                     }
                     catch { }
-                    
+
                     player.ChangeWorld(world, startingPoint);
+                    //
                 }
                 else
                     Logger.Warn("Portal's tagged starting point does not exist (Tag = {0})", this.Destination.StartingPointActorTag);

@@ -232,8 +232,17 @@ namespace Mooege.Net.GS
                 {
                     world.Game.Quests.Advance(72221);
                 }
-                //StartConversation(world,80681);
                 #endregion
+                if(dbQuestProgress.StepOfQuest < 2)
+                {
+                    var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnEnterToParkListener(client.Player, world));
+                    //Wait for portal to be used or player going to scene.
+                    ListenerUsePortalTask.ContinueWith(delegate
+                    {
+                        Logger.Debug(" Waypoint_Park Objective done ");
+
+                    });
+                }
 
             }
             #endregion
@@ -537,6 +546,34 @@ namespace Mooege.Net.GS
 
         #endregion
 
+        #region Отслеживания для Акт 1 - Квест 4
+        private bool OnEnterToParkListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 93992)
+                    {
+                        world.Game.Quests.Advance(72061);
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 72061;
+                            dbQuestProgress.StepOfQuest = 2;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        #endregion
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)

@@ -50,6 +50,7 @@ namespace Mooege.Core.GS.Powers
         // rather ugly hack needed because deleting actors immediatly when they have visual buff effects
         // applied causes the effects to stay around forever.
         private Dictionary<Actor, TickTimer> _deletingActors = new Dictionary<Actor, TickTimer>();
+        private TickTimer Timeout;
 
         private bool UseActorOnKotel72095 = false;
         private bool UseDoor72095 = false;
@@ -92,6 +93,38 @@ namespace Mooege.Core.GS.Powers
             return true;
         }
 
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
+                
+            }
+            return true;
+        }
+        private bool OnKillBossListener(List<uint> monstersAlive, Map.World world)
+        {
+            Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         public bool RunPower(Actor user, int powerSNO, uint targetId = uint.MaxValue, Vector3D targetPosition = null,
                                TargetMessage targetMessage = null)
         {
@@ -112,7 +145,7 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
-            
+            //Королевские скелеты 087012
             #region Южные ворота в тристрам.
             try
             {
@@ -465,6 +498,106 @@ namespace Mooege.Core.GS.Powers
 
             catch { }
             #endregion
+
+            #region Король скелетов
+            try
+            {
+                if (target.ActorSNO.Id == 5354)
+                {
+                    user.World.Game.Quests.NotifyQuest(72061, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 5354);
+                    var SkeletionThrone = user.World.GetActorBySNO(5354);
+                    //user.World.SpawnMonster()
+                    //var SkeletonKing = 0;
+                    Vector3D SpawnPoint = new Vector3D(343.5578f, 270.1681f, 21.33655f);
+                    List<uint> monsterAlive = new List<uint> { };
+                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                    {
+                        ActorID = SkeletionThrone.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 1000,
+                                AnimationSNO = 9859,
+                                PermutationIndex = 0,
+                                Speed = 1f
+                            }
+                            }
+                    }, SkeletionThrone);
+
+                    Timeout = new SecondsTickTimer(user.World.Game, 16f);
+                    var ListenerKingSkeletons = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                    //Ждём пока убьют
+                    ListenerKingSkeletons.ContinueWith(delegate
+                    {
+                        user.World.Leave(SkeletionThrone);
+                        user.World.SpawnMonster(5350, SpawnPoint);
+                        var SkeletonKing = user.World.GetActorBySNO(5350);
+                        monsterAlive.Add(SkeletonKing.DynamicID);
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                        // DOES NOT WORK it should be champion affixes or shit of this kind ...
+                        // Увеличиваем здоровье босса!
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 2000f;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 2000f;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Damage_Weapon_Min, 0] = 100f;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+                        SkeletonKing.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        var BossListener = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => OnKillBossListener(monsterAlive, user.World));
+                        BossListener.ContinueWith(delegate
+                        {
+                            //despawnn 009848
+                            user.World.Game.Quests.Advance(72061);
+                            user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                            {
+                                ActorID = SkeletionThrone.DynamicID,
+                                Field1 = 5,
+                                Field2 = 0,
+                                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 1000,
+                                AnimationSNO = 9859,
+                                PermutationIndex = 0,
+                                Speed = 1f
+                            }
+                            }
+                            }, SkeletionThrone);
+
+                            Timeout = new SecondsTickTimer(user.World.Game, 5f);
+                            var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                            ListenerWaiting.ContinueWith(delegate
+                            {
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                {
+                                    ActorID = SkeletonKing.DynamicID,
+                                    Field1 = 5,
+                                    Field2 = 0,
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                {
+                                new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                {
+                                    Duration = 1000,
+                                    AnimationSNO = 9848,
+                                    PermutationIndex = 0,
+                                    Speed = 1f
+                                }
+                                }
+                                    }, SkeletonKing);
+                            });
+                        });
+                    });
+
+                }
+            
+            }
+            catch { }
+            #endregion
+
             #endregion
 
             #region Книги
