@@ -56,9 +56,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if(HadConversation)
             {
                 world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
-                world.Game.Quests.Advance(87700);
-               
-                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
+                //world.Game.Quests.Advance(87700);
+                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+          
                 HadConversation = false;
             }
 
@@ -66,11 +66,11 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             //okay now we send a notify with QuestEvent for every one
             //force leah to have a specific conversation list :p
-            //world.GetActorBySNO(4580).Tags.Add(MarkerKeys.ConversationList, new TagMapEntry(198541, 108832, 2));
-
+            //world.GetActorBySNO(4580).Tags.Replace(MarkerKeys.ConversationList, new TagMapEntry(MarkerKeys.ConversationList.ID, 166675, 2));
+            world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
             foreach (var player in world.Players)
             {
-                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                //var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 
                 player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
                 {
@@ -78,15 +78,21 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     Field1 = 2,
                     Field2 = 10.0f
                 });
-                dbQuestProgress.LastQuest = 87700;
-                dbQuestProgress.ActiveQuest = 72095;
-                dbQuestProgress.StepOfQuest = -1;
-                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                DBSessions.AccountSession.Flush();
+                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Player.PlayerQuestMessage()
+                {
+                    Field0 = 1,
+                    Field1 = 87700,
+
+                });
+                /*       dbQuestProgress.LastQuest = 87700;
+                       dbQuestProgress.ActiveQuest = 72095;
+                       dbQuestProgress.StepOfQuest = -1;
+                       DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                       DBSessions.AccountSession.Flush();*/
             };
 
             // starting second quest
-            StartConversation(world, 198541);
+            //StartConversation(world, 198541);
         }
 
         //Launch Conversations.

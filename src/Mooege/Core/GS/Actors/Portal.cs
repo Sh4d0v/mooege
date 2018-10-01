@@ -673,6 +673,28 @@ namespace Mooege.Core.GS.Actors
                         minion.Destroy();
                     }
                 }
+                try
+                {
+                    if (dbQuestProgress.ActiveQuest == 72095)
+                    {
+                        dbQuestProgress.ActiveQuest = 72095;
+                        if (dbQuestProgress.StepOfQuest == 11)
+                        {
+                            dbQuestProgress.StepOfQuest = 12;
+                            var minions = world.GetActorsBySNO(80652);
+                            var CainBrains = world.GetActorBySNO(102386);
+                            Vector3D FirstPoint = new Vector3D(112.1694f, 166.0996f, 0.09996167f);
+                            Vector3D SecondPoint = new Vector3D(120.07f, 174.9657f, 0.1114834f);
+                            Vector3D ThirdPoint = new Vector3D(111.3691f, 182.6697f, 5.229973f);
+                            minions[0].Teleport(FirstPoint);
+                            minions[1].Teleport(FirstPoint);
+                            minions[2].Teleport(FirstPoint);
+
+                        }                        
+                    }
+                }
+                catch { }
+
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
@@ -777,7 +799,7 @@ namespace Mooege.Core.GS.Actors
                 if (dbQuestProgress.ActiveQuest == 72095)
                 {
                     dbQuestProgress.ActiveQuest = 72095;
-                    if (dbQuestProgress.StepOfQuest == 11)
+                    if (dbQuestProgress.StepOfQuest == 12)
                     {
                         dbQuestProgress.StepOfQuest = 12;
                         QuestEnter = true;
@@ -787,20 +809,16 @@ namespace Mooege.Core.GS.Actors
                         foreach (var minion in minions)
                         {
                             SkilletKiller.Add(minion.DynamicID);
-
-                            var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(minion, CainBrains.Position);
-
-                            minion.Move(CainBrains.Position, facingAngle);
                         }
 
-
                         var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerCain(SkilletKiller, dest));
+
                         CainKillerEvent.ContinueWith(delegate
                         {
                         if (dbQuestProgress.StepOfQuest == 12)
                         {
                             world.Game.Quests.Advance(72095);
-                                dbQuestProgress.StepOfQuest = 13;
+                            dbQuestProgress.StepOfQuest = 13;
                         }
                         });
                     }
@@ -829,6 +847,7 @@ namespace Mooege.Core.GS.Actors
                 player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
 
             }
+            // Патч выхода из хижины Адрии
             else if (this.Destination.StartingPointActorTag == -104)
             {
                 Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
