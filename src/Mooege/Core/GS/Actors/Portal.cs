@@ -139,6 +139,15 @@ namespace Mooege.Core.GS.Actors
                     };
 
                     Logger.Warn("Portal to Home {0} created", this.ActorSNO.Id);
+                }else if(this.ActorSNO.Id == 176001)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 30021,
+                        DestLevelAreaSNO = 33357,
+                        StartingPointActorTag = -105
+                    };
+                    Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
                 }
                 else
                 {
@@ -706,9 +715,8 @@ namespace Mooege.Core.GS.Actors
                 //Enter to Cathedral Level 2
                 
                 Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
-                if(world.Game.GetWorld(50582).StartingPoints.Count == 0)
+                if (world.Game.GetWorld(50582).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
-                //world = WorldGenerator.Generate(this, 50582);
             }
 
             if (world == null)
@@ -856,7 +864,11 @@ namespace Mooege.Core.GS.Actors
             {
                 Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
                 player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
-
+            }
+            else if (this.Destination.StartingPointActorTag == -105)
+            {
+                Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);
+                player.ChangeWorld(player.World.Game.GetWorld(73261), Point);
             }
             else
             {
@@ -877,6 +889,7 @@ namespace Mooege.Core.GS.Actors
 
                     }
                     catch { }
+                    
                     player.ChangeWorld(world, startingPoint);
                 }
                 else
