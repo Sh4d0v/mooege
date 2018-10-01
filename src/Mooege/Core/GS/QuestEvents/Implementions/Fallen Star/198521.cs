@@ -70,7 +70,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
             foreach (var player in world.Players)
             {
-                //var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 
                 player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
                 {
@@ -84,15 +84,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     Field1 = 87700,
 
                 });
-                /*       dbQuestProgress.LastQuest = 87700;
+                       dbQuestProgress.LastQuest = 87700;
                        dbQuestProgress.ActiveQuest = 72095;
                        dbQuestProgress.StepOfQuest = -1;
                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                       DBSessions.AccountSession.Flush();*/
+                       DBSessions.AccountSession.Flush();
             };
 
             // starting second quest
-            //StartConversation(world, 198541);
+            StartConversation(world, 198541);
         }
 
         //Launch Conversations.

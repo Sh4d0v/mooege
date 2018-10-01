@@ -30,6 +30,7 @@ using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Common.Types.Math;
 using System.Threading.Tasks;
+using Mooege.Core.GS.Generators;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -652,7 +653,9 @@ namespace Mooege.Core.GS.Actors
             if (this.Destination.WorldSNO == 60395)
             {
                 //Enter to Drowned Temple
-
+                Vector3D Point = new Vector3D(0f, 0f, 0.2f);
+                if (world.Game.GetWorld(60395).StartingPoints.Count == 0)
+                    player.ChangeWorld(player.World.Game.GetWorld(60395), Point);
             }
 
             if (this.Destination.WorldSNO == 60713)
@@ -705,6 +708,7 @@ namespace Mooege.Core.GS.Actors
                 Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
                 if(world.Game.GetWorld(50582).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
+                //world = WorldGenerator.Generate(this, 50582);
             }
 
             if (world == null)

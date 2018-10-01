@@ -34,15 +34,19 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if (HadConversation)
             {
                 HadConversation = false;
+                var CainBrains = world.GetActorsBySNO(102386);
+                Vector3D CainPath = new Vector3D(76.99389f, 155.145f, 0.0997252f);
+                var FindDynamicCain = world.GetActorByDynamicId(2297);
+                foreach (var AnyCain in CainBrains)
+                {
+                    var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(AnyCain, CainPath);
+                    AnyCain.Move(CainPath, facingAngle);
+                }
                 world.Game.Quests.Advance(72095);
                 Logger.Debug(" Quests.Advance(72095) ");
                 Logger.Debug(" Dialog with Cain ");
             }
-            var CainBrains = world.GetActorBySNO(102386);
-            Vector3D CainPath = new Vector3D(76.99389f, 155.145f, 0.0997252f);
-            var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(CainBrains, CainPath);
-
-            CainBrains.Move(CainPath, facingAngle);
+            
             //BookShelf - 5723
             var BookShelf = world.GetActorBySNO(5723);
             world.BroadcastIfRevealed(new PlayAnimationMessage

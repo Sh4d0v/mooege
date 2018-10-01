@@ -191,9 +191,46 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         DBSessions.AccountSession.Flush();
                     }
                     if (ActivePortal == true)
-                        world.Game.Quests.Advance(72095);
-                    else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
-                    StartConversation(world, 166678);
+                        StartConversation(world, 166678);
+                    else { world.Game.Quests.Advance(72095); StartConversation(world, 166678); }
+                    try
+                    {
+                        var Gate = world.GetActorBySNO(108466);
+                        world.BroadcastIfRevealed(new PlayAnimationMessage
+                        {
+                            ActorID = Gate.DynamicID,
+                            Field1 = 5,
+                            Field2 = 0,
+                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                        {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = Gate.AnimationSet.TagMapAnimDefault[Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                        }
+                        }, Gate);
+
+                        world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                        {
+                            ActorID = Gate.DynamicID,
+                            AnimationSNO = Common.Types.TagMap.AnimationSetKeys.Open.ID
+                        }, Gate);
+                        if (player.ActiveHireling != null)
+                        {
+                            var HirelingToLeave = player.ActiveHireling;
+                            world.Leave(HirelingToLeave);
+                            Vector3D OutDoor = new Vector3D(1896.382f, 2782.988f, 32.85f);
+                            Vector3D NearDoor = new Vector3D(1935.697f, 2792.971f, 40.23627f);
+                            var Leah_Back = world.GetActorByDynamicId(83);
+                            Leah_Back.EnterWorld(OutDoor);
+                        }
+
+                    }
+
+                    catch { }
                     break;
                 }
             }

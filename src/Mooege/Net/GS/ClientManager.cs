@@ -169,7 +169,8 @@ namespace Mooege.Net.GS
             #region Акт 1 Квест 3 - Сломанная корона
             if(dbQuestProgress.ActiveQuest == 72221)
             {
-                world.Leave(world.GetActorByDynamicId(72));
+                //world.Leave(world.GetActorByDynamicId(72));
+                world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
                 for (int Rem = 0; Rem < 8; Rem++)
                 {
@@ -183,9 +184,8 @@ namespace Mooege.Net.GS
                     world.Game.Quests.Advance(72095);
                 }
                 world.Leave(world.GetActorByDynamicId(25));
-                //world.Game.Quests.Advance(72095);
                 #endregion
-                if(dbQuestProgress.StepOfQuest >= 0 && dbQuestProgress.StepOfQuest < 5)
+                if (dbQuestProgress.StepOfQuest >= 0 && dbQuestProgress.StepOfQuest < 5)
                 {
                     var BlacksmithVendor = world.GetActorBySNO(56947);
                     Vector3D position = new Vector3D(BlacksmithVendor.Position);
@@ -207,6 +207,35 @@ namespace Mooege.Net.GS
 
             }
 
+            #endregion
+
+            #region Акт 1 Квест 4 - Правление короля скелетов
+            if (dbQuestProgress.ActiveQuest == 72061)
+            {
+                world.Leave(world.GetActorByDynamicId(75));
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 8; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                //world.Leave(world.GetActorByDynamicId(75));
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 10; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                //StartConversation(world,80681);
+                #endregion
+
+            }
             #endregion
 
             #endregion
@@ -340,8 +369,6 @@ namespace Mooege.Net.GS
                             DBSessions.AccountSession.Flush();
                         }
                         break;
-
-
                     }
                 }
             }
@@ -370,9 +397,44 @@ namespace Mooege.Net.GS
                             DBSessions.AccountSession.Flush();
                         }
                         if (ActivePortal == true)
-                            world.Game.Quests.Advance(72095);
-                        else { world.Game.Quests.Advance(72095); world.Game.Quests.Advance(72095); }
-                        StartConversation(world, 166678);
+                        { StartConversation(world, 166678); }
+                        else { world.Game.Quests.Advance(72095); StartConversation(world, 166678); }
+                        try
+                        {
+                            var Gate = world.GetActorBySNO(108466);
+                            world.BroadcastIfRevealed(new Message.Definitions.Animation.PlayAnimationMessage
+                            {
+                                ActorID = Gate.DynamicID,
+                                Field1 = 5,
+                                Field2 = 0,
+                                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 50,
+                                AnimationSNO = Gate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                            }
+                            }, Gate);
+
+                            world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
+                            {
+                                ActorID = Gate.DynamicID,
+                                AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                            }, Gate);
+                            if (player.ActiveHireling != null)
+                            {
+                                var HirelingToLeave = player.ActiveHireling;
+                                world.Leave(HirelingToLeave);
+                                Vector3D OutDoor = new Vector3D(1896.382f, 2782.988f, 32.85f);
+                                Vector3D NearDoor = new Vector3D(1935.697f, 2792.971f, 40.23627f);
+                                var Leah_Back = world.GetActorByDynamicId(83);
+                                Leah_Back.EnterWorld(OutDoor);
+                            }
+
+                        } catch {}
                         break;
                     }
                 }

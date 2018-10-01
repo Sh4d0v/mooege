@@ -26,6 +26,21 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         
         public override void Execute(Map.World world)
         {
+            foreach (var player in world.Players)
+            {
+                try
+                {
+                    if (player.Value.ActiveHireling != null)
+                    {
+                        var HirelingToLeave = player.Value.ActiveHireling;
+                        world.Leave(HirelingToLeave);
+                        var Leah_Back = world.GetActorByDynamicId(83);
+                        Leah_Back.EnterWorld(Leah_Back.Position);
+                    }
+
+                }
+                catch { }
+            }
             Logger.Debug(" Ворота открыты ");
             world.Game.Quests.Advance(72095);
             Logger.Debug(" Quests.Advance(72095) ");
