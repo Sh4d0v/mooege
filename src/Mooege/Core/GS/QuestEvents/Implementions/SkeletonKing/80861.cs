@@ -33,14 +33,14 @@ using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _80861 : QuestEvent
+    class _80681 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         private Players.Player MasterPlayer;
 
-        public _80861()
-            : base(80861)
+        public _80681()
+            : base(80681)
         {
         }
 
@@ -53,13 +53,18 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 dbQuestProgress.LastQuest = 72221;
                 dbQuestProgress.ActiveQuest = 72061;
-                dbQuestProgress.StepOfQuest = 1;
                 if(player.Value.PlayerIndex == 0)
                 {
                     MasterPlayer = player.Value;
                     //if (dbQuestProgress.ActiveQuest != 72061)
+                    //    world.Game.Quests.Advance(72061);
+                    if (dbQuestProgress.ActiveQuest == 72061 && dbQuestProgress.StepOfQuest == 0)
+                    {
                         world.Game.Quests.Advance(72061);
+                        dbQuestProgress.StepOfQuest = 1;
+                    }
                 }
+                
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
                 Logger.Debug(" Progress Saved ");
@@ -84,6 +89,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     sceneID = player.CurrentScene.SceneSNO.Id;
                     if (sceneID == 93992)
                     {
+                        world.Game.Quests.NotifyQuest(72061, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterLevelArea, 19938);
                         world.Game.Quests.Advance(72061);
                         foreach (var playerN in world.Players)
                         {

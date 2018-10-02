@@ -416,7 +416,7 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(129751, new _129751()); // Начало квеста
 
             // Skeleton King 72061
-            this.QuestEventDict.Add(80861, new _80861()); // Начало квеста
+            this.QuestEventDict.Add(80681, new _80681()); // Начало квеста
 
 
 

@@ -557,6 +557,7 @@ namespace Mooege.Net.GS
                     sceneID = player.CurrentScene.SceneSNO.Id;
                     if (sceneID == 93992)
                     {
+                        world.Game.Quests.NotifyQuest(72061, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterLevelArea, 19938);
                         world.Game.Quests.Advance(72061);
                         foreach (var playerN in world.Players)
                         {
