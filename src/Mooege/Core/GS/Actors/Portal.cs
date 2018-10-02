@@ -31,6 +31,7 @@ using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Common.Types.Math;
 using System.Threading.Tasks;
 using Mooege.Core.GS.Generators;
+using Mooege.Core.GS.Ticker;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -366,6 +367,14 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
+
+            }
+            return true;
+        }
         public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);
@@ -427,8 +436,13 @@ namespace Mooege.Core.GS.Actors
             
             var world = this.World.Game.GetWorld(this.Destination.WorldSNO);
             var now_world = player.World;
-            
-            if(this.Destination.WorldSNO == 71150)
+            if (world == null)
+            {
+                Logger.Warn("Portal's destination world does not exist (WorldSNO = {0})", this.Destination.WorldSNO);
+                return;
+            }
+
+            if (this.Destination.WorldSNO == 71150)
             {
                 if (this.ActorSNO.Id == 241660)
                 {
@@ -456,7 +470,6 @@ namespace Mooege.Core.GS.Actors
 
                 }
             }
-
             if (this.Destination.WorldSNO == 72637)
             {
                 // Вход в Оскверненный склеп
@@ -496,7 +509,6 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-
             if (this.Destination.WorldSNO == 62751)
             {
                 //Enter в Adrian's Hut
@@ -522,7 +534,6 @@ namespace Mooege.Core.GS.Actors
                     QuestEnter = false;
                 }
             }
-
             if (this.Destination.WorldSNO == 50579)
             {
                 //Enter в Cathedral level 1
@@ -562,7 +573,6 @@ namespace Mooege.Core.GS.Actors
                 RealPortal.EnterWorld(FakePortal.Position);
                 
             }
-
             if (this.Destination.WorldSNO == 136441)
             {
                 //Входим в погреб проклятых
@@ -688,7 +698,6 @@ namespace Mooege.Core.GS.Actors
                 if (world.Game.GetWorld(60395).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(60395), Point);
             }
-
             if (this.Destination.WorldSNO == 60713)
             {
                 //Enter to Leoric Hall
@@ -759,16 +768,31 @@ namespace Mooege.Core.GS.Actors
                 //Enter to Cathedral Level 2
                 
                 Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
+                var CathedralLevel2 = world.Game.GetWorld(50582);
+                var StartPoint = CathedralLevel2.GetActorBySNO(5502).Position;
+                var ExitToTomb = CathedralLevel2.GetActorBySNO(4067);
+
+                try
+                {
+                    Portal RealPortal = new Portal(world.Game.GetWorld(50584), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                    RealPortal.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 73261,
+                        DestLevelAreaSNO = 60885,
+                        StartingPointActorTag = -106
+                    };
+                    RealPortal.EnterWorld(ExitToTomb.Position);
+                    Logger.Warn("Congratulations) Level builded ok)");
+                }
+                catch { Logger.Warn("Sorry, Error of Build("); }
                 if (world.Game.GetWorld(50582).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
+                else
+                {
+                    var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
+                    player.ChangeWorld(world, startingPoint);
+                }
             }
-
-            if (world == null)
-            {
-                Logger.Warn("Portal's destination world does not exist (WorldSNO = {0})", this.Destination.WorldSNO);
-                return;
-            }
-
 
 
             //Portal to New Tristram
@@ -826,6 +850,7 @@ namespace Mooege.Core.GS.Actors
 
                 DBSessions.AccountSession.Flush();
             }
+            //Портал из Тристрама
             else if (this.Destination.StartingPointActorTag == -101)
             {
                 var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
@@ -844,6 +869,7 @@ namespace Mooege.Core.GS.Actors
                 else
                     player.Teleport(ToPortal);
             }
+            //Портал в Залл Леорика
             else if (this.Destination.StartingPointActorTag == -102)
             {
                 var dest = world.Game.GetWorld(60713);
@@ -897,18 +923,19 @@ namespace Mooege.Core.GS.Actors
 
 
             }
+            // Патч выхода из хижины Адрии
             else if (this.Destination.StartingPointActorTag == -103)
             {
                 Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
                 player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
 
             }
-            // Патч выхода из хижины Адрии
+            //Пустая ячейка --
             else if (this.Destination.StartingPointActorTag == -104)
             {
-                Vector3D Point = new Vector3D(1769.139f, 2914.95f, 20.16885f);
-                player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
+                
             }
+            // Портал к четвертому уровню собора
             else if (this.Destination.StartingPointActorTag == -105)
             {
                 //var BossWorld = player.World.Game.GetWorld(73261);
@@ -926,27 +953,91 @@ namespace Mooege.Core.GS.Actors
                 [135710] a1dun_Leor_Tyrael_Filler_02
                 */
 
+                var CathedralLevel4 = player.World.Game.GetWorld(50584);
+                var StartPoint = CathedralLevel4.GetActorBySNO(5502).Position;
+                var ExitToTomb = CathedralLevel4.GetActorBySNO(4067);
+                
+                try
+                {
+                    Portal RealPortal = new Portal(world.Game.GetWorld(50584), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                    RealPortal.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 73261,
+                        DestLevelAreaSNO = 60885,
+                        StartingPointActorTag = -106
+                    };
+                    RealPortal.EnterWorld(ExitToTomb.Position);
+                    Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);
+                    Logger.Warn("Congratulations) Level builded ok)");
+                    player.ChangeWorld(CathedralLevel4, StartPoint);
+                }
+                catch
+                {
+                    Logger.Warn("Sorry, Error of Build(");
+                }
+                
+
+
+                /*
+                
+                */
+            }
+            // Портал в Границу королей
+            else if (this.Destination.StartingPointActorTag == -106)
+            {
                 //Leoric Ghost - 5365
-                var BossWorld = player.World.Game.GetWorld(50585);
-                Vector3D EnterToKing = new Vector3D(1060.87f, 493.0155f, 0.100031f);
-                player.ChangeWorld(BossWorld, EnterToKing);
-                //PointToPortal
+                var KingTombWorld = player.World.Game.GetWorld(50585);
+                Vector3D EnterToKingTomb = new Vector3D(1060.87f, 493.0155f, 0.100031f);
+                player.ChangeWorld(KingTombWorld, EnterToKingTomb);
+
                 //Boss_Portal_SkeletonKing 159573
-                var NotWorkBossPortal = BossWorld.GetActorBySNO(159573);
+                #region Временный портал в босс зону
+                var NotWorkBossPortal = KingTombWorld.GetActorBySNO(159573);
                 Portal RealPortal = new Portal(world.Game.GetWorld(50585), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
                 RealPortal.Destination = new ResolvedPortalDestination
                 {
                     WorldSNO = 73261,
                     DestLevelAreaSNO = 60885,
-                    StartingPointActorTag = -106
+                    StartingPointActorTag = -107
                 };
                 RealPortal.EnterWorld(NotWorkBossPortal.Position);
+                #endregion
+
+
+                var WallCrypt = KingTombWorld.GetActorBySNO(5788);
+                TickTimer Timeout = new SecondsTickTimer(world.Game, 3f);
+                var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                ListenerWaiting.ContinueWith(delegate
+                {
+                    KingTombWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                    {
+                        ActorID = WallCrypt.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 5000,
+                                AnimationSNO = WallCrypt.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 0.5f
+                            }
+                            }
+                    }, WallCrypt);
+                    KingTombWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                    {
+                        ActorID = WallCrypt.DynamicID,
+                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                    }, WallCrypt);
+                    //9926 - Spawn2/ 9900 - Spawn
+                    //Skeleton_A - 5393
+                });
                 for (int i = 0; i < 8; i++) { world.Game.Quests.Advance(72061); }
-                /*
-                
-                */
+
             }
-            else if (this.Destination.StartingPointActorTag == -106)
+            // Портал в покои Леорика
+            else if (this.Destination.StartingPointActorTag == -107)
             {
                 var BossWorld = player.World.Game.GetWorld(73261);
                 Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);

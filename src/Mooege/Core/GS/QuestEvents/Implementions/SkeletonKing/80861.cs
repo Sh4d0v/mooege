@@ -47,8 +47,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         public override void Execute(Map.World world)
         {
             Logger.Debug(" SKELETON KING QUEST STARTED ");
-            StartConversation(world, 154570);
-            
             foreach (var player in world.Players)
             {
                 
@@ -59,7 +57,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 if(player.Value.PlayerIndex == 0)
                 {
                     MasterPlayer = player.Value;
-                    if (dbQuestProgress.ActiveQuest != 72061)
+                    //if (dbQuestProgress.ActiveQuest != 72061)
                         world.Game.Quests.Advance(72061);
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
@@ -74,6 +72,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 Logger.Debug(" Waypoint_Park Objective done "); 
 
             });
+            StartConversation(world, 154570);
         }
         private bool OnEnterToParkListener(Players.Player player,Map.World world)
         {
