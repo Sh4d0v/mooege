@@ -46,8 +46,11 @@ namespace Mooege.Core.GS.Generators
 
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
-            
-            
+
+            if (worldAsset.SNOId == 60713)
+            {
+
+            }
             if(worldAsset.SNOId == 117405)
             {
 

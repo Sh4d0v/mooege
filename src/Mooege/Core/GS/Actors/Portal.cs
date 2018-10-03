@@ -32,6 +32,8 @@ using Mooege.Core.GS.Common.Types.Math;
 using System.Threading.Tasks;
 using Mooege.Core.GS.Generators;
 using Mooege.Core.GS.Ticker;
+using Mooege.Core.GS.Common.Types.SNO;
+using System.Windows;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -41,7 +43,9 @@ namespace Mooege.Core.GS.Actors
 
         public override ActorType ActorType { get { return ActorType.Gizmo; } }
         private ResolvedPortalDestination Destination { get; set; }
+        public Mooege.Common.MPQ.FileFormats.Scene.NavZoneDef NavZone { get; private set; }
         private int MinimapIcon;
+
 
         public Portal(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
@@ -795,12 +799,27 @@ namespace Mooege.Core.GS.Actors
             }
             if (this.Destination.WorldSNO == 117405)
             {
+                //Покои: 117405
+                // To Tyrael Zone
+                /*
+                [148748] a1dun_Leor_Tyrael_Back_Skybox_01
+                [135396] a1dun_Leor_Tyrael_jail_01
+                [135521] a1dun_Leor_Tyrael_Stairs_A_01
+                [135710] a1dun_Leor_Tyrael_Filler_02
+                */
                 var Leor_Tyrael = world.Game.GetWorld(117405);
                 Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
-                Core.GS.Map.Scene Ladder = new Core.GS.Map.Scene(Leor_Tyrael, PointToScene, 135521, null);
-                player.ChangeWorld(player.World.Game.GetWorld(117405), PointToScene);
-                //Vector3D PointToSpawn = new Vector3D(13.63128f, 66.13332f, 5f);
-                Leor_Tyrael.AddScene(Ladder);
+                Vector3D PointToSkyBox = new Vector3D(240f, 240f, 0f);
+                Vector3D PointToFiller = new Vector3D(-240f, 0f, 0f);
+                Vector3D PointToJail = new Vector3D(0f, 240f, 0f);
+                Vector3D PointToSpawn = new Vector3D(13.63128f, 66.13332f, 5f);
+                player.ChangeWorld(player.World.Game.GetWorld(117405), PointToSpawn);
+              
+                //World_SceneChunk_SceneParametr - Связь мира и сцены
+                //World - Сам Мир
+                //Scene_Chunck - Сцена
+
+
             }
 
             //Portal to New Tristram
