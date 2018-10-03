@@ -793,7 +793,15 @@ namespace Mooege.Core.GS.Actors
                     player.ChangeWorld(world, startingPoint);
                 }
             }
-
+            if (this.Destination.WorldSNO == 117405)
+            {
+                var Leor_Tyrael = world.Game.GetWorld(117405);
+                Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
+                Core.GS.Map.Scene Ladder = new Core.GS.Map.Scene(Leor_Tyrael, PointToScene, 135521, null);
+                player.ChangeWorld(player.World.Game.GetWorld(117405), PointToScene);
+                //Vector3D PointToSpawn = new Vector3D(13.63128f, 66.13332f, 5f);
+                Leor_Tyrael.AddScene(Ladder);
+            }
 
             //Portal to New Tristram
             if (this.Destination.StartingPointActorTag == -100)

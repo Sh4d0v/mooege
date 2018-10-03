@@ -320,7 +320,20 @@ namespace Mooege.Net.GS
 
             #region Сырые локации
 
+            #region Покои Короля
 
+            //Покои: 117405
+            // To Tyrael Zone
+            /*
+            [148748] a1dun_Leor_Tyrael_Back_Skybox_01
+            [135396] a1dun_Leor_Tyrael_jail_01
+            [135521] a1dun_Leor_Tyrael_Stairs_A_01
+            [135710] a1dun_Leor_Tyrael_Filler_02
+            */
+          //  var Leor_Tyrael = client.Player.World.Game.GetWorld(117405);
+            Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
+         //   Core.GS.Map.Scene CainScene = new Core.GS.Map.Scene(Leor_Tyrael, PointToScene, 135521, null);
+            #endregion
 
             #endregion
 
