@@ -146,6 +146,8 @@ namespace Mooege.Core.GS.Powers
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //Королевские скелеты 087012
+            //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
+
             #region Южные ворота в тристрам.
             try
             {
@@ -499,6 +501,50 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
+            #region Меч короля скелетов
+            try
+             {
+                 if (target.ActorSNO.Id == 163449)
+                 {
+                    //163449 - Sword Leoric
+                    //220219 - Point to Spawn Ghost Leoric 
+                    //220218 - Point to Spawn Ghost Knight
+                    //4182 - Ghost Knight
+                    //4183 - Lachdanan's Ghost
+                    //5365 - King Leoric's Ghost
+
+
+                    var GhostLeoricPoint = user.World.GetActorBySNO(220219).Position;
+                    var GhostKingtsSpawners = user.World.GetActorsBySNO(220218);
+                    user.World.SpawnMonster(5365, GhostLeoricPoint);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        user.World.SpawnMonster(4182, GhostKingtsSpawners[i].Position);
+                    }
+                    user.World.SpawnMonster(4183, GhostKingtsSpawners[4].Position);
+                    //Берём участников сцены
+                    var LeoricGhost = user.World.GetActorBySNO(5365);
+                    var GhostKnights = user.World.GetActorsBySNO(4182);
+                    var LachdananGhost = user.World.GetActorBySNO(4183);
+                    //Вычесляем взгляд для участников
+                    float LeoricFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LeoricGhost, GhostKingtsSpawners[4]);
+                    float LachdananFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LachdananGhost, user.World.GetActorBySNO(220219));
+
+                    
+                    LeoricGhost.SetFacingRotation(LeoricFacingAngle);
+                    LachdananGhost.SetFacingRotation(LachdananFacingAngle);
+                    foreach (var GKnight in GhostKnights)
+                    {
+                        float KnightFacing = Actors.Movement.MovementHelpers.GetFacingAngle(GKnight, user.World.GetActorBySNO(220219));
+                        GKnight.SetFacingRotation(KnightFacing);
+                    }
+                    
+
+                }
+             }
+             catch { }
+            #endregion
+
             #region Король скелетов
             try
             {
@@ -568,27 +614,36 @@ namespace Mooege.Core.GS.Powers
                             }
                             }, SkeletionThrone);
 
-                            Timeout = new SecondsTickTimer(user.World.Game, 5f);
+                            Timeout = new SecondsTickTimer(user.World.Game, 2f);
                             var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
                             ListenerWaiting.ContinueWith(delegate
                             {
+                                var Throne = user.World.GetActorBySNO(175181);
+
                                 user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                                 {
-                                    ActorID = SkeletonKing.DynamicID,
+                                    ActorID = Throne.DynamicID,
                                     Field1 = 5,
                                     Field2 = 0,
-                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                {
-                                new Net.GS.Message.Fields.PlayAnimationMessageSpec()
-                                {
-                                    Duration = 1000,
-                                    AnimationSNO = 9848,
-                                    PermutationIndex = 0,
-                                    Speed = 1f
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[] { new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                    {
+                                        Duration = 100,
+                                        AnimationSNO = Throne.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                        PermutationIndex = 0,
+                                        Speed = 0.5f
+                                    }
                                 }
-                                }
-                                    }, SkeletonKing);
-                            });
+                                }, Throne);
+
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                {
+                                    ActorID = Throne.DynamicID,
+                                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                }, Throne);
+
+                           
+                        });
+
                         });
                     });
 

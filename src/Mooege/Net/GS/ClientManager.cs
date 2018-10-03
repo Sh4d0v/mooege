@@ -262,9 +262,11 @@ namespace Mooege.Net.GS
                     AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
                 }, DownGate);
                 #endregion
-
+                //Убираем телегу
+                var FactorToShoot = world.GetActorBySNO(81699);
+                FactorToShoot.Destroy();
                 #region Убираем телегу
-                if(dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095)
+                if (dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095)
                 {
                     var TELEGAS = world.GetActorsBySNO(112131);
                     Vector3D LastTelega = new Vector3D();
@@ -318,32 +320,10 @@ namespace Mooege.Net.GS
 
             #region Сырые локации
 
-          
+
 
             #endregion
-            #region Заполним немного локации))
-            Vector3D[] Points = new Vector3D[4];
-            Points[0] = new Vector3D(2427.788f, 2852.193f, 27.1f);
-            Points[1] = new Vector3D(2356.931f, 2528.715f, 27.1f);
-            Points[2] = new Vector3D(2119.563f, 2489.693f, 27.1f);
-            Points[3] = new Vector3D(2021.855f, 2774.645f, 40.05685f);
-            int FatZombieAID = 6652;
-            int RisenZombieAID = 6644;
-            //Ugly add monster, скучно))
-            Vector3D[] MobPosSpawn = new Vector3D[50];
-            foreach (Vector3D Point in Points)
-            {
-                for (int a = 0; a < 6; a++)
-                {
-                    world.SpawnMonster(RisenZombieAID, RandomDirection(Point, 10f, 80f));
-                }
-                for (int a = 0; a < 4; a++)
-                {
-                    world.SpawnMonster(FatZombieAID, RandomDirection(Point, 10f, 80f));                    
-                }
-            }
 
-            #endregion
             DBSessions.AccountSession.Flush();
         }
         public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)

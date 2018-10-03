@@ -77,6 +77,10 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 monstersAlive1.Add(actor.DynamicID);
             }
 
+            //Убираем телегу
+            var FactorToShoot = world.GetActorBySNO(81699);
+            FactorToShoot.Destroy();
+
             //Запуск отслеживания убийства
             var ListenerWretchedMother = Task<bool>.Factory.StartNew(() => OnKillListener(monstersAlive1, world));
             //Ждём пока убьют

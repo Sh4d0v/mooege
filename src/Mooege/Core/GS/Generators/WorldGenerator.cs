@@ -46,7 +46,15 @@ namespace Mooege.Core.GS.Generators
 
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
+            
+            
+            if(worldAsset.SNOId == 119888)
+            {
 
+                //worldData.IsGenerated = true;
+               
+            }
+            
 
             if (worldData.IsGenerated)
             {
@@ -58,6 +66,7 @@ namespace Mooege.Core.GS.Generators
 
             var world = new World(game, worldSNO);
             var levelAreas = new Dictionary<int, List<Scene>>();
+            
 
             // Create a clusterID => Cluster Dictionary
             var clusters = new Dictionary<int, Mooege.Common.MPQ.FileFormats.SceneCluster>();

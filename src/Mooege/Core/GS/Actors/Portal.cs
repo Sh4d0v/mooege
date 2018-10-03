@@ -936,7 +936,7 @@ namespace Mooege.Core.GS.Actors
                 
             }
             // Портал к четвертому уровню собора
-            else if (this.Destination.StartingPointActorTag == -105)
+            else if (this.Destination.StartingPointActorTag == -106)
             {
                 //var BossWorld = player.World.Game.GetWorld(73261);
                 //Второй уровень собора: 50582
@@ -974,6 +974,7 @@ namespace Mooege.Core.GS.Actors
                 catch
                 {
                     Logger.Warn("Sorry, Error of Build(");
+                    player.ChangeWorld(CathedralLevel4, StartPoint);
                 }
                 
 
@@ -983,7 +984,7 @@ namespace Mooege.Core.GS.Actors
                 */
             }
             // Портал в Границу королей
-            else if (this.Destination.StartingPointActorTag == -106)
+            else if (this.Destination.StartingPointActorTag == -105)
             {
                 //Leoric Ghost - 5365
                 var KingTombWorld = player.World.Game.GetWorld(50585);
@@ -1043,10 +1044,21 @@ namespace Mooege.Core.GS.Actors
                 Vector3D Point = new Vector3D(338.9958f, 468.3622f, -3.859601f);
                 world.Game.Quests.Advance(72061);
                 player.ChangeWorld(BossWorld, Point);
+                var AllSpawnPoint = world.GetActorsBySNO(5913);
                 Vector3D FistPoint = new Vector3D(291.9193f, 428.6796f, 0.1f);
                 Vector3D SecondPoint = new Vector3D(270.9105f, 426.223f, 0.1000026f);
                 Vector3D ThirdPoint = new Vector3D(241.2828f, 425.616f, 0.1f);
                 Vector3D FourPoint = new Vector3D(241.2051f, 435.0545f, 0.1f);
+
+                var SkeletonKing_Bridge = BossWorld.GetActorBySNO(461);
+                
+                BossWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                {
+                    ActorID = SkeletonKing_Bridge.DynamicID,
+                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                }, SkeletonKing_Bridge);
+                // 461 -trDun_SkeletonKing_Bridge_Active
+
                 BossWorld.SpawnMonster(87012, FistPoint);
                 BossWorld.SpawnMonster(87012, SecondPoint);
                 BossWorld.SpawnMonster(87012, ThirdPoint);

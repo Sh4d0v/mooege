@@ -74,6 +74,10 @@ namespace Mooege.Core.GS.Actors.Implementations
                         continue;
 
                     this.WaypointId = i;
+                    this.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
+                    this.Attributes[Net.GS.Message.GameAttribute.Gizmo_State] = 0;
+                    this.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = true;
+
                     break;
                 }
             }
