@@ -61,7 +61,31 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
                 HadConversation = false;
             }
-
+            var RightNPC = world.GetActorBySNO(117365);
+            // Idle - 141437
+            // 141674-141541-141795-141675
+            world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = RightNPC.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                        {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 160,
+                                AnimationSNO = 141795,
+                                PermutationIndex = 0,
+                                Speed = 1f
+                            }
+                        }
+            }, RightNPC);
+          
+            world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+            {
+                ActorID = RightNPC.DynamicID,
+                AnimationSNO = 141675,
+            }, RightNPC);
 
             foreach (var player in world.Players)
             {

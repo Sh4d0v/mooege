@@ -860,35 +860,23 @@ namespace Mooege.Core.GS.Actors
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
-                var Crater_World = player.World.Game.GetWorld(117405);
-                var Stranger = Crater_World.GetActorBySNO(180900);
+                try
+                {
+                    var Crater_World = player.World.Game.GetWorld(117405);
+                    var Stranger = Crater_World.GetActorBySNO(180900);
 
-                Crater_World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
-                {
-                    ActorID = Stranger.DynamicID,
-                    Field1 = 5,
-                    Field2 = 0,
-                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                            {
-                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
-                            {
-                                Duration = 100,
-                                AnimationSNO = 141225,
-                                PermutationIndex = 0,
-                                Speed = 0.5f
-                            }
-                            }
-                }, Stranger);
-                Crater_World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
-                {
-                    ActorID = Stranger.DynamicID,
-                    AnimationSNO = 142291,
-                }, Stranger);
+                    Crater_World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                    {
+                        ActorID = Stranger.DynamicID,
+                        AnimationSNO = 141437,
+                    }, Stranger);
+                }
+                catch { }
                 // Second Conv - 181912 // actor 117365
 
 
             }
-
+            //Khazra [056593] trOut_TristramFields_EntranceA_E01_S01
             //Portal to New Tristram
             if (this.Destination.StartingPointActorTag == -100)
             {

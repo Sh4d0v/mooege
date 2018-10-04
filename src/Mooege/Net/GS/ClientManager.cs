@@ -36,6 +36,7 @@ using Mooege.Core.GS.AI.Brains;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Mooege.Net.GS.Message.Definitions.Animation;
 
 namespace Mooege.Net.GS
 {
@@ -232,8 +233,12 @@ namespace Mooege.Net.GS
                 {
                     world.Game.Quests.Advance(72221);
                 }
+                var BlacksmithVendor = world.GetActorBySNO(56947);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036
                 #endregion
-                if(dbQuestProgress.StepOfQuest < 2)
+
+                if (dbQuestProgress.StepOfQuest < 2)
                 {
                     var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnEnterToParkListener(client.Player, world));
                     //Wait for portal to be used or player going to scene.
@@ -243,6 +248,106 @@ namespace Mooege.Net.GS
 
                     });
                 }
+
+            }
+            #endregion
+
+            #region Акт 1 Квест 5 - Меч незнакомца
+            if (dbQuestProgress.ActiveQuest == 117779)
+            {
+                world.Leave(world.GetActorByDynamicId(75));
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 8; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                //world.Leave(world.GetActorByDynamicId(75));
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 10; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                var BlacksmithVendor = world.GetActorBySNO(56947);
+                world.Leave(BlacksmithVendor);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036
+                
+
+                #endregion
+                #region Перемотка к пятому квесту
+                for (int Rem = 0; Rem < 17; Rem++)
+                {
+                    world.Game.Quests.Advance(72061);
+                }
+                #endregion
+
+                //Открытие ворот
+                var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
+                //Wait for portal to be used or player going to scene.
+                ListenerNierDoorsTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+                    //No Lock 230324
+                    //Lock 216574
+                    var Locked = world.GetActorBySNO(216574);
+                    var Unlocked = world.GetActorBySNO(230324);
+                    world.Leave(Locked);
+                    world.BroadcastIfRevealed(new PlayAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                    {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                    }
+                    }, Unlocked);
+
+                    world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        AnimationSNO = Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                    }, Unlocked);
+
+                });
+
+                if (dbQuestProgress.StepOfQuest < 2)
+                {
+                    var ListenerTristramFieldsTask = Task<bool>.Factory.StartNew(() => OnFieldsListener(client.Player, world));
+                    ListenerTristramFieldsTask.ContinueWith(delegate
+                    {
+                        Logger.Debug("Добро пожаловать в гиблые поля");
+                        var ListenerFoundCaveTask = Task<bool>.Factory.StartNew(() => OnFoundCaveListener(client.Player, world));
+                        ListenerFoundCaveTask.ContinueWith(delegate
+                        {
+                            Logger.Debug("Пещера Хазра найдена");
+                        });
+                    });
+                }
+                if (dbQuestProgress.StepOfQuest == 2)
+                {
+                    //OnFoundCaveListener
+                    var ListenerFoundCaveTask = Task<bool>.Factory.StartNew(() => OnFoundCaveListener(client.Player, world));
+                    ListenerFoundCaveTask.ContinueWith(delegate
+                    {
+                        Logger.Debug("Пещера Хазра найдена");
+                    });
+                }
+                //World - Fields_Cave_SwordOfJustice_Level01 [119888]
 
             }
             #endregion
@@ -563,6 +668,83 @@ namespace Mooege.Net.GS
                             DBSessions.AccountSession.Flush();
                         }
                         break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        #endregion
+
+        #region Отслеживания для Акт 1 - Квест 5
+        private bool OnNierDoorsListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 74617)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        //OnFieldsListener
+        private bool OnFieldsListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 56593)
+                    {
+                        world.Game.Quests.Advance(117779);
+                        foreach (var playerN in world.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            dbQuestProgress.ActiveQuest = 117779;
+                            dbQuestProgress.StepOfQuest = 2;
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        //OnFoundCave
+        private bool OnFoundCaveListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            var scene = player.CurrentScene;
+            while (true)
+            {
+                try
+                {
+                    scene = player.CurrentScene;
+                    if (scene.Subscenes.Count > 0)
+                    {
+                        if (scene.Subscenes[0].SceneSNO.Id == 118195)
+                        {
+                            world.Game.Quests.Advance(117779);
+                            foreach (var playerN in world.Players)
+                            {
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                dbQuestProgress.ActiveQuest = 117779;
+                                dbQuestProgress.StepOfQuest = 3;
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                            }
+                            break;
+                        }
                     }
                 }
                 catch { }
