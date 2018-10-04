@@ -32,7 +32,7 @@ namespace Mooege.Common.MPQ.FileFormats
     public class World : FileFormat
     {
         public Header Header { get; private set; }
-        public bool IsGenerated { get; private set; }
+        public bool IsGenerated { get; set; }
         public int Int1 { get; private set; }
         public int Int2 { get; private set; }
 

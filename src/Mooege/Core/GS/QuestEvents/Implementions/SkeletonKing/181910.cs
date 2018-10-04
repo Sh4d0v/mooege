@@ -41,8 +41,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         public List<ConversationInteraction> Conversations { get; private set; }
-        private Boolean HadConversation = true;
-
 
         public _181910()
             : base(181910)

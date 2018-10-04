@@ -57,7 +57,10 @@ namespace Mooege.Core.GS.Generators
                 //worldData.IsGenerated = true;
                
             }
-            
+            if(worldAsset.SNOId == 119888)
+            {
+                worldData.IsGenerated = false;
+            }
 
             if (worldData.IsGenerated)
             {
