@@ -147,7 +147,7 @@ namespace Mooege.Core.GS.Powers
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
-
+            // 46 - 117779
             #region Южные ворота в тристрам.
             try
             {
@@ -512,34 +512,23 @@ namespace Mooege.Core.GS.Powers
                     //4182 - Ghost Knight
                     //4183 - Lachdanan's Ghost
                     //5365 - King Leoric's Ghost
-
+                    //139823  Event_DoK_Kill.cnv
+                    //139825  Event_DoK_Death.cnv
 
                     var GhostLeoricPoint = user.World.GetActorBySNO(220219).Position;
                     var GhostKingtsSpawners = user.World.GetActorsBySNO(220218);
+                    //Спауним Дух Леорика
                     user.World.SpawnMonster(5365, GhostLeoricPoint);
+                    //Спауним Духов Рыцарей
                     for (int i = 0; i < 4; i++)
                     {
                         user.World.SpawnMonster(4182, GhostKingtsSpawners[i].Position);
                     }
+                    //Спауним Дух Ласхадана
                     user.World.SpawnMonster(4183, GhostKingtsSpawners[4].Position);
-                    //Берём участников сцены
-                    var LeoricGhost = user.World.GetActorBySNO(5365);
-                    var GhostKnights = user.World.GetActorsBySNO(4182);
-                    var LachdananGhost = user.World.GetActorBySNO(4183);
-                    //Вычесляем взгляд для участников
-                    float LeoricFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LeoricGhost, GhostKingtsSpawners[4]);
-                    float LachdananFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LachdananGhost, user.World.GetActorBySNO(220219));
-
                     
-                    LeoricGhost.SetFacingRotation(LeoricFacingAngle);
-                    LachdananGhost.SetFacingRotation(LachdananFacingAngle);
-                    foreach (var GKnight in GhostKnights)
-                    {
-                        float KnightFacing = Actors.Movement.MovementHelpers.GetFacingAngle(GKnight, user.World.GetActorBySNO(220219));
-                        GKnight.SetFacingRotation(KnightFacing);
-                    }
-                    
-
+                    //Запуск сцены
+                    StartConversation(target.World, 139823);
                 }
              }
              catch { }

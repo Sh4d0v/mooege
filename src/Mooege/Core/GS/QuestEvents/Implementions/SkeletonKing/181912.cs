@@ -72,7 +72,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             };
-
+            //117371 - Разговор с Каином и Тираэлем
+            //117779 - Пытый квест.
         }
 
         //Launch Conversations.

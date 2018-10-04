@@ -33,33 +33,46 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Core.GS.Ticker;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _181910 : QuestEvent
+    class _139825 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         public List<ConversationInteraction> Conversations { get; private set; }
-        private Boolean HadConversation = true;
 
 
-        public _181910()
-            : base(181910)
+        public _139825()
+            : base(139825)
         {
+
         }
 
         public override void Execute(Map.World world)
         {
-            Logger.Debug(" Conversation done ");
+            Logger.Debug(" Death Of King Event Path 2");
 
-         
-            // starting second conv
-            var wrongNPC = world.GetActorBySNO(180900);
-            world.SpawnMonster(117365, wrongNPC.Position);
-            var RightNPC = world.GetActorBySNO(117365);
-            world.Leave(wrongNPC);
-            StartConversation(world, 181912);
+            //Берём участников сцены
+            var LeoricGhost = world.GetActorBySNO(5365);
+            var GhostKnights = world.GetActorsBySNO(4182);
+            var LachdananGhost = world.GetActorBySNO(4183);
+            var SwordPlace = world.GetActorBySNO(163449);
+
+            TickTimer Timeout = new SecondsTickTimer(world.Game, 23f);
+            var ListenerKingSkeletons = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+            ListenerKingSkeletons.ContinueWith(delegate
+            {
+                LeoricGhost.Destroy();
+                LachdananGhost.Destroy();
+                foreach (var GK in GhostKnights)
+                {
+                    GK.Destroy();
+                }
+                
+            });
+
 
         }
 
@@ -69,6 +82,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             foreach (var player in world.Players)
             {
                 player.Value.Conversations.StartConversation(conversationId); // this does the job of sending the proper stuff :p
+            }
+            return true;
+        }
+
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
+
             }
             return true;
         }

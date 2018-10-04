@@ -371,6 +371,35 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnEnterZoneListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 33065)
+                    {
+                        Vector3D PointToLeoricGhost = new Vector3D(650.6354f, 574.0665f, 0.10000005f);
+                        var TouchWorld = player.CurrentScene.World;
+                        TouchWorld.SpawnMonster(5360, PointToLeoricGhost);
+                        StartConversation(TouchWorld, 17921);
+                        var LeoricGhost = TouchWorld.GetActorBySNO(5360);
+
+                        TickTimer Timeout = new SecondsTickTimer(TouchWorld.Game, 5f);
+                        var ListenerKing = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                        ListenerKing.ContinueWith(delegate
+                        {
+                              TouchWorld.Leave(LeoricGhost);
+                        });
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
         private bool WaitToSpawn(TickTimer timer)
         {
             while (timer.TimedOut != true)
@@ -755,7 +784,7 @@ namespace Mooege.Core.GS.Actors
                             world.Game.Quests.Advance(72061);
                            
                         }
-                        if (dbQuestProgress.StepOfQuest <= 3)
+//                        if (dbQuestProgress.StepOfQuest <= 3)
                         {
                             Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
                             // 73261 TagMap[ActorKeys.GizmoGroup]
@@ -831,6 +860,30 @@ namespace Mooege.Core.GS.Actors
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
+                var Crater_World = player.World.Game.GetWorld(117405);
+                var Stranger = Crater_World.GetActorBySNO(180900);
+
+                Crater_World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                {
+                    ActorID = Stranger.DynamicID,
+                    Field1 = 5,
+                    Field2 = 0,
+                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = 141225,
+                                PermutationIndex = 0,
+                                Speed = 0.5f
+                            }
+                            }
+                }, Stranger);
+                Crater_World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                {
+                    ActorID = Stranger.DynamicID,
+                    AnimationSNO = 142291,
+                }, Stranger);
                 // Second Conv - 181912 // actor 117365
 
 
@@ -1075,6 +1128,17 @@ namespace Mooege.Core.GS.Actors
                     //9926 - Spawn2/ 9900 - Spawn
                     //Skeleton_A - 5393
                 });
+                
+                
+                var ListenerEnterToLocalTask = Task<bool>.Factory.StartNew(() => OnEnterZoneListener(player, world));
+                //Wait for portal to be used or player going to scene.
+                ListenerEnterToLocalTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+
+                });
+
+                
                 for (int i = 0; i < 8; i++) { world.Game.Quests.Advance(72061); }
 
             }

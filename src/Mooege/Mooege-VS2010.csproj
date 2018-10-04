@@ -361,6 +361,9 @@
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198588.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198617.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Side_BrotherRescue\129751.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\117371.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\139823.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\139825.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\154570.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181910.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181912.cs" />

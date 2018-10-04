@@ -33,34 +33,56 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Core.GS.Ticker;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _181910 : QuestEvent
+    class _139823 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         public List<ConversationInteraction> Conversations { get; private set; }
-        private Boolean HadConversation = true;
 
 
-        public _181910()
-            : base(181910)
+        public _139823()
+            : base(139823)
         {
+
         }
 
         public override void Execute(Map.World world)
         {
-            Logger.Debug(" Conversation done ");
+            Logger.Debug(" Death Of King Event ");
+            
+            //Берём участников сцены
+            var LeoricGhost = world.GetActorBySNO(5365);
+            var GhostKnights = world.GetActorsBySNO(4182);
+            var LachdananGhost = world.GetActorBySNO(4183);
+            var SwordPlace = world.GetActorBySNO(163449);
+            //Вычесляем взгляд для участников
+            float LeoricFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LeoricGhost, LachdananGhost);
+            float LachdananFacingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(LachdananGhost, LeoricGhost);
 
-         
-            // starting second conv
-            var wrongNPC = world.GetActorBySNO(180900);
-            world.SpawnMonster(117365, wrongNPC.Position);
-            var RightNPC = world.GetActorBySNO(117365);
-            world.Leave(wrongNPC);
-            StartConversation(world, 181912);
 
+            LeoricGhost.SetFacingRotation(LeoricFacingAngle);
+            LachdananGhost.SetFacingRotation(LachdananFacingAngle);
+            //4 секунды до убийства
+            //Убийство + запуск нового диалога
+
+            
+            foreach (var GKnight in GhostKnights)
+            {
+                float KnightFacing = Actors.Movement.MovementHelpers.GetFacingAngle(GKnight, world.GetActorBySNO(220219));
+                GKnight.SetFacingRotation(KnightFacing);
+            }
+            LachdananGhost.Move(SwordPlace.Position, LachdananFacingAngle);
+
+            TickTimer Timeout = new SecondsTickTimer(world.Game, 4f);
+            var ListenerKingSkeletons = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+            ListenerKingSkeletons.ContinueWith(delegate
+            {
+                StartConversation(world, 139825);
+            });
         }
 
         //Launch Conversations.
@@ -69,6 +91,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             foreach (var player in world.Players)
             {
                 player.Value.Conversations.StartConversation(conversationId); // this does the job of sending the proper stuff :p
+            }
+            return true;
+        }
+
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
+
             }
             return true;
         }

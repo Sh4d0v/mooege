@@ -417,8 +417,11 @@ namespace Mooege.Core.GS.Players
 
             // Skeleton King 72061
             this.QuestEventDict.Add(80681, new _80681()); // Начало квеста
+            this.QuestEventDict.Add(139823, new _139823()); // Начало события с мечом
+            this.QuestEventDict.Add(139825, new _139825()); // Продолжение события с мечом
             this.QuestEventDict.Add(181910, new _181910()); // Приветствие в кратере
             this.QuestEventDict.Add(181912, new _181912()); // Последующий диалог в кратере.
+            this.QuestEventDict.Add(117371, new _117371()); // Завершение квеста.
 
 
         }

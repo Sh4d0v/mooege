@@ -36,7 +36,7 @@ using Mooege.Core.GS.Actors.Interactions;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _181910 : QuestEvent
+    class _117371 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
@@ -44,23 +44,35 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private Boolean HadConversation = true;
 
 
-        public _181910()
-            : base(181910)
+        public _117371()
+            : base(117371)
         {
         }
 
         public override void Execute(Map.World world)
         {
             Logger.Debug(" Conversation done ");
+            if (HadConversation)
+            {
+           
+                HadConversation = false;
+            }
 
-         
-            // starting second conv
-            var wrongNPC = world.GetActorBySNO(180900);
-            world.SpawnMonster(117365, wrongNPC.Position);
-            var RightNPC = world.GetActorBySNO(117365);
-            world.Leave(wrongNPC);
-            StartConversation(world, 181912);
 
+
+            foreach (var player in world.Players)
+            {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+
+                dbQuestProgress.LastQuest = 72061;
+                dbQuestProgress.ActiveQuest = 117779;
+                dbQuestProgress.StepOfQuest = -1;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            };
+
+            // starting five quest
+            //StartConversation(world, 0);
         }
 
         //Launch Conversations.
