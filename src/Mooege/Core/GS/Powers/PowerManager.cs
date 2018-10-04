@@ -572,7 +572,7 @@ namespace Mooege.Core.GS.Powers
                             }
                             }
                     }, SkeletionThrone);
-
+                    SkeletionThrone.Attributes[Net.GS.Message.GameAttribute.Operatable] = false;
                     Timeout = new SecondsTickTimer(user.World.Game, 16f);
                     var ListenerKingSkeletons = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
                     //Ждём пока убьют
@@ -614,6 +614,16 @@ namespace Mooege.Core.GS.Powers
                             }
                             }, SkeletionThrone);
 
+                            
+                            foreach (var player in user.World.Players)
+                            {
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                                dbQuestProgress.StepOfQuest = 15;
+
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                            }
+
                             Timeout = new SecondsTickTimer(user.World.Game, 2f);
                             var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
                             ListenerWaiting.ContinueWith(delegate
@@ -653,6 +663,15 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
+            #region Разговор в кратере
+            try
+            {
+                if (target.ActorSNO.Id == 180900)
+                {
+                    StartConversation(target.World, 181910);
+                }
+            }catch { }
+            #endregion
             #endregion
 
             #region Книги

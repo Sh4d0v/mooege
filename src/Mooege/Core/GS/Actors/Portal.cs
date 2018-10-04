@@ -379,6 +379,14 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool StartConversation(Core.GS.Map.World world, System.Int32 conversationId)
+        {
+            foreach (var player in world.Players)
+            {
+                player.Value.Conversations.StartConversation(conversationId);
+            }
+            return true;
+        }
         public static bool setActorOperable(Map.World world, System.Int32 snoId, bool status)
         {
             var actor = world.GetActorBySNO(snoId);
@@ -802,22 +810,28 @@ namespace Mooege.Core.GS.Actors
                 //Покои: 117405
                 // To Tyrael Zone
                 /*
-                [148748] a1dun_Leor_Tyrael_Back_Skybox_01
-                [135396] a1dun_Leor_Tyrael_jail_01
-                [135521] a1dun_Leor_Tyrael_Stairs_A_01
-                [135710] a1dun_Leor_Tyrael_Filler_02
+                [117035] trDun_Crypt_W_Exit_Stranger_01
                 */
-                var Leor_Tyrael = world.Game.GetWorld(117405);
-                Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
-                Vector3D PointToSkyBox = new Vector3D(240f, 240f, 0f);
-                Vector3D PointToFiller = new Vector3D(-240f, 0f, 0f);
-                Vector3D PointToJail = new Vector3D(0f, 240f, 0f);
-                Vector3D PointToSpawn = new Vector3D(13.63128f, 66.13332f, 5f);
-                player.ChangeWorld(player.World.Game.GetWorld(117405), PointToSpawn);
-              
+                //Vector3D PointToSpawn = new Vector3D(196.2606f, 300.2404f, 25.237f);
+                //player.ChangeWorld(player.World.Game.GetWorld(117405), PointToSpawn);
+                
                 //World_SceneChunk_SceneParametr - Связь мира и сцены
                 //World - Сам Мир
                 //Scene_Chunck - Сцена
+                // Тираэль в кратере 180900
+                // First COnv - 181910
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72061)
+                {
+                    if (dbQuestProgress.StepOfQuest == 15)
+                    {
+                        dbQuestProgress.StepOfQuest = 16;
+                        world.Game.Quests.Advance(72061);
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+                // Second Conv - 181912 // actor 117365
 
 
             }

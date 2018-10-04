@@ -329,8 +329,10 @@ namespace Mooege.Net.GS
             [135396] a1dun_Leor_Tyrael_jail_01
             [135521] a1dun_Leor_Tyrael_Stairs_A_01
             [135710] a1dun_Leor_Tyrael_Filler_02
+            [117035] trDun_Crypt_W_Exit_Stranger_01
+            
             */
-          //  var Leor_Tyrael = client.Player.World.Game.GetWorld(117405);
+            //  var Leor_Tyrael = client.Player.World.Game.GetWorld(117405);
             Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
          //   Core.GS.Map.Scene CainScene = new Core.GS.Map.Scene(Leor_Tyrael, PointToScene, 135521, null);
             #endregion
