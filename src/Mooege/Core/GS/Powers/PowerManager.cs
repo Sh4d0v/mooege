@@ -674,7 +674,8 @@ namespace Mooege.Core.GS.Powers
                         {
                             if (dbQuestProgress.StepOfQuest == 5)
                             {
-                                user.World.Game.Quests.NotifyQuest(117779, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                                //118037 - Конец квеста
+                                user.World.Leave(target.World.GetActorBySNO(206527));
                                 StartConversation(target.World, 194412);
                             }
                         }

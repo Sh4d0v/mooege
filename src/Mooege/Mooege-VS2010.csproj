@@ -368,6 +368,7 @@
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181910.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181912.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\80861.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SwordOfJustice\118037.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SwordOfJustice\194412.cs" />
     <Compile Include="Core\GS\QuestEvents\QuestEvent.cs" />
     <Compile Include="Core\GS\Ticker\SteppedTickTimer.cs" />

@@ -422,10 +422,15 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(181910, new _181910()); // Приветствие в кратере
             this.QuestEventDict.Add(181912, new _181912()); // Последующий диалог в кратере.
             this.QuestEventDict.Add(117371, new _117371()); // Завершение квеста.
-
+            
             // Sword of Justice 117779
             this.QuestEventDict.Add(194412, new _194412()); // Диалог с Магдой
+            this.QuestEventDict.Add(118037, new _118037()); // Завершение квеста.
 
+            // Nephalem Power 72738
+
+
+            // Return to Tristram 136656
         }
 
         /// <summary>

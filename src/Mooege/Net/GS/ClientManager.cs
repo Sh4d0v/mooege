@@ -288,7 +288,8 @@ namespace Mooege.Net.GS
                     world.Game.Quests.Advance(72061);
                 }
                 #endregion
-
+                Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
+                world.SpawnMonster(117365, PointToTyrael);
                 //Открытие ворот
                 var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
                 //Wait for portal to be used or player going to scene.

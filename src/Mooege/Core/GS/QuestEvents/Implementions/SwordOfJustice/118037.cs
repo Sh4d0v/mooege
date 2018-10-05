@@ -36,7 +36,7 @@ using Mooege.Core.GS.Actors.Interactions;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _194412 : QuestEvent
+    class _118037 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
@@ -44,8 +44,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private Boolean HadConversation = true;
 
 
-        public _194412()
-            : base(194412)
+        public _118037()
+            : base(118037)
         {
         }
 
@@ -60,13 +60,13 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
-                dbQuestProgress.ActiveQuest = 117779;
-                dbQuestProgress.StepOfQuest = 6;
+                dbQuestProgress.LastQuest = 117779;
+                dbQuestProgress.ActiveQuest = 72738;
+                dbQuestProgress.StepOfQuest = -1;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             };
-            world.Game.Quests.NotifyQuest(117779, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
-            StartConversation(world, 141778);
+            //need 117365
         }
 
         //Launch Conversations.
@@ -74,7 +74,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
             foreach (var player in world.Players)
             {
-                player.Value.Conversations.StartConversation(conversationId); 
+                player.Value.Conversations.StartConversation(conversationId);
             }
             return true;
         }
