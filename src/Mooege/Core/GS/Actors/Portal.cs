@@ -408,6 +408,48 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnKhazraCaveListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            
+            while (true)
+            {
+                try
+                {
+                    int sceneID = player.CurrentScene.SceneSNO.Id;
+                    //116976
+                    if (sceneID == 116976)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        private bool OnKillListenerKhazra(List<uint> monstersAlive, Core.GS.Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         private bool StartConversation(Core.GS.Map.World world, System.Int32 conversationId)
         {
             foreach (var player in world.Players)
@@ -735,9 +777,8 @@ namespace Mooege.Core.GS.Actors
             if (this.Destination.WorldSNO == 60395)
             {
                 //Enter to Drowned Temple
-                Vector3D Point = new Vector3D(0f, 0f, 0.2f);
-                if (world.Game.GetWorld(60395).StartingPoints.Count == 0)
-                    player.ChangeWorld(player.World.Game.GetWorld(60395), Point);
+                
+
             }
             if (this.Destination.WorldSNO == 60713)
             {
@@ -876,6 +917,57 @@ namespace Mooege.Core.GS.Actors
 
 
             }
+            if (this.Destination.WorldSNO == 119888)
+            {
+                var ToWorld = player.World.Game.GetWorld(119888);
+                //Установить ожидание зоны.
+                var ListenerKhazraEnterTask = Task<bool>.Factory.StartNew(() => OnKhazraCaveListener(player, ToWorld));
+                ListenerKhazraEnterTask.ContinueWith(delegate
+                {
+                    world.Game.Quests.Advance(117779);
+
+                    var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
+                    //OnKillListenerKhazra
+                    var minions = ToWorld.GetActorsBySNO(178213);
+                    var Urik = ToWorld.GetActorBySNO(131131);
+
+                    List<uint> KhazrasKiller = new List<uint> { };
+                    foreach (var minion in minions)
+                    {
+                        KhazrasKiller.Add(minion.DynamicID);
+                        minion.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                    }
+                    KhazrasKiller.Add(Urik.DynamicID);
+                    Urik.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                    Urik.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                    Urik.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                    //Установить счётчик убийств
+                    var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerKhazra(KhazrasKiller, ToWorld));
+                    StartConversation(ToWorld, 131144);
+
+                    CainKillerEvent.ContinueWith(delegate
+                    {
+                        world.Game.Quests.Advance(117779);
+                        foreach (var playerN in player.World.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                            if (dbQuestProgress.ActiveQuest == 117779)
+                            {
+                                dbQuestProgress.StepOfQuest = 5;
+                            }
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                        //
+                    });
+                });
+
+
+                //PowerManager - Запустить диалог после использования части клинка.
+
+                //PowerManager - Ожидание телепорта домой.
+            }
+
             //Khazra [056593] trOut_TristramFields_EntranceA_E01_S01
             //Portal to New Tristram
             if (this.Destination.StartingPointActorTag == -100)
@@ -1216,6 +1308,7 @@ namespace Mooege.Core.GS.Actors
                     //
                 }
                 else
+                   
                     Logger.Warn("Portal's tagged starting point does not exist (Tag = {0})", this.Destination.StartingPointActorTag);
             }
 

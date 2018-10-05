@@ -661,6 +661,31 @@ namespace Mooege.Core.GS.Powers
                 }
             }catch { }
             #endregion
+
+            #region Лезвия меча
+            try
+            {
+                if (target.ActorSNO.Id == 206527)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 117779)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 5)
+                            {
+                                user.World.Game.Quests.NotifyQuest(117779, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                                StartConversation(target.World, 194412);
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                  
+                }
+            }
+            catch { }
+            #endregion
             #endregion
 
             #region Книги

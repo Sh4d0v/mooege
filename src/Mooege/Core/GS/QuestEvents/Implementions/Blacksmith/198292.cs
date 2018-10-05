@@ -65,7 +65,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //BlacksmithQuest.Move(FirstPoint,FirstfacingAngle);
 
             //world.SpawnMonster(112131, LastTelega);
-            StartConversation(world, 198307);
+            //StartConversation(world, 198307);
 
         }
         private bool StartConversation(Map.World world, Int32 conversationId)

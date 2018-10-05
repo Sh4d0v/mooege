@@ -320,7 +320,7 @@ namespace Mooege.Net.GS
                     world.BroadcastIfRevealed(new SetIdleAnimationMessage
                     {
                         ActorID = Unlocked.DynamicID,
-                        AnimationSNO = Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
                     }, Unlocked);
 
                 });

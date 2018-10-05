@@ -47,9 +47,9 @@ namespace Mooege.Core.GS.Generators
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
 
-            if (worldAsset.SNOId == 60713)
+            if (worldAsset.SNOId == 60395)
             {
-
+                worldData.IsGenerated = false;
             }
             if(worldAsset.SNOId == 117405)
             {
@@ -57,9 +57,27 @@ namespace Mooege.Core.GS.Generators
                 //worldData.IsGenerated = true;
                
             }
+            //trDun_Cave_Middle_RiverA - затопленный храм.
+            //trDun_Cave_Middle_ChasmA - Пристанище войнов.
+            //trDun_Cave_Middle_LostCampA - 
+
             if(worldAsset.SNOId == 119888)
             {
                 worldData.IsGenerated = false;
+                /*
+                 
+                [116976] trDun_Cave_Goat_NSEW_02
+                [075138] trDun_Cave_Goat_S_Entrance_01
+                [075141] trDun_Cave_Goat_NE_01
+                [075144] trDun_Cave_Goat_NSW_01
+                [075186] trDun_Cave_Goat_NS_01
+                [075261] trDun_Cave_Goat_EW_01
+                [075353] trDun_Cave_Goat_NSEW_01
+                [075606] trDun_Cave_Goat_W_Entrance_01
+
+
+                 */
+
             }
 
             if (worldData.IsGenerated)
