@@ -288,6 +288,7 @@ namespace Mooege.Net.GS
                     world.Game.Quests.Advance(72061);
                 }
                 #endregion
+                
                 Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
                 world.SpawnMonster(117365, PointToTyrael);
                 //Открытие ворот
@@ -310,7 +311,7 @@ namespace Mooege.Net.GS
                     {
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
-                                Duration = 100,
+                                Duration = 1000,
                                 AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
@@ -349,6 +350,90 @@ namespace Mooege.Net.GS
                     });
                 }
                 //World - Fields_Cave_SwordOfJustice_Level01 [119888]
+
+            }
+            #endregion
+
+            #region Акт 1 Квест 6 - Меч незнакомца
+            if (dbQuestProgress.ActiveQuest == 72738)
+            {
+                world.Leave(world.GetActorByDynamicId(75));
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 8; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 10; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                var BlacksmithVendor = world.GetActorBySNO(56947);
+                world.Leave(BlacksmithVendor);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036
+
+
+                #endregion
+                #region Перемотка к пятому квесту
+                for (int Rem = 0; Rem < 17; Rem++)
+                {
+                    world.Game.Quests.Advance(72061);
+                }
+                #endregion
+                #region Перемотка к шестому квесту
+                for (int Rem = 0; Rem < 6; Rem++)
+                {
+                    world.Game.Quests.Advance(117779);
+                }
+                #endregion
+
+                Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
+                world.SpawnMonster(117365, PointToTyrael);
+                //Открытие ворот
+                var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
+                //Открытие ворот в гиблые поля.
+                ListenerNierDoorsTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+                    //No Lock 230324
+                    //Lock 216574
+                    var Locked = world.GetActorBySNO(216574);
+                    var Unlocked = world.GetActorBySNO(230324);
+                    world.Leave(Locked);
+                    world.BroadcastIfRevealed(new PlayAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                    {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 1000,
+                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                    }
+                    }, Unlocked);
+
+                    world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, Unlocked);
+
+                });
+
 
             }
             #endregion

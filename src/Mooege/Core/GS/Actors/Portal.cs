@@ -930,7 +930,8 @@ namespace Mooege.Core.GS.Actors
                     //OnKillListenerKhazra
                     var minions = ToWorld.GetActorsBySNO(178213);
                     var Urik = ToWorld.GetActorBySNO(131131);
-
+                    MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200000f;
+                    MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200000f;
                     List<uint> KhazrasKiller = new List<uint> { };
                     foreach (var minion in minions)
                     {

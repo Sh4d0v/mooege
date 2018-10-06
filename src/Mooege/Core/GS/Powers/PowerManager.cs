@@ -26,6 +26,7 @@ using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Players;
 using Mooege.Core.GS.Ticker;
+using Mooege.Net.GS.Message;
 using Mooege.Net.GS.Message.Definitions.Effect;
 using Mooege.Net.GS.Message.Definitions.World;
 
@@ -148,6 +149,8 @@ namespace Mooege.Core.GS.Powers
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
             // 46 - 117779
+            // Ворота -
+            // Негодяй - 80812
             #region Южные ворота в тристрам.
             try
             {
@@ -540,6 +543,8 @@ namespace Mooege.Core.GS.Powers
                 if (target.ActorSNO.Id == 5354)
                 {
                     user.World.Game.Quests.NotifyQuest(72061, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 5354);
+                    target.Attributes[GameAttribute.Gizmo_State] = 1;
+                    target.Attributes.BroadcastChangedIfRevealed();
                     var SkeletionThrone = user.World.GetActorBySNO(5354);
                     //user.World.SpawnMonster()
                     //var SkeletonKing = 0;
