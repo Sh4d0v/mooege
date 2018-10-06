@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Mooege.Common.MPQ.FileFormats;
+//using Mooege.Common.MPQ.FileFormats;
 using Mooege.Net.GS.Message.Definitions.ACD;
 using Mooege.Net.GS.Message.Definitions.Animation;
 using Mooege.Core.GS.Common.Types.Math;
@@ -31,7 +31,7 @@ using System.Threading;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Net.GS.Message;
-
+using MonsterFF = Mooege.Common.MPQ.FileFormats.Monster;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -79,7 +79,12 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             //Убираем телегу
             var FactorToShoot = world.GetActorBySNO(81699);
-            world.Leave(FactorToShoot);
+            try
+            {
+                world.Leave(FactorToShoot);
+            }
+            catch { }
+
             //FactorToShoot.Destroy();
 
             //Запуск отслеживания убийства
@@ -140,6 +145,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         //actorWQM.Attributes[Net.GS.Message.GameAttribute.Si]
                         // DOES NOT WORK it should be champion affixes or shit of this kind ...
                         // Увеличиваем здоровье босса!
+                        //actorWQM.Q
                         actorWQM.Attributes[GameAttribute.Hitpoints_Max] = 150f;
                         actorWQM.Attributes[GameAttribute.Hitpoints_Cur] = 150f;
 

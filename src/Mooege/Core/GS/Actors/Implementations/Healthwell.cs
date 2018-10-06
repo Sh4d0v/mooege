@@ -37,8 +37,22 @@ namespace Mooege.Core.GS.Actors.Implementations
 
         public override void OnTargeted(Players.Player player, Net.GS.Message.Definitions.World.TargetMessage message)
         {
-            Logger.Warn("Healthwell has no function, Powers not implemented");
+            Logger.Warn("Healthwell Implementaion ver 1.0, Range 26f");
+            var playersAffected = player.GetPlayersInRange(26f);
+            foreach (Players.Player playerN in playersAffected)
+            {
+                foreach (Players.Player targetAffected in playersAffected)
+                {
+                    player.InGameClient.SendMessage(new Net.GS.Message.Definitions.Effect.PlayEffectMessage()
+                    {
+                        ActorId = targetAffected.DynamicID,
+                        Effect = Net.GS.Message.Definitions.Effect.Effect.HealthOrbPickup
+                    });
+                }
 
+                //every summon and mercenary owned by you must broadcast their green text to you /H_DANILO
+                player.AddPercentageHP(100);
+            }
             this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
             this.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
             this.Attributes[GameAttribute.Gizmo_State] = 1;

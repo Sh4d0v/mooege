@@ -37,6 +37,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mooege.Net.GS.Message.Definitions.Animation;
+using Mooege.Core.GS.Actors;
+using Mooege.Core.GS.Skills;
+using Mooege.Core.GS.Powers;
+using Mooege.Core.GS.Ticker;
+using Mooege.Core.GS.Actors.Implementations.Minions;
 
 namespace Mooege.Net.GS
 {
@@ -62,7 +67,7 @@ namespace Mooege.Net.GS
             Logger.Trace("Client disconnected: {0}", e.Connection.ToString());
             GameManager.RemovePlayerFromGame((GameClient)e.Connection.Client);
         }
-
+        
         public void Consume(GameClient client, GameMessage message)
         {
             if (message is JoinBNetGameMessage) OnJoinGame(client, (JoinBNetGameMessage)message);
@@ -74,7 +79,9 @@ namespace Mooege.Net.GS
             //Тестовая проверка прохождения // Пока только синг.
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(client.Player.Toon.PersistentID);
             var world = client.Player.World;
-          
+            //[050453] [UI] Quests
+            //[050454] [UI] QuestUpdate
+            //[174218] [UI] QuestReward
             #region Акт 1
 
             #region Акт 1 Квест 2 - Наследие декарда каина
@@ -99,21 +106,21 @@ namespace Mooege.Net.GS
                 {
                     world.Leave(world.GetActorByDynamicId(83));
                     Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
-                    var NewPoint = new Vector3D(LeahBrains.Position.X, LeahBrains.Position.Y + 5, LeahBrains.Position.Z);
-                    LeahFriend.Brain = new MinionBrain(LeahFriend);
+                    LeahFriend.Brain = new HirelingBrain(LeahFriend);
+                   // SetBrain(new MinionBrain(this));
                     LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
                     LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
-                    LeahFriend.Position = RandomDirection(client.Player.Position, 3f, 8f);
                     LeahFriend.RotationW = LeahBrains.RotationW;
                     LeahFriend.RotationAxis = LeahBrains.RotationAxis;
-                    LeahFriend.EnterWorld(NewPoint);
+                    LeahFriend.EnterWorld(RandomDirection(client.Player.Position, 3f, 8f));
                     LeahFriend.Attributes[GameAttribute.Level] = 6;
                     client.Player.ActiveHireling = LeahFriend;
-                    client.Player.SelectedNPC = null;
+                    
+
                     LeahFriend.Brain.Activate();
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1)
