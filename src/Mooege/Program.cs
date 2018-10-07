@@ -115,11 +115,8 @@ namespace Mooege
             {
                 Logger.Info("Initing new database, creating first owner account (test@,123456)");
                 var account = AccountManager.CreateAccount("test@", "123456", "test", Account.UserLevels.Owner);
-                var account1 = AccountManager.CreateAccount("AiDiE@", "13061994", "One", Account.UserLevels.Owner);
                 var gameAccount = GameAccountManager.CreateGameAccount(account);
-                var gameAccount1 = GameAccountManager.CreateGameAccount(account1);
                 account.DBAccount.DBGameAccounts.Add(gameAccount.DBGameAccount);
-                account.DBAccount.DBGameAccounts.Add(gameAccount1.DBGameAccount);
                 account.SaveToDB();
             }
 

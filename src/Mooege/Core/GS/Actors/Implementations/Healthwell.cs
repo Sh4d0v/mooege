@@ -34,10 +34,18 @@ namespace Mooege.Core.GS.Actors.Implementations
             Attributes[GameAttribute.Gizmo_State] = 0;
         }
 
+        private bool WaitToSpawn(Ticker.TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
 
+            }
+            return true;
+        }
+       
         public override void OnTargeted(Players.Player player, Net.GS.Message.Definitions.World.TargetMessage message)
         {
-            Logger.Warn("Healthwell Implementaion ver 1.0, Range 26f");
+            Logger.Warn("Healthwell Implementaion ver 1.1, Range 26f, refill 5 second");
             var playersAffected = player.GetPlayersInRange(26f);
             foreach (Players.Player playerN in playersAffected)
             {
@@ -50,13 +58,27 @@ namespace Mooege.Core.GS.Actors.Implementations
                     });
                 }
 
-                //every summon and mercenary owned by you must broadcast their green text to you /H_DANILO
                 player.AddPercentageHP(100);
             }
             this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
             this.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
             this.Attributes[GameAttribute.Gizmo_State] = 1;
             Attributes.BroadcastChangedIfRevealed();
+
+            Ticker.TickTimer Timeout = new Ticker.SecondsTickTimer(player.World.Game, 5f);
+            var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+            ListenerWaiting.ContinueWith(delegate {
+                this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = false;
+                //this.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                this.Attributes[GameAttribute.Gizmo_State] = 0;
+                Attributes.BroadcastChangedIfRevealed();
+            });
+
+            player.Attributes[GameAttribute.Skill, 0x0002EC66] = 1;
+            player.Attributes[GameAttribute.Skill_Total, 0x0002EC66] = 1;
+
+            player.Attributes.SendChangedMessage(player.InGameClient);
+
         }
     }
 }
