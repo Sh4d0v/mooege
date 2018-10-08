@@ -27,16 +27,15 @@ using System;
 namespace Mooege.Core.GS.Actors.Implementations.Hirelings
 {
     [HandledSNO(4644 /* Scoundrel.acr */)]
-    public class Scoundrel : Hireling, Objects.IUpdateable
+    public class Scoundrel : Hireling, Objects.IUpdateable, Living
     {
         private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
         public static Random Rand { get { return _threadRand.Value; } }
-        private Players.Player OwnerPlayer;
         public Scoundrel(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-            Brain = new AI.Brains.AggressiveNPCBrain(this);
-            
+            Brain = new AI.Brains.HirelingBrain(this);
+           
             mainSNO = 4644;
             hirelingSNO = 52694;
             proxySNO = 192941;
@@ -67,9 +66,19 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
                 return;
             //Brain.State = AI.BrainState.Follow;
 
-            
+
             //var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(this, OwnerPlayer.Position);
-            //this.Move(OwnerPlayer.Position, OwnerPlayer.RotationW);
+            try
+            {
+                if(CurrentScene.Players[0].ActiveHireling.ActorSNO.Id == 52694)
+                {
+                    //if(CurrentScene.Players[0].mo == true)
+                    Vector3D Point = new Vector3D(CurrentScene.Players[0].Position.X -5, CurrentScene.Players[0].Position.Y, CurrentScene.Players[0].Position.Z);
+                   // this.Move(Point, CurrentScene.Players[0].RotationW);
+                }
+            }
+            catch { }
+            
             
             this.Brain.Update(tickCounter);
             
