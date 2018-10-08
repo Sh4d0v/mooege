@@ -35,7 +35,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
         protected int proxySNO = -1;
         protected int skillKit = -1;
         protected int hirelingGBID = -1;
-
+        public Actor Master;
 
         private World originalWorld = null;
         private PRTransform originalPRT = null;

@@ -46,15 +46,7 @@ namespace Mooege.Core.GS.AI.Brains
             if (body.ActorData.MonsterSNO > 0)
             {
                 var monsterData = (Mooege.Common.MPQ.FileFormats.Monster)MPQStorage.Data.Assets[SNOGroup.Monster][body.ActorData.MonsterSNO].Data;
-                //SkillKit - Scoundrel - 35582
-                if (monsterData.SNOSkillKit == 35582)
-                {
-                    this.PresetPowers.Add(30005);//AI_RunNearBy
-                    this.PresetPowers.Add(30006);//AI_RunNearBy_Gloab
-                    this.PresetPowers.Add(30008);//AI_RunNearBy_Short
-                    this.PresetPowers.Add(30592);//Weapon_inst
-                    this.PresetPowers.Add(187092);
-                }
+                
                 foreach (var monsterSkill in monsterData.SkillDeclarations)
                 {
                     if (monsterSkill.SNOPower > 0)

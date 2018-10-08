@@ -1301,16 +1301,26 @@ namespace Mooege.Core.GS.Actors
                         if (player.ActiveHireling != null)
                         {
                             var HirelingToLeave = player.ActiveHireling;
-                            now_world.Leave(HirelingToLeave);
-                            var NewTristram = player.InGameClient.Game.GetWorld(71150);
-                            var Leah_Back = NewTristram.GetActorByDynamicId(83);
-                            Leah_Back.EnterWorld(Leah_Back.Position);
+                           // now_world.Leave(HirelingToLeave);
+                            //var NewTristram = player.InGameClient.Game.GetWorld(71150);
+                            //var Leah_Back = NewTristram.GetActorByDynamicId(83);
+                            //Leah_Back.EnterWorld(Leah_Back.Position);
+                            world.Enter(HirelingToLeave);
+                            
+                            //var NewHireling = world.GetActorBySNO(HirelingToLeave.ActorSNO.Id);
+                            player.ChangeWorld(world, startingPoint);
+                            HirelingToLeave.ChangeWorld(world, player.Position);
                         }
-
+                        else
+                        {
+                            player.ChangeWorld(world, startingPoint);
+                        }
                     }
-                    catch { }
+                    catch {
+                        player.ChangeWorld(world, startingPoint);
+                    }
 
-                    player.ChangeWorld(world, startingPoint);
+                    //player.ChangeWorld(world, startingPoint);
                     //
                 }
                 else

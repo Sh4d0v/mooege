@@ -27,24 +27,30 @@ using System;
 namespace Mooege.Core.GS.Actors.Implementations.Hirelings
 {
     [HandledSNO(4644 /* Scoundrel.acr */)]
-    public class Scoundrel : Hireling, Objects.IUpdateable, Living
+    public class Scoundrel : Hireling, Objects.IUpdateable
     {
         private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
         public static Random Rand { get { return _threadRand.Value; } }
+
         public Scoundrel(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
             Brain = new AI.Brains.HirelingBrain(this);
-           
+            
             mainSNO = 4644;
             hirelingSNO = 52694;
             proxySNO = 192941;
             skillKit = 0x8AFE;
             hirelingGBID = StringHashHelper.HashItemName("Scoundrel");
             Attributes[GameAttribute.Hireling_Class] = 2;
-            //Brain.State = Mooege.Core.GS.AI.BrainState.Follow;
-            //this.Brain = new MonsterBrain(this);
-            
+
+            try
+            {
+                foreach(var player in world.Players)
+                {
+                    Master = world.GetActorBySNO(player.Value.ActorSNO.Id);
+                }
+            }catch{ }
             this.Attributes[GameAttribute.Attacks_Per_Second] = 1.0f;
             this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
             this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
@@ -64,29 +70,16 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
         {
             if (this.Brain == null)
                 return;
-            //Brain.State = AI.BrainState.Follow;
 
-
-            //var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(this, OwnerPlayer.Position);
             try
             {
                 if(CurrentScene.Players[0].ActiveHireling.ActorSNO.Id == 52694)
                 {
-                    //if(CurrentScene.Players[0].mo == true)
-                    Vector3D Point = new Vector3D(CurrentScene.Players[0].Position.X -5, CurrentScene.Players[0].Position.Y, CurrentScene.Players[0].Position.Z);
-                   // this.Move(Point, CurrentScene.Players[0].RotationW);
+                       this.Brain.Update(tickCounter);// this.Move(Point, CurrentScene.Players[0].RotationW);
                 }
             }
             catch { }
-            
-            
-            this.Brain.Update(tickCounter);
-            
-            
-
-            //Vector3D NearPlayer = new 
-            //this.Move()
-        }
+         }
         public override Hireling CreateHireling(World world, int snoId, TagMap tags)
         {
             return new Scoundrel(world, snoId, tags);

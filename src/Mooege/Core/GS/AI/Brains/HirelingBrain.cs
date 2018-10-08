@@ -27,6 +27,7 @@ using Mooege.Net.GS.Message;
 using Mooege.Common.MPQ;
 using Mooege.Core.GS.Common.Types.SNO;
 using Mooege.Core.GS.Ticker;
+using Mooege.Core.GS.Actors.Implementations.Hirelings;
 
 namespace Mooege.Core.GS.AI.Brains
 {
@@ -48,6 +49,15 @@ namespace Mooege.Core.GS.AI.Brains
             if (body.ActorData.MonsterSNO > 0)
             {
                 var monsterData = (Mooege.Common.MPQ.FileFormats.Monster)MPQStorage.Data.Assets[SNOGroup.Monster][body.ActorData.MonsterSNO].Data;
+                //SkillKit - Scoundrel - 35582
+                if (monsterData.SNOSkillKit == 35582)
+                {
+                    this.PresetPowers.Add(30005);//AI_RunNearBy
+                    this.PresetPowers.Add(30006);//AI_RunNearBy_Gloab
+                    this.PresetPowers.Add(30008);//AI_RunNearBy_Short
+                    this.PresetPowers.Add(30592);//Weapon_inst
+                    this.PresetPowers.Add(187092);
+                }
                 foreach (var monsterSkill in monsterData.SkillDeclarations)
                 {
                     if (monsterSkill.SNOPower > 0)
@@ -61,7 +71,7 @@ namespace Mooege.Core.GS.AI.Brains
         public override void Think(int tickCounter)
         {
             // this needed? /mdz
-            if (this.Body is NPC) return;
+            //if (this.Body is NPC) return;
 
             // check if in disabled state, if so cancel any action then do nothing
             if (this.Body.Attributes[GameAttribute.Frozen] ||
@@ -100,7 +110,8 @@ namespace Mooege.Core.GS.AI.Brains
                     {
                         //System.Console.Out.WriteLine("No enemies in range, return to master");
                         //TODO: Minions need to be behind Toons on either side. 1st Master 2nd 3rd
-                        this.CurrentAction = new MoveToPointAction(this.Body, (this.Body as Minion).Master.Position);
+                        Vector3D ModdedPosition = new Vector3D((this.Body as Hireling).Master.Position.X + 5, (this.Body as Hireling).Master.Position.Y, (this.Body as Hireling).Master.Position.Z);
+                        this.CurrentAction = new MoveToPointAction(this.Body, ModdedPosition);
                     }
                 }
             }
