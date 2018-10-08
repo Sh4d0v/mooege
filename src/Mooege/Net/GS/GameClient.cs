@@ -96,22 +96,42 @@ namespace Mooege.Net.GS
                                 {
                                     OldP.Destroy();
                                 }
-                            }catch{ }
-                            
+                            }
+                            catch { }
+
                             var ToHome = new Portal(Player.World, 5648, Player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
                             ToHome.NameSNOId = 71150;
                             ToHome.Scale = 0.9f;
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
                             ToHome.EnterWorld(PositionToPortal);
-                            
-                      /*      
-                            //Первая версия телепорта
-                            if (mooNetClient.InGameClient.Game.GetWorld(71150) != mooNetClient.InGameClient.Player.World)
-                                mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(71150), ToPortal);
-                            else
-                                mooNetClient.InGameClient.Player.Teleport(ToPortal);
-                      */
 
+                            /*      
+                                  //Первая версия телепорта
+                                  if (mooNetClient.InGameClient.Game.GetWorld(71150) != mooNetClient.InGameClient.Player.World)
+                                      mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(71150), ToPortal);
+                                  else
+                                      mooNetClient.InGameClient.Player.Teleport(ToPortal);
+                            */
+
+                        }
+                        // Первая версия крафта
+                        else if (message.Id == 280)
+                        {
+                            Logger.Warn("Внимание! Тестовая функция");
+                            Logger.Debug("Запуск крафта");
+                            // Field0.
+                            // Data 230/252/263/267/304/337
+                           // -1941186209 - Отличные шоссы
+                           // 1022152670 - Прекрасные ножные повязки
+                           
+                           //Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
+                           // NewCraftItem.GBHandle.GBID = message.Field0;
+                           Inventory inventory = Player.Inventory;
+                           
+                           // inventory.AddGoldAmount(100000);
+                           // inventory.SpawnItem(NewCraftItem);
+
+    
                         }
                         else Logger.Warn("{0} - ID:{1} has no consumer or self-handler.", message.GetType(), message.Id);
 

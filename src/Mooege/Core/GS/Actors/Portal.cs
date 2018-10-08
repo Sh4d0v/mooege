@@ -925,7 +925,7 @@ namespace Mooege.Core.GS.Actors
                 ListenerKhazraEnterTask.ContinueWith(delegate
                 {
                     world.Game.Quests.Advance(117779);
-
+                    
                     var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
                     //OnKillListenerKhazra
                     var minions = ToWorld.GetActorsBySNO(178213);
@@ -944,8 +944,13 @@ namespace Mooege.Core.GS.Actors
                     Urik.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
                     //Установить счётчик убийств
                     var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerKhazra(KhazrasKiller, ToWorld));
-                    StartConversation(ToWorld, 131144);
-
+                    var MaindbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                    if (MaindbQuestProgress.StepOfQuest < 5)
+                    {
+                        StartConversation(ToWorld, 131144);
+                    }
+                    DBSessions.AccountSession.SaveOrUpdate(MaindbQuestProgress);
+                    DBSessions.AccountSession.Flush();
                     CainKillerEvent.ContinueWith(delegate
                     {
                         world.Game.Quests.Advance(117779);

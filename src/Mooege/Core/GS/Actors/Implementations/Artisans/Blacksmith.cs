@@ -29,6 +29,18 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             : base(world, snoId, tags)
         {
             // TODO add all blacksmith functionality? /fasbat
+            /* Все ресурсы
+            [189847] Crafting_Tier_01B - Летучая эссенция
+            [189848] Crafting_Tier_01C - Зуб падшего
+            [189853] Crafting_Tier_02B - Сияющая эссенция
+            [189854] Crafting_Tier_02C - Глаз ящерицы
+            [189857] Crafting_Tier_03B - Желанная эссенция
+            [189858] Crafting_Tier_03C - Окаменевшее копыто
+            [189861] Crafting_Tier_04B - Изысканная эссенция
+            [189862] Crafting_Tier_04C - Переливающаяся слеза
+            [189863] Crafting_Tier_04D - Горящая сера
+            */
+
         }
     }
 }

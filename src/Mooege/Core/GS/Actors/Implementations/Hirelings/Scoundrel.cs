@@ -20,23 +20,64 @@ using Mooege.Common.Helpers.Hash;
 using Mooege.Core.GS.Map;
 using Mooege.Net.GS.Message;
 using Mooege.Core.GS.Common.Types.TagMap;
+using Mooege.Core.GS.Common.Types.Math;
+using System.Threading;
+using System;
 
 namespace Mooege.Core.GS.Actors.Implementations.Hirelings
 {
     [HandledSNO(4644 /* Scoundrel.acr */)]
-    public class Scoundrel : Hireling
+    public class Scoundrel : Hireling, Objects.IUpdateable
     {
+        private static ThreadLocal<Random> _threadRand = new ThreadLocal<Random>(() => new Random());
+        public static Random Rand { get { return _threadRand.Value; } }
+        private Players.Player OwnerPlayer;
         public Scoundrel(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            Brain = new AI.Brains.AggressiveNPCBrain(this);
+            
             mainSNO = 4644;
             hirelingSNO = 52694;
             proxySNO = 192941;
             skillKit = 0x8AFE;
             hirelingGBID = StringHashHelper.HashItemName("Scoundrel");
             Attributes[GameAttribute.Hireling_Class] = 2;
+            //Brain.State = Mooege.Core.GS.AI.BrainState.Follow;
+            //this.Brain = new MonsterBrain(this);
+            
+            this.Attributes[GameAttribute.Attacks_Per_Second] = 1.0f;
+            this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
+            this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
+            //RandomDirection(player.Value.Position, 3f, 8f);
+            //this.WalkSpeed = 0.3f * monsterData.Floats[129];  // TODO: this is probably multiplied by something erekose the 0.3 is because he is way too fast otherwise
+            this.WalkSpeed = this.RunSpeed;
         }
+        public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
+        {
+            float angle = (float)(Rand.NextDouble() * Math.PI * 2);
+            float radius = minRadius + (float)Rand.NextDouble() * (maxRadius - minRadius);
+            return new Vector3D(position.X + (float)Math.Cos(angle) * radius,
+                                position.Y + (float)Math.Sin(angle) * radius,
+                                position.Z);
+        }
+        public void Update(int tickCounter)
+        {
+            if (this.Brain == null)
+                return;
+            //Brain.State = AI.BrainState.Follow;
 
+            
+            //var facingAngle = Actors.Movement.MovementHelpers.GetFacingAngle(this, OwnerPlayer.Position);
+            //this.Move(OwnerPlayer.Position, OwnerPlayer.RotationW);
+            
+            this.Brain.Update(tickCounter);
+            
+            
+
+            //Vector3D NearPlayer = new 
+            //this.Move()
+        }
         public override Hireling CreateHireling(World world, int snoId, TagMap tags)
         {
             return new Scoundrel(world, snoId, tags);

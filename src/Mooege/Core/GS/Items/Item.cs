@@ -188,11 +188,6 @@ namespace Mooege.Core.GS.Items
             this.NameSNOId = -1;      // I think it is ignored anyways - farmy
             this.Field10 = 0x00;
 
-
-
-
-
-
         }
         public Item(GS.Map.World world, ItemTable definition)
             : base(world, definition.SNOActor)
@@ -442,6 +437,12 @@ namespace Mooege.Core.GS.Items
 
         public virtual void OnRequestUse(Player player, Item target, int actionId, WorldPlace worldPlace)
         {
+            if (this.ActorSNO.Id == 192598)
+            {
+                Logger.Warn("Внимание! Тестовая функция");
+                Logger.Debug("Изучение книги кузнецом");
+
+            }
             throw new System.NotImplementedException();
         }
 
