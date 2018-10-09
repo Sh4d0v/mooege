@@ -34,6 +34,8 @@ using Mooege.Core.GS.Generators;
 using Mooege.Core.GS.Ticker;
 using Mooege.Core.GS.Common.Types.SNO;
 using System.Windows;
+using Mooege.Core.GS.Actors.Implementations.Hirelings;
+using Mooege.Net.GS.Message;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -532,6 +534,7 @@ namespace Mooege.Core.GS.Actors
                     Vector3D Point = new Vector3D(2867.382f, 2398.66f, 1.813717f);
                     player.Teleport(Point);
                     //OnListenerToEnterGraveyard
+                    
                     var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
                     if (dbQuestProgress.StepOfQuest == 6)
                     {
@@ -998,9 +1001,9 @@ namespace Mooege.Core.GS.Actors
                         if (player.ActiveHireling != null)
                         {
                             var HirelingToLeave = player.ActiveHireling;
-                            now_world.Leave(HirelingToLeave);
+                     //       now_world.Leave(HirelingToLeave);
                         }
-
+            
                     }
                     catch { }
                     if (dbQuestProgress.ActiveQuest == 72221 && dbQuestProgress.StepOfQuest == 10)
@@ -1008,8 +1011,13 @@ namespace Mooege.Core.GS.Actors
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                 }
                 else
+                {
                     player.Teleport(ToPortal);
-
+                    if (player.ActiveHireling != null)
+                    {
+                        player.ActiveHireling.Teleport(ToPortal);
+                    }
+                }
                 //Create Back Portal
                 var TristramHome = player.World.Game.GetWorld(71150);
                 var OldPortal = TristramHome.GetActorsBySNO(5648);
@@ -1044,10 +1052,16 @@ namespace Mooege.Core.GS.Actors
                 }
 
                 if (player.World.Game.GetWorld(dbPortalOfToon.WorldDest) != player.World)
-
                     player.ChangeWorld(player.World.Game.GetWorld(dbPortalOfToon.WorldDest), ToPortal);
+
                 else
+                {
                     player.Teleport(ToPortal);
+                    if (player.ActiveHireling != null)
+                    {
+                        player.ActiveHireling.Teleport(ToPortal);
+                    }
+                }
             }
             //Портал в Залл Леорика
             else if (this.Destination.StartingPointActorTag == -102)
@@ -1096,8 +1110,6 @@ namespace Mooege.Core.GS.Actors
                     QuestEnter = false;
 
                 }
-
-
 
                 player.ChangeWorld(player.World.Game.GetWorld(60713), Point);
 
@@ -1300,16 +1312,52 @@ namespace Mooege.Core.GS.Actors
                     {
                         if (player.ActiveHireling != null)
                         {
-                            var HirelingToLeave = player.ActiveHireling;
-                           // now_world.Leave(HirelingToLeave);
+                            // now_world.Leave(HirelingToLeave);
                             //var NewTristram = player.InGameClient.Game.GetWorld(71150);
                             //var Leah_Back = NewTristram.GetActorByDynamicId(83);
                             //Leah_Back.EnterWorld(Leah_Back.Position);
-                            world.Enter(HirelingToLeave);
-                            
-                            //var NewHireling = world.GetActorBySNO(HirelingToLeave.ActorSNO.Id);
-                            player.ChangeWorld(world, startingPoint);
-                            HirelingToLeave.ChangeWorld(world, player.Position);
+                            if (player.ActiveHireling.ActorSNO.Id == 4580)
+                            {
+                                var HirelingToLeave = player.ActiveHireling;
+                                now_world.Leave(HirelingToLeave);
+                                player.ChangeWorld(world, startingPoint);
+                                //var NewTristram = player.InGameClient.Game.GetWorld(71150);
+                                //var Leah_Back = NewTristram.GetActorByDynamicId(83);
+                                //Leah_Back.EnterWorld(Leah_Back.Position);
+                            }
+                            else
+                            {
+                                //Берём текущего спутника
+                                var HirelingToLeave = player.ActiveHireling;
+                                //Убираем его из мира
+
+                                //Телепортируемся сами.
+                                player.ChangeWorld(world, startingPoint);
+                                HirelingToLeave.ChangeWorld(world, startingPoint);
+                                world.Leave(HirelingToLeave);
+                                HirelingToLeave.Master = player;
+                                HirelingToLeave.EnterWorld(player.Position);
+                                //now_world.Leave(HirelingToLeave);
+                                //Телепортируем нашего товарища.
+                                //Клон
+
+                                /*
+                                    Hireling SoulTransmit = new Scoundrel(world,player.ActiveHireling.ActorSNO.Id, player.ActiveHireling.Tags);
+
+                                    SoulTransmit.Attributes[GameAttribute.Pet_Creator] = player.PlayerIndex;
+                                    SoulTransmit.Attributes[GameAttribute.Pet_Type] = 0;
+                                    SoulTransmit.Attributes[GameAttribute.Pet_Owner] = player.PlayerIndex;
+
+                                    SoulTransmit.RotationW = this.RotationW;
+                                    SoulTransmit.RotationAxis = this.RotationAxis;
+                                    SoulTransmit.Master = player;
+                                    SoulTransmit.EnterWorld(player.Position);
+                                    player.ActiveHireling = SoulTransmit;
+
+                                    player.SelectedNPC = null;
+                                */
+                            }
+
                         }
                         else
                         {
@@ -1317,6 +1365,7 @@ namespace Mooege.Core.GS.Actors
                         }
                     }
                     catch {
+                        Logger.Warn("Ошибка телепортации.");
                         player.ChangeWorld(world, startingPoint);
                     }
 

@@ -275,6 +275,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
             if (this.IsHireling)
             {
                 var original = CreateHireling(originalWorld, mainSNO, this.Tags);
+                original.Brain.DeActivate();
                 original.SetUpAttributes(player);
                 original.RotationW = this.originalPRT.Quaternion.W;
                 original.RotationAxis = this.originalPRT.Quaternion.Vector3D;

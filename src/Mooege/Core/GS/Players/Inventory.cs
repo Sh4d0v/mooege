@@ -468,6 +468,27 @@ namespace Mooege.Core.GS.Players
             if (item.DBInventory != null)
                 _dbInventoriesToDelete.Add(item.DBInventory);
             item.DBInventory = null;
+            /*
+                [011539] [Anim2D] DropDownItemMouseover00
+                [011541] [Anim2D] DropDownItemSelected00
+                [000757] [Anim2D] DropDownItemSelected01
+            */
+            _owner.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = item.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 200,
+                                AnimationSNO = 757,
+                                PermutationIndex = 0,
+                                Speed = 1f
+                            }
+                            }
+            }, item);
             item.CurrentState = ItemState.Normal;
             AcceptMoveRequest(item);
         }

@@ -105,12 +105,13 @@ namespace Mooege.Net.GS
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
                     world.Leave(world.GetActorByDynamicId(83));
-                    Hireling LeahFriend = new Hireling(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+                    Hireling LeahFriend = new Scoundrel(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
                     LeahFriend.Brain = new HirelingBrain(LeahFriend);
                    // SetBrain(new MinionBrain(this));
                     LeahFriend.Attributes[GameAttribute.Untargetable] = false;
                     LeahFriend.GBHandle.Type = 4;
                     LeahFriend.GBHandle.GBID = 717705071;
+                    LeahFriend.Master = client.Player;
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
                     LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
@@ -364,6 +365,7 @@ namespace Mooege.Net.GS
             #region Акт 1 Квест 6 - Меч незнакомца
             if (dbQuestProgress.ActiveQuest == 72738)
             {
+                world.Leave(world.GetActorByDynamicId(72));
                 world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
                 for (int Rem = 0; Rem < 8; Rem++)
@@ -376,7 +378,7 @@ namespace Mooege.Net.GS
                 {
                     world.Game.Quests.Advance(72095);
                 }
-                world.Leave(world.GetActorByDynamicId(25));
+                //world.Leave(world.GetActorByDynamicId(25));
                 #endregion
                 #region Перемотка к четвертому квесту
                 for (int Rem = 0; Rem < 10; Rem++)
@@ -401,6 +403,8 @@ namespace Mooege.Net.GS
                 {
                     world.Game.Quests.Advance(117779);
                 }
+                //118037
+                
                 #endregion
 
                 Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
@@ -441,8 +445,43 @@ namespace Mooege.Net.GS
 
                 });
 
+                
+                var ListenerFirstTask = Task<bool>.Factory.StartNew(() => OnNierZoneTFListener(client.Player, world));
+                //Подходим к подъему 78212
+                ListenerFirstTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+                    world.Game.Quests.Advance(72738);
 
+
+                    TickTimer Timeout = new SecondsTickTimer(world.Game, 5f);
+                    var Waiter = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                    //Ждём пока убьют
+                    Waiter.ContinueWith(delegate
+                    {
+                        //ScoundrelNPC-80812 / Dyn.1088
+                        var ScoundrelNPC = world.GetActorBySNO(80812);
+                        Vector3D FinishToPath = new Vector3D(1568.468f, 839.8882f, 28.78354f);
+                        var facingAngle = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, FinishToPath);
+                        ScoundrelNPC.Move(FinishToPath, facingAngle);
+
+                        StartConversation(world, 111893);
+                        //ScoundrelNPC.Attributes[GameAttribute.Unte] = true;
+                        //MoveTo - 
+                        Vector3D MoveTo = new Vector3D(1530.305f, 857.0227f, 39.23478f);
+                        var facingAnglenew = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, MoveTo);
+                        ScoundrelNPC.Move(MoveTo, facingAnglenew);
+
+                        //167677 - Перед боем
+                    });
+
+                 
+                    
+                });
+                // */
             }
+
+
             #endregion
 
             #endregion
@@ -502,7 +541,9 @@ namespace Mooege.Net.GS
                 }
                 else
                 {
-                    world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
+                    world.Game.Quests.CurrentQuest(dbQuestProgress.ActiveQuest);
+                    try { world.Game.Quests.Advance(dbQuestProgress.ActiveQuest); }
+                    catch{ }
                     Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
                 }
                 if (dbQuestProgress.ActiveQuest == 87700)
@@ -841,6 +882,35 @@ namespace Mooege.Net.GS
                     }
                 }
                 catch { }
+            }
+            return true;
+        }
+        #endregion
+
+        #region Отслеживания для Акт 1 - Квест 6
+        private bool OnNierZoneTFListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 78212)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
+
             }
             return true;
         }

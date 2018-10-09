@@ -33,19 +33,19 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Net.GS.Message;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _194412 : QuestEvent
+    class _167677 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         public List<ConversationInteraction> Conversations { get; private set; }
         private Boolean HadConversation = true;
-
-
-        public _194412()
-            : base(194412)
+       
+        public _167677()
+            : base(167677)
         {
         }
 
@@ -57,17 +57,47 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
             }
 
-            foreach (var player in world.Players)
-            {
-                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
-                dbQuestProgress.ActiveQuest = 117779;
-                dbQuestProgress.StepOfQuest = 6;
-                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                DBSessions.AccountSession.Flush();
-            };
-            world.Game.Quests.NotifyQuest(117779, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+            var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
+            var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
+            var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
+            
 
-            StartConversation(world, 141778);
+            
+
+            firgtRobber.Attributes[GameAttribute.Hitpoints_Max] = 200f;
+            firgtRobber.Attributes[GameAttribute.Hitpoints_Cur] = 200f;
+
+            secondRobber.Attributes[GameAttribute.Hitpoints_Max] = 200f;
+            secondRobber.Attributes[GameAttribute.Hitpoints_Cur] = 200f;
+
+            thirdRobber.Attributes[GameAttribute.Hitpoints_Max] = 200f;
+            thirdRobber.Attributes[GameAttribute.Hitpoints_Cur] = 200f;
+        }
+
+
+        private bool OnKillListener(List<uint> monstersAlive, Map.World world)
+        {
+            Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
         }
 
         //Launch Conversations.
@@ -75,7 +105,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         {
             foreach (var player in world.Players)
             {
-                player.Value.Conversations.StartConversation(conversationId); 
+                player.Value.Conversations.StartConversation(conversationId);
             }
             return true;
         }

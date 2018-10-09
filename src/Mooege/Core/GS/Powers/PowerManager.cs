@@ -692,6 +692,17 @@ namespace Mooege.Core.GS.Powers
             }
             catch { }
             #endregion
+
+            #region Пеъедесталы затопленного храма
+            try
+            {
+                if (target.ActorSNO.Id == 61459)
+                {
+
+                }
+            }catch { }
+            #endregion
+
             #endregion
 
             #region Книги

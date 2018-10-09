@@ -54,17 +54,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
             this.Attributes[GameAttribute.Attacks_Per_Second] = 1.0f;
             this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 5f;
             this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 5f;
-            //RandomDirection(player.Value.Position, 3f, 8f);
-            //this.WalkSpeed = 0.3f * monsterData.Floats[129];  // TODO: this is probably multiplied by something erekose the 0.3 is because he is way too fast otherwise
             this.WalkSpeed = this.RunSpeed;
-        }
-        public Vector3D RandomDirection(Vector3D position, float minRadius, float maxRadius)
-        {
-            float angle = (float)(Rand.NextDouble() * Math.PI * 2);
-            float radius = minRadius + (float)Rand.NextDouble() * (maxRadius - minRadius);
-            return new Vector3D(position.X + (float)Math.Cos(angle) * radius,
-                                position.Y + (float)Math.Sin(angle) * radius,
-                                position.Z);
         }
         public void Update(int tickCounter)
         {
@@ -73,13 +63,13 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
 
             try
             {
-                if(CurrentScene.Players[0].ActiveHireling.ActorSNO.Id == 52694)
+                if (Master != null)
                 {
-                       this.Brain.Update(tickCounter);// this.Move(Point, CurrentScene.Players[0].RotationW);
+                    this.Brain.Update(tickCounter);
                 }
             }
             catch { }
-         }
+        }
         public override Hireling CreateHireling(World world, int snoId, TagMap tags)
         {
             return new Scoundrel(world, snoId, tags);
