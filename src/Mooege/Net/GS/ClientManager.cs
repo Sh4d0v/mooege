@@ -934,6 +934,8 @@ namespace Mooege.Net.GS
                                 dbQuestProgress.StepOfQuest = 3;
                                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                                 DBSessions.AccountSession.Flush();
+                                //
+                                StartConversation(world, 130225);
                             }
                             break;
                         }

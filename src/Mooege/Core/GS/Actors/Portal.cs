@@ -349,6 +349,30 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnKillSkeletonsInTempleListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         private bool OnKillListenerBossEamon(List<uint> monstersAlive, Core.GS.Map.World world)
         {
             System.Int32 monstersKilled = 0;
@@ -790,6 +814,67 @@ namespace Mooege.Core.GS.Actors
                         dbQuestProgress.ActiveQuest = 72738;
                         dbQuestProgress.StepOfQuest = 14;
                         Logger.Debug(" Progress Saved ");
+                    }
+                    if(dbQuestProgress.StepOfQuest == 14)
+                    {
+                        var DrownedTempleWorld = player.World.Game.GetWorld(60395);
+                        //Сюда соберём всех жертв)
+                        List<uint> SkeletonsList = new List<uint> { };
+                        // Магхда
+                        //[Actor] [Type: Monster] SNOId:129345 DynamicId: 1943 Position: x:170,6767 y:256,0987 z:-68,2796 Name: Maghda_A_TempProjection}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster}
+                        //Скелетоны
+                        //[Actor] [Type: Monster] SNOId:5347 DynamicId: 1904 Position: x:289,1984 y:359,3138 z:-75,79334 Name: SkeletonArcher_B}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Implementations.Monsters.ReturnedArcher}
+                        //[Actor] [Type: Monster] SNOId:139757 DynamicId: 1949 Position: x:298,6743 y:280,9939 z:-76,54692 Name: Nephalem_Ghost_A_DrownedTemple_Martyr_Skeleton}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster}
+                        //[Actor] [Type: Monster] SNOId:5276 DynamicId: 1902 Position: x:295,7219 y:326,8748 z:-75,79003 Name: Shield_Skeleton_B}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Implementations.Monsters.ReturnedShieldMan}
+                        //[Actor] [Type: Monster] SNOId:5395 DynamicId: 2033 Position: x:299,8383 y:372,2672 z:-76,8657 Name: Skeleton_B}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Implementations.Monsters.Returned}
+                        //[Actor] [Type: Monster] SNOId:5388 DynamicId: 1914 Position: x:300,6144 y:371,7983 z:-76,8657 Name: SkeletonSummoner_B}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster}
+                        // Тот скелет
+                        //[Actor] [Type: Monster] SNOId:139757 DynamicId: 1920 Position: x:289,4304 y:277,368 z:-76,47368 Name: Nephalem_Ghost_A_DrownedTemple_Martyr_Skeleton}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.InteractiveNPC}
+                        // if(Brain != null)
+                        // Аларик
+                        //[Actor] [Type: Monster] SNOId:108882 DynamicId: 1933 Position: x:259,6319 y:270,5458 z:-73,87531 Name: GhostKnight1_Festering}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster} 
+                        // 
+
+                        //Берём всех в охапку
+                        var AllSkeletons1 = DrownedTempleWorld.GetActorsBySNO(5347);
+                        var AllSkeletons2 = DrownedTempleWorld.GetActorsBySNO(5276);
+                        var AllSkeletons3 = DrownedTempleWorld.GetActorsBySNO(5395);
+                        var AllSkeletons4 = DrownedTempleWorld.GetActorsBySNO(5388);
+                        var AllSkeletons5 = DrownedTempleWorld.GetActorsBySNO(139757);
+                        //Последующие
+
+                        #region Варим солянку
+                        //Кидаем в солянку
+                        foreach (var Skelet in AllSkeletons1)
+                        {
+                            SkeletonsList.Add(Skelet.DynamicID);
+                        }
+                        foreach (var Skelet in AllSkeletons2)
+                        {
+                            SkeletonsList.Add(Skelet.DynamicID);
+                        }
+                        foreach (var Skelet in AllSkeletons3)
+                        {
+                            SkeletonsList.Add(Skelet.DynamicID);
+                        }
+                        foreach (var Skelet in AllSkeletons4)
+                        {
+                            SkeletonsList.Add(Skelet.DynamicID);
+                        }
+                        foreach (var Skelet in AllSkeletons5)
+                        {
+                            Skelet.Destroy();
+                        }
+                        #endregion
+
+                        var ListenerSkeletons = Task<bool>.Factory.StartNew(() => OnKillSkeletonsInTempleListener(SkeletonsList, DrownedTempleWorld));
+                        //Ждём пока убьют
+                        ListenerSkeletons.ContinueWith(delegate
+                        {
+                            world.Game.Quests.Advance(72738);
+
+                        });
+
                     }
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);

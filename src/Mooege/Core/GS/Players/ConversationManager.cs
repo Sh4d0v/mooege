@@ -435,7 +435,8 @@ namespace Mooege.Core.GS.Players
 
 
             // The Doom in Wortham
-
+            //World Main - [072882] [Worlds] trOUT_TownAttack
+            //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A
             // Trailing the Coven
 
             // The Imprisoned Angel

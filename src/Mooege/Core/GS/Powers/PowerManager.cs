@@ -151,6 +151,40 @@ namespace Mooege.Core.GS.Powers
             // 46 - 117779
             // Ворота -
             // Негодяй - 80812
+            try
+            {
+                if (target.ActorSNO.Id == 153019)
+                {
+                    Vector3D Point = new Vector3D(0f, 0f, 0f);
+                    var AttackedTown = user.World.Game.GetWorld(072882);
+                    foreach (var player in user.World.Players)
+                    {
+                        /*
+                            [087882] trOut_TownAttack_E07_S13
+                            [084717] trOut_TownAttack_E11_S14
+                            [084718] trOut_TownAttack_E11_S15
+                            [084737] trOut_TownAttack_E08_S13
+                            [084738] trOut_TownAttack_E09_S13
+                            [084739] trOut_TownAttack_E10_S13
+                            [075960] trOut_TownAttack_E10_S16
+                            [075965] trOut_TownAttack_E07_S14
+                            [075970] trOut_TownAttack_E07_S15
+                            [075975] trOut_TownAttack_E07_S16
+                            [075980] trOut_TownAttack_E08_S14
+                            [075985] trOut_TownAttack_E08_S15
+                            [075990] trOut_TownAttack_E08_S16
+                            [075995] trOut_TownAttack_E09_S14
+                            [076000] trOut_TownAttack_E09_S15
+                            [076005] trOut_TownAttack_E09_S16
+                            [076010] trOut_TownAttack_E10_S14
+                            [076015] trOut_TownAttack_E10_S15
+                        */
+                        player.Value.ChangeWorld(AttackedTown, Point);
+                    }
+                }
+            }
+            catch { }
+
             #region Южные ворота в тристрам.
             try
             {
