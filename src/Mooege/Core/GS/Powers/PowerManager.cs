@@ -696,11 +696,234 @@ namespace Mooege.Core.GS.Powers
             #region Пеъедесталы затопленного храма
             try
             {
+                //Правый пъедестал
                 if (target.ActorSNO.Id == 61459)
                 {
-
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 0)
+                        {
+                            var inventory = player.Value.Inventory;
+                            
+                            foreach (var item in inventory.GetBackPackItems())
+                            {
+                                int count = 0;
+                                if (item.ActorSNO.Id == 62989)
+                                {
+                                    inventory.DestroyInventoryItem(item);
+                                    inventory.RefreshInventoryToClient();
+                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 61459);
+                                    count++;
+                                }
+                                if (item.ActorSNO.Id == 61441)
+                                {
+                                    count++;
+                                }
+                                if (count == 1)
+                                {
+                                    foreach (var playerN in user.World.Players)
+                                    {
+                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                        dbQuestProgress.ActiveQuest = 72738;
+                                        dbQuestProgress.StepOfQuest = 12;
+                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                        DBSessions.AccountSession.Flush();
+                                        Logger.Debug(" Progress Saved ");
+                                    }
+                                }
+                            }
+                        
+                    }
                 }
-            }catch { }
+
+                //Левый пъедестал
+                if (target.ActorSNO.Id == 63114)
+                {
+                        foreach (var player in user.World.Players)
+                        {
+                            var inventory = player.Value.Inventory;
+                            foreach (var item in inventory.GetBackPackItems())
+                            {
+                                int count = 2;
+                                if (item.ActorSNO.Id == 61441)
+                                {
+                                    inventory.DestroyInventoryItem(item);
+                                    inventory.RefreshInventoryToClient();
+                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 63114);
+                                    count++;
+                                }
+                                if (item.ActorSNO.Id == 62989)
+                                {
+                                    count++;
+                                }
+                                if (count == 1)
+                                {
+                                    foreach (var playerN in user.World.Players)
+                                    {
+                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                        dbQuestProgress.ActiveQuest = 72738;
+                                        dbQuestProgress.StepOfQuest = 12;
+                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                        DBSessions.AccountSession.Flush();
+                                        Logger.Debug(" Progress Saved ");
+                                    }
+
+                                    #region Дверь
+                                    var Door = user.World.GetActorBySNO(100967);
+                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                    {
+                                        ActorID = Door.DynamicID,
+                                        Field1 = 5,
+                                        Field2 = 0,
+                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                        {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 50,
+                                            AnimationSNO = Door.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            PermutationIndex = 0,
+                                            Speed = 0.5f
+                                        }
+                                        }
+                                    }, Door);
+                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                    {
+                                        ActorID = Door.DynamicID,
+                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                    }, Door);
+                                    #endregion
+                                    #region Мост
+                                    var Bridge = user.World.GetActorBySNO(144149);
+                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                    {
+                                        ActorID = Bridge.DynamicID,
+                                        Field1 = 5,
+                                        Field2 = 0,
+                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                        {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 50,
+                                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            PermutationIndex = 0,
+                                            Speed = 0.5f
+                                        }
+                                        }
+                                    }, Bridge);
+                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                    {
+                                        ActorID = Bridge.DynamicID,
+                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                    }, Bridge);
+                                    #endregion
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Алтари со сферами
+            try
+            {
+                //Первая сфера
+                if (target.ActorSNO.Id == 215434)
+                {
+                    string SphereName = "Quest_Nephalem_Key_A";
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 0)
+                        {
+                            var inventory = player.Value.Inventory;
+                            var Sphere = Items.ItemGenerator.Cook(player.Value, SphereName);
+                            inventory.PickUp(Sphere);
+                            //item.EnterWorld(player.Value.Position);
+                            target.Attributes[GameAttribute.Gizmo_State] = 1;
+                            target.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                            user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, 61441);
+                            target.Destroy();
+
+                            int count = 0;
+                            foreach (var item in inventory.GetBackPackItems())
+                            {
+                                if (item.ActorSNO.Id == 61441)
+                                {
+                                    count++;
+                                }
+                                if (item.ActorSNO.Id == 62989)
+                                {
+                                    count++;
+                                }
+                                if (count == 2)
+                                {
+                                    foreach (var playerN in user.World.Players)
+                                    {
+
+                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                        dbQuestProgress.ActiveQuest = 72738;
+                                        dbQuestProgress.StepOfQuest = 11;
+                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                        DBSessions.AccountSession.Flush();
+                                        Logger.Debug(" Progress Saved ");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Вторая сфера
+                if (target.ActorSNO.Id == 215512)
+                {
+                    string SphereName = "Quest_Nephalem_Key_B";
+                    foreach (var player in user.World.Players)
+                    {
+                        if (player.Value.PlayerIndex == 0)
+                        {
+                            var inventory = player.Value.Inventory;
+                            var Sphere = Items.ItemGenerator.Cook(player.Value, SphereName);
+                            inventory.PickUp(Sphere);
+                            //item.EnterWorld(player.Value.Position);
+                            target.Attributes[GameAttribute.Gizmo_State] = 1;
+                            target.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                            user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, 62989);
+                            target.Destroy();
+
+                            int count = 0;
+                            foreach (var item in inventory.GetBackPackItems())
+                            {
+                                if (item.ActorSNO.Id == 61441)
+                                {
+                                    count++;
+                                }
+                                if (item.ActorSNO.Id == 62989)
+                                {
+                                    count++;
+                                }
+                                if (count == 2)
+                                {
+                                    foreach (var playerN in user.World.Players)
+                                    {
+
+                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                        dbQuestProgress.ActiveQuest = 72738;
+                                        dbQuestProgress.StepOfQuest = 11;
+                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                        DBSessions.AccountSession.Flush();
+                                        Logger.Debug(" Progress Saved ");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            catch { }
             #endregion
 
             #endregion

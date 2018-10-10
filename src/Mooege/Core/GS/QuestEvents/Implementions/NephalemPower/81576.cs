@@ -38,7 +38,7 @@ using Mooege.Core.GS.Players;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _111899 : QuestEvent
+    class _81576 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
@@ -46,8 +46,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private Boolean HadConversation = true;
         List<uint> monstersAlive = new List<uint> { };
         private Player player;
-        public _111899()
-            : base(111899)
+        public _81576()
+            : base(81576)
         {
         }
 
@@ -59,32 +59,39 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
             }
 
-        
-           
-
             foreach (var playin in world.Players)
             {
                 if (playin.Value.PlayerIndex == 0)
                     player = playin.Value;
             }
 
-            var ListenerAwayTask = Task<bool>.Factory.StartNew(() => OnAwayZoneTFListener(player, world));
-            //Подходим к поталу
-            ListenerAwayTask.ContinueWith(delegate
+            var ListenerAwayTempleTask = Task<bool>.Factory.StartNew(() => OnAwayTempleListener(player, world));
+            ListenerAwayTempleTask.ContinueWith(delegate
             {
-                world.Game.Quests.Advance(72738);
-                var ListenerToTempleTask = Task<bool>.Factory.StartNew(() => OnNierTempleListener(player, world));
-                ListenerToTempleTask.ContinueWith(delegate
+               
+                var ListenerToWoodTask = Task<bool>.Factory.StartNew(() => OnWoodListener(player, world));
+                ListenerToWoodTask.ContinueWith(delegate
                 {
                     world.Game.Quests.Advance(72738);
+                    foreach (var player in world.Players)
+                    {
+
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 72738;
+                        dbQuestProgress.StepOfQuest = 10;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                        Logger.Debug(" Progress Saved ");
+
+                    }
+
                 });
-                StartConversation(world, 116881);
             });
-               
-           
+
+
         }
 
-        private bool OnAwayZoneTFListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        private bool OnAwayTempleListener(Core.GS.Players.Player player, Core.GS.Map.World world)
         {
 
             while (true)
@@ -92,7 +99,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 try
                 {
                     int sceneID = player.CurrentScene.SceneSNO.Id;
-                    if (sceneID != 78212)
+                    if (sceneID == 58974)
                     {
                         break;
                     }
@@ -101,7 +108,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             return true;
         }
-        private bool OnNierTempleListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        private bool OnWoodListener(Core.GS.Players.Player player, Core.GS.Map.World world)
         {
 
             while (true)
@@ -109,7 +116,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 try
                 {
                     int sceneID = player.CurrentScene.SceneSNO.Id;
-                    if (sceneID == 60695)
+                    if (sceneID == 79216)
                     {
                         break;
                     }

@@ -445,39 +445,97 @@ namespace Mooege.Net.GS
 
                 });
 
-                
-                var ListenerFirstTask = Task<bool>.Factory.StartNew(() => OnNierZoneTFListener(client.Player, world));
-                //Подходим к подъему 78212
-                ListenerFirstTask.ContinueWith(delegate
+                if (dbQuestProgress.StepOfQuest < 2)
                 {
-                    Logger.Debug(" Waypoint_Park Objective done ");
-                    world.Game.Quests.Advance(72738);
+                    var ListenerFirstTask = Task<bool>.Factory.StartNew(() => OnNierZoneTFListener(client.Player, world));
+                    //Подходим к подъему 78212
+                    ListenerFirstTask.ContinueWith(delegate
+                    {
+                        Logger.Debug(" Waypoint_Park Objective done ");
+                        world.Game.Quests.Advance(72738);
 
 
-                    TickTimer Timeout = new SecondsTickTimer(world.Game, 5f);
-                    var Waiter = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                        TickTimer Timeout = new SecondsTickTimer(world.Game, 5f);
+                        var Waiter = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
                     //Ждём пока убьют
                     Waiter.ContinueWith(delegate
-                    {
+                        {
                         //ScoundrelNPC-80812 / Dyn.1088
                         var ScoundrelNPC = world.GetActorBySNO(80812);
-                        Vector3D FinishToPath = new Vector3D(1568.468f, 839.8882f, 28.78354f);
-                        var facingAngle = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, FinishToPath);
-                        ScoundrelNPC.Move(FinishToPath, facingAngle);
+                            Vector3D FinishToPath = new Vector3D(1568.468f, 839.8882f, 28.78354f);
+                            var facingAngle = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, FinishToPath);
+                            ScoundrelNPC.Move(FinishToPath, facingAngle);
 
-                        StartConversation(world, 111893);
+                            StartConversation(world, 111893);
                         //ScoundrelNPC.Attributes[GameAttribute.Unte] = true;
                         //MoveTo - 
                         Vector3D MoveTo = new Vector3D(1530.305f, 857.0227f, 39.23478f);
-                        var facingAnglenew = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, MoveTo);
-                        ScoundrelNPC.Move(MoveTo, facingAnglenew);
+                            var facingAnglenew = Core.GS.Actors.Movement.MovementHelpers.GetFacingAngle(ScoundrelNPC, MoveTo);
+                            ScoundrelNPC.Move(MoveTo, facingAnglenew);
 
                         //167677 - Перед боем
                     });
 
-                 
+
+
+                    });
+                }
+                if (dbQuestProgress.StepOfQuest > 11)
+                {
+                    var ListenerToTempleTask = Task<bool>.Factory.StartNew(() => OnNierTempleListener(client.Player, world));
+                    ListenerToTempleTask.ContinueWith(delegate
+                    {
+                        #region Дверь
+                        var Door = client.Player.World.GetActorBySNO(100967);
+                        client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                        {
+                            ActorID = Door.DynamicID,
+                            Field1 = 5,
+                            Field2 = 0,
+                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 100,
+                                            AnimationSNO = Door.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            PermutationIndex = 0,
+                                            Speed = 0.9f
+                                        }
+                            }
+                        }, Door);
+                        client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                        {
+                            ActorID = Door.DynamicID,
+                            AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                        }, Door);
+                        #endregion
+                        #region Мост
+                        var Bridge = client.Player.World.GetActorBySNO(144149);
+                        client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                        {
+                            ActorID = Bridge.DynamicID,
+                            Field1 = 5,
+                            Field2 = 0,
+                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 100,
+                                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            PermutationIndex = 0,
+                                            Speed = 0.9f
+                                        }
+                            }
+                        }, Bridge);
+                        client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                        {
+                            ActorID = Bridge.DynamicID,
+                            AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                        }, Bridge);
+                        #endregion
+                    });
                     
-                });
+                }
                 // */
             }
 
@@ -905,12 +963,28 @@ namespace Mooege.Net.GS
             }
             return true;
         }
-
         private bool WaitToSpawn(TickTimer timer)
         {
             while (timer.TimedOut != true)
             {
 
+            }
+            return true;
+        }
+        private bool OnNierTempleListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+
+            while (true)
+            {
+                try
+                {
+                    int sceneID = player.CurrentScene.SceneSNO.Id;
+                    if (sceneID == 60695)
+                    {
+                        break;
+                    }
+                }
+                catch { }
             }
             return true;
         }

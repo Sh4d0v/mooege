@@ -356,6 +356,7 @@
     <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\111899.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\167656.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\167677.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\81576.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\166678.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\167115.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\17667.cs" />

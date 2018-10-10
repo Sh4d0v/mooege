@@ -79,8 +79,8 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            string Revision = "38"; // Ревизия
-            string date = "09/10/2018";
+            string Revision = "39"; // Ревизия
+            string date = "10/10/2018";
 
             string title = "D3IIIS - Revision [" + Revision + "] - Date [" + date + "] - By AiDiE";
 
@@ -136,7 +136,7 @@ namespace Mooege
             Logger.Info("Loading achievements database..");
             Logger.Trace("Achievement file parsed with a total of {0} achievements and {1} criteria in {2} categories.",
                 AchievementManager.TotalAchievements, AchievementManager.TotalCriteria, AchievementManager.TotalCategories);
-
+            
 
             Logger.Info("Type '!commands' for a list of available commands.");
 

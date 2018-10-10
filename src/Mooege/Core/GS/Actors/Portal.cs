@@ -780,8 +780,20 @@ namespace Mooege.Core.GS.Actors
             if (this.Destination.WorldSNO == 60395)
             {
                 //Enter to Drowned Temple
-                
-
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72738)
+                {
+                    if (dbQuestProgress.StepOfQuest == 12)
+                    {
+                        world.Game.Quests.Advance(72738);
+                        world.Game.Quests.Advance(72738);
+                        dbQuestProgress.ActiveQuest = 72738;
+                        dbQuestProgress.StepOfQuest = 14;
+                        Logger.Debug(" Progress Saved ");
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
             }
             if (this.Destination.WorldSNO == 60713)
             {

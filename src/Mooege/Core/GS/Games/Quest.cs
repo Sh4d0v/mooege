@@ -166,8 +166,30 @@ namespace Mooege.Core.GS.Games
                                     Logger.Debug(" (Notify) NOW CALLING UPDATE COUNTER ");
 
                                     Counter++;
+
+
+                                    //*/
                                     questStep.UpdateCounter(this);
                                 }
+                                if (value == 61441)
+                                {
+                                    if (this.questStep.ObjectivesSets[0].Objectives[0].Counter == 0)
+                                    {
+                                        this.questStep.ObjectivesSets[0].Objectives[0].Counter++;
+                                        this.questStep.ObjectivesSets[1].Objectives[0].Counter++;
+                                        questStep.UpdateCounter(this);
+                                    }
+                                }
+                                if (value == 62989)
+                                {
+                                    if (this.questStep.ObjectivesSets[0].Objectives[1].Counter == 0)
+                                    {
+                                        this.questStep.ObjectivesSets[0].Objectives[1].Counter++;
+                                        this.questStep.ObjectivesSets[1].Objectives[1].Counter++;
+                                        questStep.UpdateCounter(this);
+                                    }
+                                }
+                                
                                 break;
                             }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.TimedEventExpired:

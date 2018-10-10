@@ -427,12 +427,21 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(194412, new _194412()); // Диалог с Магдой
             this.QuestEventDict.Add(118037, new _118037()); // Завершение квеста.
 
-            // Nephalem Power 72738
+            // The Broken Blade/ Nephalem Power 72738
             this.QuestEventDict.Add(167656, new _167656()); // Начало на ферме.
             this.QuestEventDict.Add(167677, new _167677()); // Диалог с бандитом.
             this.QuestEventDict.Add(111899, new _111899()); // События после фермы.
+            this.QuestEventDict.Add(81576, new _81576()); // Первый диалог с Алариком.
+
+
+            // The Doom in Wortham
+
+            // Trailing the Coven
+
+            // The Imprisoned Angel
 
             // Return to Tristram 136656
+
         }
 
         /// <summary>
