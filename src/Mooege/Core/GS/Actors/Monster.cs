@@ -45,7 +45,19 @@ namespace Mooege.Core.GS.Actors
         {
             get
             {
-                return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Normal;
+                if (ActorSNO.Id == 85900 || // Мира жена кузнеца
+                    ActorSNO.Id == 5350 || // Леорик
+                    ActorSNO.Id == 176889 || // Мать её..)
+                    ActorSNO.Id == 156801 || //Капитан Далтин
+                    ActorSNO.Id == 156353 || //Советник Имон
+                    ActorSNO.Id == 0)
+                {
+
+                    return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
+                }
+                else
+                    return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Normal;
+                
             }
             set
             {

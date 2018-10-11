@@ -572,6 +572,24 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
     }
     #endregion
 
+    #region
+    
+    [HandledSNO(85900)] 
+    public class MiraBlacksmithWife : Monster
+    {
+        public MiraBlacksmithWife(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).RemovePresetPower(30592); // Only distance attack
+            (Brain as MonsterBrain).AddPresetPower(110518);
+            //this.Attributes[GameAttribute.Health]
+
+            //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
+            //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
+        }
+    }
+    #endregion
+
     #region Queen Of Wretched Mothers
     [HandledSNO(176889)] // ZombieFemale_A_TristramQuest_Unique.acr
     public class QueenWretchedMother : Monster
@@ -582,9 +600,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             (Brain as MonsterBrain).RemovePresetPower(30592); // Only distance attack
             (Brain as MonsterBrain).AddPresetPower(94734);
             (Brain as MonsterBrain).AddPresetPower(110518);
-            (Brain as MonsterBrain).Body.Quality = 5;
             //this.Attributes[GameAttribute.Health]
-            Quality = (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
             
             //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
             //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;

@@ -148,42 +148,17 @@ namespace Mooege.Core.GS.Powers
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
-            // 46 - 117779
-            // Ворота -
-            // Негодяй - 80812
-            try
-            {
-                if (target.ActorSNO.Id == 153019)
-                {
-                    Vector3D Point = new Vector3D(0f, 0f, 0f);
-                    var AttackedTown = user.World.Game.GetWorld(072882);
-                    foreach (var player in user.World.Players)
-                    {
-                        /*
-                            [087882] trOut_TownAttack_E07_S13
-                            [084717] trOut_TownAttack_E11_S14
-                            [084718] trOut_TownAttack_E11_S15
-                            [084737] trOut_TownAttack_E08_S13
-                            [084738] trOut_TownAttack_E09_S13
-                            [084739] trOut_TownAttack_E10_S13
-                            [075960] trOut_TownAttack_E10_S16
-                            [075965] trOut_TownAttack_E07_S14
-                            [075970] trOut_TownAttack_E07_S15
-                            [075975] trOut_TownAttack_E07_S16
-                            [075980] trOut_TownAttack_E08_S14
-                            [075985] trOut_TownAttack_E08_S15
-                            [075990] trOut_TownAttack_E08_S16
-                            [075995] trOut_TownAttack_E09_S14
-                            [076000] trOut_TownAttack_E09_S15
-                            [076005] trOut_TownAttack_E09_S16
-                            [076010] trOut_TownAttack_E10_S14
-                            [076015] trOut_TownAttack_E10_S15
-                        */
-                        player.Value.ChangeWorld(AttackedTown, Point);
-                    }
-                }
-            }
-            catch { }
+            
+         /*   
+                
+                   
+                         Quest - TownAttack 73236
+                         * Диалог для перевозки 72817
+                    //World Main - [072882] [Worlds] trOUT_TownAttack
+                    //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A     
+                  
+   
+            */
 
             #region Южные ворота в тристрам.
             try
@@ -771,48 +746,49 @@ namespace Mooege.Core.GS.Powers
                     }
                 }
 
+                }
                 //Левый пъедестал
                 if (target.ActorSNO.Id == 63114)
                 {
-                        foreach (var player in user.World.Players)
+                    foreach (var player in user.World.Players)
+                    {
+                        var inventory = player.Value.Inventory;
+                        foreach (var item in inventory.GetBackPackItems())
                         {
-                            var inventory = player.Value.Inventory;
-                            foreach (var item in inventory.GetBackPackItems())
+                            int count = 2;
+                            if (item.ActorSNO.Id == 61441)
                             {
-                                int count = 2;
-                                if (item.ActorSNO.Id == 61441)
+                                inventory.DestroyInventoryItem(item);
+                                inventory.RefreshInventoryToClient();
+                                user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                                user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 63114);
+                                count++;
+                            }
+                            if (item.ActorSNO.Id == 62989)
+                            {
+                                count++;
+                            }
+                            if (count == 1)
+                            {
+                                foreach (var playerN in user.World.Players)
                                 {
-                                    inventory.DestroyInventoryItem(item);
-                                    inventory.RefreshInventoryToClient();
-                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
-                                    user.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 63114);
-                                    count++;
+                                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                    dbQuestProgress.ActiveQuest = 72738;
+                                    dbQuestProgress.StepOfQuest = 12;
+                                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                    DBSessions.AccountSession.Flush();
+                                    Logger.Debug(" Progress Saved ");
                                 }
-                                if (item.ActorSNO.Id == 62989)
-                                {
-                                    count++;
-                                }
-                                if (count == 1)
-                                {
-                                    foreach (var playerN in user.World.Players)
-                                    {
-                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                                        dbQuestProgress.ActiveQuest = 72738;
-                                        dbQuestProgress.StepOfQuest = 12;
-                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                                        DBSessions.AccountSession.Flush();
-                                        Logger.Debug(" Progress Saved ");
-                                    }
 
-                                    #region Дверь
-                                    var Door = user.World.GetActorBySNO(100967);
-                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                #region Дверь
+                                var Door = user.World.GetActorBySNO(100967);
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                {
+                                    ActorID = Door.DynamicID,
+                                    Field1 = 5,
+                                    Field2 = 0,
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                                     {
-                                        ActorID = Door.DynamicID,
-                                        Field1 = 5,
-                                        Field2 = 0,
-                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                        {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 50,
@@ -820,23 +796,23 @@ namespace Mooege.Core.GS.Powers
                                             PermutationIndex = 0,
                                             Speed = 0.5f
                                         }
-                                        }
-                                    }, Door);
-                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                    }
+                                }, Door);
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                {
+                                    ActorID = Door.DynamicID,
+                                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                }, Door);
+                                #endregion
+                                #region Мост
+                                var Bridge = user.World.GetActorBySNO(144149);
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                {
+                                    ActorID = Bridge.DynamicID,
+                                    Field1 = 5,
+                                    Field2 = 0,
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                                     {
-                                        ActorID = Door.DynamicID,
-                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                                    }, Door);
-                                    #endregion
-                                    #region Мост
-                                    var Bridge = user.World.GetActorBySNO(144149);
-                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
-                                    {
-                                        ActorID = Bridge.DynamicID,
-                                        Field1 = 5,
-                                        Field2 = 0,
-                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                        {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 50,
@@ -844,15 +820,14 @@ namespace Mooege.Core.GS.Powers
                                             PermutationIndex = 0,
                                             Speed = 0.5f
                                         }
-                                        }
-                                    }, Bridge);
-                                    user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
-                                    {
-                                        ActorID = Bridge.DynamicID,
-                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                                    }, Bridge);
-                                    #endregion
-                                }
+                                    }
+                                }, Bridge);
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                {
+                                    ActorID = Bridge.DynamicID,
+                                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                }, Bridge);
+                                #endregion
                             }
                         }
                     }

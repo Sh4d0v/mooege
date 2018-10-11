@@ -196,12 +196,12 @@ namespace Mooege.Common.MPQ.FileFormats
     public enum SpawnType : int
     {
         Normal = 0,
-        Champion,
-        Rare,
-        Minion,
-        Unique,
-        Hireling,
-        Clone,
-        Boss,
+        Champion = 1,
+        Rare = 2,
+        Minion = 3,
+        Unique = 4,
+        Hireling = 5,
+        Clone = 6,
+        Boss = 7,
     }
 }

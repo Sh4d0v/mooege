@@ -258,9 +258,9 @@ namespace Mooege.Core.GS.Players
                 }
                 else
                 {
-                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float, it should be implemented ", this.SNOId);
+                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float or Quest Standard, it should be implemented ", this.SNOId);
                 }
-            }else if (this.SNOId == 167115)  // КАААААААААСТЫЛИ
+            }else if (this.SNOId == 167115 || this.SNOId == 72817)  // КАААААААААСТЫЛИ
             {
                 logger.Debug("Запуск диалога: {0}", this.SNOId);
                 if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
@@ -434,15 +434,21 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(81576, new _81576()); // Первый диалог с Алариком.
 
 
-            // The Doom in Wortham
+            // The Doom in Wortham / TownAttack 73236
+            this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
+
+
             //World Main - [072882] [Worlds] trOUT_TownAttack
             //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A
             // Trailing the Coven
 
             // The Imprisoned Angel
+            // RescueTyrael 72801
+
 
             // Return to Tristram 136656
-
+            //CainExit 72546
+            // Belieal 57339
         }
 
         /// <summary>
@@ -502,7 +508,12 @@ namespace Mooege.Core.GS.Players
             {
                 openConversations.Remove(conversation.SNOId);
             }
-
+            if (conversation.SNOId == 72817)
+            {
+                var AttackedTown = player.World.Game.GetWorld(72882);
+                var startingPoint = AttackedTown.StartingPoints[2].Position;
+                player.ChangeWorld(AttackedTown, startingPoint);
+            }
             if (conversation.ConvPiggyBack != -1)
                 StartConversation(conversation.ConvPiggyBack);
 
