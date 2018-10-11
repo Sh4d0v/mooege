@@ -38,9 +38,9 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public TreasureGoblin(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-            (Brain as MonsterBrain).AddPresetPower(105371);
-            (Brain as MonsterBrain).AddPresetPower(54836);
-            (Brain as MonsterBrain).AddPresetPower(105665);
+            //(Brain as MonsterBrain).AddPresetPower(105371);
+            //(Brain as MonsterBrain).AddPresetPower(54836);
+            //(Brain as MonsterBrain).AddPresetPower(105665);
         }
     }
 

@@ -149,15 +149,11 @@ namespace Mooege.Core.GS.Powers
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
             
-         /*   
-                
-                   
+            /*   
                          Quest - TownAttack 73236
                          * Диалог для перевозки 72817
                     //World Main - [072882] [Worlds] trOUT_TownAttack
                     //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A     
-                  
-   
             */
 
             #region Южные ворота в тристрам.
