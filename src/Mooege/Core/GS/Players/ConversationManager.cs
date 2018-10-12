@@ -437,20 +437,32 @@ namespace Mooege.Core.GS.Players
 
             // The Doom in Wortham / TownAttack 73236
             this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
+            //Призывальщик
+            //[090367] TownAttack_Cultist
+            //Призываемое зверье
+            //[090455] TownAttack_Summonable_A
+            //Кружочек)
+            //[099986] TownAttack_Circle
+
+            //[178297] TownAttack_Summoner
+            //Берсерк
+            //[178300] TownAttack_Berserker
+            //Урцель
+            //[178619] TownAttack_Summoner_Unique
 
 
             //World Main - [072882] [Worlds] trOUT_TownAttack
             //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A
             // Trailing the Coven
 
-            // The Imprisoned Angel
-            // RescueTyrael 72801
+        // The Imprisoned Angel
+        // RescueTyrael 72801
 
 
-            // Return to Tristram 136656
-            //CainExit 72546
-            // Belieal 57339
-        }
+        // Return to Tristram 136656
+        //CainExit 72546
+        // Belieal 57339
+    }
 
         /// <summary>
         /// Остановка всех диалогов
