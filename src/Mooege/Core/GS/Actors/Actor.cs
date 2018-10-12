@@ -478,7 +478,9 @@ namespace Mooege.Core.GS.Actors
         protected void UpdateQuestRangeVisbility() //erekose set to protected
         {
             if (_questRange != null)
-                Visible = World.Game.Quests.IsInQuestRange(_questRange);
+                try {
+                    Visible = World.Game.Quests.IsInQuestRange(_questRange); }
+                catch { }
             else
                 Visible = true;
         }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2011 - 2012 mooege project - http://www.mooege.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -235,7 +235,22 @@ namespace Mooege.Core.MooNet.Accounts
         {
             get
             {
-                return AccountProfile.CreateBuilder()
+                return AccountProfile.CreateBuilder() // Game Account Info (F10 UI) [Necrosummon]
+                    .SetGoldCollected(this.DBGameAccount.GoldCollected)
+                    .SetHighestHardcoreLevel(this.DBGameAccount.HighestHardcoreLevel)
+                    .SetElitesKilled(this.DBGameAccount.ElitesKilled)
+                    .SetMonstersKilled(this.DBGameAccount.MonstersKilled)
+                    .SetHardcoreMonstersKilled(this.DBGameAccount.HardcoreMonstersKilled)
+                    .SetHighestDifficulty(this.DBGameAccount.HighestDifficulty) // HighestDifficulty = 0:Normal, 1:Nightmare, 2:Hell, 3:Inferno. Difficulty and HighestBossDifficulty have to be the same value.
+                    //.SetHighestBossDifficulty1(0) // Butcher
+                    //.SetHighestBossDifficulty2(0) // Belial
+                    //.SetHighestBossDifficulty3(0) // Azmodan
+                    //.SetHighestBossDifficulty4(0) // Diablo 
+                    .SetClassBarbarian(ClassInfo.CreateBuilder().SetPlaytime(this.DBGameAccount.BarbarianPlayedTime).SetHighestLevel(this.DBGameAccount.BarbarianHighestLevel).SetHighestDifficulty(this.DBGameAccount.BarbarianHighestDifficulty))
+                    .SetClassDemonhunter(ClassInfo.CreateBuilder().SetPlaytime(this.DBGameAccount.DemonHunterPlayedTime).SetHighestLevel(this.DBGameAccount.DemonHunterHighestLevel).SetHighestDifficulty(this.DBGameAccount.DemonHunterHighestDifficulty))
+                    .SetClassMonk(ClassInfo.CreateBuilder().SetPlaytime(this.DBGameAccount.MonkPlayedTime).SetHighestLevel(this.DBGameAccount.MonkHighestLevel).SetHighestDifficulty(this.DBGameAccount.MonkHighestDifficulty))
+                    .SetClassWitchdoctor(ClassInfo.CreateBuilder().SetPlaytime(this.DBGameAccount.WitchDoctorPlayedTime).SetHighestLevel(this.DBGameAccount.WitchDoctorHighestLevel).SetHighestDifficulty(this.DBGameAccount.WitchDoctorHighestDifficulty))
+                    .SetClassWizard(ClassInfo.CreateBuilder().SetPlaytime(this.DBGameAccount.WizardPlayedTime).SetHighestLevel(this.DBGameAccount.WizardHighestLevel).SetHighestDifficulty(this.DBGameAccount.WizardHighestDifficulty))
                     .Build();
             }
         }

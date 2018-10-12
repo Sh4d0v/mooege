@@ -50,6 +50,10 @@ namespace Mooege.Core.GS.Actors
                     ActorSNO.Id == 176889 || // Мать её..)
                     ActorSNO.Id == 156801 || //Капитан Далтин
                     ActorSNO.Id == 156353 || //Советник Имон
+                    ActorSNO.Id == 139757 || //Пророк Эзек
+                    ActorSNO.Id == 139713 || //Брат в пещере 1
+                    ActorSNO.Id == 139715 || //Брат в пещере 2
+                    ActorSNO.Id == 139756 || //Брат в пещере 3
                     ActorSNO.Id == 0)
                 {
 

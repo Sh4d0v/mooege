@@ -35,10 +35,11 @@ using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Interactions;
 using Mooege.Net.GS.Message;
 using Mooege.Core.GS.Players;
+using Mooege.Core.GS.Ticker;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
-    class _81576 : QuestEvent
+    class _133372 : QuestEvent
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
@@ -46,8 +47,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private Boolean HadConversation = true;
         List<uint> monstersAlive = new List<uint> { };
         private Player player;
-        public _81576()
-            : base(81576)
+        private TickTimer Timeout;
+        public _133372()
+            : base(133372)
         {
         }
 
@@ -64,19 +66,16 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 if (playin.Value.PlayerIndex == 0)
                     player = playin.Value;
             }
-
-            var ListenerAwayTempleTask = Task<bool>.Factory.StartNew(() => OnAwayTempleListener(player, world));
-            ListenerAwayTempleTask.ContinueWith(delegate
+            //world.Game.Quests.Advance(72738);
+            #region Дверь
+            var Bridge = world.GetActorBySNO(177439);
+            world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
             {
-                #region Мост
-                var Bridge = world.GetActorBySNO(100849);
-                world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                ActorID = Bridge.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                 {
-                    ActorID = Bridge.DynamicID,
-                    Field1 = 5,
-                    Field2 = 0,
-                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                    {
                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                         {
                             Duration = 300,
@@ -84,73 +83,34 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                             PermutationIndex = 0,
                             Speed = 0.9f
                         }
-                    }
-                }, Bridge);
-                world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
-                {
-                    ActorID = Bridge.DynamicID,
-                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                }, Bridge);
-                #endregion
+                }
+            }, Bridge);
+            world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+            {
+                ActorID = Bridge.DynamicID,
+                AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+            }, Bridge);
+            #endregion
 
-                var ListenerToWoodTask = Task<bool>.Factory.StartNew(() => OnWoodListener(player, world));
-                ListenerToWoodTask.ContinueWith(delegate
-                {
-
-
-                    world.Game.Quests.Advance(72738);
-                    foreach (var player in world.Players)
-                    {
-
-                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
-                        dbQuestProgress.ActiveQuest = 72738;
-                        dbQuestProgress.StepOfQuest = 10;
-                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                        DBSessions.AccountSession.Flush();
-                        Logger.Debug(" Progress Saved ");
-
-                    }
-
-                });
+            Timeout = new SecondsTickTimer(world.Game, 6f);
+            var WaitToWalk = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+            WaitToWalk.ContinueWith(delegate
+            {
+                StartConversation(world, 198925);
             });
 
 
         }
 
-        private bool OnAwayTempleListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        private bool WaitToSpawn(TickTimer timer)
         {
-
-            while (true)
+            while (timer.TimedOut != true)
             {
-                try
-                {
-                    int sceneID = player.CurrentScene.SceneSNO.Id;
-                    if (sceneID == 58974)
-                    {
-                        break;
-                    }
-                }
-                catch { }
+
             }
             return true;
         }
-        private bool OnWoodListener(Core.GS.Players.Player player, Core.GS.Map.World world)
-        {
 
-            while (true)
-            {
-                try
-                {
-                    int sceneID = player.CurrentScene.SceneSNO.Id;
-                    if (sceneID == 79216)
-                    {
-                        break;
-                    }
-                }
-                catch { }
-            }
-            return true;
-        }
         //Launch Conversations.
         private bool StartConversation(Map.World world, Int32 conversationId)
         {

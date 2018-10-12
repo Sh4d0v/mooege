@@ -260,7 +260,7 @@ namespace Mooege.Core.GS.Players
                 {
                     logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float or Quest Standard, it should be implemented ", this.SNOId);
                 }
-            }else if (this.SNOId == 167115 || this.SNOId == 72817)  // КАААААААААСТЫЛИ
+            }else if (this.SNOId == 167115 || this.SNOId == 72817 || this.SNOId == 133372 || this.SNOId == 198925)  // КАААААААААСТЫЛИ
             {
                 logger.Debug("Запуск диалога: {0}", this.SNOId);
                 if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
@@ -432,7 +432,8 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(167677, new _167677()); // Диалог с бандитом.
             this.QuestEventDict.Add(111899, new _111899()); // События после фермы.
             this.QuestEventDict.Add(81576, new _81576()); // Первый диалог с Алариком.
-
+            this.QuestEventDict.Add(133372, new _133372()); // Диалог с Алариком внутри Храма после убийства скелетов.
+            this.QuestEventDict.Add(198925, new _198925()); // МАГДА!).
 
             // The Doom in Wortham / TownAttack 73236
             this.QuestEventDict.Add(72817, new _72817()); //Отправка в город

@@ -542,6 +542,7 @@ namespace Mooege.Core.GS.Players
         {
             Item collectedItem = _owner.World.GetItem(itemID);
             AddGoldAmount(collectedItem.Attributes[GameAttribute.Gold]);
+            //_owner.Toon.DBToon.DBGameAccount.GoldCollected = AddGoldAmount(collectedItem.Attributes[GameAttribute.Gold]);
         }
 
         private void OnInventoryRequestUseMessage(InventoryRequestUseMessage inventoryRequestUseMessage)
@@ -703,6 +704,7 @@ namespace Mooege.Core.GS.Players
                 _inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = _inventoryGold.Attributes[GameAttribute.Gold];
                 _inventoryGold.Attributes.SendChangedMessage(_owner.InGameClient);
             }
+            _owner.Toon.DBToon.DBGameAccount.GoldCollected += (uint)amount; // Add gold amount to Gold Collected Account Profile [Necrosummon]
         }
 
         public void RemoveGoldAmount(int amount)

@@ -59,6 +59,78 @@ namespace Mooege.Core.GS.Generators
             {
                 worldData.IsGenerated = false;
             }
+            if (worldAsset.SNOId == 50584)
+            {
+                worldData.IsGenerated = false;
+                /*
+                [032936] trDun_Cath_01_Filler
+                [032938] trDun_Cath_E
+                [032939] trDun_Cath_EW_01
+                [032940] trDun_Cath_EW_Entrance_01
+                [032941] trDun_Cath_EW_Hall_01
+                [032943] trDun_Cath_E_Dead_End_01
+                [032944] trDun_Cath_E_Entrance01
+                [032945] trDun_Cath_E_Entrance_02
+                [032946] trDun_Cath_E_Exit
+                [032947] trDun_Cath_E_Exit_02
+                [032948] trDun_Cath_E_Exit_Crypt_01
+                [032951] trDun_Cath_NEW_01
+                [032952] trDun_Cath_NE_01
+                [032954] trDun_Cath_NE_Hall_01
+                [032955] trDun_Cath_NE_Hall_02
+                [032956] trDun_Cath_NE_Hall_03
+                [032957] trDun_Cath_NE_Hall_04
+                [032958] trDun_Cath_NSEW_01
+                [032960] trDun_Cath_NSE_01
+                [032961] trDun_Cath_NS_01
+                [032963] trDun_Cath_NS_Hall_01
+                [032964] trDun_Cath_NS_Hall_02
+                [032965] trDun_Cath_NW_01
+                [032967] trDun_Cath_NW_Hall_01
+                [032968] trDun_Cath_NW_Hall_02
+                [032969] trDun_Cath_N_01
+                [032970] trDun_Cath_N_02
+                [032971] trDun_Cath_N_Dead_End_01
+                [032974] trDun_Cath_N_Entrance_02
+                [032975] trDun_Cath_N_Entrance_03
+                [032976] trDun_Cath_N_Exit_01
+                [032979] trDun_Cath_SEW_01
+                [032981] trDun_Cath_SE_01
+                [032982] trDun_Cath_SE_Hall_01
+                [032983] trDun_Cath_SE_Hall_02
+                [032984] trDun_Cath_SE_Hall_03
+                [032985] trDun_Cath_SW_01
+                [032986] trDun_Cath_SW_Hall_01
+                [032987] trDun_Cath_SW_Hall_02
+                [032989] trDun_Cath_S_01
+                [032990] trDun_Cath_S_02_Stranger
+                [032991] trDun_Cath_S_Dead_End_01
+                [032992] trDun_Cath_S_Entrance_01
+                [032993] trDun_Cath_S_Exit_01
+                [032995] trDun_Cath_S_Exit_03
+                [032997] trDun_Cath_S_Exit_Crypt_02
+                [032999] trDun_Cath_W_Dead_End_01
+                [033000] trDun_Cath_W_Entrance_01
+                [033001] trDun_Cath_W_Exit_01
+                [033002] trDun_Cath_W_Exit_Crypt_01
+                [136166] trDun_Cath_E_DungeonStone_Exit_01
+                [136167] trDun_Cath_N_DungeonStone_Exit_01
+                [136168] trDun_Cath_S_DungeonStone_Exit_01
+                [136170] trDun_Cath_W_DungeonStone_Exit_01
+                [001883] trDun_Cath_EW_Hall_02
+                [001884] trDun_Cath_NSW_01
+                [001885] trDun_Cath_SEW_02
+                [001886] trDun_Cath_W_01
+                [091612] trDun_Cath_NSEW_02_Templar
+                [060885] trDun_Cath_Cain_Intro_01
+                [066589] trDun_Cath_NE_02
+                [066919] trDun_Cath_NS_02
+                [066925] trDun_Cath_SE_02
+                [067021] trDun_Cath_EW_02
+                */
+
+            }
+
             if (worldAsset.SNOId == 117405)
             {
 

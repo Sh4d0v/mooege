@@ -40,6 +40,27 @@ namespace Mooege.Common.Storage.AccountDataBase.Mapper
             Map(e => e.GoldHC);
             Map(e => e.StashSize);
             Map(e => e.StashSizeHC);
+            Map(e => e.BarbarianPlayedTime);
+            Map(e => e.BarbarianHighestLevel);
+            Map(e => e.BarbarianHighestDifficulty);
+            Map(e => e.DemonHunterPlayedTime);
+            Map(e => e.DemonHunterHighestLevel);
+            Map(e => e.DemonHunterHighestDifficulty);
+            Map(e => e.MonkPlayedTime);
+            Map(e => e.MonkHighestLevel);
+            Map(e => e.MonkHighestDifficulty);
+            Map(e => e.WitchDoctorPlayedTime);
+            Map(e => e.WitchDoctorHighestLevel);
+            Map(e => e.WitchDoctorHighestDifficulty);
+            Map(e => e.WizardPlayedTime);
+            Map(e => e.WizardHighestLevel);
+            Map(e => e.WizardHighestDifficulty);
+            Map(e => e.HighestDifficulty);
+            Map(e => e.GoldCollected);
+            Map(e => e.ElitesKilled);
+            Map(e => e.MonstersKilled);
+            Map(e => e.HardcoreMonstersKilled);
+            Map(e => e.HighestHardcoreLevel);
         }
     }
 }

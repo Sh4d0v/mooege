@@ -373,6 +373,36 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnKillSkeletonsInTemple2Listener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                        if (monstersKilled == 1)
+                            StartConversation(world, 109245);
+                        else if (monstersKilled == 2)
+                            StartConversation(world, 109247);
+                        else if (monstersKilled == 3)
+                            StartConversation(world, 109249);
+                    }
+                }
+            }
+            return true;
+        }
         private bool OnKillListenerBossEamon(List<uint> monstersAlive, Core.GS.Map.World world)
         {
             System.Int32 monstersKilled = 0;
@@ -820,6 +850,7 @@ namespace Mooege.Core.GS.Actors
                         var DrownedTempleWorld = player.World.Game.GetWorld(60395);
                         //Сюда соберём всех жертв)
                         List<uint> SkeletonsList = new List<uint> { };
+                        List<uint> Skeletons2List = new List<uint> { };
                         // Магхда
                         //[Actor] [Type: Monster] SNOId:129345 DynamicId: 1943 Position: x:170,6767 y:256,0987 z:-68,2796 Name: Maghda_A_TempProjection}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster}
                         //Скелетоны
@@ -833,7 +864,6 @@ namespace Mooege.Core.GS.Actors
                         // if(Brain != null)
                         // Аларик
                         //[Actor] [Type: Monster] SNOId:108882 DynamicId: 1933 Position: x:259,6319 y:270,5458 z:-73,87531 Name: GhostKnight1_Festering}	Mooege.Core.GS.Actors.Actor {Mooege.Core.GS.Actors.Monster} 
-                        // 
 
                         //Берём всех в охапку
                         var AllSkeletons1 = DrownedTempleWorld.GetActorsBySNO(5347);
@@ -861,9 +891,20 @@ namespace Mooege.Core.GS.Actors
                         {
                             SkeletonsList.Add(Skelet.DynamicID);
                         }
+                        world.SpawnMonster(139757, AllSkeletons5[0].Position);
                         foreach (var Skelet in AllSkeletons5)
                         {
                             Skelet.Destroy();
+                        }
+                        var AllSkeletons5Again = DrownedTempleWorld.GetActorsBySNO(139757);
+                        foreach (var Skelet in AllSkeletons5Again)
+                        {
+                            SkeletonsList.Add(Skelet.DynamicID);
+                            Skelet.Attributes[GameAttribute.Hitpoints_Max] = 1200f;
+                            Skelet.Attributes[GameAttribute.Hitpoints_Cur] = 1200f;
+                            Skelet.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 70f;
+                            Skelet.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+                            Skelet.Attributes[GameAttribute.Quest_Monster] = true;
                         }
                         #endregion
 
@@ -871,7 +912,72 @@ namespace Mooege.Core.GS.Actors
                         //Ждём пока убьют
                         ListenerSkeletons.ContinueWith(delegate
                         {
-                            world.Game.Quests.Advance(72738);
+                            /*
+                            [139713] Nephalem_Ghost_A_DrownedTemple_Martyr1_Skeleton
+                            [139715] Nephalem_Ghost_A_DrownedTemple_Martyr2_Skeleton
+                            [139756] Nephalem_Ghost_A_DrownedTemple_Martyr3_Skeleton
+                            */
+                            //Spawn Actor 92387
+                            var AllTablets = DrownedTempleWorld.GetActorsBySNO(92387);
+                            //Анимация открытия склепов
+                            foreach (var Tablet in AllTablets)
+                            {
+                                DrownedTempleWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                {
+                                    ActorID = Tablet.DynamicID,
+                                    Field1 = 5,
+                                    Field2 = 0,
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                    {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 300,
+                                            AnimationSNO = Tablet.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            PermutationIndex = 0,
+                                            Speed = 0.9f
+                                        }
+                                    }
+                                }, Tablet);
+                                DrownedTempleWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                {
+                                    ActorID = Tablet.DynamicID,
+                                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                }, Tablet);
+                            }
+                            //Спауним гадов
+                            DrownedTempleWorld.SpawnMonster(139713, AllTablets[0].Position);
+                            Skeletons2List.Add(DrownedTempleWorld.GetActorBySNO(139713).DynamicID);
+                            world.GetActorBySNO(139713).Attributes[GameAttribute.Hitpoints_Max] = 800f;
+                            world.GetActorBySNO(139713).Attributes[GameAttribute.Hitpoints_Cur] = 800f;
+                            world.GetActorBySNO(139713).Attributes[GameAttribute.Damage_Weapon_Min, 0] = 70f;
+                            world.GetActorBySNO(139713).Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+                            world.GetActorBySNO(139713).Attributes[GameAttribute.Quest_Monster] = true;
+
+                            DrownedTempleWorld.SpawnMonster(139715, AllTablets[1].Position);
+                            Skeletons2List.Add(DrownedTempleWorld.GetActorBySNO(139715).DynamicID);
+                            world.GetActorBySNO(139715).Attributes[GameAttribute.Hitpoints_Max] = 800f;
+                            world.GetActorBySNO(139715).Attributes[GameAttribute.Hitpoints_Cur] = 800f;
+                            world.GetActorBySNO(139715).Attributes[GameAttribute.Damage_Weapon_Min, 0] = 70f;
+                            world.GetActorBySNO(139715).Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+                            world.GetActorBySNO(139715).Attributes[GameAttribute.Quest_Monster] = true;
+
+                            DrownedTempleWorld.SpawnMonster(139756, AllTablets[2].Position);
+                            Skeletons2List.Add(DrownedTempleWorld.GetActorBySNO(139756).DynamicID);
+                            world.GetActorBySNO(139756).Attributes[GameAttribute.Hitpoints_Max] = 800f;
+                            world.GetActorBySNO(139756).Attributes[GameAttribute.Hitpoints_Cur] = 800f;
+                            world.GetActorBySNO(139756).Attributes[GameAttribute.Damage_Weapon_Min, 0] = 70f;
+                            world.GetActorBySNO(139756).Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+                            world.GetActorBySNO(139756).Attributes[GameAttribute.Quest_Monster] = true;
+
+                            var ListenerSecondSkeletons = Task<bool>.Factory.StartNew(() => OnKillSkeletonsInTemple2Listener(Skeletons2List, DrownedTempleWorld));
+                            ListenerSecondSkeletons.ContinueWith(delegate
+                            {
+                                world.Game.Quests.Advance(72738);
+                                StartConversation(DrownedTempleWorld, 108256);
+                                StartConversation(DrownedTempleWorld, 133372);
+                            });
+
+                            StartConversation(DrownedTempleWorld, 133356);
 
                         });
 
@@ -945,12 +1051,12 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-            if (this.Destination.WorldSNO == 50582)
+            if (this.Destination.WorldSNO == 50584)
             {
                 //Enter to Cathedral Level 2
                 
                 Vector3D Point = new Vector3D(1146.33f, 1539.594f, 0.2f);
-                var CathedralLevel2 = world.Game.GetWorld(50582);
+           /*     var CathedralLevel2 = world.Game.GetWorld(50584);
                 var StartPoint = CathedralLevel2.GetActorBySNO(5502).Position;
                 var ExitToTomb = CathedralLevel2.GetActorBySNO(4067);
 
@@ -966,14 +1072,14 @@ namespace Mooege.Core.GS.Actors
                     RealPortal.EnterWorld(ExitToTomb.Position);
                     Logger.Warn("Congratulations) Level builded ok)");
                 }
-                catch { Logger.Warn("Sorry, Error of Build("); }
-                if (world.Game.GetWorld(50582).StartingPoints.Count == 0)
+                catch { Logger.Warn("Sorry, Error of Build("); }*/
+          /*      if (world.Game.GetWorld(50582).StartingPoints.Count == 0)
                     player.ChangeWorld(player.World.Game.GetWorld(50582), Point);
-                else
+         /*       else
                 {
                     var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
                     player.ChangeWorld(world, startingPoint);
-                }
+                }*/
             }
             if (this.Destination.WorldSNO == 117405)
             {
@@ -1105,6 +1211,13 @@ namespace Mooege.Core.GS.Actors
                     catch { }
                     if (dbQuestProgress.ActiveQuest == 72221 && dbQuestProgress.StepOfQuest == 10)
                     { player.World.Game.Quests.NotifyQuest(72221, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1); }
+                    player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
+                    if (dbQuestProgress.ActiveQuest == 72738 && dbQuestProgress.StepOfQuest == 18)
+                    {
+                        player.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                        dbQuestProgress.ActiveQuest = 73236;
+                        dbQuestProgress.StepOfQuest = -1;
+                    }
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                 }
                 else

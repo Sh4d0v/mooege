@@ -72,13 +72,18 @@ namespace Mooege.Net.GS
         {
             if (message is JoinBNetGameMessage) OnJoinGame(client, (JoinBNetGameMessage)message);
 
-            //Остреливаем левый портал
-            var FalsePortal = client.Player.World.GetActorBySNO(5648);
-            //client.Player.World.Leave(FalsePortal);
-            //FalsePortal.Destroy();
+             //client.Player.World.Leave(FalsePortal);
+
             //Тестовая проверка прохождения // Пока только синг.
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(client.Player.Toon.PersistentID);
             var world = client.Player.World;
+            //Остреливаем левый портал. НАХЕР ЭТО ГАВНО ИЗ ГОРОДА
+            try
+            {
+                var FalsePortal = client.Player.World.GetActorBySNO(191492);
+                FalsePortal.Destroy();
+            } catch { }
+            
             //[050453] [UI] Quests
             //[050454] [UI] QuestUpdate
             //[174218] [UI] QuestReward
@@ -291,14 +296,14 @@ namespace Mooege.Net.GS
 
                 #endregion
                 #region Перемотка к пятому квесту
-                for (int Rem = 0; Rem < 17; Rem++)
+                for (int Rem = 0; Rem < 18; Rem++)
                 {
                     world.Game.Quests.Advance(72061);
                 }
                 #endregion
                 
                 Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
-                world.SpawnMonster(117365, PointToTyrael);
+                //world.SpawnMonster(117365, PointToTyrael);
                 //Открытие ворот
                 var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
                 //Wait for portal to be used or player going to scene.
@@ -366,9 +371,9 @@ namespace Mooege.Net.GS
             if (dbQuestProgress.ActiveQuest == 72738)
             {
                 world.Leave(world.GetActorByDynamicId(72));
-                world.Leave(world.GetActorByDynamicId(75));
+                //world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 8; Rem++)
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
@@ -381,19 +386,19 @@ namespace Mooege.Net.GS
                 //world.Leave(world.GetActorByDynamicId(25));
                 #endregion
                 #region Перемотка к четвертому квесту
-                for (int Rem = 0; Rem < 10; Rem++)
+                for (int Rem = 0; Rem < 9; Rem++)
                 {
                     world.Game.Quests.Advance(72221);
                 }
-                var BlacksmithVendor = world.GetActorBySNO(56947);
+                /*var BlacksmithVendor = world.GetActorBySNO(56947);
                 world.Leave(BlacksmithVendor);
                 Vector3D position = new Vector3D(BlacksmithVendor.Position);
-                world.SpawnMonster(56947, position);// NonVendor - 65036
+                world.SpawnMonster(56947, position);// NonVendor - 65036*/
 
 
                 #endregion
                 #region Перемотка к пятому квесту
-                for (int Rem = 0; Rem < 17; Rem++)
+                for (int Rem = 0; Rem < 18; Rem++)
                 {
                     world.Game.Quests.Advance(72061);
                 }
@@ -408,7 +413,7 @@ namespace Mooege.Net.GS
                 #endregion
 
                 Vector3D PointToTyrael = new Vector3D(2940.182f, 2792.239f, 24.04533f);
-                world.SpawnMonster(117365, PointToTyrael);
+             //   world.SpawnMonster(117365, PointToTyrael);
                 //Открытие ворот
                 var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
                 //Открытие ворот в гиблые поля.
@@ -496,7 +501,7 @@ namespace Mooege.Net.GS
                             {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
-                                            Duration = 100,
+                                            Duration = 300,
                                             AnimationSNO = Door.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                             PermutationIndex = 0,
                                             Speed = 0.9f
@@ -520,7 +525,7 @@ namespace Mooege.Net.GS
                             {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
-                                            Duration = 100,
+                                            Duration = 300,
                                             AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                             PermutationIndex = 0,
                                             Speed = 0.9f
@@ -536,6 +541,97 @@ namespace Mooege.Net.GS
                     });
                     
                 }
+                // */
+            }
+
+
+            #endregion
+
+            #region Акт 1 Квест 7 - Судьба Вортема
+            if (dbQuestProgress.ActiveQuest == 73236)
+            {
+                world.Leave(world.GetActorByDynamicId(72));
+                //world.Leave(world.GetActorByDynamicId(75));
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 7; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                //world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 9; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                /*var BlacksmithVendor = world.GetActorBySNO(56947);
+                world.Leave(BlacksmithVendor);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036*/
+
+
+                #endregion
+                #region Перемотка к пятому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72061);
+                }
+                #endregion
+                #region Перемотка к шестому квесту
+                for (int Rem = 0; Rem < 6; Rem++)
+                {
+                    world.Game.Quests.Advance(117779);
+                }
+                #endregion
+                #region Перемотка к седьмому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72738);
+                }
+                #endregion
+
+                //Открытие ворот
+                var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
+                //Открытие ворот в гиблые поля.
+                ListenerNierDoorsTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+                    //No Lock 230324
+                    //Lock 216574
+                    var Locked = world.GetActorBySNO(216574);
+                    var Unlocked = world.GetActorBySNO(230324);
+                    world.Leave(Locked);
+                    world.BroadcastIfRevealed(new PlayAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                    {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 1000,
+                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                    }
+                    }, Unlocked);
+
+                    world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, Unlocked);
+
+                });
+
                 // */
             }
 

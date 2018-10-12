@@ -42,5 +42,27 @@ namespace Mooege.Common.Storage.AccountDataBase.Entities
         public virtual int GoldHC { get; set; }
         public virtual int StashSize { get; set; }
         public virtual int StashSizeHC { get; set; }
+        //Статистика аккаунта
+        public virtual uint BarbarianPlayedTime { get; set; }
+        public virtual uint BarbarianHighestLevel { get; set; }
+        public virtual uint BarbarianHighestDifficulty { get; set; }
+        public virtual uint DemonHunterPlayedTime { get; set; }
+        public virtual uint DemonHunterHighestLevel { get; set; }
+        public virtual uint DemonHunterHighestDifficulty { get; set; }
+        public virtual uint MonkPlayedTime { get; set; }
+        public virtual uint MonkHighestLevel { get; set; }
+        public virtual uint MonkHighestDifficulty { get; set; }
+        public virtual uint WitchDoctorPlayedTime { get; set; }
+        public virtual uint WitchDoctorHighestLevel { get; set; }
+        public virtual uint WitchDoctorHighestDifficulty { get; set; }
+        public virtual uint WizardPlayedTime { get; set; }
+        public virtual uint WizardHighestLevel { get; set; }
+        public virtual uint WizardHighestDifficulty { get; set; }
+        public virtual uint HighestDifficulty { get; set; }
+        public virtual uint GoldCollected { get; set; }
+        public virtual uint ElitesKilled { get; set; }
+        public virtual uint MonstersKilled { get; set; }
+        public virtual uint HardcoreMonstersKilled { get; set; }
+        public virtual uint HighestHardcoreLevel { get; set; }
     }
 }

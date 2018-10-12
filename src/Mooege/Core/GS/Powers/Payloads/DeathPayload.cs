@@ -140,6 +140,14 @@ namespace Mooege.Core.GS.Powers.Payloads
             if (this.Target is Monster)
                 (this.Target as Monster).PlayLore();
 
+            Player Killer = (Player)this.Context.User;
+
+            // Monsters Killed for the Account Profile
+            if (!Killer.Toon.Hardcore)
+                Killer.Toon.DBToon.DBGameAccount.MonstersKilled++;
+            else
+                Killer.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
+
             // HACK: instead of deleting actor right here, its added to a list (near the top of this function)
             //this.Target.Destroy();
         }

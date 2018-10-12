@@ -64,13 +64,16 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             var ListenerKingSkeletons = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
             ListenerKingSkeletons.ContinueWith(delegate
             {
-                LeoricGhost.Destroy();
-                LachdananGhost.Destroy();
-                foreach (var GK in GhostKnights)
-                {
-                    GK.Destroy();
-                }
-                
+              //  try
+              //  {
+                    LeoricGhost.Destroy();
+                    LachdananGhost.Destroy();
+                    foreach (var GK in GhostKnights)
+                    {
+                        GK.Destroy();
+                    }
+              //  }
+              //  catch { }
             });
 
 
