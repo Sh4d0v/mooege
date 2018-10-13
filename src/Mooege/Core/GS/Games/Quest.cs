@@ -120,6 +120,15 @@ namespace Mooege.Core.GS.Games
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest:
+                            {
+                                if (value == objective.SNOName1.Id)
+                                {
+                                    Counter++;
+                                    questStep.UpdateCounter(this);
+                                    
+                                }
+                                break;
+                            }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterLevelArea:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived:

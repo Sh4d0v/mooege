@@ -436,6 +436,7 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(198925, new _198925()); // МАГДА!).
 
             // The Doom in Wortham / TownAttack 73236
+            this.QuestEventDict.Add(120357, new _120357()); //Начало квеста
             this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
             //Призывальщик
             //[090367] TownAttack_Cultist
@@ -502,7 +503,6 @@ namespace Mooege.Core.GS.Players
                 lock (openConversations)
                 {
                     openConversations.Add(snoConversation, newConversation);
-
                 }
             }
         }

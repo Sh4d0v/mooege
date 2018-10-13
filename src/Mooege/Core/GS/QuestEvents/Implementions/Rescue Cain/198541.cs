@@ -73,7 +73,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 Logger.Debug(" RESCUE CAIN QUEST STARTED ");
                 Logger.Debug(" Quests.Advance(72095) ");
-                world.Game.Quests.HasCurrentQuest(72095, -1);
+                //world.Game.Quests.HasCurrentQuest(72095, -1);
                 world.Game.Quests.Advance(72095);
             }
             // Away Leah

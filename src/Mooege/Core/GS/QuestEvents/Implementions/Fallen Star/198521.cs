@@ -57,7 +57,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
                 //world.Game.Quests.Advance(87700);
-                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+                //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
           
                 HadConversation = false;
             }
@@ -67,7 +67,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             //okay now we send a notify with QuestEvent for every one
             //force leah to have a specific conversation list :p
             //world.GetActorBySNO(4580).Tags.Replace(MarkerKeys.ConversationList, new TagMapEntry(MarkerKeys.ConversationList.ID, 166675, 2));
-            world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
+            //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
@@ -78,15 +78,20 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     Field1 = 2,
                     Field2 = 10.0f
                 });
-                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Player.PlayerQuestMessage()
-                {
-                    Field0 = 1,
-                    Field1 = 87700,
+                D3.Quests.QuestReward.Builder Reward = new D3.Quests.QuestReward.Builder();
+                Reward.SnoQuest = 87700;
+                Reward.GoldGranted = 500;
+                Reward.XpGranted = 1000;
 
+                Reward.Build();
+                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestRewardMessage()
+                {
+                    QuestReward = Reward.Build()
                 });
+                //player.Value.World.Game.Quests.CurrentQuest(72095);
                        dbQuestProgress.LastQuest = 87700;
-                       dbQuestProgress.ActiveQuest = 72095;
-                       dbQuestProgress.StepOfQuest = -1;
+            //           dbQuestProgress.ActiveQuest = 72095;
+            //           dbQuestProgress.StepOfQuest = -1;
                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                        DBSessions.AccountSession.Flush();
             };

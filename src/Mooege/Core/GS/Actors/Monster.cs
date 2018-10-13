@@ -59,6 +59,13 @@ namespace Mooege.Core.GS.Actors
                 {
 
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
+                }else if (ActorSNO.Id == 219995) //Моррис Джекйобс
+                {
+                    return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Unique;
+                }
+                else if (ActorSNO.Id == 219725) //Проклятая мать
+                {
+                    return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Champion;
                 }
                 else
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Normal;

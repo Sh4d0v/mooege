@@ -146,6 +146,8 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
+            //Моррис 219995
+
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
             

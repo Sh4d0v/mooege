@@ -124,7 +124,7 @@ namespace Mooege.Net.GS
                            // -1941186209 - Отличные шоссы
                            // 1022152670 - Прекрасные ножные повязки
                            
-                           //Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
+                           // Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
                            // NewCraftItem.GBHandle.GBID = message.Field0;
                            Inventory inventory = Player.Inventory;
                            

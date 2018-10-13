@@ -1214,7 +1214,7 @@ namespace Mooege.Core.GS.Actors
                     player.ChangeWorld(player.World.Game.GetWorld(71150), ToPortal);
                     if (dbQuestProgress.ActiveQuest == 72738 && dbQuestProgress.StepOfQuest == 18)
                     {
-                        player.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                        //player.World.Game.Quests.NotifyQuest(72738, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
                         dbQuestProgress.ActiveQuest = 73236;
                         dbQuestProgress.StepOfQuest = -1;
                     }
