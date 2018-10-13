@@ -57,7 +57,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
                 //world.Game.Quests.Advance(87700);
-                //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
           
                 HadConversation = false;
             }
@@ -90,8 +90,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 });
                 //player.Value.World.Game.Quests.CurrentQuest(72095);
                        dbQuestProgress.LastQuest = 87700;
-            //           dbQuestProgress.ActiveQuest = 72095;
-            //           dbQuestProgress.StepOfQuest = -1;
+                       dbQuestProgress.ActiveQuest = 72095;
+                       dbQuestProgress.StepOfQuest = -1;
                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                        DBSessions.AccountSession.Flush();
             };

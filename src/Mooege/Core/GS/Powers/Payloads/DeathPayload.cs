@@ -134,19 +134,28 @@ namespace Mooege.Core.GS.Powers.Payloads
                         if (Mooege.Common.Helpers.Math.RandomHelper.NextDouble() < Mooege.Net.GS.Config.Instance.HealthGlobeDropRate / 100)
                             this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
                     }
+
+                    // Monsters Killed for the Account Profile
+                    if (!player.Toon.Hardcore)
+                        player.Toon.DBToon.DBGameAccount.MonstersKilled++;
+                    else if (player.Toon.Hardcore)
+                        player.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
                 }
+
+                /*if (this.Context.User is Minion) // Minion Kills counts too
+                {
+                    Minion minion = (Minion)this.Context.User;
+                    var summoner = minion.Master.World.GetPlayer(minion.Master.DynamicID);
+
+                    if (!summoner.Toon.Hardcore)
+                        summoner.Toon.DBToon.DBGameAccount.MonstersKilled++;
+                    else if (summoner.Toon.Hardcore)
+                        summoner.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
+                }*/
             }
 
             if (this.Target is Monster)
                 (this.Target as Monster).PlayLore();
-
-            Player Killer = (Player)this.Context.User;
-
-            // Monsters Killed for the Account Profile
-            if (!Killer.Toon.Hardcore)
-                Killer.Toon.DBToon.DBGameAccount.MonstersKilled++;
-            else
-                Killer.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
 
             // HACK: instead of deleting actor right here, its added to a list (near the top of this function)
             //this.Target.Destroy();
