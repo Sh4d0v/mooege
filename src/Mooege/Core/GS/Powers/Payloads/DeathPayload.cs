@@ -142,7 +142,7 @@ namespace Mooege.Core.GS.Powers.Payloads
                         player.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
                 }
 
-                /*if (this.Context.User is Minion) // Minion Kills counts too
+                if (this.Context.User is Minion) // Minion Kills counts too
                 {
                     Minion minion = (Minion)this.Context.User;
                     var summoner = minion.Master.World.GetPlayer(minion.Master.DynamicID);
@@ -151,7 +151,7 @@ namespace Mooege.Core.GS.Powers.Payloads
                         summoner.Toon.DBToon.DBGameAccount.MonstersKilled++;
                     else if (summoner.Toon.Hardcore)
                         summoner.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
-                }*/
+                }
             }
 
             if (this.Target is Monster)

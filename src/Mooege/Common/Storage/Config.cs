@@ -20,6 +20,7 @@ namespace Mooege.Common.Storage
 {
     public sealed class Config : Common.Config.Config
     {
+        public string DatabaseSystem { get { return this.GetString("DatabaseSystem", "Assets"); } set { this.Set("DatabaseSystem", "SQLite"); } }
         public string Root { get { return this.GetString("Root", "Assets"); } set { this.Set("Root", value); } }
         public string MPQRoot { get { return this.GetString("MPQRoot", "Assets/MPQ"); } set { this.Set("MPQRoot", value); } }
         public bool EnableTasks { get { return this.GetBoolean("EnableTasks", true); } set { this.Set("EnableTasks", value); } }

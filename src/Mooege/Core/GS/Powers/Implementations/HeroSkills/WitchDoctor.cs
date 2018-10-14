@@ -1803,7 +1803,8 @@ namespace Mooege.Core.GS.Powers.Implementations
             spider.Brain.DeActivate();
             spider.Position = RandomDirection(User.Position, 3f, 8f); //Kind of hacky until we get proper collisiondetection
             spider.Attributes[GameAttribute.Untargetable] = true;
-            spider.EnterWorld(spider.Position);
+
+            spider.EnterWorld(proj.Position);
             yield return WaitSeconds(0.05f);
 
             (spider as Minion).Brain.Activate();

@@ -115,8 +115,9 @@ namespace Mooege.Core.GS.Games
         public bool HasCurrentQuest(int snoQuest, int Step)
         {
             if (Quests.ContainsKey(snoQuest))
-                if (Quests[snoQuest].CurrentStep.QuestStepID == Step || Step == -1)
-                    return true;
+                //72095 32
+                    if (Quests[snoQuest].CurrentStep.QuestStepID == Step || Step == -1)
+                        return true;
                /* if (snoQuest == 117779 && Step == 5)
                     return true;*/
             return false;

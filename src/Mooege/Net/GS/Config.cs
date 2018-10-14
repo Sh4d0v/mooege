@@ -79,6 +79,7 @@ namespace Mooege.Net.GS.BarbarianRageSkills
     public sealed class BarbarianRageSkillsConfig : Common.BarbarianSkillsConfig.Config
     {
         // Hammer of the Ancients Base skill
+        public float WrathOfTheBerserkerDuration { get { return this.GetFloat("WrathOfTheBerserkerDuration", 15); } set { this.Set("WrathOfTheBerserkerDuration", value); } }
         public float WrathOfTheBerserkerCooldown { get { return this.GetFloat("WrathOfTheBerserkerCooldown", 120); } set { this.Set("WrathOfTheBerserkerCooldown", value); } }
         public int WrathOfTheBerserkerFuryCost { get { return this.GetInt("WrathOfTheBerserkerFuryCost", 50); } set { this.Set("WrathOfTheBerserkerFuryCost", value); } }
 

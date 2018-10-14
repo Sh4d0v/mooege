@@ -759,8 +759,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="..\..\assets\database.Account.config">
-      <Link>database.Account.config</Link>
+    <None Include="..\..\assets\databaseSQLite.Account.config">
+      <Link>databaseSQLite.Account.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+	<None Include="..\..\assets\databaseMySQL.Account.config">
+      <Link>databaseMySQL.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\..\assets\mpqdata.db">
@@ -789,6 +793,9 @@
     <None Include="conf\Server.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="conf\Skills\BarbarianSkills.conf" />
+    <None Include="databaseMySQL.Account.config" />
+    <None Include="databaseSQLite.Account.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

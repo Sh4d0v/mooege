@@ -29,7 +29,7 @@ namespace Mooege.Common.Storage
     public static class DBManager
     {
         public static SQLiteConnection MPQMirror { get; private set; }
-
+        public static SQLiteConnection Connection { get; private set; }
         
 
         public static readonly Logger Logger = LogManager.CreateLogger();
@@ -71,14 +71,32 @@ namespace Mooege.Common.Storage
 
         private static void ConnectAccounts()
         {
-            try
+            if (Mooege.Common.Storage.Config.Instance.DatabaseSystem == "SQLite")
             {
-                Logger.Info("Attention! This version is experimental, the database for accounts has moved to MySQL.");
-                Logger.Info("No use SSL Mode, standard user and password: mooege. ");
+                try
+                {
+                    Logger.Info("Database System = SQLite.");
+                    Connection = new SQLiteConnection(String.Format("Data Source={0}/AccountDB.db", AssetDirectory));
+                    Connection.Open();
+                }
+                catch (Exception e)
+                {
+                    Logger.FatalException(e, "Connect()");
+                }
             }
-            catch (Exception e)
+
+            else if (Mooege.Common.Storage.Config.Instance.DatabaseSystem == "MySQL")
             {
-                Logger.FatalException(e, "Connect()");
+                try
+                {
+                    Logger.Info("Database System = MySQL.");
+                    Logger.Info("Attention! This version is experimental, the database for accounts has moved to MySQL.");
+                    Logger.Info("No use SSL Mode, standard user and password: mooege. ");
+                }
+                catch (Exception e)
+                {
+                    Logger.FatalException(e, "Connect()");
+                }
             }
         }
     }

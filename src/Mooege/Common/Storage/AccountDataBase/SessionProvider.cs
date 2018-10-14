@@ -56,7 +56,11 @@ namespace Mooege.Common.Storage.AccountDataBase
                 if (_config == null)
                 {
                     _config = new Configuration();
-                    _config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "database.Account.config"));
+
+                    if(Mooege.Common.Storage.Config.Instance.DatabaseSystem == "SQLite")
+                        _config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "databaseSQLite.Account.config"));
+                    else if (Mooege.Common.Storage.Config.Instance.DatabaseSystem == "MySQL")
+                        _config = _config.Configure(Path.Combine(FileHelpers.AssemblyRoot, "databaseMySQL.Account.config"));
                     var replacedProperties = new Dictionary<string, string>();
                     foreach (var prop in _config.Properties)
                     {

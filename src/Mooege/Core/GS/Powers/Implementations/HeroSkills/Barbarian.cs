@@ -49,7 +49,8 @@ namespace Mooege.Core.GS.Powers.Implementations
                 attack.Targets = GetBestMeleeEnemy();
 
                 if (i == 0)
-                    attack.AddWeaponDamage(ScriptFormula(3), DamageType.Physical);
+                    //attack.AddWeaponDamage(ScriptFormula(3), DamageType.Physical);
+                    attack.AddWeaponDamage(Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashWeaponDamagePercent / 100, DamageType.Physical);
                 else
                     attack.AddWeaponDamage(ScriptFormula(12), DamageType.Physical);
 
@@ -83,7 +84,8 @@ namespace Mooege.Core.GS.Powers.Implementations
                 yield return WaitSeconds(ScriptFormula(13));
 
                 if (hitAnything)
-                    GeneratePrimaryResource(EvalTag(PowerKeys.ResourceGainedOnFirstHit));
+                    //GeneratePrimaryResource(EvalTag(PowerKeys.ResourceGainedOnFirstHit));
+                    GeneratePrimaryResource(Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashFuryGeneration);
             }
             //Shockwave -> capsule distance, at the moment using beamdirection
             if (Rune_E > 0)
@@ -663,7 +665,8 @@ namespace Mooege.Core.GS.Powers.Implementations
     {
         public override IEnumerable<TickTimer> Main()
         {
-            UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
+            //UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
+            UsePrimaryResource(Mooege.Net.GS.BarbarianSecondarySkills.BarbarianSecondarySkillsConfig.Instance.HammerOfTheAncientsCost);
 
             if (Rune_B > 0)
             {
@@ -680,7 +683,8 @@ namespace Mooege.Core.GS.Powers.Implementations
 
                 AttackPayload attack = new AttackPayload(this);
                 attack.Targets = GetEnemiesInRadius(TargetPosition, ScriptFormula(11));
-                attack.AddWeaponDamage(ScriptFormula(4), DamageType.Physical);
+                //attack.AddWeaponDamage(ScriptFormula(4), DamageType.Physical);
+                attack.AddWeaponDamage(Mooege.Net.GS.BarbarianSecondarySkills.BarbarianSecondarySkillsConfig.Instance.HammerOfTheAncientsWeaponDamagePercent / 100, DamageType.Physical);
                 attack.OnHit = hitPayload =>
                 {
                     if (Rune_D > 0)
@@ -1974,8 +1978,10 @@ namespace Mooege.Core.GS.Powers.Implementations
     {
         public override IEnumerable<TickTimer> Main()
         {
-            StartCooldown(EvalTag(PowerKeys.CooldownTime));
-            UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
+            //StartCooldown(EvalTag(PowerKeys.CooldownTime));
+            //UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
+            StartCooldown(Mooege.Net.GS.BarbarianRageSkills.BarbarianRageSkillsConfig.Instance.WrathOfTheBerserkerCooldown);
+            UsePrimaryResource(Mooege.Net.GS.BarbarianRageSkills.BarbarianRageSkillsConfig.Instance.WrathOfTheBerserkerFuryCost);
 
             AddBuff(User, new BerserkerBuff());
             if (Rune_B > 0)
@@ -2006,7 +2012,8 @@ namespace Mooege.Core.GS.Powers.Implementations
         {
             public override void Init()
             {
-                Timeout = WaitSeconds(ScriptFormula(6));
+                //Timeout = WaitSeconds(ScriptFormula(6));
+                Timeout = WaitSeconds(Mooege.Net.GS.BarbarianRageSkills.BarbarianRageSkillsConfig.Instance.WrathOfTheBerserkerDuration);
             }
 
             public override bool Apply()
@@ -2021,6 +2028,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] += ScriptFormula(2);
                 User.Attributes[GameAttribute.Dodge_Chance_Bonus] += ScriptFormula(3);
                 User.Attributes[GameAttribute.Movement_Bonus_Run_Speed] += ScriptFormula(1);
+                //User.Attributes[GameAttribute.Look_Override] = ?; // We need WotB Actor hex here
                 User.Attributes.BroadcastChangedIfRevealed();
                 return true;
             }

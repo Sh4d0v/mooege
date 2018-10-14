@@ -132,19 +132,20 @@ namespace Mooege.Core.GS.Games
                 return "You can only invoke this command while ingame.";
 
             var player = invokerClient.InGameClient.Player;
-            var actorSNO = 6652; /* zombie */
+            //var actorSNO = 6652; /* zombie */
+            var actorSNO = Convert.ToInt32(@params[0]);
             var amount = 1;
 
 
             if (@params != null)
             {
-                if (!Int32.TryParse(@params[0], out amount))
+                if (!Int32.TryParse(@params[1], out amount))
                     amount = 1;
 
                 if (amount > 100) amount = 100;
 
                 if (@params.Count() > 1)
-                    if (!Int32.TryParse(@params[1], out actorSNO))
+                    if (!Int32.TryParse(@params[0], out actorSNO))
                         actorSNO = 6652;
             }
 
