@@ -35,7 +35,7 @@ using Mooege.Core.GS.Actors.Implementations;
 using Mooege.Core.GS.AI;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
-
+using Mooege.Net.GS.Message;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -61,14 +61,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
             StartConversation(world, 198199);
-            foreach (var player in world.Players)
+          /*  foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 dbQuestProgress.ActiveQuest = 87700;
                 dbQuestProgress.StepOfQuest = 1;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
-            };
+            };*/
             var wave1Actors = world.GetActorsInGroup("GizmoGroup1");
             monstersId.Clear();
             ActorsVector3D.Clear();
@@ -114,6 +114,43 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     };
+                    var OldGate = world.GetActorBySNO(90419);
+                    
+                    var NoDownGate = new Door(world,90419,world.GetActorBySNO(90419).Tags);
+                    NoDownGate.Field2 = 16;
+                    NoDownGate.RotationAxis = world.GetActorBySNO(90419).RotationAxis;
+                    NoDownGate.RotationW = world.GetActorBySNO(90419).RotationW;
+                    NoDownGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    NoDownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    NoDownGate.Attributes[GameAttribute.Untargetable] = true;
+                    NoDownGate.Attributes.BroadcastChangedIfRevealed();
+                    NoDownGate.EnterWorld(world.GetActorBySNO(90419).Position);
+                    OldGate.Destroy();
+
+                    world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                    {
+                        ActorID = NoDownGate.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[] { new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                    {
+                                        Duration = 100,
+                                        AnimationSNO = NoDownGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                        PermutationIndex = 0,
+                                        Speed = 0.5f
+                                    }
+                                }
+                    }, NoDownGate);
+
+                    world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                    {
+                        ActorID = NoDownGate.DynamicID,
+                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                    }, NoDownGate);
+                    NoDownGate.Field2 = 16;
+                    NoDownGate.Attributes[Net.GS.Message.GameAttribute.Operatable] = false;
+
                     Logger.Debug("Event finished");
                     // wyjebanie leah                      
                     var actorToShoot = world.GetActorByDynamicId(72);

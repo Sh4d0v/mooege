@@ -562,7 +562,7 @@ namespace Mooege.Core.GS.Players
             //this.Attributes[GameAttribute.Attacks_Per_Second_Item] = 1.199219f;
             this.Attributes[GameAttribute.Crit_Percent_Base] = 0.05f; //5% Critical Chance Base of all classes [Necrosummon]
             this.Attributes[GameAttribute.Crit_Percent_Cap] = Toon.HeroTable.CritPercentCap;
-            this.Attributes[GameAttribute.Crit_Damage_Percent] = 0; // Always starts with 50% CD, if this isn't here, Ruthless passive bonus will double his CD bonus. [Necrosummon]
+            this.Attributes[GameAttribute.Crit_Damage_Percent] = (int)0.5; // Always starts with 50% CD, if this isn't here, Ruthless passive bonus will double his CD bonus. [Necrosummon]
             //scripted //this.Attributes[GameAttribute.Casting_Speed_Total] = 1f;
             this.Attributes[GameAttribute.Casting_Speed] = 1f;
 

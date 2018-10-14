@@ -200,7 +200,7 @@ namespace Mooege.Core.GS.Skills
             // Barbarian
             if (player.RuthlessPassive())
             {
-                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.55f;
+                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
                 player.Attributes[GameAttribute.Crit_Damage_Percent] += 0.5f;
             }
 

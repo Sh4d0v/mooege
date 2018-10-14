@@ -42,6 +42,7 @@ using Mooege.Core.GS.Skills;
 using Mooege.Core.GS.Powers;
 using Mooege.Core.GS.Ticker;
 using Mooege.Core.GS.Actors.Implementations.Minions;
+using Mooege.Core.GS.Actors.Implementations;
 
 namespace Mooege.Net.GS
 {
@@ -147,6 +148,11 @@ namespace Mooege.Net.GS
                         Logger.Debug("Enter to Road Objective done "); // Waypoint_OldTristram
                         var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
                     });
+                }
+                else
+                {
+                    var Gate = world.GetActorBySNO(108466);
+                    Gate.Destroy();
                 }
                 if (dbQuestProgress.StepOfQuest == 3)
                 {
@@ -314,7 +320,20 @@ namespace Mooege.Net.GS
                     //Lock 216574
                     var Locked = world.GetActorBySNO(216574);
                     var Unlocked = world.GetActorBySNO(230324);
-                    world.Leave(Locked);
+                    Locked.Destroy();
+
+                    var NoGate = new Door(world, 230324, world.GetActorBySNO(230324).Tags);
+                    NoGate.Field2 = 16;
+                    NoGate.RotationAxis = world.GetActorBySNO(230324).RotationAxis;
+                    NoGate.RotationW = world.GetActorBySNO(230324).RotationW;
+                    NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    NoGate.Attributes[GameAttribute.Untargetable] = true;
+                    NoGate.Attributes.BroadcastChangedIfRevealed();
+                    NoGate.EnterWorld(world.GetActorBySNO(230324).Position);
+                    Unlocked.Destroy();
+
                     world.BroadcastIfRevealed(new PlayAnimationMessage
                     {
                         ActorID = Unlocked.DynamicID,
@@ -325,18 +344,18 @@ namespace Mooege.Net.GS
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
                                 Duration = 1000,
-                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
                             }
                     }
-                    }, Unlocked);
+                    }, NoGate);
 
                     world.BroadcastIfRevealed(new SetIdleAnimationMessage
                     {
-                        ActorID = Unlocked.DynamicID,
-                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
-                    }, Unlocked);
+                        ActorID = NoGate.DynamicID,
+                        AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, NoGate);
 
                 });
 
@@ -424,7 +443,20 @@ namespace Mooege.Net.GS
                     //Lock 216574
                     var Locked = world.GetActorBySNO(216574);
                     var Unlocked = world.GetActorBySNO(230324);
-                    world.Leave(Locked);
+                    Locked.Destroy();
+
+                    var NoGate = new Door(world, 230324, world.GetActorBySNO(230324).Tags);
+                    NoGate.Field2 = 16;
+                    NoGate.RotationAxis = world.GetActorBySNO(230324).RotationAxis;
+                    NoGate.RotationW = world.GetActorBySNO(230324).RotationW;
+                    NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    NoGate.Attributes[GameAttribute.Untargetable] = true;
+                    NoGate.Attributes.BroadcastChangedIfRevealed();
+                    NoGate.EnterWorld(world.GetActorBySNO(230324).Position);
+                    Unlocked.Destroy();
+
                     world.BroadcastIfRevealed(new PlayAnimationMessage
                     {
                         ActorID = Unlocked.DynamicID,
@@ -435,18 +467,18 @@ namespace Mooege.Net.GS
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
                                 Duration = 1000,
-                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
                             }
                     }
-                    }, Unlocked);
+                    }, NoGate);
 
                     world.BroadcastIfRevealed(new SetIdleAnimationMessage
                     {
-                        ActorID = Unlocked.DynamicID,
-                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
-                    }, Unlocked);
+                        ActorID = NoGate.DynamicID,
+                        AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, NoGate);
 
                 });
 
@@ -606,7 +638,20 @@ namespace Mooege.Net.GS
                     //Lock 216574
                     var Locked = world.GetActorBySNO(216574);
                     var Unlocked = world.GetActorBySNO(230324);
-                    world.Leave(Locked);
+                    Locked.Destroy();
+
+                    var NoGate = new Door(world, 230324, world.GetActorBySNO(230324).Tags);
+                    NoGate.Field2 = 16;
+                    NoGate.RotationAxis = world.GetActorBySNO(90419).RotationAxis;
+                    NoGate.RotationW = world.GetActorBySNO(90419).RotationW;
+                    NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    NoGate.Attributes[GameAttribute.Untargetable] = true;
+                    NoGate.Attributes.BroadcastChangedIfRevealed();
+                    NoGate.EnterWorld(world.GetActorBySNO(90419).Position);
+                    Unlocked.Destroy();
+
                     world.BroadcastIfRevealed(new PlayAnimationMessage
                     {
                         ActorID = Unlocked.DynamicID,
@@ -617,22 +662,31 @@ namespace Mooege.Net.GS
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
                                 Duration = 1000,
-                                AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
                             }
                     }
-                    }, Unlocked);
+                    }, NoGate);
 
                     world.BroadcastIfRevealed(new SetIdleAnimationMessage
                     {
-                        ActorID = Unlocked.DynamicID,
-                        AnimationSNO = Unlocked.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
-                    }, Unlocked);
+                        ActorID = NoGate.DynamicID,
+                        AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, NoGate);
 
                 });
 
-                // */
+                /*    if(dbQuestProgress.StepOfQuest == 2)
+                    {
+                        var AttackedTown = client.Game.GetWorld(72882);
+                        var ListenerEnterToCenterTownEnter = Task<bool>.Factory.StartNew(() => OnListenerToCenterTownEnter(client.Player, AttackedTown));
+                        ListenerEnterToCenterTownEnter.ContinueWith(delegate
+                        {
+                            Logger.Debug("Enter to Center Town done ");
+                        });
+                    }
+                    // */
             }
 
 
@@ -645,7 +699,8 @@ namespace Mooege.Net.GS
             {
                 #region Нижнии ворота тристрама
                 var DownGate = world.GetActorBySNO(90419);
-                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                DownGate.Attributes[GameAttribute.Gizmo_State] = 0;
+                //DownGate.Field2 = 0;
                 DownGate.Attributes.BroadcastChangedIfRevealed();
                 world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
                 {
@@ -656,18 +711,25 @@ namespace Mooege.Net.GS
                 //Убираем телегу
                 var FactorToShoot = world.GetActorBySNO(81699);
                 FactorToShoot.Destroy();
-                #region Убираем телегу
-                if (dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095)
+                #region Убираем телегу или делаем её нормальной.
+                if (dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095 && dbQuestProgress.ActiveQuest != -1)
                 {
                     var TELEGAS = world.GetActorsBySNO(112131);
-                    Vector3D LastTelega = new Vector3D();
                     foreach (var TELEGA in TELEGAS)
                     {
                         TELEGA.Destroy();
-                        LastTelega = TELEGA.Position;
+                    }
+                }
+                else
+                {
+                    var TELEGAS = world.GetActorsBySNO(112131);
+                    foreach (var TELEGA in TELEGAS)
+                    {
+                        TELEGA.Field2 = 0;
                     }
                 }
                 #endregion
+
                 if (dbQuestProgress.StepOfQuest > 0)
                 {
                     // Вышибаем лею                      
@@ -708,6 +770,20 @@ namespace Mooege.Net.GS
                     }
                 }
 
+            }
+            else
+            {
+                //Ворота
+                var DownGate = world.GetActorBySNO(90419);
+                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                DownGate.Attributes.BroadcastChangedIfRevealed();
+                //DownGate.Field2 = 0;
+                DownGate.Attributes[GameAttribute.Operatable] = false;
+                var TELEGAS = world.GetActorsBySNO(112131);
+                foreach (var TELEGA in TELEGAS)
+                {
+                    TELEGA.Field2 = 0;
+                }
             }
             #endregion
 
@@ -799,9 +875,22 @@ namespace Mooege.Net.GS
                         try
                         {
                             var Gate = world.GetActorBySNO(108466);
+
+                            var NoGate = new Door(world, 108466, world.GetActorBySNO(108466).Tags);
+                            NoGate.Field2 = 16;
+                            NoGate.RotationAxis = world.GetActorBySNO(108466).RotationAxis;
+                            NoGate.RotationW = world.GetActorBySNO(108466).RotationW;
+                            NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                            //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                            NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                            NoGate.Attributes[GameAttribute.Untargetable] = true;
+                            NoGate.Attributes.BroadcastChangedIfRevealed();
+                            NoGate.EnterWorld(world.GetActorBySNO(108466).Position);
+                            Gate.Destroy();
+
                             world.BroadcastIfRevealed(new Message.Definitions.Animation.PlayAnimationMessage
                             {
-                                ActorID = Gate.DynamicID,
+                                ActorID = NoGate.DynamicID,
                                 Field1 = 5,
                                 Field2 = 0,
                                 tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -809,18 +898,19 @@ namespace Mooege.Net.GS
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
                                 Duration = 50,
-                                AnimationSNO = Gate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
                             }
                             }
-                            }, Gate);
+                            }, NoGate);
 
                             world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
                             {
-                                ActorID = Gate.DynamicID,
+                                ActorID = NoGate.DynamicID,
                                 AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
-                            }, Gate);
+                            }, NoGate);
+
                             if (player.ActiveHireling != null)
                             {
                                 var HirelingToLeave = player.ActiveHireling;
@@ -1086,6 +1176,41 @@ namespace Mooege.Net.GS
             }
             return true;
         }
+        #endregion
+
+        #region Отслеживания для Акт 1 - Квест 7
+        private bool OnListenerToCenterTownEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    if (player.World.WorldSNO.Id == 72882)
+                    {
+                        sceneID = player.CurrentScene.SceneSNO.Id;
+                        if (sceneID == 76000)
+                        {
+                            foreach (var playerN in world.Players)
+                            {
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                dbQuestProgress.ActiveQuest = 73236;
+                                dbQuestProgress.StepOfQuest = 3;
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                            }
+                            //world.Game.Quests.Advance(73236);
+                            world.Game.Quests.NotifyQuest(73236, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return true;
+        }
+
         #endregion
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
         {

@@ -42,7 +42,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         private static readonly Logger Logger = LogManager.CreateLogger();
         public List<ConversationInteraction> Conversations { get; private set; }
         private Boolean HadConversation = true;
-
+        private Players.Player MasterPlayer;
 
         public _72817()
             : base(72817)
@@ -64,6 +64,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         {
                             world.Game.Quests.Advance(73236);
                         }
+                        MasterPlayer = player.Value;
                     }
                     DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                     DBSessions.AccountSession.Flush();
@@ -81,8 +82,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     if (dbQuestProgress.StepOfQuest < 2)
                     {
-                       // dbQuestProgress.ActiveQuest = 73236;
-                       // dbQuestProgress.StepOfQuest = 2;
+                        dbQuestProgress.ActiveQuest = 73236;
+                        dbQuestProgress.StepOfQuest = 2;
 
                     }
                     //player.Value.ChangeWorld(AttackedTown, startingPoint);
@@ -90,12 +91,101 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-            
-            
+
+            var ListenerEnterToCenterTownEnter = Task<bool>.Factory.StartNew(() => OnListenerToCenterTownEnter(MasterPlayer, world));
+            ListenerEnterToCenterTownEnter.ContinueWith(delegate 
+            {
+                Logger.Debug("Enter to Center Town done ");
+
+                foreach (var playerN in world.Players)
+                {
+                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                    dbQuestProgress.ActiveQuest = 73236;
+                    dbQuestProgress.StepOfQuest = 3;
+                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                    DBSessions.AccountSession.Flush();
+                }
+
+                var Cultists1 = AttackedTown.GetActorsBySNO(90367);
+                var Cultists2 = AttackedTown.GetActorsBySNO(90008);
+                List<uint> CultistList = new List<uint> { };
+                foreach(var Cultist in Cultists1)
+                {
+                    if(Cultist.CurrentScene.SceneSNO.Id == 76000)
+                    {
+                        CultistList.Add(Cultist.DynamicID);
+                        Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+
+                    }
+                }
+                foreach (var Cultist in Cultists2)
+                {
+                    if (Cultist.CurrentScene.SceneSNO.Id == 76000)
+                    {
+                        CultistList.Add(Cultist.DynamicID);
+                        Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                    }
+                }
+                var ListenerSkeletons = Task<bool>.Factory.StartNew(() => OnKillCultistInTownListener(CultistList, AttackedTown));
+                ListenerSkeletons.ContinueWith(delegate
+                    {
+                    world.Game.Quests.NotifyQuest(73236, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                });
+
+            });
 
         }
-        
-        
+
+        private bool OnKillCultistInTownListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private bool OnListenerToCenterTownEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    if (player.World.WorldSNO.Id == 72882)
+                    {
+                        sceneID = player.CurrentScene.SceneSNO.Id;
+                        if (sceneID == 76000)
+                        {
+                            
+                            //world.Game.Quests.Advance(73236);
+                            world.Game.Quests.NotifyQuest(73236, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return true;
+        }
+
         private bool StartConversation(Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)

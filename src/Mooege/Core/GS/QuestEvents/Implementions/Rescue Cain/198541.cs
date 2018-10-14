@@ -196,28 +196,42 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     try
                     {
                         var Gate = world.GetActorBySNO(108466);
-                        world.BroadcastIfRevealed(new PlayAnimationMessage
+
+                        var NoGate = new Actors.Implementations.Door(world, 108466, world.GetActorBySNO(108466).Tags);
+                        NoGate.Field2 = 16;
+                        NoGate.RotationAxis = world.GetActorBySNO(108466).RotationAxis;
+                        NoGate.RotationW = world.GetActorBySNO(108466).RotationW;
+                        NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                        //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                        NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                        NoGate.Attributes[GameAttribute.Untargetable] = true;
+                        NoGate.Attributes.BroadcastChangedIfRevealed();
+                       // NoGate.EnterWorld(world.GetActorBySNO(108466).Position);
+                        Gate.Destroy();
+
+                        world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                         {
-                            ActorID = Gate.DynamicID,
+                            ActorID = NoGate.DynamicID,
                             Field1 = 5,
                             Field2 = 0,
                             tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                         {
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
-                                Duration = 100,
-                                AnimationSNO = Gate.AnimationSet.TagMapAnimDefault[Common.Types.TagMap.AnimationSetKeys.Opening],
+                                Duration = 50,
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 1
                             }
                         }
-                        }, Gate);
+                        }, NoGate);
 
-                        world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                        world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                         {
-                            ActorID = Gate.DynamicID,
-                            AnimationSNO = Common.Types.TagMap.AnimationSetKeys.Open.ID
-                        }, Gate);
+                            ActorID = NoGate.DynamicID,
+                            AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                        }, NoGate);
+
                         if (player.ActiveHireling != null)
                         {
                             var HirelingToLeave = player.ActiveHireling;

@@ -34,11 +34,10 @@ namespace Mooege.Core.GS.Items.Implementations
 
         public override void OnRequestUse(GS.Players.Player player, Item target, int actionId, Net.GS.Message.Fields.WorldPlace worldPlace)
         {
+             //Small potion - 4440
             if (player.Attributes[GameAttribute.Hitpoints_Cur] == player.Attributes[GameAttribute.Hitpoints_Max])
                 return; // TODO Error msg? /fasbat
-            player.Attributes[GameAttribute.Hitpoints_Cur] =
-                Math.Min(player.Attributes[GameAttribute.Hitpoints_Cur] + this.Attributes[GameAttribute.Hitpoints_Granted],
-                player.Attributes[GameAttribute.Hitpoints_Max]);
+            player.Attributes[GameAttribute.Hitpoints_Cur] = player.Attributes[GameAttribute.Hitpoints_Cur] + this.Attributes[GameAttribute.Hitpoints_Granted];
 
             player.Attributes.BroadcastChangedIfRevealed();
 

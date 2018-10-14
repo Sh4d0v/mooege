@@ -38,14 +38,26 @@ namespace Mooege.Core.GS.Actors.Implementations
         public Door(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            Field2 = 0;
         }
 
 
         public override void OnTargeted(Players.Player player, Net.GS.Message.Definitions.World.TargetMessage message)
         {
+            var OpenDoor = new Door(this.World, this.ActorSNO.Id, this.Tags);
+            OpenDoor.Field2 = 16;
+            OpenDoor.RotationAxis = this.RotationAxis;
+            OpenDoor.RotationW = this.RotationW;
+            OpenDoor.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+            OpenDoor.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+            OpenDoor.Attributes[GameAttribute.Gizmo_State] = 1;
+            OpenDoor.Attributes[GameAttribute.Untargetable] = true;
+            Attributes.BroadcastChangedIfRevealed();
+            OpenDoor.EnterWorld(this.Position);
+
             World.BroadcastIfRevealed(new PlayAnimationMessage
             {
-                ActorID = this.DynamicID,
+                ActorID = OpenDoor.DynamicID,
                 Field1 = 5,
                 Field2 = 0,
                 tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -59,20 +71,20 @@ namespace Mooege.Core.GS.Actors.Implementations
                     }
                 }
 
-            }, this);
+            }, OpenDoor);
 
             World.BroadcastIfRevealed(new SetIdleAnimationMessage
             {
-                ActorID = this.DynamicID,
+                ActorID = OpenDoor.DynamicID,
                 AnimationSNO = AnimationSetKeys.Open.ID
-            }, this);
+            }, OpenDoor);
 
-            this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
-            this.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
-            this.Attributes[GameAttribute.Gizmo_State] = 1;
-            Attributes.BroadcastChangedIfRevealed();
-
+            
+            
+            
+            
             base.OnTargeted(player, message);
+            Destroy();
         }
     }
 }

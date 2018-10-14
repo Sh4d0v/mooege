@@ -57,7 +57,21 @@ namespace Mooege.Core.GS.Powers.Implementations
             return Launch();
         }
     }
-
+    [ImplementsPowerSNO(30570)] // TriuneSummoner_Projectile.pow
+    public class TriuneSummonerProjectile : SingleProjectileSkill
+    {
+        public override IEnumerable<TickTimer> Main()
+        {
+            SetProjectile(this, 6040, User.Position, 1f, (hit) =>
+            {
+                WeaponDamage(hit, 1.00f, DamageType.Fire);
+                projectile.Destroy();
+            });
+            return Launch();
+        }
+    }
+    // [030570][Power] TriuneSummoner_Projectile
+    // [030571][Power] TriuneSummoner_Shield
     [ImplementsPowerSNO(30474)] // Shield_Skeleton_Melee_Instant.pow
     public class ShieldSkeletonMeleeInstant : SingleProjectileSkill
     {

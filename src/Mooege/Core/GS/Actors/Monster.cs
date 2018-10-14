@@ -55,6 +55,7 @@ namespace Mooege.Core.GS.Actors
                     ActorSNO.Id == 139715 || //Брат в пещере 2
                     ActorSNO.Id == 139756 || //Брат в пещере 3
                     ActorSNO.Id == 178619 || //Урцель Мордрег
+                    ActorSNO.Id == 3526 || //Мясник
                     ActorSNO.Id == 0)
                 {
 
@@ -63,7 +64,9 @@ namespace Mooege.Core.GS.Actors
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Unique;
                 }
-                else if (ActorSNO.Id == 219725) //Проклятая мать
+                else if (ActorSNO.Id == 219725 ||//Проклятая мать
+                         ActorSNO.Id == 90367 ||//Темный пробудитель
+                         ActorSNO.Id == -2) 
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Champion;
                 }

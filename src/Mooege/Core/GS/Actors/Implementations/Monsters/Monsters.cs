@@ -140,6 +140,19 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
         }
     }
+    [HandledSNO(90367)]
+    public class DarkCultistSummnoerTownAttack : Monster
+    {
+        public DarkCultistSummnoerTownAttack(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).AddPresetPower(30570); 
+            (Brain as MonsterBrain).AddPresetPower(30547);
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+        }
+    }
     #endregion
     #region Ghost
     //Enraged phantom 370, 136943

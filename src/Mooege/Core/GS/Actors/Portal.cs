@@ -36,6 +36,7 @@ using Mooege.Core.GS.Common.Types.SNO;
 using System.Windows;
 using Mooege.Core.GS.Actors.Implementations.Hirelings;
 using Mooege.Net.GS.Message;
+using Mooege.Core.GS.Actors.Implementations;
 
 namespace Mooege.Core.GS.Actors
 {
@@ -1489,9 +1490,21 @@ namespace Mooege.Core.GS.Actors
                     world.Game.Quests.Advance(72061);
                     //5765 - Gate
                     var SkeletonGate = BossWorld.GetActorBySNO(5765);
+                    var WalkableSkeletonGate = new Door(BossWorld, 5765, world.GetActorBySNO(5765).Tags);
+                    WalkableSkeletonGate.Field2 = 16;
+                    WalkableSkeletonGate.RotationAxis = world.GetActorBySNO(5765).RotationAxis;
+                    WalkableSkeletonGate.RotationW = world.GetActorBySNO(5765).RotationW;
+                    WalkableSkeletonGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    WalkableSkeletonGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    WalkableSkeletonGate.Attributes[GameAttribute.Untargetable] = true;
+                    WalkableSkeletonGate.Attributes.BroadcastChangedIfRevealed();
+                    WalkableSkeletonGate.EnterWorld(world.GetActorBySNO(5765).Position);
+                    SkeletonGate.Destroy();
+
                     BossWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                     {
-                        ActorID = SkeletonGate.DynamicID,
+                        ActorID = WalkableSkeletonGate.DynamicID,
                         Field1 = 5,
                         Field2 = 0,
                         tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -1499,17 +1512,18 @@ namespace Mooege.Core.GS.Actors
                             new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                             {
                                 Duration = 100,
-                                AnimationSNO = SkeletonGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                AnimationSNO = WalkableSkeletonGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                 PermutationIndex = 0,
                                 Speed = 0.5f
                             }
                             }
-                    }, SkeletonGate);
+                    }, WalkableSkeletonGate);
                     BossWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                     {
-                        ActorID = SkeletonGate.DynamicID,
+                        ActorID = WalkableSkeletonGate.DynamicID,
                         AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                    }, SkeletonGate);
+                    }, WalkableSkeletonGate);
+
                 });
             }
             else
