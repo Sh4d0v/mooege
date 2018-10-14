@@ -51,7 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 ## Так-же рекомендуем
-* Присоеденяйтесь к обсуждениям: https://discord.gg/ES7G8VV
+* Присоеденяйтесь к обсуждениям: https://discord.gg/Js8Uy2A
 * Читайте [RageZone Forums](http://ragezone.com/).
 * Был воссоздан сервер http://d3reflection.com (Совершенно другой билд mooege. И вообще исходники зажали, и куда-то слились.)
 * Рабочая вики: https://github.com/Sh4d0v/mooege/wiki
