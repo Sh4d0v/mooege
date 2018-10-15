@@ -260,7 +260,7 @@ namespace Mooege.Core.GS.Players
                 {
                     logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float or Quest Standard, it should be implemented ", this.SNOId);
                 }
-            }else if (this.SNOId == 167115 || this.SNOId == 72817 || this.SNOId == 133372 || this.SNOId == 198925)  // КАААААААААСТЫЛИ
+            }else if (this.SNOId == 167115 || this.SNOId == 72817 || this.SNOId == 133372 || this.SNOId == 198925 || this.SNOId == 194942)  // КАААААААААСТЫЛИ
             {
                 logger.Debug("Запуск диалога: {0}", this.SNOId);
                 if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
@@ -438,6 +438,8 @@ namespace Mooege.Core.GS.Players
             // The Doom in Wortham / TownAttack 73236
             this.QuestEventDict.Add(120357, new _120357()); //Начало квеста
             this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
+            this.QuestEventDict.Add(194942, new _194942()); //Угроза Магды
+
             //Призывальщик
             //[090367] TownAttack_Cultist
             //Призываемое зверье
@@ -524,8 +526,9 @@ namespace Mooege.Core.GS.Players
             if (conversation.SNOId == 72817)
             {
                 var AttackedTown = player.World.Game.GetWorld(72882);
-                var startingPoint = AttackedTown.StartingPoints[2].Position;
-                player.ChangeWorld(AttackedTown, startingPoint);
+                Vector3D Start = new Vector3D(511.3073f,855.166f,79.90576f);
+                //var startingPoint = AttackedTown.StartingPoints[2].Position;
+                player.ChangeWorld(AttackedTown, Start);
             }
             if (conversation.ConvPiggyBack != -1)
                 StartConversation(conversation.ConvPiggyBack);

@@ -125,7 +125,6 @@ namespace Mooege.Core.GS.Games
                                 {
                                     Counter++;
                                     questStep.UpdateCounter(this);
-                                    
                                 }
                                 break;
                             }

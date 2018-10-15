@@ -33,6 +33,7 @@ using Mooege.Core.GS.Common.Types.TagMap;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors.Interactions;
+using Mooege.Net.GS.Message;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -43,7 +44,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
         public List<ConversationInteraction> Conversations { get; private set; }
         private Boolean HadConversation = true;
         private Players.Player MasterPlayer;
-
+        private int EnterStep;
         public _72817()
             : base(72817)
         {
@@ -80,60 +81,97 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 if (player.Value.PlayerIndex == 0)
                 {
-                    if (dbQuestProgress.StepOfQuest < 2)
+                    if (dbQuestProgress.ActiveQuest == 73236)
                     {
-                        dbQuestProgress.ActiveQuest = 73236;
-                        dbQuestProgress.StepOfQuest = 2;
+                        if (dbQuestProgress.StepOfQuest < 2)
+                        {
+                            dbQuestProgress.ActiveQuest = 73236;
+                            dbQuestProgress.StepOfQuest = 2;
+                            EnterStep = 1;
+                        }
+                        else
+                            EnterStep = 2;
 
-                    }
+                    } else
+                        EnterStep = -1;
                     //player.Value.ChangeWorld(AttackedTown, startingPoint);
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
 
-            var ListenerEnterToCenterTownEnter = Task<bool>.Factory.StartNew(() => OnListenerToCenterTownEnter(MasterPlayer, world));
-            ListenerEnterToCenterTownEnter.ContinueWith(delegate 
+            var Maghda = AttackedTown.GetActorBySNO(129345);
+            AttackedTown.Leave(Maghda);
+            if (EnterStep == 1 || EnterStep == 2)
             {
-                Logger.Debug("Enter to Center Town done ");
-
-                foreach (var playerN in world.Players)
+                var ListenerEnterToCenterTownEnter = Task<bool>.Factory.StartNew(() => OnListenerToCenterTownEnter(MasterPlayer, world));
+                ListenerEnterToCenterTownEnter.ContinueWith(delegate
                 {
-                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                    dbQuestProgress.ActiveQuest = 73236;
-                    dbQuestProgress.StepOfQuest = 3;
-                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                    DBSessions.AccountSession.Flush();
-                }
+                    Logger.Debug("Enter to Center Town done ");
 
-                var Cultists1 = AttackedTown.GetActorsBySNO(90367);
-                var Cultists2 = AttackedTown.GetActorsBySNO(90008);
-                List<uint> CultistList = new List<uint> { };
-                foreach(var Cultist in Cultists1)
-                {
-                    if(Cultist.CurrentScene.SceneSNO.Id == 76000)
+                   /* foreach (var playerN in world.Players)
                     {
-                        CultistList.Add(Cultist.DynamicID);
-                        Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 73236;
+                        dbQuestProgress.StepOfQuest = 3;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }*/
 
+                    var Cultists1 = AttackedTown.GetActorsBySNO(90367);
+                    var Cultists2 = AttackedTown.GetActorsBySNO(90008);
+                    List<uint> CultistList = new List<uint> { };
+                    foreach (var Cultist in Cultists1)
+                    {
+                        if (Cultist.CurrentScene.SceneSNO.Id == 76000)
+                        {
+                            CultistList.Add(Cultist.DynamicID);
+                            Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+
+                        }
                     }
-                }
-                foreach (var Cultist in Cultists2)
-                {
-                    if (Cultist.CurrentScene.SceneSNO.Id == 76000)
+                    foreach (var Cultist in Cultists2)
                     {
-                        CultistList.Add(Cultist.DynamicID);
-                        Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        if (Cultist.CurrentScene.SceneSNO.Id == 76000)
+                        {
+                            CultistList.Add(Cultist.DynamicID);
+                            Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        }
                     }
-                }
-                var ListenerSkeletons = Task<bool>.Factory.StartNew(() => OnKillCultistInTownListener(CultistList, AttackedTown));
-                ListenerSkeletons.ContinueWith(delegate
+                    var ListenerSkeletons = Task<bool>.Factory.StartNew(() => OnKillCultistInTownListener(CultistList, AttackedTown));
+                    ListenerSkeletons.ContinueWith(delegate
                     {
-                    world.Game.Quests.NotifyQuest(73236, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                        
+                        Maghda.EnterWorld(Maghda.Position);
+                        Maghda.Attributes[GameAttribute.Hitpoints_Max] = 20000000f;
+                        Maghda.Attributes[GameAttribute.Hitpoints_Cur] = 20000000f;
+                        AttackedTown.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                        {
+                            ActorID = Maghda.DynamicID,
+                            Field1 = 5,
+                            Field2 = 0,
+                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                        {
+                            Duration = 100,
+                            AnimationSNO = 193535,
+                            PermutationIndex = 0,
+                            Speed = 0.9f
+                        }
+                            }
+                        }, Maghda);
+
+                        StartConversation(AttackedTown, 194933);
+                        StartConversation(AttackedTown, 194942);
+
+                        //StartConversation(world,1);
+
+                    });
+
                 });
-
-            });
-
+            }
+           
         }
 
         private bool OnKillCultistInTownListener(List<uint> monstersAlive, Map.World world)

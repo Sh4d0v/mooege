@@ -64,8 +64,9 @@ namespace Mooege.Core.GS.Actors
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Unique;
                 }
-                else if (ActorSNO.Id == 219725 ||//Проклятая мать
-                         ActorSNO.Id == 90367 ||//Темный пробудитель
+                else if (ActorSNO.Id == 219725 ||  //Проклятая мать
+                         ActorSNO.Id == 90367  ||  //Темный пробудитель
+                         ActorSNO.Id == 178300 ||  //Берсерк
                          ActorSNO.Id == -2) 
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Champion;

@@ -113,6 +113,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
             this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
         }
     }
     [HandledSNO(6035)]
@@ -125,6 +127,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
             this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
         }
     }
     [HandledSNO(178297)]
@@ -138,6 +142,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
             this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
         }
     }
     [HandledSNO(90367)]
@@ -151,6 +157,8 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
             this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
         }
     }
     #endregion
