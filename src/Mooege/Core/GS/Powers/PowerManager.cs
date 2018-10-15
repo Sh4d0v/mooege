@@ -735,10 +735,10 @@ namespace Mooege.Core.GS.Powers
                         if (player.Value.PlayerIndex == 0)
                         {
                             var inventory = player.Value.Inventory;
-                            
+                            int count = 0;
                             foreach (var item in inventory.GetBackPackItems())
                             {
-                                int count = 0;
+                                
                                 if (item.ActorSNO.Id == 62989)
                                 {
                                     inventory.DestroyInventoryItem(item);
@@ -751,26 +751,28 @@ namespace Mooege.Core.GS.Powers
                                 {
                                     count++;
                                 }
-                                if (count == 1)
+                                
+                            }
+                            if (count == 1)
+                            {
+                                foreach (var playerN in user.World.Players)
                                 {
-                                    foreach (var playerN in user.World.Players)
-                                    {
-                                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                                        dbQuestProgress.ActiveQuest = 72738;
-                                        dbQuestProgress.StepOfQuest = 12;
-                                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                                        DBSessions.AccountSession.Flush();
-                                        Logger.Debug(" Progress Saved ");
+                                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                    dbQuestProgress.ActiveQuest = 72738;
+                                    dbQuestProgress.StepOfQuest = 12;
+                                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                    DBSessions.AccountSession.Flush();
+                                    Logger.Debug(" Progress Saved ");
 
-                                        #region Дверь
-                                        var Door = target.World.GetActorBySNO(100967);
-                                        target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                    #region Дверь
+                                    var Door = target.World.GetActorBySNO(100967);
+                                    target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                    {
+                                        ActorID = Door.DynamicID,
+                                        Field1 = 5,
+                                        Field2 = 0,
+                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                                         {
-                                            ActorID = Door.DynamicID,
-                                            Field1 = 5,
-                                            Field2 = 0,
-                                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                            {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 300,
@@ -778,43 +780,54 @@ namespace Mooege.Core.GS.Powers
                                             PermutationIndex = 0,
                                             Speed = 0.9f
                                         }
-                                            }
-                                        }, Door);
-                                        target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                        }
+                                    }, Door);
+                                    target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                    {
+                                        ActorID = Door.DynamicID,
+                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                    }, Door);
+                                    #endregion
+                                    #region Мост
+                                    var Bridge = target.World.GetActorBySNO(144149);
+                                    var WalkableGate = new Actors.Implementations.Door(target.World, 144149, Bridge.Tags);
+                                    WalkableGate.Field2 = 16;
+                                    WalkableGate.RotationAxis = Bridge.RotationAxis;
+                                    WalkableGate.RotationW = Bridge.RotationW;
+                                    WalkableGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                                    //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                                    WalkableGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                                    WalkableGate.Attributes[GameAttribute.Untargetable] = true;
+                                    WalkableGate.Attributes.BroadcastChangedIfRevealed();
+                                    WalkableGate.EnterWorld(Bridge.Position);
+                                    Bridge.Destroy();
+
+                                    target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                    {
+                                        ActorID = WalkableGate.DynamicID,
+                                        Field1 = 5,
+                                        Field2 = 0,
+                                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
                                         {
-                                            ActorID = Door.DynamicID,
-                                            AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                                        }, Door);
-                                        #endregion
-                                        #region Мост
-                                        var Bridge = target.World.GetActorBySNO(144149);
-                                        target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
-                                        {
-                                            ActorID = Bridge.DynamicID,
-                                            Field1 = 5,
-                                            Field2 = 0,
-                                            tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
-                                            {
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 300,
-                                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            AnimationSNO = WalkableGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                             PermutationIndex = 0,
                                             Speed = 0.9f
                                         }
-                                            }
-                                        }, Bridge);
-                                        target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
-                                        {
-                                            ActorID = Bridge.DynamicID,
-                                            AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                                        }, Bridge);
-                                        #endregion
-                                    }
+                                        }
+                                    }, WalkableGate);
+                                    target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                                    {
+                                        ActorID = WalkableGate.DynamicID,
+                                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                                    }, WalkableGate);
+                                    #endregion
                                 }
                             }
-                        
-                    }
+
+                        }
                 }
 
                 }
@@ -824,9 +837,10 @@ namespace Mooege.Core.GS.Powers
                     foreach (var player in user.World.Players)
                     {
                         var inventory = player.Value.Inventory;
+                        int count = 0;
                         foreach (var item in inventory.GetBackPackItems())
                         {
-                            int count = 2;
+                            
                             if (item.ActorSNO.Id == 61441)
                             {
                                 inventory.DestroyInventoryItem(item);
@@ -839,17 +853,18 @@ namespace Mooege.Core.GS.Powers
                             {
                                 count++;
                             }
-                            if (count == 1)
+                            
+                        }
+                        if (count == 1)
+                        {
+                            foreach (var playerN in user.World.Players)
                             {
-                                foreach (var playerN in user.World.Players)
-                                {
-                                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                                    dbQuestProgress.ActiveQuest = 72738;
-                                    dbQuestProgress.StepOfQuest = 12;
-                                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                                    DBSessions.AccountSession.Flush();
-                                    Logger.Debug(" Progress Saved ");
-                                }
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                dbQuestProgress.ActiveQuest = 72738;
+                                dbQuestProgress.StepOfQuest = 12;
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                                Logger.Debug(" Progress Saved ");
 
                                 #region Дверь
                                 var Door = target.World.GetActorBySNO(100967);
@@ -877,9 +892,21 @@ namespace Mooege.Core.GS.Powers
                                 #endregion
                                 #region Мост
                                 var Bridge = target.World.GetActorBySNO(144149);
+                                var WalkableGate = new Actors.Implementations.Door(target.World, 144149, Bridge.Tags);
+                                WalkableGate.Field2 = 16;
+                                WalkableGate.RotationAxis = Bridge.RotationAxis;
+                                WalkableGate.RotationW = Bridge.RotationW;
+                                WalkableGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                                //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                                WalkableGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                                WalkableGate.Attributes[GameAttribute.Untargetable] = true;
+                                WalkableGate.Attributes.BroadcastChangedIfRevealed();
+                                WalkableGate.EnterWorld(Bridge.Position);
+                                Bridge.Destroy();
+
                                 target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                                 {
-                                    ActorID = Bridge.DynamicID,
+                                    ActorID = WalkableGate.DynamicID,
                                     Field1 = 5,
                                     Field2 = 0,
                                     tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -887,17 +914,17 @@ namespace Mooege.Core.GS.Powers
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 300,
-                                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            AnimationSNO = WalkableGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                             PermutationIndex = 0,
                                             Speed = 0.9f
                                         }
                                     }
-                                }, Bridge);
+                                }, WalkableGate);
                                 target.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                                 {
-                                    ActorID = Bridge.DynamicID,
+                                    ActorID = WalkableGate.DynamicID,
                                     AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                                }, Bridge);
+                                }, WalkableGate);
                                 #endregion
                             }
                         }

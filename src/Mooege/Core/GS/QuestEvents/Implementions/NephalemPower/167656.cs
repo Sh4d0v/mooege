@@ -76,7 +76,48 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             thirdRobber.Attributes[GameAttribute.Hitpoints_Max] = 20000000f;
             thirdRobber.Attributes[GameAttribute.Hitpoints_Cur] = 20000000f;
             var ListenerBandit = Task<bool>.Factory.StartNew(() => OnKillListener(monstersAlive, world));
-            
+
+            //Окрыть ворота 
+            var noneeddoors = world.GetActorsBySNO(170913);
+            foreach (var one in noneeddoors)
+            {
+                var WalkableGate = new Actors.Implementations.Door(world, 170913, one.Tags);
+                WalkableGate.Field2 = 16;
+                WalkableGate.RotationAxis = one.RotationAxis;
+                WalkableGate.RotationW = one.RotationW;
+                WalkableGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                WalkableGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                WalkableGate.Attributes[GameAttribute.Untargetable] = true;
+                WalkableGate.Attributes.BroadcastChangedIfRevealed();
+                WalkableGate.EnterWorld(one.Position);
+                one.Destroy();
+
+                world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                {
+                    ActorID = WalkableGate.DynamicID,
+                    Field1 = 5,
+                    Field2 = 0,
+                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                        {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = WalkableGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 0.5f
+                            }
+                        }
+                }, WalkableGate);
+                world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
+                {
+                    ActorID = WalkableGate.DynamicID,
+                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
+                }, WalkableGate);
+               
+
+            }
+
             StartConversation(world, 167677);
             ListenerBandit.ContinueWith(delegate
             {

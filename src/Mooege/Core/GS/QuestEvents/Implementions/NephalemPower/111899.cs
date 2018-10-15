@@ -60,7 +60,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
 
         
-           
+            //Открываем выход с фермы
 
             foreach (var playin in world.Players)
             {

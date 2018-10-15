@@ -494,7 +494,7 @@ namespace Mooege.Net.GS
 
                         TickTimer Timeout = new SecondsTickTimer(world.Game, 5f);
                         var Waiter = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
-                    //Ждём пока убьют
+                    
                     Waiter.ContinueWith(delegate
                         {
                         //ScoundrelNPC-80812 / Dyn.1088
@@ -516,6 +516,24 @@ namespace Mooege.Net.GS
 
 
                     });
+                }
+                if (dbQuestProgress.StepOfQuest > 4)
+                {
+                    var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
+                    var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
+                    var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
+                    try
+                    {
+                        firgtRobber.Destroy();
+                        secondRobber.Destroy();
+                        thirdRobber.Destroy();
+                    }
+                    catch { }
+                    var noneeddoors = world.GetActorsBySNO(170913);
+                    foreach (var one in noneeddoors)
+                    {
+                        one.Destroy();
+                    }
                 }
                 if (dbQuestProgress.StepOfQuest > 11)
                 {
@@ -548,9 +566,21 @@ namespace Mooege.Net.GS
                         #endregion
                         #region Мост
                         var Bridge = client.Player.World.GetActorBySNO(144149);
+                        var WalkableGate = new Door(world, 144149, Bridge.Tags);
+                        WalkableGate.Field2 = 16;
+                        WalkableGate.RotationAxis = Bridge.RotationAxis;
+                        WalkableGate.RotationW = Bridge.RotationW;
+                        WalkableGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                        //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                        WalkableGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                        WalkableGate.Attributes[GameAttribute.Untargetable] = true;
+                        WalkableGate.Attributes.BroadcastChangedIfRevealed();
+                        WalkableGate.EnterWorld(Bridge.Position);
+                        Bridge.Destroy();
+
                         client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                         {
-                            ActorID = Bridge.DynamicID,
+                            ActorID = WalkableGate.DynamicID,
                             Field1 = 5,
                             Field2 = 0,
                             tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -558,17 +588,17 @@ namespace Mooege.Net.GS
                                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                                         {
                                             Duration = 300,
-                                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                            AnimationSNO = WalkableGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                                             PermutationIndex = 0,
                                             Speed = 0.9f
                                         }
                             }
-                        }, Bridge);
+                        }, WalkableGate);
                         client.Player.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                         {
-                            ActorID = Bridge.DynamicID,
+                            ActorID = WalkableGate.DynamicID,
                             AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                        }, Bridge);
+                        }, WalkableGate);
                         #endregion
                     });
                     
@@ -626,7 +656,27 @@ namespace Mooege.Net.GS
                 {
                     world.Game.Quests.Advance(72738);
                 }
+
+                //Убираем бандитов и двери на ферме
+                var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
+                var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
+                var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
+                try
+                {
+                    firgtRobber.Destroy();
+                    secondRobber.Destroy();
+                    thirdRobber.Destroy();
+                }
+                catch { }
+                //обе двери
+                var noneeddoors = world.GetActorsBySNO(170913);
+                foreach (var one in noneeddoors)
+                {
+                    one.Destroy();
+                }
                 #endregion
+
+
 
                 //Открытие ворот
                 var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));

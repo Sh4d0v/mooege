@@ -832,7 +832,7 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-            if (this.Destination.WorldSNO == 60395)
+            if (this.Destination.WorldSNO == 60395 && this.Destination.StartingPointActorTag == -101)
             {
                 //Enter to Drowned Temple
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);

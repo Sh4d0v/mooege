@@ -763,7 +763,7 @@
       <Link>databaseSQLite.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-	<None Include="..\..\assets\databaseMySQL.Account.config">
+    <None Include="..\..\assets\databaseMySQL.Account.config">
       <Link>databaseMySQL.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -794,8 +794,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="conf\Skills\BarbarianSkills.conf" />
-    <None Include="databaseMySQL.Account.config" />
-    <None Include="databaseSQLite.Account.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

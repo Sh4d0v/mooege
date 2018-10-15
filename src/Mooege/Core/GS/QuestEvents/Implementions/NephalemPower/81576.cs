@@ -70,9 +70,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 #region Мост
                 var Bridge = world.GetActorBySNO(100849);
+
+                var WalkableBridge = new Actors.Implementations.Door(world, 100849, Bridge.Tags);
+                WalkableBridge.Field2 = 16;
+                WalkableBridge.RotationAxis = Bridge.RotationAxis;
+                WalkableBridge.RotationW = Bridge.RotationW;
+                WalkableBridge.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                WalkableBridge.Attributes[GameAttribute.Gizmo_State] = 1;
+                WalkableBridge.Attributes[GameAttribute.Untargetable] = true;
+                WalkableBridge.Attributes.BroadcastChangedIfRevealed();
+                WalkableBridge.EnterWorld(Bridge.Position);
+                Bridge.Destroy();
+
                 world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
                 {
-                    ActorID = Bridge.DynamicID,
+                    ActorID = WalkableBridge.DynamicID,
                     Field1 = 5,
                     Field2 = 0,
                     tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -80,17 +93,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                         {
                             Duration = 300,
-                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                            AnimationSNO = WalkableBridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                             PermutationIndex = 0,
                             Speed = 0.9f
                         }
                     }
-                }, Bridge);
+                }, WalkableBridge);
                 world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                 {
-                    ActorID = Bridge.DynamicID,
+                    ActorID = WalkableBridge.DynamicID,
                     AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-                }, Bridge);
+                }, WalkableBridge);
                 #endregion
 
                 var ListenerToWoodTask = Task<bool>.Factory.StartNew(() => OnWoodListener(player, world));

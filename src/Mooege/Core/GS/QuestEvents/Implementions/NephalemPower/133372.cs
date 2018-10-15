@@ -68,10 +68,22 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             }
             //world.Game.Quests.Advance(72738);
             #region Дверь
-            var Bridge = world.GetActorBySNO(177439);
+            var Gate = world.GetActorBySNO(177439);
+            var WalkableGate = new Actors.Implementations.Door(world, 177439, Gate.Tags);
+            WalkableGate.Field2 = 16;
+            WalkableGate.RotationAxis = Gate.RotationAxis;
+            WalkableGate.RotationW = Gate.RotationW;
+            WalkableGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+            //NoDownGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+            WalkableGate.Attributes[GameAttribute.Gizmo_State] = 1;
+            WalkableGate.Attributes[GameAttribute.Untargetable] = true;
+            WalkableGate.Attributes.BroadcastChangedIfRevealed();
+            WalkableGate.EnterWorld(Gate.Position);
+            Gate.Destroy();
+
             world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
             {
-                ActorID = Bridge.DynamicID,
+                ActorID = WalkableGate.DynamicID,
                 Field1 = 5,
                 Field2 = 0,
                 tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
@@ -79,17 +91,17 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                         {
                             Duration = 300,
-                            AnimationSNO = Bridge.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                            AnimationSNO = WalkableGate.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
                             PermutationIndex = 0,
                             Speed = 0.9f
                         }
                 }
-            }, Bridge);
+            }, WalkableGate);
             world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
             {
-                ActorID = Bridge.DynamicID,
+                ActorID = WalkableGate.DynamicID,
                 AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID,
-            }, Bridge);
+            }, WalkableGate);
             #endregion
 
             Timeout = new SecondsTickTimer(world.Game, 6f);
