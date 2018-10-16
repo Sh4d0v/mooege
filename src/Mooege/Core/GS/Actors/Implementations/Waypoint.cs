@@ -37,6 +37,15 @@ namespace Mooege.Core.GS.Actors.Implementations
         public Waypoint(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            this.Attributes[GameAttribute.MinimapIconOverride] = 78759;
+            /*
+                [072689] [Actor] MinimapIconStairs_Switch
+                [075172] [Actor] minimapMarker_model
+                [004686] [Actor] MinimapIconStairs
+                [075171] [Appearance] minimapMarker_model
+                [212733] [MarkerSet] caOut_Boneyard_ExitA_E02_S02 (Minimap Pings)
+
+             */
             this.Attributes[GameAttribute.MinimapActive] = true;
         }
 

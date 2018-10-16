@@ -199,7 +199,7 @@ namespace Mooege.Core.GS.Items
 
             Attributes[GameAttribute.Item_Quality_Level] = 1;
             if (Item.IsArmor(this.ItemType) || Item.IsWeapon(this.ItemType) || Item.IsOffhand(this.ItemType))
-                Attributes[GameAttribute.Item_Quality_Level] = RandomHelper.Next(6);
+                Attributes[GameAttribute.Item_Quality_Level] = RandomHelper.Next(11);
             if (this.ItemType.Flags.HasFlag(ItemFlags.AtLeastMagical) && Attributes[GameAttribute.Item_Quality_Level] < 3)
                 Attributes[GameAttribute.Item_Quality_Level] = 3;
 
@@ -218,9 +218,12 @@ namespace Mooege.Core.GS.Items
             ApplySkills(definition);
             ApplyAttributeSpecifier(definition);
 
+
+
             int affixNumber = 1;
             if (Attributes[GameAttribute.Item_Quality_Level] >= 3)
                 affixNumber = Attributes[GameAttribute.Item_Quality_Level] - 2;
+            
             AffixGenerator.Generate(this, affixNumber);
         }
 

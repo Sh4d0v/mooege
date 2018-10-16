@@ -49,7 +49,13 @@ namespace Mooege.Core.GS.Items
 
         //private static readonly Dictionary<Player, List<Item>> DbItems = new Dictionary<Player, List<Item>>(); //we need this list to delete item_instances from items which have no owner anymore.
         //private static readonly Dictionary<int, Item> CachedItems = new Dictionary<int, Item>();
-
+        /*
+            Гнев данеты - Unique_HandXBow_001
+            Ярость данеты - Unique_HandXBow_002
+            Гнев Натали - Unique_HandXBow_003
+            Тень Натали - Unique_Cloak_006
+            Святой мститель - Unique_HandXBow_016
+         */
 
 
         public static int TotalItems
@@ -175,7 +181,7 @@ namespace Mooege.Core.GS.Items
                 if (itemDefinition.Name.ToLower().Contains("gold")) continue;
                 if (itemDefinition.Name.ToLower().Contains("healthglobe")) continue;
                 if (itemDefinition.Name.ToLower().Contains("pvp")) continue;
-                if (itemDefinition.Name.ToLower().Contains("unique")) continue;
+                //if (itemDefinition.Name.ToLower().Contains("unique")) continue;
                 if (itemDefinition.Name.ToLower().Contains("crafted")) continue;
                 if (itemDefinition.Name.ToLower().Contains("debug")) continue;
                 if (itemDefinition.Name.ToLower().Contains("missing")) continue; //I believe I've seen a missing item before, may have been affix though. //Wetwlly
@@ -237,6 +243,8 @@ namespace Mooege.Core.GS.Items
         {
             int hash = StringHashHelper.HashItemName(name);
             ItemTable definition = Items[hash];
+            
+            
             return CookFromDefinition(player, definition);
         }
 
@@ -247,7 +255,7 @@ namespace Mooege.Core.GS.Items
 
             var item = (Item)Activator.CreateInstance(type, new object[] { player.World, definition });
             //player.GroundItems[item.DynamicID] = item;
-
+           
             return item;
         }
 

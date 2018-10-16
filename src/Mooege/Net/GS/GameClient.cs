@@ -69,6 +69,7 @@ namespace Mooege.Net.GS
                 while ((end - _incomingBuffer.Position) >= 9)
                 {
                     var message = _incomingBuffer.ParseMessage();
+
                     if (message == null) continue;
                     try
                     {
@@ -119,13 +120,15 @@ namespace Mooege.Net.GS
                         {
                             Logger.Warn("Внимание! Тестовая функция");
                             Logger.Debug("Запуск крафта");
+
                             // Field0.
                             // Data 230/252/263/267/304/337
-                           // -1941186209 - Отличные шоссы
-                           // 1022152670 - Прекрасные ножные повязки
+                            // -1941186209 - Отличные шоссы
+                            // 1022152670 - Прекрасные ножные повязки
+                            
                            
-                           // Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
-                           // NewCraftItem.GBHandle.GBID = message.Field0;
+                           //Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
+                           
                            Inventory inventory = Player.Inventory;
                            
                            // inventory.AddGoldAmount(100000);

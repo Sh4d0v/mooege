@@ -66,6 +66,6 @@ namespace Mooege.Core.GS.Common.Types.TagMap
         public static TagKeyInt TriggerDistance = new TagKeyInt(528384); // raven_pecking
         public static TagKeySNO TriggeredActor = new TagKeySNO(526592);
 
-        public static TagKeySNO MinimapTexture = new TagKeySNO(548864);
+        public static TagKeySNO MinimapTexture = new TagKeySNO(548869);
     }
 }

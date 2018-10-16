@@ -32,6 +32,7 @@ namespace Mooege.Core.GS.Actors.Implementations
         {
             Attributes[GameAttribute.MinimapActive] = true;
             Attributes[GameAttribute.Gizmo_State] = 0;
+            Field2 = 0;
         }
 
         private bool WaitToSpawn(Ticker.TickTimer timer)

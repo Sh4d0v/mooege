@@ -31,13 +31,17 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             : base(world, snoId, tags)
         {
             this.Attributes[GameAttribute.MinimapActive] = true;
-
+            //{544769 = 186330}
+            //{544768 = 223677}
+            //{544768 = 223677}
+            //{524872 = 75875}
             Interactions.Add(new CraftInteraction());
         }
 
         public override void OnCraft(Player player)
         {
             player.InGameClient.SendMessage(new OpenArtisanWindowMessage() { ArtisanID = this.DynamicID });
+
         }
 
     }
