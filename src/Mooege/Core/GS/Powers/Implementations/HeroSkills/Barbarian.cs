@@ -138,14 +138,14 @@ namespace Mooege.Core.GS.Powers.Implementations
             {
                 int BashBuffRemover = StackCount;
                 base.Remove();
-                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] -= BashBuffRemover * (Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100);
+                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] -= BashBuffRemover * (Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100);
                 User.Attributes.BroadcastChangedIfRevealed();
 
             }
 
             private void _AddDamage()
             {
-                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] += Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100;
+                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] += Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100;
                 User.Attributes.BroadcastChangedIfRevealed();
             }
         }

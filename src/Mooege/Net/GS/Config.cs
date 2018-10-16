@@ -53,6 +53,22 @@ namespace Mooege.Net.GS.BarbarianPrimarySkills
         // Bash Base skill
         public float BashWeaponDamagePercent { get { return this.GetFloat("BashWeaponDamagePercent", 150); } set { this.Set("BashWeaponDamagePercent", value); } }
         public int BashFuryGeneration { get { return this.GetInt("BashFuryGeneration", 6); } set { this.Set("BashFuryGeneration", value); } }
+        public float BashKnockbackChance { get { return this.GetFloat("BashKnockbackChance", 20); } set { this.Set("BashKnockbackChance", value); } }
+        // Instigation (Rune D)
+        public int BashExtraFuryGeneration { get { return this.GetInt("BashExtraFuryGeneration", 6); } set { this.Set("BashExtraFuryGeneration", value); } }
+        // Punish (Rune B)
+        public float BashIncreasedDamageSkills { get { return this.GetFloat("BashIncreasedDamageSkills", 6); } set { this.Set("BashIncreasedDamageSkills", value); } }
+        public float BashPunishDuration { get { return this.GetFloat("BashPunishDuration", 5); } set { this.Set("BashPunishDuration", value); } }
+        public int BashPunishMaxStacks { get { return this.GetInt("BashPunishMaxStacks", 3); } set { this.Set("BashPunishMaxStacks", value); } }
+        // Onslaught (Rune A)
+        public int BashReverberations { get { return this.GetInt("BashReverberations", 2); } set { this.Set("BashReverberations", value); } }
+        public float BashReverberationWeaponDamage { get { return this.GetFloat("BashReverberationWeaponDamage", 22); } set { this.Set("BashReverberationWeaponDamage", value); } }
+        // Clobber (Rune C)
+        public float BashStunChance { get { return this.GetFloat("BashStunChance", 35); } set { this.Set("BashStunChance", value); } }
+        public float BashStunDuration { get { return this.GetFloat("BashStunDuration", 1.5f); } set { this.Set("BashStunDuration", value); } }
+        // Pulverize (Rune E)
+        public float BashPulverizeWeaponDamage { get { return this.GetFloat("BashPulverizeWeaponDamage", 22); } set { this.Set("BashPulverizeWeaponDamage", value); } }
+        public float BashPulverizeDistance { get { return this.GetFloat("BashPulverizeDistance", 26); } set { this.Set("BashPulverizeDistance", value); } }
 
         private static readonly BarbarianPrimarySkillsConfig _instance = new BarbarianPrimarySkillsConfig();
         public static BarbarianPrimarySkillsConfig Instance { get { return _instance; } }
@@ -92,4 +108,5 @@ namespace Mooege.Net.GS.BarbarianRageSkills
 
 
 #endregion
+
 

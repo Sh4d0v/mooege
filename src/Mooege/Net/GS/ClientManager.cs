@@ -94,7 +94,7 @@ namespace Mooege.Net.GS
             if (dbQuestProgress.ActiveQuest == 72095)
             {
                 #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 8; Rem++)
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
@@ -192,7 +192,7 @@ namespace Mooege.Net.GS
                 //world.Leave(world.GetActorByDynamicId(72));
                 world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 8; Rem++)
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
@@ -234,7 +234,7 @@ namespace Mooege.Net.GS
             {
                 world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 8; Rem++)
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
@@ -276,7 +276,7 @@ namespace Mooege.Net.GS
             {
                 world.Leave(world.GetActorByDynamicId(75));
                 #region Перемотка ко второму квесту
-                for (int Rem = 0; Rem < 8; Rem++)
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
                     world.Game.Quests.Advance(87700);
                 }
