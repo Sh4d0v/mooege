@@ -38,45 +38,47 @@ namespace Mooege.Core.GS.Powers.Implementations
     {
         public override IEnumerable<TickTimer> Main()
         {
+            var BarbarianConf = Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance;
             bool hitAnything = false;
             var ShockWavePos = PowerMath.TranslateDirection2D(User.Position, TargetPosition,
                                                               User.Position,
                                                               ScriptFormula(23));
-            var maxHits = ScriptFormula(1);
+
+            var maxHits = BarbarianConf.BashReverberations + 1; // Number of Reverberations of Rune A
             for (int i = 0; i < maxHits; ++i)
             {
                 AttackPayload attack = new AttackPayload(this);
                 attack.Targets = GetBestMeleeEnemy();
 
                 if (i == 0)
-                    //attack.AddWeaponDamage(ScriptFormula(3), DamageType.Physical);
-                    attack.AddWeaponDamage(Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashWeaponDamagePercent / 100, DamageType.Physical);
+                    attack.AddWeaponDamage(BarbarianConf.BashWeaponDamagePercent / 100, DamageType.Physical);
                 else
-                    attack.AddWeaponDamage(ScriptFormula(12), DamageType.Physical);
+                    attack.AddWeaponDamage(BarbarianConf.BashReverberationWeaponDamage / 100, DamageType.Physical); // Damage of Reverberations (Rune A)
 
                 attack.OnHit = hitPayload =>
                 {
                     hitAnything = true;
-                    if (Rune_D > 0)
+
+                    if (Rune_D > 0) // Instigation
                     {
-                        GeneratePrimaryResource(ScriptFormula(10));
+                        GeneratePrimaryResource(BarbarianConf.BashExtraFuryGeneration);
                     }
-                    if (Rune_B > 0)
+                    if (Rune_B > 0) // Punish
                     {
                         AddBuff(User, new AddDamageBuff());
                     }
-
-                    if (Rune_A > 0)
-                    {
+                    if (Rune_A > 0) // Onslaught
+                    { 
+                        
                     }
-                    else if (Rune_C > 0)
+                    else if (Rune_C > 0) // Clobber
                     {
-                        if (Rand.NextDouble() < ScriptFormula(14))
-                            AddBuff(hitPayload.Target, new DebuffStunned(WaitSeconds(ScriptFormula(15))));
+                        if (Rand.NextDouble() < BarbarianConf.BashStunChance / 100) 
+                            AddBuff(hitPayload.Target, new DebuffStunned(WaitSeconds(BarbarianConf.BashStunDuration)));
                     }
-                    else
+                    else // Chance to Knockback Base (less Onslaught)
                     {
-                        if (Rand.NextDouble() < ScriptFormula(0))
+                        if (Rand.NextDouble() < BarbarianConf.BashKnockbackChance / 100)
                             Knockback(hitPayload.Target, ScriptFormula(5), ScriptFormula(6), ScriptFormula(7));
                     }
                 };
@@ -84,15 +86,14 @@ namespace Mooege.Core.GS.Powers.Implementations
                 yield return WaitSeconds(ScriptFormula(13));
 
                 if (hitAnything)
-                    //GeneratePrimaryResource(EvalTag(PowerKeys.ResourceGainedOnFirstHit));
-                    GeneratePrimaryResource(Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashFuryGeneration);
+                    GeneratePrimaryResource(BarbarianConf.BashFuryGeneration);
             }
             //Shockwave -> capsule distance, at the moment using beamdirection
-            if (Rune_E > 0)
+            if (Rune_E > 0) // Pulverize
             {
                 User.PlayEffectGroup(93867);
                 yield return WaitSeconds(0.5f);
-                WeaponDamage(GetEnemiesInBeamDirection(ShockWavePos, TargetPosition, 30f, 8f), ScriptFormula(18), DamageType.Physical);
+                WeaponDamage(GetEnemiesInBeamDirection(ShockWavePos, TargetPosition, BarbarianConf.BashPulverizeDistance, 8f), BarbarianConf.BashPulverizeWeaponDamage / 100, DamageType.Physical);
             }
             yield break;
         }
@@ -108,8 +109,9 @@ namespace Mooege.Core.GS.Powers.Implementations
         {
             public override void Init()
             {
-                Timeout = WaitSeconds(ScriptFormula(11));
-                MaxStackCount = (int)ScriptFormula(4);
+                var BarbarianConf = Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance;
+                Timeout = WaitSeconds(BarbarianConf.BashPunishDuration);
+                MaxStackCount = BarbarianConf.BashPunishMaxStacks;
             }
 
             public override bool Apply()
@@ -134,15 +136,16 @@ namespace Mooege.Core.GS.Powers.Implementations
 
             public override void Remove()
             {
+                int BashBuffRemover = StackCount;
                 base.Remove();
-                User.Attributes[GameAttribute.Damage_Bonus_Min] -= StackCount * ScriptFormula(2);
+                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] -= BashBuffRemover * (Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100);
                 User.Attributes.BroadcastChangedIfRevealed();
 
             }
 
             private void _AddDamage()
             {
-                User.Attributes[GameAttribute.Damage_Bonus_Min] += ScriptFormula(2);
+                User.Attributes[GameAttribute.Damage_Percent_All_From_Skills] += Mooege.Net.GS.BarbarianPrimarySkills.BarbarianPrimarySkillsConfig.Instance.BashIncreasedDamageSkills / 100;
                 User.Attributes.BroadcastChangedIfRevealed();
             }
         }
@@ -2028,7 +2031,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] += ScriptFormula(2);
                 User.Attributes[GameAttribute.Dodge_Chance_Bonus] += ScriptFormula(3);
                 User.Attributes[GameAttribute.Movement_Bonus_Run_Speed] += ScriptFormula(1);
-                //User.Attributes[GameAttribute.Look_Override] = ?; // We need WotB Actor hex here
+                User.Attributes[GameAttribute.Look_Override] = 126012101; // We need WotB Actor hex here
                 User.Attributes.BroadcastChangedIfRevealed();
                 return true;
             }
@@ -2046,6 +2049,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 User.Attributes[GameAttribute.Attacks_Per_Second_Bonus] -= ScriptFormula(2);
                 User.Attributes[GameAttribute.Dodge_Chance_Bonus] -= ScriptFormula(3);
                 User.Attributes[GameAttribute.Movement_Bonus_Run_Speed] -= ScriptFormula(1);
+                User.Attributes[GameAttribute.Look_Override] = 0; // We need WotB Actor hex here
                 User.Attributes.BroadcastChangedIfRevealed();
             }
         }
