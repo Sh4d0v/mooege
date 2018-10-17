@@ -94,7 +94,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             var Maghda = AttackedTown.GetActorBySNO(129345);
             AttackedTown.Leave(Maghda);
-            if (EnterStep == 1 || EnterStep == 2)
+            if (EnterStep < 3)
             {
                 var ListenerEnterToCenterTownEnter = Task<bool>.Factory.StartNew(() => OnListenerToCenterTownEnter(MasterPlayer, world));
                 ListenerEnterToCenterTownEnter.ContinueWith(delegate

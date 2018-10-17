@@ -57,6 +57,12 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
             }
 
+            
+       //     var Leah = world.GetActorByDynamicId(25);
+            
+       //     world.SpawnMonster(121208, Leah.Position);
+            
+            
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
@@ -66,6 +72,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
+
+            StartConversation(world, 93337);
         }
 
 

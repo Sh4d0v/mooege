@@ -117,6 +117,19 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.RunSpeed = 0.15f;
         }
     }
+    [HandledSNO(90008)] 
+    public class DarkCultistsTownAttackMelee : Monster
+    {
+        public DarkCultistsTownAttackMelee(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
     [HandledSNO(6035)]
     public class DarkSummoner : Monster
     {
@@ -606,8 +619,27 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
     }
     #endregion
 
+    #region БОССЫ!!
     #region
-    
+    //5350
+    [HandledSNO(5350)]
+    public class LeorikKing : Monster
+    {
+        public LeorikKing(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).AddPresetPower(30496);
+            Attributes[GameAttribute.Hitpoints_Max] = 2000f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 2000f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 100f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+        }
+    }
+    #endregion
+    #endregion
+
+    #region
+
     [HandledSNO(85900)] 
     public class MiraBlacksmithWife : Monster
     {

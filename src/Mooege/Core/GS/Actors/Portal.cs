@@ -147,15 +147,6 @@ namespace Mooege.Core.GS.Actors
                     };
 
                     Logger.Warn("Portal to Home {0} created", this.ActorSNO.Id);
-                }else if(this.ActorSNO.Id == 176001)
-                {
-                    this.Destination = new ResolvedPortalDestination
-                    {
-                        WorldSNO = 50582,
-                        DestLevelAreaSNO = 33357,
-                        StartingPointActorTag = -105
-                    };
-                    Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
                 }
                 else
                 {
@@ -1032,19 +1023,18 @@ namespace Mooege.Core.GS.Actors
                             world.Game.Quests.Advance(72061);
                            
                         }
-//                        if (dbQuestProgress.StepOfQuest <= 3)
+
+                        //Задать верное расположение!
+                        Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                        // 73261 TagMap[ActorKeys.GizmoGroup]
+                        Portal RealPortal = new Portal(world.Game.GetWorld(60713), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                        RealPortal.Destination = new ResolvedPortalDestination
                         {
-                            Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
-                            // 73261 TagMap[ActorKeys.GizmoGroup]
-                            Portal RealPortal = new Portal(world.Game.GetWorld(60713), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
-                            RealPortal.Destination = new ResolvedPortalDestination
-                            {
-                                WorldSNO = 60713,
-                                DestLevelAreaSNO = 60885,
-                                StartingPointActorTag = -105
-                            };
-                            RealPortal.EnterWorld(SpawnPortalPosition);
-                        }
+                            WorldSNO = 60713,
+                            DestLevelAreaSNO = 60885,
+                            StartingPointActorTag = -505
+                        };
+                        RealPortal.EnterWorld(SpawnPortalPosition);
                     }
                 }
                 catch { }
@@ -1229,6 +1219,33 @@ namespace Mooege.Core.GS.Actors
                            
                         });
                     }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
+
+            if (this.Destination.WorldSNO == 180550)
+            {
+                //Вход в паучьи пещеры
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72546)
+                {
+                    if (dbQuestProgress.StepOfQuest == 2)
+                    {
+                        dbQuestProgress.StepOfQuest = 3;
+                        world.Game.Quests.Advance(72546);
+                    }
+
+                    Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                    // 73261 TagMap[ActorKeys.GizmoGroup]
+                    Portal RealPortal = new Portal(world.Game.GetWorld(60713), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                    RealPortal.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 60713,
+                        DestLevelAreaSNO = 60885,
+                        StartingPointActorTag = -104
+                    };
+                    RealPortal.EnterWorld(SpawnPortalPosition);
                 }
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
@@ -1442,7 +1459,7 @@ namespace Mooege.Core.GS.Actors
                 */
             }
             // Портал в Границу королей
-            else if (this.Destination.StartingPointActorTag == -105)
+            else if (this.Destination.StartingPointActorTag == -505)
             {
                 //Leoric Ghost - 5365
                 var KingTombWorld = player.World.Game.GetWorld(50585);
@@ -1640,6 +1657,10 @@ namespace Mooege.Core.GS.Actors
                                         //Пока её нет)
 
                                         this.Destroy();
+                                        var Leah = now_world.GetActorByDynamicId(25);
+
+                                        now_world.SpawnMonster(121208, Leah.Position);
+
                                         StartConversation(now_world, 138268);
                                     }else
                                     { player.ChangeWorld(world, startingPoint); }

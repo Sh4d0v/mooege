@@ -1269,7 +1269,7 @@ namespace Mooege.Core.GS.Players
                 HotBarButton = new HotbarButtonData { SNOSkill = -1, Field1 = -1, ItemGBId = -1 },
                 Field2 = 0xB4,
                 PlaytimeTotal = (int)this.Toon.TimePlayed,
-                WaypointFlags = 0x000005F7,
+                WaypointFlags = 0x000007F7,
                 #region Флаги для порталов 0 - 100
                 //WaypointFlags = 0x00000003, // Руины Тристрама и новый Тристрам
                 //WaypointFlags = 0x00000005, // Соборный сад и новый Тристрам
