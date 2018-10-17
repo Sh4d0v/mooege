@@ -742,7 +742,7 @@ namespace Mooege.Net.GS
 
             #endregion
 
-            #region Акт 1 Квест 7 - Судьба Вортема
+            #region Акт 1 Квест 8 - Судьба Вортема
             if (dbQuestProgress.ActiveQuest == 72546)
             {
                 world.Leave(world.GetActorByDynamicId(72));
