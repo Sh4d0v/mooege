@@ -60,7 +60,9 @@ namespace Mooege.Core.GS.Actors
                 {
 
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
-                }else if (ActorSNO.Id == 219995) //Моррис Джекйобс
+                }else if (ActorSNO.Id == 219995 ||  //Моррис Джекйобс
+                          ActorSNO.Id == 129439 ||  //Арсект ядовитый
+                          ActorSNO.Id == 0)
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Unique;
                 }

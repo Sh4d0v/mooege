@@ -344,7 +344,9 @@
     <Compile Include="Core\GS\Players\Equipment.cs" />
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TrailingTheCoven\138268.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\120357.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\165080.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\194942.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\72817.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\196041.cs" />

@@ -1133,10 +1133,10 @@ namespace Mooege.Core.GS.Actors
                 {
                     world.Game.Quests.Advance(117779);
                     
-                    var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
                     //OnKillListenerKhazra
                     var minions = ToWorld.GetActorsBySNO(178213);
                     var Urik = ToWorld.GetActorBySNO(131131);
+                    var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
                     MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200000f;
                     MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200000f;
                     List<uint> KhazrasKiller = new List<uint> { };
@@ -1180,9 +1180,64 @@ namespace Mooege.Core.GS.Actors
 
                 //PowerManager - Ожидание телепорта домой.
             }
+            
+
+            if (this.Destination.WorldSNO == 167721)
+            {
+                //Вход в подвал часовни
+                //LevelArea\A1_trOut_TownAttack_ChapelCellar.lvl
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 73236)
+                {
+                    if (dbQuestProgress.StepOfQuest == 7)
+                    {
+                        dbQuestProgress.StepOfQuest = 8;
+                        world.Game.Quests.Advance(73236);
+                    }
+                    if (dbQuestProgress.StepOfQuest == 8)
+                    {
+                        var ToWorld = player.World.Game.GetWorld(167721);
+                        var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
+                        ToWorld.Leave(MaghdaSpirit);
+
+                        TickTimer Timeout = new SecondsTickTimer(world.Game, 4f);
+                        var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                        ListenerWaiting.ContinueWith(delegate
+                        {
+                            MaghdaSpirit.EnterWorld(MaghdaSpirit.Position);
+                            MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200000f;
+                            MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200000f;
+                            ToWorld.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                            {
+                                ActorID = MaghdaSpirit.DynamicID,
+                                Field1 = 5,
+                                Field2 = 0,
+                                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 100,
+                                AnimationSNO = 193535,
+                                PermutationIndex = 0,
+                                Speed = 0.9f
+                            }
+                            }
+                            }, MaghdaSpirit);
+                            StartConversation(ToWorld, 165080);
+                            //StartConversation(ToWorld, 143182);
+
+                           
+                        });
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
 
             //Khazra [056593] trOut_TristramFields_EntranceA_E01_S01
             //Portal to New Tristram
+
+            #region Не санкционированные порталы)
             if (this.Destination.StartingPointActorTag == -100)
             {
 
@@ -1526,6 +1581,8 @@ namespace Mooege.Core.GS.Actors
 
                 });
             }
+            #endregion
+
             else
             {
                 var startingPoint = world.GetStartingPointById(this.Destination.StartingPointActorTag);
@@ -1565,27 +1622,37 @@ namespace Mooege.Core.GS.Actors
                                 //Телепортируем нашего товарища.
                                 //Клон
 
-                                /*
-                                    Hireling SoulTransmit = new Scoundrel(world,player.ActiveHireling.ActorSNO.Id, player.ActiveHireling.Tags);
-
-                                    SoulTransmit.Attributes[GameAttribute.Pet_Creator] = player.PlayerIndex;
-                                    SoulTransmit.Attributes[GameAttribute.Pet_Type] = 0;
-                                    SoulTransmit.Attributes[GameAttribute.Pet_Owner] = player.PlayerIndex;
-
-                                    SoulTransmit.RotationW = this.RotationW;
-                                    SoulTransmit.RotationAxis = this.RotationAxis;
-                                    SoulTransmit.Master = player;
-                                    SoulTransmit.EnterWorld(player.Position);
-                                    player.ActiveHireling = SoulTransmit;
-
-                                    player.SelectedNPC = null;
-                                */
+                               
                             }
 
                         }
                         else
                         {
-                            player.ChangeWorld(world, startingPoint);
+                            if (this.Destination.WorldSNO == 130161)
+                            {
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                                if (dbQuestProgress.ActiveQuest == 73236)
+                                {
+                                    if (dbQuestProgress.StepOfQuest == 9)
+                                    {
+                                        //Включение кат-сцены
+
+                                        //Пока её нет)
+
+                                        this.Destroy();
+                                        StartConversation(now_world, 138268);
+                                    }else
+                                    { player.ChangeWorld(world, startingPoint); }
+                                }
+                                else { player.ChangeWorld(world, startingPoint); }
+
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                            }
+                            else
+                            {
+                                player.ChangeWorld(world, startingPoint);
+                            }
                         }
                     }
                     catch {

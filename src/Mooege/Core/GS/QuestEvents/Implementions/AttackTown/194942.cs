@@ -119,6 +119,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     world.Game.Quests.Advance(73236);
                     StartConversation(world, 120372);
                     world.Game.Quests.Advance(73236);
+                    foreach (var playerN in world.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                        dbQuestProgress.ActiveQuest = 73236;
+                        dbQuestProgress.StepOfQuest = 7;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
                     var Church = world.GetActorBySNO(165475);
                     world.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.SetIdleAnimationMessage
                     {

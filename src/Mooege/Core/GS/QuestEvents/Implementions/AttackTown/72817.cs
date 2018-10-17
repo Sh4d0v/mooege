@@ -83,15 +83,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     if (dbQuestProgress.ActiveQuest == 73236)
                     {
-                        if (dbQuestProgress.StepOfQuest < 2)
-                        {
-                            dbQuestProgress.ActiveQuest = 73236;
-                            dbQuestProgress.StepOfQuest = 2;
-                            EnterStep = 1;
-                        }
-                        else
-                            EnterStep = 2;
-
+                        EnterStep = dbQuestProgress.StepOfQuest;
                     } else
                         EnterStep = -1;
                     //player.Value.ChangeWorld(AttackedTown, startingPoint);

@@ -479,7 +479,13 @@ namespace Mooege.Core.GS.Actors
         {
             if (_questRange != null)
                 try {
-                    Visible = World.Game.Quests.IsInQuestRange(_questRange); }
+                    
+                    Visible = World.Game.Quests.IsInQuestRange(_questRange);
+                    if (ActorSNO.Id == 178293)
+                    {
+                        Visible = true;
+                    }
+                }
                 catch { }
             else
                 Visible = true;

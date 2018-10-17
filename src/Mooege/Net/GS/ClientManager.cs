@@ -742,6 +742,152 @@ namespace Mooege.Net.GS
 
             #endregion
 
+            #region Акт 1 Квест 7 - Судьба Вортема
+            if (dbQuestProgress.ActiveQuest == 72546)
+            {
+                world.Leave(world.GetActorByDynamicId(72));
+                //world.Leave(world.GetActorByDynamicId(75));
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 7; Rem++)
+                {
+                    world.Game.Quests.Advance(87700);
+                }
+                #endregion
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
+                {
+                    world.Game.Quests.Advance(72095);
+                }
+                //world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 9; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                /*var BlacksmithVendor = world.GetActorBySNO(56947);
+                world.Leave(BlacksmithVendor);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036*/
+
+
+                #endregion
+                #region Перемотка к пятому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72061);
+                }
+                #endregion
+                #region Перемотка к шестому квесту
+                for (int Rem = 0; Rem < 6; Rem++)
+                {
+                    world.Game.Quests.Advance(117779);
+                }
+                #endregion
+                #region Перемотка к седьмому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72738);
+                }
+
+                //Убираем бандитов и двери на ферме
+                var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
+                var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
+                var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
+                try
+                {
+                    firgtRobber.Destroy();
+                    secondRobber.Destroy();
+                    thirdRobber.Destroy();
+                }
+                catch { }
+                //обе двери
+                var noneeddoors = world.GetActorsBySNO(170913);
+                foreach (var one in noneeddoors)
+                {
+                    one.Destroy();
+                }
+                #endregion
+                #region Перемотка к восьмому квесту
+                for (int Rem = 0; Rem < 9; Rem++)
+                {
+                    world.Game.Quests.Advance(73236);
+                }
+
+                //Чистим Вортем
+                var Wortem = world.Game.GetWorld(72882);
+                var Monster1 = Wortem.GetActorsBySNO(90367);
+                var Monster2 = Wortem.GetActorsBySNO(178297);
+                var Monster3 = Wortem.GetActorsBySNO(90008);
+                var Monster4 = Wortem.GetActorsBySNO(129345);
+
+                try
+                {
+                    foreach (var monst in Monster1){ monst.Destroy(); }
+                    foreach (var monst in Monster2) { monst.Destroy(); }
+                    foreach (var monst in Monster3) { monst.Destroy(); }
+                    foreach (var monst in Monster4) { monst.Destroy(); }
+
+                }
+                catch { }
+                //обе двери
+                #endregion
+
+
+                //Открытие ворот
+                var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));
+                //Открытие ворот в гиблые поля.
+                ListenerNierDoorsTask.ContinueWith(delegate
+                {
+                    Logger.Debug(" Waypoint_Park Objective done ");
+                    //No Lock 230324
+                    //Lock 216574
+                    var Locked = world.GetActorBySNO(216574);
+                    var Unlocked = world.GetActorBySNO(230324);
+                    Locked.Destroy();
+
+                    var NoGate = new Door(world, 230324, world.GetActorBySNO(230324).Tags);
+                    NoGate.Field2 = 16;
+                    NoGate.RotationAxis = world.GetActorBySNO(90419).RotationAxis;
+                    NoGate.RotationW = world.GetActorBySNO(90419).RotationW;
+                    NoGate.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    //NoGate.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    NoGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    NoGate.Attributes[GameAttribute.Untargetable] = true;
+                    NoGate.Attributes.BroadcastChangedIfRevealed();
+                    NoGate.EnterWorld(world.GetActorBySNO(90419).Position);
+                    Unlocked.Destroy();
+
+                    world.BroadcastIfRevealed(new PlayAnimationMessage
+                    {
+                        ActorID = Unlocked.DynamicID,
+                        Field1 = 5,
+                        Field2 = 0,
+                        tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                    {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 1000,
+                                AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Opening],
+                                PermutationIndex = 0,
+                                Speed = 1
+                            }
+                    }
+                    }, NoGate);
+
+                    world.BroadcastIfRevealed(new SetIdleAnimationMessage
+                    {
+                        ActorID = NoGate.DynamicID,
+                        AnimationSNO = NoGate.AnimationSet.TagMapAnimDefault[Mooege.Core.GS.Common.Types.TagMap.AnimationSetKeys.Open]
+                    }, NoGate);
+
+                });
+
+            }
+
+
+            #endregion
+
             #endregion
 
             #region Основная проверка
@@ -1262,6 +1408,7 @@ namespace Mooege.Net.GS
         }
 
         #endregion
+
         private bool StartConversation(Core.GS.Map.World world, Int32 conversationId)
         {
             foreach (var player in world.Players)

@@ -412,8 +412,11 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(196041, new _196041()); // Диалог с кузнецом для починки короны
             this.QuestEventDict.Add(196043, new _196043()); // Завершение квеста
 
-            // Highlands VendorRescue 129801
+            // EVENT - Highlands VendorRescue 129801
             this.QuestEventDict.Add(129751, new _129751()); // Начало квеста
+
+            // EVENT - Jar of Souls - 84767
+
 
             // Skeleton King 72061
             this.QuestEventDict.Add(80681, new _80681()); // Начало квеста
@@ -439,33 +442,17 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(120357, new _120357()); //Начало квеста
             this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
             this.QuestEventDict.Add(194942, new _194942()); //Угроза Магды
+            this.QuestEventDict.Add(165080, new _165080()); //Магда в подвале
 
-            //Призывальщик
-            //[090367] TownAttack_Cultist
-            //Призываемое зверье
-            //[090455] TownAttack_Summonable_A
-            //Кружочек)
-            //[099986] TownAttack_Circle
+            // Trailing the Coven 72546
+            this.QuestEventDict.Add(138268, new _138268()); //Магда в подвале
 
-            //[178297] TownAttack_Summoner
-            //Берсерк
-            //[178300] TownAttack_Berserker
-            //Урцель
-            //[178619] TownAttack_Summoner_Unique
+            // The Imprisoned Angel 72801
 
+            // Return to Tristram 136656
 
-            //World Main - [072882] [Worlds] trOUT_TownAttack
-            //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A
-            // Trailing the Coven
-
-        // The Imprisoned Angel
-        // RescueTyrael 72801
-
-
-        // Return to Tristram 136656
-        //CainExit 72546
-        // Belieal 57339
-    }
+            //Конец Первого АКТА!
+        }
 
         /// <summary>
         /// Остановка всех диалогов

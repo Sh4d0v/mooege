@@ -73,6 +73,9 @@ namespace Mooege.Core.GS.Actors.Implementations
 
             for (int i = 0; i < wayPointInfo.Length; i++)
             {
+                // World - Level
+                //117405 - 117411
+                //167721 - 119870
                 if (wayPointInfo[i].SNOLevelArea == -1)
                     continue;
 

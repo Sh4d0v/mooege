@@ -146,11 +146,21 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
-            //Моррис 219995
+            try
+            {
+                Mooege.Common.MPQ.FileFormats.QuestRange _questRange;
+                int snoQuestRange = target.Tags[Common.Types.TagMap.MarkerKeys.QuestRange].Id;
+
+                if (Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange].ContainsKey(snoQuestRange))
+                    _questRange = Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange][snoQuestRange].Data as Mooege.Common.MPQ.FileFormats.QuestRange;
+                _questRange = Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange][snoQuestRange].Data as Mooege.Common.MPQ.FileFormats.QuestRange;
+                user.World.Game.Quests.IsInQuestRange(_questRange);
+            }
+            catch { }//Моррис 219995
 
             //Королевские скелеты 087012
             //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
-            
+
             /*   
                          Quest - TownAttack 73236
                          * Диалог для перевозки 72817
@@ -1032,6 +1042,17 @@ namespace Mooege.Core.GS.Powers
             }
             catch { }
             #endregion
+
+            #region Cпятивший отшельник
+            try
+            {
+                if(target.ActorSNO.Id == 74115)
+                {
+                    StartConversation(target.World, 74121);
+                }
+            }
+            catch { }
+            #endregion 
 
             #endregion
 
