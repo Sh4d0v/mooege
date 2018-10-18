@@ -96,7 +96,19 @@ namespace Mooege.Core.GS.Generators
             */
             #endregion
 
+            #region Лощина стенаний
+            /*
+             
+            
 
+             
+            [078420] trOut_Wilderness_Road_NE_02
+            [074241] trOut_Wilderness_Road_EW_01
+            [074248] trOut_Wilderness_Road_NE_01
+            [074276] trOut_Wilderness_Road_SW_01
+            [078798] trOut_Wilderness_Road_SW_02
+            */
+            #endregion
             if (worldAsset.SNOId == 60395)
             {
                 worldData.IsGenerated = false;

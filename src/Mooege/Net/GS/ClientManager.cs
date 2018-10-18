@@ -742,7 +742,7 @@ namespace Mooege.Net.GS
 
             #endregion
 
-            #region Акт 1 Квест 8 - Судьба Вортема
+            #region Акт 1 Квест 8 - По следам тёмного культа
             if (dbQuestProgress.ActiveQuest == 72546)
             {
                 world.Leave(world.GetActorByDynamicId(72));
@@ -833,6 +833,13 @@ namespace Mooege.Net.GS
                 //обе двери
                 #endregion
 
+                //[Actor] [Type: Gizmo] SNOId:178151 DynamicId: 1132 Position: x:2390,857 y:4244,667 z:0,09999084 Name: trOut_Highlands_Mystic_Wagon}
+                //Проверка на наличие вагона
+                var Wagon = world.GetActorBySNO(178151);
+                if (Wagon == null)
+                {
+                    
+                }
 
                 //Открытие ворот
                 var ListenerNierDoorsTask = Task<bool>.Factory.StartNew(() => OnNierDoorsListener(client.Player, world));

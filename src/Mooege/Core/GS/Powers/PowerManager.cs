@@ -172,6 +172,9 @@ namespace Mooege.Core.GS.Powers
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //[Actor] 194263 - Mystic_B
+            //[Actor] [Type: Gizmo] SNOId:178151 DynamicId: 1132 Position: x:2390,857 y:4244,667 z:0,09999084 Name: trOut_Highlands_Mystic_Wagon}
+            //
+
             #region Южные ворота в тристрам.
             try
             {
@@ -1058,12 +1061,10 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
-            #endregion
-
             #region Карина в пещере
             try
             {
-                if(target.ActorSNO.Id == 104545)
+                if (target.ActorSNO.Id == 104545)
                 {
                     foreach (var player in user.World.Players)
                     {
@@ -1129,6 +1130,7 @@ namespace Mooege.Core.GS.Powers
             }
             catch { }
             #endregion
+
             #region Карина за пещерой
             try
             {
@@ -1142,7 +1144,7 @@ namespace Mooege.Core.GS.Powers
                             dbQuestProgress.StepOfQuest = 10;
                             user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
                             StartConversation(target.World, 191511);
-                            
+
                         }
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
@@ -1150,8 +1152,38 @@ namespace Mooege.Core.GS.Powers
                 }
             }
             catch { }
-            
+
             #endregion
+
+            #region Тележка Карины
+            try
+            {
+                if (target.ActorSNO.Id == 178151)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72546)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 10)
+                            {
+                                //  dbQuestProgress.StepOfQuest = 11;
+                                
+                                user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                                user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 178151);
+                                //Ожидание зоны - 130546[Scene] SNOId: 130546 DynamicId: 67109112 Name: trOut_Highlands_Chokepoint_A_E03_S01
+
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            #endregion
+
+            #endregion
+
 
             #region Книги
             try

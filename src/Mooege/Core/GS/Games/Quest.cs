@@ -294,11 +294,26 @@ namespace Mooege.Core.GS.Games
 
                 foreach (var objectiveSet in assetQuestStep.StepObjectiveSets)
                 {
-                    ObjectivesSets.Add(new ObjectiveSet()
+                    if (objectiveSet.FollowUpStepID == -2)
                     {
-                        FollowUpStepID = objectiveSet.FollowUpStepID,
-                        Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
-                    });
+                        ObjectivesSets.Add(new ObjectiveSet()
+                        {
+
+                            FollowUpStepID = 36,
+                            Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
+                        });
+                    }
+                    else
+                    {
+                        ObjectivesSets.Add(new ObjectiveSet()
+                        {
+
+                            FollowUpStepID = objectiveSet.FollowUpStepID,
+                            Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
+                        });
+                    }
+                    
+                    
                 }
                 c = 0;
 
