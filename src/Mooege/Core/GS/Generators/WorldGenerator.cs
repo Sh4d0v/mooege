@@ -47,6 +47,56 @@ namespace Mooege.Core.GS.Generators
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
 
+            #region инфа для высокогорья
+            /*
+                [075347] trOut_Highlands_Entrance_E04_N01
+                [075348] trOut_Highlands_Entrance_E04_S01
+                [075789] trOut_Highlands_Entrance_E04_S04 - "3000"	"3840"
+                [075790] trOut_Highlands_Entrance_E04_S05 - "3120"	"3840"
+
+                [074865] trOut_Highlands_Entrance_E05_S01
+                [074861] trOut_Highlands_Entrance_E05_S02
+                [074866] trOut_Highlands_Entrance_E05_S03
+                [074854] trOut_Highlands_Entrance_E05_S04
+                [075346] trOut_Highlands_Entrance_E05_N01
+
+                [074864] trOut_Highlands_Entrance_E06_S01
+                [074860] trOut_Highlands_Entrance_E06_S02
+                [074857] trOut_Highlands_Entrance_E06_S03
+                [074853] trOut_Highlands_Entrance_E06_S04
+
+                [074863] trOut_Highlands_Entrance_E07_S01
+                [074859] trOut_Highlands_Entrance_E07_S02
+                [074856] trOut_Highlands_Entrance_E07_S03
+                [074852] trOut_Highlands_Entrance_E07_S04
+
+                [074862] trOut_Highlands_Entrance_E08_S01
+                [074858] trOut_Highlands_Entrance_E08_S02
+                [074855] trOut_Highlands_Entrance_E08_S03
+                [074851] trOut_Highlands_Entrance_E08_S04
+
+                [123952] trOut_Highlands_Sub80_MysticWagon - Вагон (СубСцена)
+                
+                [076172] trOut_Highlands_Roads_EW_01
+                [076179] trOut_Highlands_Roads_NE_01
+                [076186] trOut_Highlands_Roads_NSEW_01
+                [076193] trOut_Highlands_Roads_NS_01
+                [076200] trOut_Highlands_Roads_NW_01
+                [076207] trOut_Highlands_Roads_SE_01
+                [076214] trOut_Highlands_Roads_SW_01
+                [082761] trOut_Highlands_Roads_SW_02
+                [083007] trOut_Highlands_Roads_SE_02
+                [199507] trOut_Highlands_Roads_NS_01_AO_1
+                [083128] trOut_Highlands_Roads_NW_02
+                [083257] trOut_Highlands_Roads_NS_03
+                [083286] trOut_Highlands_Roads_NS_02
+                [083326] trOut_Highlands_Roads_NE_02
+                [083395] trOut_Highlands_Roads_EW_03
+                [083453] trOut_Highlands_Roads_EW_02
+            */
+            #endregion
+
+
             if (worldAsset.SNOId == 60395)
             {
                 worldData.IsGenerated = false;

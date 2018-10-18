@@ -171,7 +171,7 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
-
+            //[Actor] 194263 - Mystic_B
             #region Южные ворота в тристрам.
             try
             {
@@ -1128,6 +1128,29 @@ namespace Mooege.Core.GS.Powers
                 }
             }
             catch { }
+            #endregion
+            #region Карина за пещерой
+            try
+            {
+                if (target.ActorSNO.Id == 194263)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.StepOfQuest == 9)
+                        {
+                            dbQuestProgress.StepOfQuest = 10;
+                            user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                            StartConversation(target.World, 191511);
+                            
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                }
+            }
+            catch { }
+            
             #endregion
 
             #region Книги
