@@ -23,6 +23,7 @@ using Mooege.Common.Logging;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
 using Mooege.Core.GS.Actors;
+using Mooege.Core.GS.Actors.Implementations;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Players;
 using Mooege.Core.GS.Ticker;
@@ -126,6 +127,30 @@ namespace Mooege.Core.GS.Powers
             }
             return true;
         }
+        private bool OnKillQueenBossListener(List<uint> monstersAlive, Map.World world)
+        {
+            Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         public bool RunPower(Actor user, int powerSNO, uint targetId = uint.MaxValue, Vector3D targetPosition = null,
                                TargetMessage targetMessage = null)
         {
@@ -146,27 +171,6 @@ namespace Mooege.Core.GS.Powers
             
             // find and run a power implementation
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
-            try
-            {
-                Mooege.Common.MPQ.FileFormats.QuestRange _questRange;
-                int snoQuestRange = target.Tags[Common.Types.TagMap.MarkerKeys.QuestRange].Id;
-
-                if (Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange].ContainsKey(snoQuestRange))
-                    _questRange = Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange][snoQuestRange].Data as Mooege.Common.MPQ.FileFormats.QuestRange;
-                _questRange = Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.QuestRange][snoQuestRange].Data as Mooege.Common.MPQ.FileFormats.QuestRange;
-                user.World.Game.Quests.IsInQuestRange(_questRange);
-            }
-            catch { }//Моррис 219995
-
-            //Королевские скелеты 087012
-            //[Actor] [Type: Gizmo] SNOId:5766 DynamicId: 2009 Position: x:964,2715 y:579,897 z:2,670288E-05 Name: trDun_Cath_Gate_C
-
-            /*   
-                         Quest - TownAttack 73236
-                         * Диалог для перевозки 72817
-                    //World Main - [072882] [Worlds] trOUT_TownAttack
-                    //Chapel - [167721] [Worlds] trOut_TownAttack_ChapelCellar_A     
-            */
 
             #region Южные ворота в тристрам.
             try
@@ -1052,8 +1056,78 @@ namespace Mooege.Core.GS.Powers
                 }
             }
             catch { }
-            #endregion 
+            #endregion
 
+            #endregion
+
+            #region Карина в пещере
+            try
+            {
+                if(target.ActorSNO.Id == 104545)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72546)
+                        {
+                            if (dbQuestProgress.StepOfQuest == 4)
+                            {
+                                var WrongSpiderQueen = user.World.GetActorsBySNO(51341);
+                                foreach (var WrongMonster in WrongSpiderQueen)
+                                {
+                                    WrongMonster.Destroy();
+                                }
+
+                                List<uint> BossQueenAlive = new List<uint> { };
+                                user.World.SpawnMonster(51341, user.Position);
+                                var SpiderQueen = user.World.GetActorBySNO(51341);
+
+                                BossQueenAlive.Add(SpiderQueen.DynamicID);
+                                user.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                                {
+                                    ActorID = SpiderQueen.DynamicID,
+                                    Field1 = 5,
+                                    Field2 = 0,
+                                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                    {
+                                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                            {
+                                                Duration = 70,
+                                                AnimationSNO = 165050,
+                                                PermutationIndex = 0,
+                                                Speed = 1f
+                                            }
+                                    }
+                                }, SpiderQueen);
+                                var BossQueenListener = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => OnKillQueenBossListener(BossQueenAlive, user.World));
+                                BossQueenListener.ContinueWith(delegate
+                                {
+                                    user.World.Game.Quests.Advance(72546);
+                                    user.World.Game.Quests.Advance(72546);
+                                    dbQuestProgress.StepOfQuest = 7;
+
+                                    var UsedWeb = user.World.GetActorBySNO(104545);
+                                    var OpenDoor = new Door(UsedWeb.World, UsedWeb.ActorSNO.Id, UsedWeb.Tags);
+                                    OpenDoor.Field2 = 0;
+                                    OpenDoor.RotationAxis = UsedWeb.RotationAxis;
+                                    OpenDoor.RotationW = UsedWeb.RotationW;
+                                    OpenDoor.Attributes.BroadcastChangedIfRevealed();
+                                    OpenDoor.EnterWorld(UsedWeb.Position);
+                                    UsedWeb.Destroy();
+                                });
+                            }
+                            if (dbQuestProgress.StepOfQuest == 7)
+                            {
+                                user.World.Game.Quests.Advance(72546);
+                                dbQuestProgress.StepOfQuest = 8;
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                }
+            }
+            catch { }
             #endregion
 
             #region Книги

@@ -601,6 +601,21 @@ namespace Mooege.Core.GS.Actors
                     player.Teleport(Point);
 
                 }
+                if (this.ActorSNO.Id == 175482)
+                {
+                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                    if (dbQuestProgress.ActiveQuest == 72546)
+                    {
+                        if (dbQuestProgress.StepOfQuest == 8)
+                        {
+                            this.World.Game.Quests.Advance(72546);
+                            dbQuestProgress.StepOfQuest = 9;
+
+                        }
+                    }
+                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                    DBSessions.AccountSession.Flush();
+                }
             }
             if (this.Destination.WorldSNO == 72637)
             {
@@ -823,7 +838,7 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-            if (this.Destination.WorldSNO == 60395 && this.Destination.StartingPointActorTag == -101)
+            if (this.Destination.WorldSNO == 60395)// || this.Destination.StartingPointActorTag == -101)
             {
                 //Enter to Drowned Temple
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
@@ -989,6 +1004,7 @@ namespace Mooege.Core.GS.Actors
                     {
                         ActorID = BookShelf.DynamicID,
                         AnimationSNO = AnimationSetKeys.Open.ID
+
                     }, BookShelf);
                     var minions = world.GetActorsBySNO(80652);
                     foreach (var minion in minions)
@@ -1004,15 +1020,6 @@ namespace Mooege.Core.GS.Actors
                         if (dbQuestProgress.StepOfQuest == 11)
                         {
                             dbQuestProgress.StepOfQuest = 12;
-                            var minions = world.GetActorsBySNO(80652);
-                            var CainBrains = world.GetActorBySNO(102386);
-                            Vector3D FirstPoint = new Vector3D(112.1694f, 166.0996f, 0.09996167f);
-                            Vector3D SecondPoint = new Vector3D(120.07f, 174.9657f, 0.1114834f);
-                            Vector3D ThirdPoint = new Vector3D(111.3691f, 182.6697f, 5.229973f);
-                            minions[0].Teleport(FirstPoint);
-                            minions[1].Teleport(FirstPoint);
-                            minions[2].Teleport(FirstPoint);
-
                         }                        
                     }
                     if(dbQuestProgress.ActiveQuest == 72061)
@@ -1170,8 +1177,6 @@ namespace Mooege.Core.GS.Actors
 
                 //PowerManager - Ожидание телепорта домой.
             }
-            
-
             if (this.Destination.WorldSNO == 167721)
             {
                 //Вход в подвал часовни
@@ -1223,27 +1228,34 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-
             if (this.Destination.WorldSNO == 180550)
             {
                 //Вход в паучьи пещеры
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
                 if (dbQuestProgress.ActiveQuest == 72546)
                 {
+                    if (dbQuestProgress.StepOfQuest < 2)
+                    {
+                        dbQuestProgress.StepOfQuest = 2;
+                        world.Game.Quests.Advance(72546);
+                    }
                     if (dbQuestProgress.StepOfQuest == 2)
                     {
                         dbQuestProgress.StepOfQuest = 3;
-                        world.Game.Quests.Advance(72546);
+                       // world.Game.Quests.Advance(72546);
+                       world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 180550);
                     }
 
-                    Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                    //Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                    Vector3D SpawnPortalPosition = world.GetActorBySNO(183032).Position;
                     // 73261 TagMap[ActorKeys.GizmoGroup]
-                    Portal RealPortal = new Portal(world.Game.GetWorld(60713), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                    
+                    Portal RealPortal = new Portal(world.Game.GetWorld(180550), 5648, world.Game.GetWorld(182976).StartingPoints[0].Tags);
                     RealPortal.Destination = new ResolvedPortalDestination
                     {
-                        WorldSNO = 60713,
-                        DestLevelAreaSNO = 60885,
-                        StartingPointActorTag = -104
+                        WorldSNO = 182976,
+                        DestLevelAreaSNO = 62726,
+                        StartingPointActorTag = -104 //30
                     };
                     RealPortal.EnterWorld(SpawnPortalPosition);
                 }
@@ -1251,9 +1263,28 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.Flush();
             }
 
-            //Khazra [056593] trOut_TristramFields_EntranceA_E01_S01
-            //Portal to New Tristram
-
+            if (this.Destination.WorldSNO == 182976)
+            {
+                //Покои королевы
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.StepOfQuest == 3)
+                {
+                    dbQuestProgress.StepOfQuest = 4;
+                    world.Game.Quests.Advance(72546);
+                    // world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 180550);
+                }
+                if (dbQuestProgress.StepOfQuest > 7)
+                {
+                    try {
+                        var UsedWeb = world.GetActorBySNO(104545);
+                        UsedWeb.Destroy();
+                    }
+                    catch { }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+            }
+            
             #region Не санкционированные порталы)
             if (this.Destination.StartingPointActorTag == -100)
             {
@@ -1362,14 +1393,29 @@ namespace Mooege.Core.GS.Actors
                     {
                         dbQuestProgress.StepOfQuest = 12;
                         QuestEnter = true;
-                        var minions = dest.GetActorsBySNO(80652);
+                        var Wrongminions = dest.GetActorsBySNO(80652);
+                        Vector3D FirstPoint = new Vector3D(112.1694f, 166.0996f, 0.09996167f);
+                        Vector3D SecondPoint = new Vector3D(120.07f, 174.9657f, 0.1114834f);
+                        Vector3D ThirdPoint = new Vector3D(111.3691f, 182.6697f, 5.229973f);
+                        Vector3D BossPoint = new Vector3D(111.3691f, 187.6697f, 5.229973f);
+                        dest.SpawnMonster(87012, FirstPoint);
+                        dest.SpawnMonster(87012, SecondPoint);
+                        dest.SpawnMonster(87012, ThirdPoint);
+                        dest.SpawnMonster(115403, BossPoint);
+                        var minions = dest.GetActorsBySNO(87012);
+
+                        foreach (var minion in Wrongminions)
+                        {
+                            minion.Destroy();
+                        }
+
                         List<uint> SkilletKiller = new List<uint> { };
                         var CainBrains = world.GetActorBySNO(102386);
                         foreach (var minion in minions)
                         {
                             SkilletKiller.Add(minion.DynamicID);
                         }
-
+                        SkilletKiller.Add(dest.GetActorBySNO(115403).DynamicID);
                         var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerCain(SkilletKiller, dest));
 
                         CainKillerEvent.ContinueWith(delegate
@@ -1408,7 +1454,10 @@ namespace Mooege.Core.GS.Actors
             //Пустая ячейка --
             else if (this.Destination.StartingPointActorTag == -104)
             {
-                
+                //var startingPoint = new Vector3D(0f,0f,0f);//world.GetStartingPointById(this.Destination.StartingPointActorTag);
+                var startingPoint = new Vector3D(183.8976f, 133.8681f, 19.6342f);
+                player.ChangeWorld(world, startingPoint);
+
             }
             // Портал к четвертому уровню собора
             else if (this.Destination.StartingPointActorTag == -106)

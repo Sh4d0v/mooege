@@ -55,6 +55,7 @@ namespace Mooege.Core.GS.Actors
                     ActorSNO.Id == 139715 || //Брат в пещере 2
                     ActorSNO.Id == 139756 || //Брат в пещере 3
                     ActorSNO.Id == 178619 || //Урцель Мордрег
+                    ActorSNO.Id == 51341 || //Королева Арана
                     ActorSNO.Id == 3526 || //Мясник
                     ActorSNO.Id == 0)
                 {
@@ -62,6 +63,7 @@ namespace Mooege.Core.GS.Actors
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Boss;
                 }else if (ActorSNO.Id == 219995 ||  //Моррис Джекйобс
                           ActorSNO.Id == 129439 ||  //Арсект ядовитый
+                          ActorSNO.Id == 115403 ||  //Головоруб
                           ActorSNO.Id == 0)
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Unique;

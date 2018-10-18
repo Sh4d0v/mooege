@@ -620,7 +620,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
     #endregion
 
     #region БОССЫ!!
-    #region
+    #region Леорик
     //5350
     [HandledSNO(5350)]
     public class LeorikKing : Monster
@@ -633,6 +633,22 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             Attributes[GameAttribute.Hitpoints_Cur] = 2000f;
             Attributes[GameAttribute.Damage_Weapon_Min, 0] = 100f;
             Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+        }
+    }
+    #endregion
+    #region Арана
+    //5350
+    [HandledSNO(51341)]
+    public class SpiderQueen : Monster
+    {
+        public SpiderQueen(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            //(Brain as MonsterBrain).AddPresetPower(30496);
+            Attributes[GameAttribute.Hitpoints_Max] = 2500f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 2500f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 80f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 80f;
         }
     }
     #endregion

@@ -100,7 +100,7 @@ namespace Mooege.Net.GS
                 }
                 #endregion
                 var LeahBrains = world.GetActorByDynamicId(72);
-
+                Player MasterPlayer = client.Player;
                 if (LeahBrains != null)
                 {
                     Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", LeahBrains.ActorSNO, world.GetActorsBySNO(3739).Count);
@@ -113,34 +113,34 @@ namespace Mooege.Net.GS
                     world.Leave(world.GetActorByDynamicId(83));
                     Hireling LeahFriend = new Scoundrel(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
                     LeahFriend.Brain = new HirelingBrain(LeahFriend);
-                   // SetBrain(new MinionBrain(this));
-                    LeahFriend.Attributes[GameAttribute.Untargetable] = false;
-                    LeahFriend.GBHandle.Type = 4;
-                    LeahFriend.GBHandle.GBID = 717705071;
-                    LeahFriend.Master = client.Player;
+                    // SetBrain(new MinionBrain(this));
                     LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
-                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0;
+                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0x8;
+                    LeahFriend.Attributes[GameAttribute.Hitpoints_Max] = 100f;
+                    LeahFriend.Attributes[GameAttribute.Hitpoints_Cur] = 80f;
+                    LeahFriend.Attributes[GameAttribute.Attacks_Per_Second] = 1.6f;
                     LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
+                    LeahFriend.Attributes[GameAttribute.Untargetable] = false;
+                    LeahFriend.Position = RandomDirection(client.Player.Position, 3f, 8f);
                     LeahFriend.RotationW = LeahBrains.RotationW;
                     LeahFriend.RotationAxis = LeahBrains.RotationAxis;
                     LeahFriend.EnterWorld(RandomDirection(client.Player.Position, 3f, 8f));
-                    LeahFriend.Attributes[GameAttribute.Level] = 6;
+                    LeahFriend.Attributes[GameAttribute.Level]++;
                     client.Player.ActiveHireling = LeahFriend;
-                    
-
+                    client.Player.SelectedNPC = null;
                     LeahFriend.Brain.Activate();
+                    
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1)
                 {
                     var NewTristramPortal = world.GetActorByDynamicId(34);
-                    Player MasterPlayer = client.Player;
                     var ListenerUsePortalTask = Task<bool>.Factory.StartNew(() => OnUseTeleporterListener(NewTristramPortal.DynamicID, world));
 
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
 
-                    Player MasterPlayer = client.Player;
+                    
                     var ListenerEnterToOldTristram = Task<bool>.Factory.StartNew(() => OnListenerToEnter(MasterPlayer, world));
 
                     ListenerEnterToOldTristram.ContinueWith(delegate //Once killed:
@@ -156,7 +156,7 @@ namespace Mooege.Net.GS
                 }
                 if (dbQuestProgress.StepOfQuest == 3)
                 {
-                    Player MasterPlayer = client.Player;
+                    
                     var ListenerEnterToAdriaEnter = Task<bool>.Factory.StartNew(() => OnListenerToAndriaEnter(MasterPlayer, world));
                 }
                 if (dbQuestProgress.StepOfQuest > 3 && dbQuestProgress.StepOfQuest < 11)
@@ -166,7 +166,7 @@ namespace Mooege.Net.GS
                 
                 if (dbQuestProgress.StepOfQuest == 12)
                 {
-                    Player MasterPlayer = client.Player;
+                    
                     var CainIntroWorld = client.Player.World.Game.GetWorld(60713);
                     var minions = CainIntroWorld.GetActorsBySNO(80652);
                     List<uint> SkilletKiller = new List<uint> { };
