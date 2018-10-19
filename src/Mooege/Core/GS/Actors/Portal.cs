@@ -1284,12 +1284,18 @@ namespace Mooege.Core.GS.Actors
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
-            
+
+            if (this.Destination.WorldSNO == 75049)
+            {
+                //LevelArea = 100854
+                world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 75049);
+            }
+
             #region Не санкционированные порталы)
             if (this.Destination.StartingPointActorTag == -100)
             {
 
-                Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
+                Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
                 //Сохраняем в базу координаты для обратного портала.
                 var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);

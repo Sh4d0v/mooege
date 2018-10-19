@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mooege.Common.Logging;
 using Mooege.Common.Storage;
 using Mooege.Common.Storage.AccountDataBase.Entities;
@@ -1168,15 +1169,100 @@ namespace Mooege.Core.GS.Powers
                             if (dbQuestProgress.StepOfQuest == 10)
                             {
                                 //  dbQuestProgress.StepOfQuest = 11;
-                                
-                                user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
-                                user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 178151);
-                                //Ожидание зоны - 130546[Scene] SNOId: 130546 DynamicId: 67109112 Name: trOut_Highlands_Chokepoint_A_E03_S01
 
-                                
+                                if (player.Value.PlayerIndex == 0)
+                                {
+                                    user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                                    user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 178151);
+                                    //Ожидание зоны - 130546[Scene] SNOId: 130546 DynamicId: 67109112 Name: trOut_Highlands_Chokepoint_A_E03_S01
+
+
+                                    var ListenerEnterToKhazra = Task<bool>.Factory.StartNew(() => OnListenerKhazraEnter(player.Value, user.World));
+                                    ListenerEnterToKhazra.ContinueWith(delegate
+                                    {
+                                        //Ожидание зоны - 74536
+                                        var ListenerEnterToLeoricManor = Task<bool>.Factory.StartNew(() => OnListenerLeoricManorEnter(player.Value, user.World));
+                                        ListenerEnterToLeoricManor.ContinueWith(delegate
+                                        {
+
+                                        });
+                                    });
+                                }
                             }
                         }
                     }
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Дверь в замке Леорика
+            try
+            {
+                if (target.ActorSNO.Id == 99304)
+                {
+                    //target.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                    target.World.Game.Quests.Advance(72546);
+                    //Current Scene = 76484
+                    var Summoned = target.World.GetActorsBySNO(6059);
+                    var Summoners = target.World.GetActorsBySNO(6035);
+                    var Cultists = target.World.GetActorsBySNO(6024);
+                    List<uint> CultistList = new List<uint> { };
+                    foreach (var Cultist in Summoned)
+                    {
+                        if (Cultist.CurrentScene.SceneSNO.Id == 76484)
+                        {
+                            CultistList.Add(Cultist.DynamicID);
+                            Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+
+                        }
+                    }
+                    foreach (var Cultist in Summoners)
+                    {
+                        if (Cultist.CurrentScene.SceneSNO.Id == 76484)
+                        {
+                            CultistList.Add(Cultist.DynamicID);
+                            Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        }
+                    }
+                    foreach (var Cultist in Cultists)
+                    {
+                        if (Cultist.CurrentScene.SceneSNO.Id == 76484)
+                        {
+                            CultistList.Add(Cultist.DynamicID);
+                            Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                        }
+                    }
+                    var ListenerCultists = Task<bool>.Factory.StartNew(() => OnKillCultistInManorListener(CultistList, target.World));
+                    ListenerCultists.ContinueWith(delegate
+                    {
+                        user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillGroup, -1);
+
+                        foreach (var player in user.World.Players)
+                        {
+                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+
+                            dbQuestProgress.ActiveQuest = 72801;
+                            dbQuestProgress.StepOfQuest = -1;
+                            
+
+                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                            DBSessions.AccountSession.Flush();
+                        }
+                    });
+                    // Мужик на входе A1C1DyingCaravanGuy - 2861
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Мужик лежащий перед порталом.
+            try
+            {
+                if (target.ActorSNO.Id == 2861)
+                {
+                    // Мужик на входе A1C1DyingCaravanGuy - 2861
+                    StartConversation(target.World, 0);
                 }
             }
             catch { }
@@ -1253,6 +1339,80 @@ namespace Mooege.Core.GS.Powers
             {
                 player.Value.Conversations.StartConversation(conversationId);
             }
+            return true;
+        }
+        
+
+        private bool OnListenerLeoricManorEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    if (player.World.WorldSNO.Id == 71150)
+                    {
+                        sceneID = player.CurrentScene.SceneSNO.Id;
+                        if (sceneID == 74536)
+                        {
+
+                            world.Game.Quests.Advance(72546);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return true;
+        }
+
+        private bool OnKillCultistInManorListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private bool OnListenerKhazraEnter(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+            int sceneID = player.CurrentScene.SceneSNO.Id;
+            while (true)
+            {
+                try
+                {
+                    if (player.World.WorldSNO.Id == 71150)
+                    {
+                        sceneID = player.CurrentScene.SceneSNO.Id;
+                        if (sceneID == 130546)
+                        {
+                            world.Game.Quests.Advance(72546);
+                            //world.Game.Quests.NotifyQuest(73236, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
             return true;
         }
 

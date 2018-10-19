@@ -87,8 +87,8 @@ namespace Mooege.Net.GS
                         {
                             MooNetClient mooNetClient = BnetClient;
                             Logger.Warn("Portal to New Tristram. Version 2.0.", message.GetType(), message.Id);
-                            Vector3D ToPortal = new Vector3D(2988.73f, 2798.009f, 24.66344f);
-
+                            //Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
+                            Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
                             try
                             {
                                 //Search Old Portals
@@ -105,15 +105,6 @@ namespace Mooege.Net.GS
                             ToHome.Scale = 0.9f;
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
                             ToHome.EnterWorld(PositionToPortal);
-
-                            /*      
-                                  //Первая версия телепорта
-                                  if (mooNetClient.InGameClient.Game.GetWorld(71150) != mooNetClient.InGameClient.Player.World)
-                                      mooNetClient.InGameClient.Player.ChangeWorld(mooNetClient.InGameClient.Game.GetWorld(71150), ToPortal);
-                                  else
-                                      mooNetClient.InGameClient.Player.Teleport(ToPortal);
-                            */
-
                         }
                         // Первая версия крафта
                         else if (message.Id == 280)

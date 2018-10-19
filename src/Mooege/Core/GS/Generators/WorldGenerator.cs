@@ -47,7 +47,7 @@ namespace Mooege.Core.GS.Generators
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
 
-            #region инфа для высокогорья
+            #region Инфа для высокогорья
             /*
                 [075347] trOut_Highlands_Entrance_E04_N01
                 [075348] trOut_Highlands_Entrance_E04_S01
@@ -95,7 +95,6 @@ namespace Mooege.Core.GS.Generators
                 [083453] trOut_Highlands_Roads_EW_02
             */
             #endregion
-
             #region Лощина стенаний
             /*
              
@@ -109,6 +108,129 @@ namespace Mooege.Core.GS.Generators
             [078798] trOut_Wilderness_Road_SW_02
             */
             #endregion
+            #region Замок Леорика
+
+            /*
+             * 
+            [World] SNOId: 75049 DynamicId: 117440514 Name: a1dun_Leor_Manor}
+
+
+            [093289] a1dun_Leor_Jail_S_Entrance_01
+            
+            [093450] a1dun_Leor_Jail_NSEW_04
+            [091982] a1dun_Leor_Jail_NSEW_02
+            [092335] a1dun_Leor_Jail_NSEW_03
+            [097158] a1dun_Leor_Jail_Filler_Exit_01
+            [091385] a1dun_Leor_Jail_W_01
+            [091389] a1dun_Leor_Jail_S_01
+            [091393] a1dun_Leor_Jail_N_01
+            [091397] a1dun_Leor_Jail_E_01
+            [091435] a1dun_Leor_Jail_NSEW_01
+            [099174] a1dun_Leor_Jail_Filler_NE_01
+            [099178] a1dun_Leor_Jail_Filler_NW_01
+            [099182] a1dun_Leor_Jail_Filler_SE_01
+            [099186] a1dun_Leor_Jail_Filler_SW_01
+            [091311] a1dun_Leor_Jail_Filler_01
+            
+            [095362] a1dun_Leor_Jail_N_Exit_01
+            [093835] a1dun_Leor_Jail_NSEW_05
+            
+
+            [135710] a1dun_Leor_Tyrael_Filler_02
+            [148748] a1dun_Leor_Tyrael_Back_Skybox_01
+            [135396] a1dun_Leor_Tyrael_jail_01
+            [135521] a1dun_Leor_Tyrael_Stairs_A_01
+            
+
+            [030928] a1dun_Leor_E_Entrance_01
+            
+            [030945] a1dun_Leor_N_Entrance_01
+            [030953] a1dun_Leor_S_Entrance_01
+            [030956] a1dun_Leor_W_Entrance_01
+            
+            [030957] a1dun_Leor_W_Exit_01
+            [030954] a1dun_Leor_S_Exit_01
+            [001778] a1dun_Leor_N_Exit_01
+            [030929] a1dun_leor_E_Exit_01
+            [080422] a1dun_Leor_W_Exit_Boss_01
+            
+            [109551] a1dun_Leor_SW_Hall_01_B
+            [109578] a1dun_Leor_SW_Hall_01_C
+            [052681] a1dun_Leor_EW_01_BellowsRoom
+            [052683] a1dun_Leor_NS_01_Executioner
+            [030924] a1dun_Leor_01_Filler
+            
+            [030948] a1dun_Leor_SE_01
+            [030949] a1dun_Leor_SE_02
+            
+            [030940] a1dun_Leor_NS_01
+            [030941] a1dun_Leor_NS_02
+            
+            [030942] a1dun_Leor_NW_01
+            [030943] a1dun_Leor_NW_02
+            
+            [030925] a1dun_Leor_EW_01
+            [030926] a1dun_Leor_EW_02
+            
+            [030932] A1dun_Leor_NE_01
+            [030933] a1dun_Leor_NE_02
+            [183305] a1dun_Leor_NE_03
+            
+            [030936] a1dun_Leor_NSE_01
+            [030937] a1dun_Leor_NSE_02
+            
+            [030938] a1dun_Leor_NSW_01
+            [030939] a1dun_Leor_NSW_02
+            
+            [030946] A1dun_Leor_SEW_01
+            [030947] a1dun_Leor_SEW_02
+            
+            [030930] a1dun_Leor_NEW_01
+            [030931] a1dun_Leor_NEW_02
+            
+            [030934] a1dun_Leor_NSEW_01
+            [030935] a1dun_Leor_NSEW_02
+            [052682] a1dun_Leor_NSEW_03
+            
+            [030944] a1dun_Leor_N_Dead_End_01
+            [030927] a1dun_Leor_E_Dead_End_01
+            [030952] a1dun_Leor_S_Dead_End_01
+            [030955] a1dun_Leor_W_Dead_End_01
+            
+            [030950] a1dun_Leor_SW_Hall_01
+            [030951] a1dun_Leor_SW_Hall_02
+            */
+            #endregion
+
+            /*
+                [087771] [Scene] trOut_Highlands_DunExterior_A_E01_S01
+                [087766] [Scene] trOut_Highlands_DunExterior_A_E01_S02
+                [087764] [Scene] trOut_Highlands_DunExterior_A_E01_S03
+
+                [087770] [Scene] trOut_Highlands_DunExterior_A_E02_S01
+                [087773] [Scene] trOut_Highlands_DunExterior_A_E02_S02
+                [087763] [Scene] trOut_Highlands_DunExterior_A_E02_S03
+
+                [087765] [Scene] trOut_Highlands_DunExterior_A_E03_S02
+                [087762] [Scene] trOut_Highlands_DunExterior_A_E03_S03
+
+                [087707] [Worlds] trOut_Highlands_DunExteriorA
+                
+            [076489] [Scene] trOut_Highlands_ManorInterior_E01_S01
+            [076485] [Scene] trOut_Highlands_ManorInterior_E01_S02
+            [076482] [Scene] trOut_Highlands_ManorInterior_E01_S03
+            
+            [076488] [Scene] trOut_Highlands_ManorInterior_E02_S01
+            [076484] [Scene] trOut_Highlands_ManorInterior_E02_S02
+            [076481] [Scene] trOut_Highlands_ManorInterior_E02_S03
+            
+            [076487] [Scene] trOut_Highlands_ManorInterior_E03_S01
+            [076490] [Scene] trOut_Highlands_ManorInterior_E03_S02
+            [076480] [Scene] trOut_Highlands_ManorInterior_E03_S03
+            
+            [076483] [Scene] trOut_Highlands_ManorInterior_E04_S02
+             */
+
             if (worldAsset.SNOId == 60395)
             {
                 worldData.IsGenerated = false;
