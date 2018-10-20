@@ -80,6 +80,7 @@ namespace Mooege.Common.Config
     }
 }
 
+#region Barbarian Skills Config File
 namespace Mooege.Common.BarbarianSkillsConfig
 {
     public sealed class ConfigurationManager
@@ -93,7 +94,7 @@ namespace Mooege.Common.BarbarianSkillsConfig
         {
             try
             {
-                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Skills/BarbarianSkills.conf"); // the config file's location.
+                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Skills/Barbarian.conf"); // the config file's location.
                 Parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
                 _fileExists = true;
             }
@@ -101,7 +102,7 @@ namespace Mooege.Common.BarbarianSkillsConfig
             {
                 Parser = new IniConfigSource(); // initiate a new .ini source.
                 _fileExists = false;
-                Logger.Warn("Error loading settings BarbarianSkills.conf, will be using default settings.");
+                Logger.Warn("Error loading settings conf/Skills/Barbarian.conf, will be using default settings.");
             }
 
             Parser.ExpandKeyValues();
@@ -128,3 +129,55 @@ namespace Mooege.Common.BarbarianSkillsConfig
         }
     }
 }
+#endregion
+
+#region Demon Hunter Skills Config File
+namespace Mooege.Common.DemonHunterSkillsConfig
+{
+    public sealed class ConfigurationManager
+    {
+        private static readonly Logger Logger = LogManager.CreateLogger();
+        private static readonly IniConfigSource Parser; // the ini parser.
+        private static readonly string ConfigFile;
+        private static bool _fileExists = false; // does the ini file exists?
+
+        static ConfigurationManager()
+        {
+            try
+            {
+                ConfigFile = string.Format("{0}/{1}", FileHelpers.AssemblyRoot, "conf/Skills/Demon Hunter.conf"); // the config file's location.
+                Parser = new IniConfigSource(ConfigFile); // see if the file exists by trying to parse it.
+                _fileExists = true;
+            }
+            catch (Exception)
+            {
+                Parser = new IniConfigSource(); // initiate a new .ini source.
+                _fileExists = false;
+                Logger.Warn("Error loading settings conf/Skills/Demon Hunter.conf, will be using default settings.");
+            }
+
+            Parser.ExpandKeyValues();
+        }
+
+        static internal IConfig Section(string section) // Returns the asked config section.
+        {
+            return Parser.Configs[section];
+        }
+
+        static internal IConfig AddSection(string section) // Adds a config section.
+        {
+            return Parser.AddConfig(section);
+        }
+
+        static internal void Save() //  Saves the settings.
+        {
+            if (_fileExists) Parser.Save();
+            else
+            {
+                Parser.Save(ConfigFile);
+                _fileExists = true;
+            }
+        }
+    }
+}
+#endregion

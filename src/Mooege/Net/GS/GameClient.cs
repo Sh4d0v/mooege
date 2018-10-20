@@ -86,9 +86,9 @@ namespace Mooege.Net.GS
                         else if (message.Id == 87)
                         {
                             MooNetClient mooNetClient = BnetClient;
-                            Logger.Warn("Portal to New Tristram. Version 2.0.", message.GetType(), message.Id);
-                            //Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
-                            Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
+                            Logger.Warn("Portal to New Tristram. Version 2.1.", message.GetType(), message.Id);
+                            //Vector3D ToPortal = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
+                            Vector3D ToPortal = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
                             try
                             {
                                 //Search Old Portals
@@ -101,6 +101,7 @@ namespace Mooege.Net.GS
                             catch { }
 
                             var ToHome = new Portal(Player.World, 5648, Player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
+                            
                             ToHome.NameSNOId = 71150;
                             ToHome.Scale = 0.9f;
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);

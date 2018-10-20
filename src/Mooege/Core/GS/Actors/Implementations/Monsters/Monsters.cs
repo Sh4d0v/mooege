@@ -637,7 +637,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
     }
     #endregion
     #region Арана
-    //5350
+    //51341
     [HandledSNO(51341)]
     public class SpiderQueen : Monster
     {
@@ -649,6 +649,22 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             Attributes[GameAttribute.Hitpoints_Cur] = 2500f;
             Attributes[GameAttribute.Damage_Weapon_Min, 0] = 80f;
             Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 80f;
+        }
+    }
+    #endregion
+    #region Мясник
+    //3526
+    [HandledSNO(3526)]
+    public class Butcher : Monster
+    {
+        public Butcher(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            //(Brain as MonsterBrain).AddPresetPower(30496);
+            Attributes[GameAttribute.Hitpoints_Max] = 4000f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 4000f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 180f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 180f;
         }
     }
     #endregion

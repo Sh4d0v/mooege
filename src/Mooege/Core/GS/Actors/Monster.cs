@@ -56,6 +56,7 @@ namespace Mooege.Core.GS.Actors
                     ActorSNO.Id == 139756 || //Брат в пещере 3
                     ActorSNO.Id == 178619 || //Урцель Мордрег
                     ActorSNO.Id == 51341 || //Королева Арана
+                    ActorSNO.Id == 98879 || //Главный тюремщик
                     ActorSNO.Id == 3526 || //Мясник
                     ActorSNO.Id == 0)
                 {

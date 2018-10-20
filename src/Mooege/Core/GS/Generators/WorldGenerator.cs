@@ -108,18 +108,14 @@ namespace Mooege.Core.GS.Generators
             [078798] trOut_Wilderness_Road_SW_02
             */
             #endregion
-            #region Замок Леорика
-
+            #region Проклятый замок
             /*
-             * 
-            [World] SNOId: 75049 DynamicId: 117440514 Name: a1dun_Leor_Manor}
+             [093289]
+        a1dun_Leor_Jail_S_Entrance_01
 
-
-            [093289] a1dun_Leor_Jail_S_Entrance_01
-            
             [093450] a1dun_Leor_Jail_NSEW_04
             [091982] a1dun_Leor_Jail_NSEW_02
-            [092335] a1dun_Leor_Jail_NSEW_03
+            [092335] a1dun_Leor_Jail_NSEW_03 // Босс батл
             [097158] a1dun_Leor_Jail_Filler_Exit_01
             [091385] a1dun_Leor_Jail_W_01
             [091389] a1dun_Leor_Jail_S_01
@@ -131,28 +127,31 @@ namespace Mooege.Core.GS.Generators
             [099182] a1dun_Leor_Jail_Filler_SE_01
             [099186] a1dun_Leor_Jail_Filler_SW_01
             [091311] a1dun_Leor_Jail_Filler_01
-            
+
             [095362] a1dun_Leor_Jail_N_Exit_01
-            [093835] a1dun_Leor_Jail_NSEW_05
-            
+            [093835] a1dun_Leor_Jail_NSEW_05*/
+            #endregion
+            #region Замок Леорика
+
+            /*
+             * 
+            [World] SNOId: 75049 DynamicId: 117440514 Name: a1dun_Leor_Manor}
 
             [135710] a1dun_Leor_Tyrael_Filler_02
             [148748] a1dun_Leor_Tyrael_Back_Skybox_01
             [135396] a1dun_Leor_Tyrael_jail_01
             [135521] a1dun_Leor_Tyrael_Stairs_A_01
             
-
-            [030928] a1dun_Leor_E_Entrance_01
-            
-            [030945] a1dun_Leor_N_Entrance_01
-            [030953] a1dun_Leor_S_Entrance_01
+            [030928] a1dun_Leor_E_Entrance_01 // Начало второго уровня агоний
+            [030945] a1dun_Leor_N_Entrance_01 // Начало первого уровня агоний
+            [030953] a1dun_Leor_S_Entrance_01 
             [030956] a1dun_Leor_W_Entrance_01
             
             [030957] a1dun_Leor_W_Exit_01
-            [030954] a1dun_Leor_S_Exit_01
-            [001778] a1dun_Leor_N_Exit_01
+            [030954] a1dun_Leor_S_Exit_01 //Выход на второй уровень
+            [001778] a1dun_Leor_N_Exit_01 
             [030929] a1dun_leor_E_Exit_01
-            [080422] a1dun_Leor_W_Exit_Boss_01
+            [080422] a1dun_Leor_W_Exit_Boss_01 //Выход на переправу высокогорья
             
             [109551] a1dun_Leor_SW_Hall_01_B
             [109578] a1dun_Leor_SW_Hall_01_C
@@ -203,18 +202,6 @@ namespace Mooege.Core.GS.Generators
             #endregion
 
             /*
-                [087771] [Scene] trOut_Highlands_DunExterior_A_E01_S01
-                [087766] [Scene] trOut_Highlands_DunExterior_A_E01_S02
-                [087764] [Scene] trOut_Highlands_DunExterior_A_E01_S03
-
-                [087770] [Scene] trOut_Highlands_DunExterior_A_E02_S01
-                [087773] [Scene] trOut_Highlands_DunExterior_A_E02_S02
-                [087763] [Scene] trOut_Highlands_DunExterior_A_E02_S03
-
-                [087765] [Scene] trOut_Highlands_DunExterior_A_E03_S02
-                [087762] [Scene] trOut_Highlands_DunExterior_A_E03_S03
-
-                [087707] [Worlds] trOut_Highlands_DunExteriorA
                 
             [076489] [Scene] trOut_Highlands_ManorInterior_E01_S01
             [076485] [Scene] trOut_Highlands_ManorInterior_E01_S02
@@ -230,7 +217,21 @@ namespace Mooege.Core.GS.Generators
             
             [076483] [Scene] trOut_Highlands_ManorInterior_E04_S02
              */
-
+            if (worldAsset.SNOId == 2826)
+            {
+                //1 Уровень залов агонии 
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 58982)
+            {
+                //2 Уровень залов агонии
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 58983)
+            {
+                //3 Уровень залов агонии
+                worldData.IsGenerated = false;
+            }
             if (worldAsset.SNOId == 60395)
             {
                 worldData.IsGenerated = false;

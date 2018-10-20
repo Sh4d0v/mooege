@@ -448,7 +448,9 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(138268, new _138268()); //Магда в подвале
 
             // The Imprisoned Angel 72801
-
+            this.QuestEventDict.Add(103388, new _103388()); //Призрак королевы
+            // Перед сбором душ - [103388] [Conversation] Quest_Jail_Queen_01
+            // После сбора душ - [109728] [Conversation] Quest_Jail_Queen_AllPrisonersFreed
             // Return to Tristram 136656
 
             //Конец Первого АКТА!

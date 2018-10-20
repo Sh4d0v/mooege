@@ -93,6 +93,7 @@ namespace Mooege.Core.GS.Powers.Implementations
 
                 bigtoad.PlayActionAnimation(110520); // attack ani
                 TickTimer waitAttackEnd = WaitSeconds(1.5f);
+                //yield return WaitSeconds(0.3f); // wait for attack ani to play a bit
                 yield return WaitSeconds(0.3f); // wait for attack ani to play a bit
 
                 var tongueEnd = SpawnProxy(TargetPosition, WaitInfinite());
@@ -1797,23 +1798,39 @@ namespace Mooege.Core.GS.Powers.Implementations
             SpawnEffect(110714, TargetPosition);
 
             //the rest of this is spiders, which are pets i presume?
-            yield return WaitSeconds(0.05f);
+            yield return WaitSeconds(0.1f);
 
-            var spider = new CorpseSpider(this.World, this, 0);
-            spider.Brain.DeActivate();
-            spider.Position = RandomDirection(User.Position, 3f, 8f); //Kind of hacky until we get proper collisiondetection
-            spider.Attributes[GameAttribute.Untargetable] = true;
+            List<Actor> spiders = new List<Actor>();
+            for (int i = 0; i < 4; i++) // Summons 4 spiders
+            {
+                var spider = new CorpseSpider(this.World, this, i);
+                spider.Brain.DeActivate();
+                spider.Position = proj.Position; // Spiders appear in the projectile position 
+                spider.Attributes[GameAttribute.Untargetable] = true;
+                spider.EnterWorld(spider.Position);
+                spiders.Add(spider);
+            }
 
-            spider.EnterWorld(proj.Position);
-            yield return WaitSeconds(0.05f);
+            foreach (Actor spider in spiders)
+            {
+                (spider as Minion).Brain.Activate();
+                spider.Attributes[GameAttribute.Untargetable] = false;
+                spider.Attributes.BroadcastChangedIfRevealed();
+            }
 
-            (spider as Minion).Brain.Activate();
-            spider.Attributes[GameAttribute.Untargetable] = false;
-            spider.Attributes.BroadcastChangedIfRevealed();
+            yield return WaitSeconds(2f); // Lifetime of spiders, 2 seconds? [Necrosummon]
+
+            foreach (Actor spider in spiders)
+            {
+                var spiderDeath = SpawnEffect(215820, spider.Position, 0, WaitSeconds(2));
+                spiderDeath.Destroy();
+                spider.Destroy();
+            }
 
             yield break;
         }
     }
+
     #endregion
 
     //Pet Class

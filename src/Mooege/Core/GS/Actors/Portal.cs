@@ -57,26 +57,184 @@ namespace Mooege.Core.GS.Actors
 
             try
             {
-                this.Destination = new ResolvedPortalDestination
+                //Выход к Мяснику
+                if (world.WorldSNO.Id == 58983 && this.ActorSNO.Id == 158944)
                 {
-                    WorldSNO = tags[MarkerKeys.DestinationWorld].Id,
-                    DestLevelAreaSNO = tags[MarkerKeys.DestinationLevelArea].Id,
-                    StartingPointActorTag = tags[MarkerKeys.DestinationActorTag]
-                };
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 78839,
+                        DestLevelAreaSNO = 90881,
+                        StartingPointActorTag = 172
+                    };
 
-                // Override minimap icon in merkerset tags
-                if (tags.ContainsKey(MarkerKeys.MinimapTexture))
-                {
-                    MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+
                 }
                 else
                 {
-                    MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
-                }
 
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = tags[MarkerKeys.DestinationWorld].Id,
+                        DestLevelAreaSNO = tags[MarkerKeys.DestinationLevelArea].Id,
+                        StartingPointActorTag = tags[MarkerKeys.DestinationActorTag]
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
             }
             catch (KeyNotFoundException)
             {
+                #region Первый этаж Агонии
+                //Вход
+                if (world.WorldSNO.Id == 2826 && this.ActorSNO.Id == 175999)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 75049,
+                        DestLevelAreaSNO = 100854,
+                        StartingPointActorTag = 171
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                //Выход на 2 этаж
+                if (world.WorldSNO.Id == 2826 && this.ActorSNO.Id == 175482)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 58982,
+                        DestLevelAreaSNO = 19775,
+                        StartingPointActorTag = tags[MarkerKeys.DestinationActorTag]
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                #endregion
+
+                #region Второй этаж Агонии
+                //Вход
+                if (world.WorldSNO.Id == 58982 && this.ActorSNO.Id == 175999)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 2826,
+                        DestLevelAreaSNO = 19774,
+                        StartingPointActorTag = 171
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                #endregion
+
+                #region Переправа в высокогорье
+                //Вход
+                if (world.WorldSNO.Id == 87707 && this.ActorSNO.Id == 176001)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 58982,
+                        DestLevelAreaSNO = 19775,
+                        StartingPointActorTag = 171
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                #endregion
+
+                #region Проклятая крепость
+                //Выход на 3 этаж Агонии
+                if (world.WorldSNO.Id == 94676 && this.ActorSNO.Id == 175999)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 58983,
+                        DestLevelAreaSNO = 19776,
+                        StartingPointActorTag = 172
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                #endregion
+                #region Третий этаж Агонии
+                //Вход
+                if (world.WorldSNO.Id == 58983 && this.ActorSNO.Id == 175999)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 94676,
+                        DestLevelAreaSNO = 94672,
+                        StartingPointActorTag = 171
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+                }
+                
+                #endregion
                 if (this.ActorSNO.Id == 168932)
                 {
                     var dest = world.Game.GetWorld(60713);
@@ -141,8 +299,8 @@ namespace Mooege.Core.GS.Actors
                     //Generate Portal
                     this.Destination = new ResolvedPortalDestination
                     {
-                        WorldSNO = 60713,
-                        DestLevelAreaSNO = 33357,
+                        WorldSNO = 71150,
+                        DestLevelAreaSNO = 19947,
                         StartingPointActorTag = -100
                     };
 
@@ -1290,12 +1448,47 @@ namespace Mooege.Core.GS.Actors
                 //LevelArea = 100854
                 world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 75049);
             }
+            if (this.Destination.WorldSNO == 2826)
+            {
+                // Первый этаж агоний
+                world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 2826);
+            }
+            if (this.Destination.WorldSNO == 58982)
+            {
+                // Второй этаж агоний
+                world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 58982);
+            }
+            if (this.Destination.WorldSNO == 87707)
+            {
+                // Перевал в Высокогорье
+                world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 87707);
+            }
+            if (this.Destination.WorldSNO == 94676)
+            {
+                // Проклятая крепость
+                world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 94676);
+
+            }
+            if (this.Destination.WorldSNO == 58983)
+            {
+                // Третий этаж Агонии МОЕЙ ЖОПЫ БЛЯТЬ!
+                var ToHome = new Portal(player.World.Game.GetWorld(58983), 5648, player.World.Game.GetWorld(78839).StartingPoints[0].Tags);
+                ToHome.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = 78839,
+                    DestLevelAreaSNO = 90881,
+                    StartingPointActorTag = -108
+                };
+                // Название локации, не работает(
+                ToHome.EnterWorld(world.GetActorBySNO(158944).Position);
+            }
+            
 
             #region Не санкционированные порталы)
             if (this.Destination.StartingPointActorTag == -100)
             {
 
-                Vector3D ToPortal = new Vector3D(2963.336f, 2865.452f, 24.0453f);
+                Vector3D ToPortal = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
                 //Сохраняем в базу координаты для обратного портала.
                 var dbPortalOfToon = DBSessions.AccountSession.Get<DBPortalOfToon>(player.Toon.PersistentID);
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
@@ -1457,7 +1650,7 @@ namespace Mooege.Core.GS.Actors
                 player.ChangeWorld(player.World.Game.GetWorld(71150), Point);
 
             }
-            //Пустая ячейка --
+            // Паучиха --
             else if (this.Destination.StartingPointActorTag == -104)
             {
                 //var startingPoint = new Vector3D(0f,0f,0f);//world.GetStartingPointById(this.Destination.StartingPointActorTag);
@@ -1653,6 +1846,19 @@ namespace Mooege.Core.GS.Actors
 
                 });
             }
+            else if (this.Destination.StartingPointActorTag == -108)
+            {
+                world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 78839);
+                //var startingPoint = new Vector3D(0f, 0f, 0f);
+                var startingPoint = new Vector3D(143.3902f, 143.1758f, 0.09997044f);
+                var ButcherLair = world.Game.GetWorld(78839);
+                ButcherLair.SpawnMonster(3526,new Vector3D(92.82627f,90.92698f,0.09997056f));
+                
+                player.ChangeWorld(world, startingPoint);
+
+                StartConversation(ButcherLair, 211980);
+            }
+
             #endregion
 
             else

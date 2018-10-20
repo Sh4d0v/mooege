@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2018 DiIiS project
+ * Copyright (C) 2011 - 2018 mooege project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,9 +104,36 @@ namespace Mooege.Net.GS.BarbarianRageSkills
         private BarbarianRageSkillsConfig() : base("Rage-Skills") { }
     }
 }
+#endregion
 
+#region DemonHunterSkills
+namespace Mooege.Net.GS.DemonHunterPrimarySkills
+{
+    public sealed class DemonHunterPrimarySkillsConfig : Common.DemonHunterSkillsConfig.Config
+    {
+        // Hungering Arrow
+        public float HungeringArrowDamagePercent { get { return this.GetFloat("HungeringArrowDamagePercent", 115); } set { this.Set("HungeringArrowDamagePercent", value); } }
+        public int HungeringArrowHatredGeneration { get { return this.GetInt("HungeringArrowHatredGeneration", 3); } set { this.Set("HungeringArrowHatredGeneration", value); } }
+        public float HungeringArrowPierceChance { get { return this.GetFloat("HungeringArrowPierceChance", 35); } set { this.Set("HungeringArrowPierceChance", value); } }
+        // Puncturing (Rune D)
+        public float HungeringArrowPuncturingPierceChance { get { return this.GetFloat("HungeringArrowPuncturingPierceChance", 50); } set { this.Set("HungeringArrowPuncturingPierceChance", value); } }
+        // Devouring Arrow (Rune C)
+        public float HungeringArrowDevouringArrowExtraDamage { get { return this.GetFloat("HungeringArrowDevouringArrowExtraDamage", 70); } set { this.Set("HungeringArrowDevouringArrowExtraDamage", value); } }
+        // Cinder Arrow (Rune A)
+        public float HungeringArrowCinderArrowExtraDamage { get { return this.GetFloat("HungeringArrowCinderArrowExtraDamage", 35); } set { this.Set("HungeringArrowCinderArrowExtraDamage", value); } }
+        public int HungeringArrowCinderArrowDuration { get { return this.GetInt("HungeringArrowCinderArrowDuration", 3); } set { this.Set("HungeringArrowCinderArrowDuration", value); } }
+        // Spray of Teeth (Rune E)
+        public int HungeringArrowSprayOfTeethArea { get { return this.GetInt("HungeringArrowSprayOfTeethArea", 3); } set { this.Set("HungeringArrowSprayOfTeethArea", value); } }
+        public float HungeringArrowSprayOfTeethWeaponDamage { get { return this.GetFloat("HungeringArrowSprayOfTeethWeaponDamage", 50); } set { this.Set("HungeringArrowSprayOfTeethWeaponDamage", value); } }
+        // Shatter Shot (Rune B)
+        public int HungeringArrowShatterShotProjectiles { get { return this.GetInt("HungeringArrowShatterShotProjectiles", 3); } set { this.Set("HungeringArrowShatterShotProjectiles", value); } }
+        public float HungeringArrowShatterShotWeaponDamage { get { return this.GetFloat("HungeringArrowShatterShotWeaponDamage", 115); } set { this.Set("HungeringArrowShatterShotWeaponDamage", value); } }
 
-
+        private static readonly DemonHunterPrimarySkillsConfig _instance = new DemonHunterPrimarySkillsConfig();
+        public static DemonHunterPrimarySkillsConfig Instance { get { return _instance; } }
+        private DemonHunterPrimarySkillsConfig() : base("Primary-Skills") { }
+    }
+}
 #endregion
 
 

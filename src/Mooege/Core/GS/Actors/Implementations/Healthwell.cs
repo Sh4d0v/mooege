@@ -46,7 +46,7 @@ namespace Mooege.Core.GS.Actors.Implementations
        
         public override void OnTargeted(Players.Player player, Net.GS.Message.Definitions.World.TargetMessage message)
         {
-            Logger.Warn("Healthwell Implementaion ver 1.1, Range 26f, refill 5 second");
+            Logger.Warn("Healthwell Implementaion ver 1.1, Range 26f, refill 20 second");
             var playersAffected = player.GetPlayersInRange(26f);
             foreach (Players.Player playerN in playersAffected)
             {
@@ -66,7 +66,7 @@ namespace Mooege.Core.GS.Actors.Implementations
             this.Attributes[GameAttribute.Gizmo_State] = 1;
             Attributes.BroadcastChangedIfRevealed();
 
-            Ticker.TickTimer Timeout = new Ticker.SecondsTickTimer(player.World.Game, 5f);
+            Ticker.TickTimer Timeout = new Ticker.SecondsTickTimer(player.World.Game, 20f);
             var ListenerWaiting = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
             ListenerWaiting.ContinueWith(delegate {
                 this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = false;

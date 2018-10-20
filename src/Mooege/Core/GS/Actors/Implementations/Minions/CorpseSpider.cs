@@ -19,7 +19,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Minions
         public CorpseSpider(Map.World world, PowerContext context, int SpiderID)
             : base(world, 107031, context.User, null)
         {
-            Scale = 1.2f; //they look cooler bigger :)
+            Scale = 0.3f; //they look cooler bigger :), [Necrosummon] yes, but for custom summons :)
             //TODO: get a proper value for this.
             this.WalkSpeed *= 5;
             SetBrain(new MinionBrain(this));

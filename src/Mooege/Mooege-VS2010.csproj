@@ -149,6 +149,7 @@
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Core\GS\Actors\Actions\PowerAction.cs" />
     <Compile Include="Core\GS\Actors\Implementations\BlackSmithQuest.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\GhostQueen.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Leah.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Mystic.cs" />
     <Compile Include="Core\GS\Actors\Spawner.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Core\GS\Players\Equipment.cs" />
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TheImprisonedAngel\103388.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\TrailingTheCoven\138268.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\120357.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\165080.cs" />
@@ -770,6 +772,7 @@
     <None Include="..\..\assets\databaseMySQL.Account.config">
       <Link>databaseMySQL.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="..\..\assets\mpqdata.db">
       <Link>Assets\mpqdata.db</Link>
@@ -797,7 +800,8 @@
     <None Include="conf\Server.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="conf\Skills\BarbarianSkills.conf" />
+    <None Include="conf\Skills\Barbarian.conf" />
+    <None Include="conf\Skills\Demon Hunter.conf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

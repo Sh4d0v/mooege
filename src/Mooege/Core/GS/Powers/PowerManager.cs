@@ -174,7 +174,7 @@ namespace Mooege.Core.GS.Powers
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //[Actor] 194263 - Mystic_B
             //[Actor] [Type: Gizmo] SNOId:178151 DynamicId: 1132 Position: x:2390,857 y:4244,667 z:0,09999084 Name: trOut_Highlands_Mystic_Wagon}
-            //
+            //[Actor] 103381 - Ghost_Queen_Leoric
 
             #region Южные ворота в тристрам.
             try
@@ -1201,7 +1201,6 @@ namespace Mooege.Core.GS.Powers
             {
                 if (target.ActorSNO.Id == 99304)
                 {
-                    //target.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived, -1);
                     target.World.Game.Quests.Advance(72546);
                     //Current Scene = 76484
                     var Summoned = target.World.GetActorsBySNO(6059);
@@ -1233,7 +1232,7 @@ namespace Mooege.Core.GS.Powers
                             Cultist.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
                         }
                     }
-                    var ListenerCultists = Task<bool>.Factory.StartNew(() => OnKillCultistInManorListener(CultistList, target.World));
+                    var ListenerCultists = Task<bool>.Factory.StartNew(() => OnKillCultistInManorListener(CultistList, user.World));
                     ListenerCultists.ContinueWith(delegate
                     {
                         user.World.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillGroup, -1);
@@ -1263,6 +1262,21 @@ namespace Mooege.Core.GS.Powers
                 {
                     // Мужик на входе A1C1DyingCaravanGuy - 2861
                     StartConversation(target.World, 0);
+                }
+            }
+            catch { }
+            #endregion
+
+            #region Королева Асилла и её слуги.
+            try
+            {
+                if (target.ActorSNO.Id == 103381)
+                {
+                    StartConversation(user.World, 103388);
+                }
+                if (target.ActorSNO.Id == 102927)
+                {
+                    user.World.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 102927);
                 }
             }
             catch { }

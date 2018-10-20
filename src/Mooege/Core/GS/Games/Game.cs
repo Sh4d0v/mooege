@@ -301,7 +301,7 @@ namespace Mooege.Core.GS.Games
             //joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.First().Position);
             
             var world = joinedPlayer.World;
-            Vector3D ToPortal1Act = new Vector3D(2963.336f, 2865.452f, 24.0453f);
+            Vector3D ToPortal1Act = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
             // Проверка на место спауна.
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(joinedPlayer.Toon.PersistentID);
             if (dbQuestProgress.ActiveQuest != -1)
