@@ -902,218 +902,221 @@ namespace Mooege.Net.GS
 
             #endregion
 
-            #region Акт 1 Квест 9 - Пленный ангел
-            #region Перемотка ко второму квесту
-            for (int Rem = 0; Rem < 7; Rem++)
+            #region Акт 1 Квест 9 - Пленный ангел 
+            if (dbQuestProgress.ActiveQuest == 72801)
             {
-                world.Game.Quests.Advance(87700);
-            }
-            #endregion
-            #region Перемотка ко третьему квесту
-            for (int Rem = 0; Rem < 15; Rem++)
-            {
-                world.Game.Quests.Advance(72095);
-            }
-            //world.Leave(world.GetActorByDynamicId(25));
-            #endregion
-            #region Перемотка к четвертому квесту
-            for (int Rem = 0; Rem < 9; Rem++)
-            {
-                world.Game.Quests.Advance(72221);
-            }
-            /*var BlacksmithVendor = world.GetActorBySNO(56947);
-            world.Leave(BlacksmithVendor);
-            Vector3D position = new Vector3D(BlacksmithVendor.Position);
-            world.SpawnMonster(56947, position);// NonVendor - 65036*/
-
-
-            #endregion
-            #region Перемотка к пятому квесту
-            for (int Rem = 0; Rem < 18; Rem++)
-            {
-                world.Game.Quests.Advance(72061);
-            }
-            #endregion
-            #region Перемотка к шестому квесту
-            for (int Rem = 0; Rem < 6; Rem++)
-            {
-                world.Game.Quests.Advance(117779);
-            }
-            #endregion
-            #region Перемотка к седьмому квесту
-            for (int Rem = 0; Rem < 18; Rem++)
-            {
-                world.Game.Quests.Advance(72738);
-            }
-
-            //Убираем бандитов и двери на ферме
-            var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
-            var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
-            var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
-            try
-            {
-                firgtRobber.Destroy();
-                secondRobber.Destroy();
-                thirdRobber.Destroy();
-            }
-            catch { }
-            //обе двери
-            var noneeddoors = world.GetActorsBySNO(170913);
-            foreach (var one in noneeddoors)
-            {
-                one.Destroy();
-            }
-            #endregion
-            #region Перемотка к восьмому квесту
-            for (int Rem = 0; Rem < 9; Rem++)
-            {
-                world.Game.Quests.Advance(73236);
-            }
-
-            //Чистим Вортем
-            var Wortem = world.Game.GetWorld(72882);
-            var Monster1 = Wortem.GetActorsBySNO(90367);
-            var Monster2 = Wortem.GetActorsBySNO(178297);
-            var Monster3 = Wortem.GetActorsBySNO(90008);
-            var Monster4 = Wortem.GetActorsBySNO(129345);
-
-            try
-            {
-                foreach (var monst in Monster1) { monst.Destroy(); }
-                foreach (var monst in Monster2) { monst.Destroy(); }
-                foreach (var monst in Monster3) { monst.Destroy(); }
-                foreach (var monst in Monster4) { monst.Destroy(); }
-
-            }
-            catch { }
-            //обе двери
-            #endregion
-            #region Перемотка к девятому квесту
-            for (int Rem = 0; Rem < 10; Rem++)
-            {
-                world.Game.Quests.Advance(72546);
-            }
-            world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
-            world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 178151);
-            for (int Rem = 0; Rem < 4; Rem++)
-            {
-                world.Game.Quests.Advance(72546);
-            }
-            //Чистим Вортем
-            var BWortem = world.Game.GetWorld(72882);
-            var BMonster1 = BWortem.GetActorsBySNO(90367);
-            var BMonster2 = BWortem.GetActorsBySNO(178297);
-            var BMonster3 = BWortem.GetActorsBySNO(90008);
-            var BMonster4 = BWortem.GetActorsBySNO(129345);
-
-            try
-            {
-                foreach (var monst in BMonster1) { monst.Destroy(); }
-                foreach (var monst in BMonster2) { monst.Destroy(); }
-                foreach (var monst in BMonster3) { monst.Destroy(); }
-                foreach (var monst in BMonster4) { monst.Destroy(); }
-
-            }
-            catch { }
-            //обе двери
-            #endregion
-
-            //[102927] Ghost_Jail_Prisoner - Останки узника
-            //Первая точка (188.899f,152.7945f,0.09996948f)
-            //Вторая точка (152.8937f,158.7531f,0.09996949f)
-
-            #endregion
-
-            #endregion
-
-            #region Основная проверка
-            if (dbQuestProgress.ActiveQuest != -1)
-            {
-                #region Нижнии ворота тристрама
-                var DownGate = world.GetActorBySNO(90419);
-                DownGate.Attributes[GameAttribute.Gizmo_State] = 0;
-                //DownGate.Field2 = 0;
-                DownGate.Attributes.BroadcastChangedIfRevealed();
-                world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
+                #region Перемотка ко второму квесту
+                for (int Rem = 0; Rem < 7; Rem++)
                 {
-                    ActorID = DownGate.DynamicID,
-                    AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
-                }, DownGate);
+                    world.Game.Quests.Advance(87700);
+                }
                 #endregion
-                //Убираем телегу
-                var FactorToShoot = world.GetActorBySNO(81699);
-                FactorToShoot.Destroy();
-                #region Убираем телегу или делаем её нормальной.
-                if (dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095 && dbQuestProgress.ActiveQuest != -1)
+                #region Перемотка ко третьему квесту
+                for (int Rem = 0; Rem < 15; Rem++)
                 {
-                    var TELEGAS = world.GetActorsBySNO(112131);
-                    foreach (var TELEGA in TELEGAS)
+                    world.Game.Quests.Advance(72095);
+                }
+                //world.Leave(world.GetActorByDynamicId(25));
+                #endregion
+                #region Перемотка к четвертому квесту
+                for (int Rem = 0; Rem < 9; Rem++)
+                {
+                    world.Game.Quests.Advance(72221);
+                }
+                /*var BlacksmithVendor = world.GetActorBySNO(56947);
+                world.Leave(BlacksmithVendor);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                world.SpawnMonster(56947, position);// NonVendor - 65036*/
+
+
+                #endregion
+                #region Перемотка к пятому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72061);
+                }
+                #endregion
+                #region Перемотка к шестому квесту
+                for (int Rem = 0; Rem < 6; Rem++)
+                {
+                    world.Game.Quests.Advance(117779);
+                }
+                #endregion
+                #region Перемотка к седьмому квесту
+                for (int Rem = 0; Rem < 18; Rem++)
+                {
+                    world.Game.Quests.Advance(72738);
+                }
+
+                //Убираем бандитов и двери на ферме
+                var firgtRobber = world.GetActorBySNO(4373); //graveRobber_B
+                var secondRobber = world.GetActorBySNO(4376); //graveRobber_C
+                var thirdRobber = world.GetActorBySNO(4373); //graveRobber_D_NPC- 177539
+                try
+                {
+                    firgtRobber.Destroy();
+                    secondRobber.Destroy();
+                    thirdRobber.Destroy();
+                }
+                catch { }
+                //обе двери
+                var noneeddoors = world.GetActorsBySNO(170913);
+                foreach (var one in noneeddoors)
+                {
+                    one.Destroy();
+                }
+                #endregion
+                #region Перемотка к восьмому квесту
+                for (int Rem = 0; Rem < 9; Rem++)
+                {
+                    world.Game.Quests.Advance(73236);
+                }
+
+                //Чистим Вортем
+                var Wortem = world.Game.GetWorld(72882);
+                var Monster1 = Wortem.GetActorsBySNO(90367);
+                var Monster2 = Wortem.GetActorsBySNO(178297);
+                var Monster3 = Wortem.GetActorsBySNO(90008);
+                var Monster4 = Wortem.GetActorsBySNO(129345);
+
+                try
+                {
+                    foreach (var monst in Monster1) { monst.Destroy(); }
+                    foreach (var monst in Monster2) { monst.Destroy(); }
+                    foreach (var monst in Monster3) { monst.Destroy(); }
+                    foreach (var monst in Monster4) { monst.Destroy(); }
+
+                }
+                catch { }
+                //обе двери
+                #endregion
+                #region Перемотка к девятому квесту
+                for (int Rem = 0; Rem < 10; Rem++)
+                {
+                    world.Game.Quests.Advance(72546);
+                }
+                world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem, -1);
+                world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 178151);
+                for (int Rem = 0; Rem < 4; Rem++)
+                {
+                    world.Game.Quests.Advance(72546);
+                }
+                //Чистим Вортем
+                var BWortem = world.Game.GetWorld(72882);
+                var BMonster1 = BWortem.GetActorsBySNO(90367);
+                var BMonster2 = BWortem.GetActorsBySNO(178297);
+                var BMonster3 = BWortem.GetActorsBySNO(90008);
+                var BMonster4 = BWortem.GetActorsBySNO(129345);
+
+                try
+                {
+                    foreach (var monst in BMonster1) { monst.Destroy(); }
+                    foreach (var monst in BMonster2) { monst.Destroy(); }
+                    foreach (var monst in BMonster3) { monst.Destroy(); }
+                    foreach (var monst in BMonster4) { monst.Destroy(); }
+
+                }
+                catch { }
+                //обе двери
+                #endregion
+
+                //[102927] Ghost_Jail_Prisoner - Останки узника
+                //Первая точка (188.899f,152.7945f,0.09996948f)
+                //Вторая точка (152.8937f,158.7531f,0.09996949f)
+
+                #endregion
+
+                #endregion
+
+                #region Основная проверка
+                if (dbQuestProgress.ActiveQuest != -1)
+                {
+                    #region Нижнии ворота тристрама
+                    var DownGate = world.GetActorBySNO(90419);
+                    DownGate.Attributes[GameAttribute.Gizmo_State] = 0;
+                    //DownGate.Field2 = 0;
+                    DownGate.Attributes.BroadcastChangedIfRevealed();
+                    world.BroadcastIfRevealed(new Message.Definitions.Animation.SetIdleAnimationMessage
                     {
-                        TELEGA.Destroy();
+                        ActorID = DownGate.DynamicID,
+                        AnimationSNO = Core.GS.Common.Types.TagMap.AnimationSetKeys.Open.ID
+                    }, DownGate);
+                    #endregion
+                    //Убираем телегу
+                    var FactorToShoot = world.GetActorBySNO(81699);
+                    FactorToShoot.Destroy();
+                    #region Убираем телегу или делаем её нормальной.
+                    if (dbQuestProgress.ActiveQuest != 87700 && dbQuestProgress.ActiveQuest != 72095 && dbQuestProgress.ActiveQuest != -1)
+                    {
+                        var TELEGAS = world.GetActorsBySNO(112131);
+                        foreach (var TELEGA in TELEGAS)
+                        {
+                            TELEGA.Destroy();
+                        }
                     }
+                    else
+                    {
+                        var TELEGAS = world.GetActorsBySNO(112131);
+                        foreach (var TELEGA in TELEGAS)
+                        {
+                            TELEGA.Field2 = 0;
+                        }
+                    }
+                    #endregion
+
+                    if (dbQuestProgress.StepOfQuest > 0)
+                    {
+                        // Вышибаем лею                      
+                        var actorToShoot = world.GetActorByDynamicId(72);
+                        if (dbQuestProgress.ActiveQuest == 87700)
+                        {
+                            if (actorToShoot != null)
+                            {
+                                Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
+                                world.Leave(actorToShoot);
+                            }
+                            else
+                            {
+                                Logger.Debug("Вышибать некого");
+                            }
+                        }
+
+                        Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
+                        for (int CS = 0; CS < dbQuestProgress.StepOfQuest; CS++)
+                        {
+                            world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
+                            //Logger.Warn("Обнаруженно прохождение квеста {0}, шаг квеста {1]", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
+                        }
+                        Logger.Warn("Обнаружено Прохождение квеста {0}, шаг - {1}", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
+                    }
+                    else
+                    {
+                        world.Game.Quests.CurrentQuest(dbQuestProgress.ActiveQuest);
+                        try { world.Game.Quests.Advance(dbQuestProgress.ActiveQuest); }
+                        catch { }
+                        Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
+                    }
+                    if (dbQuestProgress.ActiveQuest == 87700)
+                    {
+                        if (dbQuestProgress.StepOfQuest == 8)
+                        {
+                            world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 192164);
+                        }
+                    }
+
                 }
                 else
                 {
+                    //Ворота
+                    var DownGate = world.GetActorBySNO(90419);
+                    DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                    DownGate.Attributes.BroadcastChangedIfRevealed();
+                    DownGate.Attributes[GameAttribute.Operatable] = false;
                     var TELEGAS = world.GetActorsBySNO(112131);
                     foreach (var TELEGA in TELEGAS)
                     {
                         TELEGA.Field2 = 0;
                     }
-                }
-                #endregion
-
-                if (dbQuestProgress.StepOfQuest > 0)
-                {
-                    // Вышибаем лею                      
-                    var actorToShoot = world.GetActorByDynamicId(72);
-                    if (dbQuestProgress.ActiveQuest == 87700)
-                    {
-                        if (actorToShoot != null)
-                        {
-                            Logger.Debug("Вышибаем SNO {0}, мир содершит {1} ", actorToShoot.ActorSNO, world.GetActorsBySNO(3739).Count);
-                            world.Leave(actorToShoot);
-                        }
-                        else
-                        {
-                            Logger.Debug("Вышибать некого");
-                        }
-                    }
-
-                    Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
-                    for (int CS = 0; CS < dbQuestProgress.StepOfQuest; CS++)
-                    {
-                        world.Game.Quests.Advance(dbQuestProgress.ActiveQuest);
-                        //Logger.Warn("Обнаруженно прохождение квеста {0}, шаг квеста {1]", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
-                    }
-                    Logger.Warn("Обнаружено Прохождение квеста {0}, шаг - {1}", dbQuestProgress.ActiveQuest, dbQuestProgress.StepOfQuest);
-                }
-                else
-                {
-                    world.Game.Quests.CurrentQuest(dbQuestProgress.ActiveQuest);
-                    try { world.Game.Quests.Advance(dbQuestProgress.ActiveQuest); }
-                    catch{ }
-                    Logger.Warn("Обнаружен начатый квест {0}", dbQuestProgress.ActiveQuest);
-                }
-                if (dbQuestProgress.ActiveQuest == 87700)
-                {
-                    if (dbQuestProgress.StepOfQuest == 8)
-                    {
-                        world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 192164);
-                    }
-                }
-
-            }
-            else
-            {
-                //Ворота
-                var DownGate = world.GetActorBySNO(90419);
-                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
-                DownGate.Attributes.BroadcastChangedIfRevealed();
-                DownGate.Attributes[GameAttribute.Operatable] = false;
-                var TELEGAS = world.GetActorsBySNO(112131);
-                foreach (var TELEGA in TELEGAS)
-                {
-                    TELEGA.Field2 = 0;
                 }
             }
             #endregion
