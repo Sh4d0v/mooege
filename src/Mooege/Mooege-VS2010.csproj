@@ -347,6 +347,7 @@
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\TheImprisonedAngel\103388.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TheImprisonedAngel\119680.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\TrailingTheCoven\138268.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\120357.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\165080.cs" />

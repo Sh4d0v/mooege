@@ -71,7 +71,8 @@ namespace Mooege.Core.GS.Actors
                 }
                 else if (ActorSNO.Id == 219725 ||  //Проклятая мать
                          ActorSNO.Id == 90367  ||  //Темный пробудитель
-                         ActorSNO.Id == 178300 ||  //Берсерк
+                         ActorSNO.Id == 178300 ||  //Берсерки в Вортеме 
+                         ActorSNO.Id == 375 ||  //Шаманы клана луны
                          ActorSNO.Id == -2) 
                 {
                     return (int)Mooege.Common.MPQ.FileFormats.SpawnType.Champion;

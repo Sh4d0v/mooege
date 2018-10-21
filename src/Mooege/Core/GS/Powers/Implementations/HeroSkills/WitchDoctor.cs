@@ -1814,7 +1814,7 @@ namespace Mooege.Core.GS.Powers.Implementations
             foreach (Actor spider in spiders)
             {
                 (spider as Minion).Brain.Activate();
-                spider.Attributes[GameAttribute.Untargetable] = false;
+                //spider.Attributes[GameAttribute.Untargetable] = false;
                 spider.Attributes.BroadcastChangedIfRevealed();
             }
 

@@ -141,7 +141,7 @@ namespace Mooege.Core.GS.Generators
             [148748] a1dun_Leor_Tyrael_Back_Skybox_01
             [135396] a1dun_Leor_Tyrael_jail_01
             [135521] a1dun_Leor_Tyrael_Stairs_A_01
-            
+            /
             [030928] a1dun_Leor_E_Entrance_01 // Начало второго уровня агоний
             [030945] a1dun_Leor_N_Entrance_01 // Начало первого уровня агоний
             [030953] a1dun_Leor_S_Entrance_01 

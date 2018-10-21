@@ -113,14 +113,40 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
             this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
             this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
-            this.WalkSpeed = 0.15f;
-            this.RunSpeed = 0.15f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
         }
     }
     [HandledSNO(90008)] 
     public class DarkCultistsTownAttackMelee : Monster
     {
         public DarkCultistsTownAttackMelee(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
+    [HandledSNO(6027)]
+    public class CrazyDarkCultistsMelee : Monster
+    {
+        public CrazyDarkCultistsMelee(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
+    [HandledSNO(6052)]
+    public class BerserkMini : Monster
+    {
+        public BerserkMini(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
             this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
@@ -660,7 +686,11 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public Butcher(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-            //(Brain as MonsterBrain).AddPresetPower(30496);
+          //  (Brain as MonsterBrain).AddPresetPower(83008);
+          //  (Brain as MonsterBrain).AddPresetPower(30160);
+            
+            Attributes[GameAttribute.Attacks_Per_Second] = 1.4f;
+            this.RunSpeed = 0.3f;
             Attributes[GameAttribute.Hitpoints_Max] = 4000f;
             Attributes[GameAttribute.Hitpoints_Cur] = 4000f;
             Attributes[GameAttribute.Damage_Weapon_Min, 0] = 180f;

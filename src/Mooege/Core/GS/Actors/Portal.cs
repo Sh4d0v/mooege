@@ -499,6 +499,95 @@ namespace Mooege.Core.GS.Actors
             }
             return true;
         }
+        private bool OnKillButcherListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            bool MidMidle_Active = false;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                
+                /*
+                if (MidMidle_Active == false)
+                {
+                    MidMidle_Active = true;
+
+                    var Panel_MidMiddle_Base = world.GetActorBySNO(201426);
+
+                    if (Panel_MidMiddle_Base == null)
+                    {
+                        world.SpawnMonster(201426, new Vector3D(120.9595f, 121.6244f, -0.1068707f));
+                        Panel_MidMiddle_Base = world.GetActorBySNO(201426);
+                    }
+
+                    TickTimer Timeout1 = new SecondsTickTimer(world.Game, 2f);
+                    var TimeoutToReady = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout1));
+                    TimeoutToReady.ContinueWith(delegate
+                    {
+                        world.SpawnMonster(201428, Panel_MidMiddle_Base.Position);
+                        var Panel_MidMiddle_Ready = world.GetActorBySNO(201428);
+
+                        TickTimer Timeout2 = new SecondsTickTimer(world.Game, 4f);
+                        var TimeoutToActive = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout2));
+                        TimeoutToActive.ContinueWith(delegate
+                        {
+                            Panel_MidMiddle_Ready.Destroy();
+                            world.SpawnMonster(201430, Panel_MidMiddle_Base.Position);
+                            var Panel_MidMiddle_Active = world.GetActorBySNO(201430);
+
+                            TickTimer Timeout3 = new SecondsTickTimer(world.Game, 5f);
+                            var TimeoutToOff = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout3));
+                            TimeoutToOff.ContinueWith(delegate
+                            {
+                                Panel_MidMiddle_Active.Destroy();
+                                MidMidle_Active = false;
+                            });
+                        });
+                    });
+                }
+                */
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
+        private bool OnKillCultistsInJailListener(List<uint> monstersAlive, Map.World world)
+        {
+            System.Int32 monstersKilled = 0;
+            var monsterCount = monstersAlive.Count; //Since we are removing values while iterating, this is set at the first real read of the mob counting.
+            while (monstersKilled != monsterCount)
+            {
+                //Iterate through monstersAlive List, if found dead we start to remove em till all of em are dead and removed.
+                for (int i = monstersAlive.Count - 1; i >= 0; i--)
+                {
+                    if (world.HasMonster(monstersAlive[i]))
+                    {
+                        //Alive: Nothing.
+                    }
+                    else
+                    {
+                        //If dead we remove it from the list and keep iterating.
+                        Logger.Debug(monstersAlive[i] + " has been killed");
+                        monstersAlive.RemoveAt(i);
+                        monstersKilled++;
+                    }
+                }
+            }
+            return true;
+        }
         private bool OnKillSkeletonsInTempleListener(List<uint> monstersAlive, Map.World world)
         {
             System.Int32 monstersKilled = 0;
@@ -624,6 +713,24 @@ namespace Mooege.Core.GS.Actors
                     int sceneID = player.CurrentScene.SceneSNO.Id;
                     //116976
                     if (sceneID == 116976)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return true;
+        }
+        private bool OnJailListener(Core.GS.Players.Player player, Core.GS.Map.World world)
+        {
+
+            while (true)
+            {
+                try
+                {
+                    int sceneID = player.CurrentScene.SceneSNO.Id;
+                    //116976
+                    if (sceneID == 135396)
                     {
                         break;
                     }
@@ -1451,20 +1558,61 @@ namespace Mooege.Core.GS.Actors
             if (this.Destination.WorldSNO == 2826)
             {
                 // Первый этаж агоний
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72801)
+                {
+                    if (dbQuestProgress.StepOfQuest < 2)
+                    {
+                        dbQuestProgress.StepOfQuest = 2;
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+
                 world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 2826);
             }
             if (this.Destination.WorldSNO == 58982)
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72801)
+                {
+                    if (dbQuestProgress.StepOfQuest < 3)
+                    {
+                        dbQuestProgress.StepOfQuest = 3;
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
                 // Второй этаж агоний
                 world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 58982);
             }
             if (this.Destination.WorldSNO == 87707)
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72801)
+                {
+                    if (dbQuestProgress.StepOfQuest < 4)
+                    {
+                        dbQuestProgress.StepOfQuest = 4;
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
                 // Перевал в Высокогорье
                 world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 87707);
             }
             if (this.Destination.WorldSNO == 94676)
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (dbQuestProgress.ActiveQuest == 72801)
+                {
+                    if (dbQuestProgress.StepOfQuest < 5)
+                    {
+                        dbQuestProgress.StepOfQuest = 5;
+                    }
+                }
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
                 // Проклятая крепость
                 world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 94676);
 
@@ -1482,7 +1630,37 @@ namespace Mooege.Core.GS.Actors
                 // Название локации, не работает(
                 ToHome.EnterWorld(world.GetActorBySNO(158944).Position);
             }
-            
+            if (this.Destination.WorldSNO == 135713)
+            {
+                //Камеры обречённых
+                try
+                {
+                    var TyraelJail = world.Game.GetWorld(135713);
+                    var TyraelNo = TyraelJail.GetActorBySNO(183125);
+
+                    TyraelJail.Leave(TyraelNo);
+
+                    var ListenerJailEnterTask = Task<bool>.Factory.StartNew(() => OnJailListener(player, TyraelJail));
+                    ListenerJailEnterTask.ContinueWith(delegate
+                    {
+                        TyraelJail.Game.Quests.Advance(72801);
+                        var Cultists = TyraelJail.GetActorsBySNO(102452);
+                    //Tyrael - 183125 / Stranger - 205446 / Dialog_Stranger - 117365 / 183117 - Stranger_Ritual
+                    List<uint> CultistsList = new List<uint> { };
+                        foreach (var Cultist in Cultists)
+                            CultistsList.Add(Cultist.DynamicID);
+                        var ListenerCultistsInJail = Task<bool>.Factory.StartNew(() => OnKillCultistsInJailListener(CultistsList, TyraelJail));
+                    //Ждём пока убьют
+                    ListenerCultistsInJail.ContinueWith(delegate
+                        {
+                            TyraelJail.Game.Quests.Advance(72801);
+                            TyraelJail.Leave(TyraelJail.GetActorBySNO(205446));
+
+                        });
+                    });
+                }
+                catch { }
+            }
 
             #region Не санкционированные порталы)
             if (this.Destination.StartingPointActorTag == -100)
@@ -1706,7 +1884,7 @@ namespace Mooege.Core.GS.Actors
                 
                 */
             }
-            // Портал в Границу королей
+            // Портал в Гробницу королей
             else if (this.Destination.StartingPointActorTag == -505)
             {
                 //Leoric Ghost - 5365
@@ -1846,6 +2024,7 @@ namespace Mooege.Core.GS.Actors
 
                 });
             }
+            // Портал к Мяснику.
             else if (this.Destination.StartingPointActorTag == -108)
             {
                 world.Game.Quests.NotifyQuest(72801, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 78839);
@@ -1857,6 +2036,45 @@ namespace Mooege.Core.GS.Actors
                 player.ChangeWorld(world, startingPoint);
 
                 StartConversation(ButcherLair, 211980);
+                List<uint> ButcherList = new List<uint> { };
+                //Отключить дверь
+                //ID двери - 105361
+                var BlockDoor = ButcherLair.GetActorBySNO(105361);
+                BlockDoor.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                BlockDoor.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                BlockDoor.Attributes[GameAttribute.Gizmo_State] = 1;
+                BlockDoor.Attributes[GameAttribute.Untargetable] = true;
+                BlockDoor.Attributes.BroadcastChangedIfRevealed();
+
+                //[Actor] [Type: Monster] SNOId:201426 DynamicId: 2591 Position: x:120,9595 y:121,6244 z:-0,1068707 Name: ButcherLair_FloorPanel_MidMiddle_Base
+                /*
+                [201426] ButcherLair_FloorPanel_MidMiddle_Base
+                [201428] ButcherLair_FloorPanel_MidMiddle_Telegraph
+                [201430] ButcherLair_FloorPanel_MidMiddle_Active
+                */
+                
+                
+
+                //ButcherLair.SpawnMonster()
+
+                //[Actor] [Type: Monster] SNOId:200969 DynamicId: 2593 Position: x:149,4937 y:150,5052 z:-0,3369803 Name: ButcherLair_FloorPanel_LowerMid_Base
+
+                ButcherList.Add(ButcherLair.GetActorBySNO(3526).DynamicID);
+                var ListenerButcher = Task<bool>.Factory.StartNew(() => OnKillButcherListener(ButcherList, ButcherLair));
+                //Ждём пока убьют
+                ListenerButcher.ContinueWith(delegate
+                {
+                    ButcherLair.Game.Quests.Advance(72801);
+                    //Включить дверь
+                    
+                    var OpenDoor = new Door(BlockDoor.World, BlockDoor.ActorSNO.Id, BlockDoor.Tags);
+                    OpenDoor.Field2 = 0;
+                    OpenDoor.RotationAxis = BlockDoor.RotationAxis;
+                    OpenDoor.RotationW = BlockDoor.RotationW;
+                    OpenDoor.Attributes.BroadcastChangedIfRevealed();
+                    OpenDoor.EnterWorld(BlockDoor.Position);
+                    BlockDoor.Destroy();
+                });
             }
 
             #endregion

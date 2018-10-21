@@ -1156,6 +1156,19 @@ namespace Mooege.Core.GS.Powers
 
             #endregion
 
+            #region Странник после ритуала
+            try
+            {
+                if (target.ActorSNO.Id == 183117 && target.World.WorldSNO.Id == 135713)
+                {
+                   user.World.SpawnMonster(117365, user.World.GetActorBySNO(183117).Position);
+                   user.World.Leave(user.World.GetActorBySNO(183117));
+                   StartConversation(target.World, 119680);
+                }
+            }
+            catch { }
+            #endregion
+
             #region Тележка Карины
             try
             {
@@ -1189,7 +1202,10 @@ namespace Mooege.Core.GS.Powers
                                     });
                                 }
                             }
+
                         }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
                     }
                 }
             }
@@ -1255,6 +1271,31 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
+            #region Диалог с Тираэлем в городе
+            //72897
+            try
+            {
+                if (target.ActorSNO.Id == 6353)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 136656)
+                        {
+                            if (dbQuestProgress.StepOfQuest < 2)
+                            {
+                                dbQuestProgress.StepOfQuest = 2;
+                                StartConversation(user.World, 72897);
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                }
+            }
+            catch { }
+            #endregion
+
             #region Мужик лежащий перед порталом.
             try
             {
@@ -1282,6 +1323,47 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
+            #region Карванщик во 2 АКТ!
+            try
+            {
+                if (target.ActorSNO.Id == 177544)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        player.Value.InGameClient.SendMessage(new Net.GS.Message.Definitions.Act.ActTransitionMessage
+                        {
+                            Field0 = 70016,
+                            Field1 = true,
+                        });
+                        //Conversation to Caldeum 177564
+                        //[050588] [Worlds] a2c1Dun_Swr_Caldeum_01
+                        /*
+                        [161516] caOut_RefugeeCamp_E01_S01
+                        [161510] caOut_RefugeeCamp_E01_S02
+                        [185542] caOut_RefugeeCamp_E01_S03
+                        [161507] caOut_RefugeeCamp_E02_S01
+                        [161513] caOut_RefugeeCamp_E02_S02
+                        [185545] caOut_RefugeeCamp_E02_S03 
+                        [161518] caOut_RefugeeCamp_Skybox
+                        */
+                        /*var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 136656)
+                        {
+                            if (dbQuestProgress.StepOfQuest < 2)
+                            {
+                                dbQuestProgress.StepOfQuest = 2;
+                                StartConversation(user.World, 72897);
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();*/
+                    }
+
+
+                }
+            }
+            catch { }
+            #endregion
             #endregion
 
 

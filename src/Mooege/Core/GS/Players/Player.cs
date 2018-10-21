@@ -1947,8 +1947,10 @@ namespace Mooege.Core.GS.Players
         public HirelingInfo[] HirelingInfo = new HirelingInfo[4]
         {
             new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 0, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
-            new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 0, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
-            new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 0, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
+            //Страж
+            new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 1, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
+            //Негодяй
+            new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 1, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
             new HirelingInfo { HirelingIndex = 0x00000000, Field1 = -1, Level = 0, Field3 = 0x0000, Field4 = false, Skill1SNOId = -1, Skill2SNOId = -1, Skill3SNOId = -1, Skill4SNOId = -1, },
         };
 

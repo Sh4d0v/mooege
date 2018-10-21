@@ -449,11 +449,25 @@ namespace Mooege.Core.GS.Players
 
             // The Imprisoned Angel 72801
             this.QuestEventDict.Add(103388, new _103388()); //Призрак королевы
+            this.QuestEventDict.Add(119680, new _119680()); //Возвращение меча
+
             // Перед сбором душ - [103388] [Conversation] Quest_Jail_Queen_01
             // После сбора душ - [109728] [Conversation] Quest_Jail_Queen_AllPrisonersFreed
             // Return to Tristram 136656
 
             //Конец Первого АКТА!
+
+            //Квесты второго акта
+            // 1  - 80322
+            // 2  - 93396
+            // 3  - 74128
+            // 4  - 57331
+            // 5  - 78264
+            // 6  - 78266
+            // 7  - 57335
+            // 8  - 57337
+            // 9  - 121792
+            // 10 - 57339
         }
 
         /// <summary>
@@ -519,6 +533,14 @@ namespace Mooege.Core.GS.Players
                 //var startingPoint = AttackedTown.StartingPoints[2].Position;
                 player.ChangeWorld(AttackedTown, Start);
             }
+            if (conversation.SNOId == 177564)
+            {
+                var Caldeum = player.World.Game.GetWorld(161472);
+                //Vector3D Start = new Vector3D(0f, 0f, 0f);
+                var startingPoint = Caldeum.StartingPoints[0].Position;
+                player.ChangeWorld(Caldeum, startingPoint);
+            }
+            //50588
             if (conversation.ConvPiggyBack != -1)
                 StartConversation(conversation.ConvPiggyBack);
 

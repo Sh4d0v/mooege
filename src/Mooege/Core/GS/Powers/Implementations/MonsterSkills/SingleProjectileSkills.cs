@@ -22,6 +22,8 @@ using System.Linq;
 using System.Text;
 using Mooege.Core.GS.Ticker;
 using Mooege.Core.GS.Actors;
+using Mooege.Core.GS.Common.Types.Math;
+using Mooege.Core.GS.Powers.Payloads;
 
 namespace Mooege.Core.GS.Powers.Implementations
 {
@@ -62,21 +64,107 @@ namespace Mooege.Core.GS.Powers.Implementations
     {
         public override IEnumerable<TickTimer> Main()
         {
-            SetProjectile(this, 6040, User.Position, 1f, (hit) =>
+            SetProjectile(this, 6040, User.Position, 0.7f, (hit) =>
             {
                 WeaponDamage(hit, 1.00f, DamageType.Fire);
+                projectile.Position.Z += 5f;
                 projectile.Destroy();
             });
             return Launch();
         }
     }
-    // [030570][Power] TriuneSummoner_Projectile
-    // [030571][Power] TriuneSummoner_Shield
+    [ImplementsPowerSNO(83008)] // Butcher_Hook.pow
+    public class ButcherHookProjectile : SingleProjectileSkill
+    {
+        public override IEnumerable<TickTimer> Main()
+        {
+            bool hitAnything = false;
+            projectile = new Projectile(this, 3528, User.Position);
+            speed = 2f;
+            /*SetProjectile(this, 3528, User.Position, 2f, (hit) =>
+            {
+                WeaponDamage(hit, 1.00f, DamageType.Arcane);
+                projectile.Destroy();
+            });*/
+            projectile.Position.Z += 5f;
+            projectile.Position.X += 5f;
+            projectile.Scale = 2f;
+            projectile.Timeout = WaitSeconds(0.5f);
+            projectile.OnCollision = (hit) =>
+            {
+                hitAnything = true;
+
+                _setupReturnProjectile(hit.Position);
+
+                AttackPayload attack = new AttackPayload(this);
+                attack.SetSingleTarget(hit);
+                attack.AddWeaponDamage(ScriptFormula(0), DamageType.Physical);
+                attack.OnHit = (hitPayload) =>
+                {
+                    for (int i = 0; i < ScriptFormula(17); ++i)
+                    {
+                        hitPayload.Target.PlayEffectGroup(18748);//18748
+                        Knockback(hitPayload.Target, -25f, ScriptFormula(3), ScriptFormula(4));
+                    }
+                };
+                attack.Apply();
+
+            };
+            projectile.OnTimeout = () =>
+            {
+                _setupReturnProjectile(projectile.Position);
+            };
+
+            projectile.Launch(TargetPosition, ScriptFormula(8));
+            User.AddRopeEffect(30877, projectile);
+
+            return Launch();
+        }
+        private void _setupReturnProjectile(Vector3D spawnPosition)
+        {
+            Vector3D inFrontOfUser = PowerMath.TranslateDirection2D(User.Position, spawnPosition, User.Position, 5f);
+
+            var return_proj = new Projectile(this, 3528, new Vector3D(spawnPosition.X, spawnPosition.Y, User.Position.Z));
+            return_proj.Scale = 2f;
+            return_proj.DestroyOnArrival = true;
+            return_proj.LaunchArc(inFrontOfUser, 1f, -0.03f);
+            User.AddRopeEffect(30877, return_proj);
+        }
+    }
+    //[030877] [Rope] Butcher_Hookshot_Chain
+
+
     [ImplementsPowerSNO(30474)] // Shield_Skeleton_Melee_Instant.pow
     public class ShieldSkeletonMeleeInstant : SingleProjectileSkill
     {
         public override IEnumerable<TickTimer> Main()
         {
+            WeaponDamage(GetBestMeleeEnemy(), 1.50f, DamageType.Physical);
+            yield break;
+        }
+    }
+
+    [ImplementsPowerSNO(30160)] // Butcher_Smash.pow
+    public class ButcherSmashInstant : SingleProjectileSkill
+    {
+        public override IEnumerable<TickTimer> Main()
+        {
+            User.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = User.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                        {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 50,
+                                            AnimationSNO = User.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Attack2],
+                                            PermutationIndex = 0,
+                                            Speed = 1f
+                                        }
+                                        }
+            }, User);
             WeaponDamage(GetBestMeleeEnemy(), 1.50f, DamageType.Physical);
             yield break;
         }
@@ -92,6 +180,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                 WeaponDamage(hit, 1.00f, DamageType.Physical);
                 projectile.Destroy();
             });
+            
             return Launch();
         }
     }

@@ -65,20 +65,6 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 dbQuestProgress.StepOfQuest = 5;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
-
-            "0"	    "240"
-            "240"	"240"
-            "-240"	"240"
-            "240"	"480"
-            "0"	    "480"
-            "0"	    "720"
-
-            "240"   "0"
-            "240"	"240"
-            "240"	"-240"
-            "480"	"240"
-            "480"   "0"
-            "720"   "0"
             };
             */
             //103381 - Королева
@@ -106,6 +92,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             ListenerUsePortalTask.ContinueWith(delegate
             {
                 Logger.Debug("Все призраки найдены");
+                StartConversation(world, 109728);
                 world.SpawnMonster(98879,new Vector3D(604.2187f,596.0316f,0.9996948f));
                 Warden.Add(world.GetActorBySNO(98879).DynamicID);
                 var ListenerWarden = Task<bool>.Factory.StartNew(() => OnKillListener(Warden, world));

@@ -57,7 +57,9 @@ namespace Mooege.Core.GS.Actors.Implementations
         private void ReadWaypointId()
         {
             var actData = (Mooege.Common.MPQ.FileFormats.Act)MPQStorage.Data.Assets[SNOGroup.Act][70015].Data;
+            var SecondactData = (Mooege.Common.MPQ.FileFormats.Act)MPQStorage.Data.Assets[SNOGroup.Act][70016].Data;
             var wayPointInfo = actData.WayPointInfo;
+            var SecondwayPointInfo = SecondactData.WayPointInfo;
 
             var proximity = new Rect(this.Position.X - 1.0, this.Position.Y - 1.0, 2.0, 2.0);
             var scenes = this.World.QuadTree.Query<Scene>(proximity);
@@ -71,6 +73,28 @@ namespace Mooege.Core.GS.Actors.Implementations
                     scene = scenes[1];
             }
 
+            for (int i = 0; i < wayPointInfo.Length; i++)
+            {
+                // World - Level
+                //117405 - 117411
+                //167721 - 119870
+                if (wayPointInfo[i].SNOLevelArea == -1)
+                    continue;
+
+                if (scene.Specification == null) continue;
+                foreach (var area in scene.Specification.SNOLevelAreas)
+                {
+                    if (wayPointInfo[i].SNOWorld != this.World.WorldSNO.Id || wayPointInfo[i].SNOLevelArea != area)
+                        continue;
+
+                    this.WaypointId = i;
+                    this.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
+                    this.Attributes[Net.GS.Message.GameAttribute.Gizmo_State] = 0;
+                    this.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = true;
+
+                    break;
+                }
+            }
             for (int i = 0; i < wayPointInfo.Length; i++)
             {
                 // World - Level
