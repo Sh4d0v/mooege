@@ -261,11 +261,11 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
                                 .SetLastPlayedAct(0)//ActiveAct)
-                                .SetHighestUnlockedAct(0)
-                                .SetLastPlayedDifficulty(3)
+                                .SetHighestUnlockedAct(70016)
+                                .SetLastPlayedDifficulty(0)
                                 .SetHighestUnlockedDifficulty(3)
                                 .SetLastPlayedQuest(this.LastQuestPlayed)//LastQuestPlayed
-                                .SetLastPlayedQuestStep(-1)
+                                .SetLastPlayedQuestStep(0)
                                 .SetTimePlayed(this.TimePlayed)
                                 .Build();
             }

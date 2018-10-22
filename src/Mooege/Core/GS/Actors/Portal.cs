@@ -409,6 +409,7 @@ namespace Mooege.Core.GS.Actors
             {
                 if (player.World.WorldSNO.Id == 71150)
                 {
+                   
                     sceneID = player.CurrentScene.SceneSNO.Id;
                     if (sceneID == 74614) //trOut_wilderness_MainGraveyard_E02_S03
                     {
@@ -811,7 +812,7 @@ namespace Mooege.Core.GS.Actors
                     WorldID = this.World.DynamicID
                 },
                 Field2 =  0x00018FB0,  /* Marker_DungeonEntrance.tex */          // TODO Dont mark all portals as dungeon entrances... some may be exits too (although d3 does not necesarrily use the correct markers). Also i have found no hacky way to determine whether a portal is entrance or exit - farmy
-                m_snoStringList = 0x0000CB2E, /* LevelAreaNames.stl */          // TODO Dont use hardcoded numbers
+               // m_snoStringList = 0x0000CB2E, /* LevelAreaNames.stl */          // TODO Dont use hardcoded numbers
 
                 Field3 = StringHashHelper.HashNormal(markerName),
                 Field9 = 0,
@@ -840,6 +841,17 @@ namespace Mooege.Core.GS.Actors
 
             if (this.Destination.WorldSNO == 71150)
             {
+                //Временный портал
+                Vector3D Position = new Vector3D(2985.959f,2795.399f,23.94531f);
+                Portal RealPortal = new Portal(world.Game.GetWorld(71150), 5648, world.Game.GetWorld(73261).StartingPoints[0].Tags);
+                RealPortal.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = 94676,
+                    DestLevelAreaSNO = 94672,
+                    StartingPointActorTag = 172
+                };
+                RealPortal.EnterWorld(Position);
+
                 if (this.ActorSNO.Id == 241660)
                 {
                     Vector3D Point = new Vector3D(2867.382f, 2398.66f, 1.813717f);
@@ -2076,6 +2088,8 @@ namespace Mooege.Core.GS.Actors
                     BlockDoor.Destroy();
                 });
             }
+            // Портал для тестов
+
 
             #endregion
 

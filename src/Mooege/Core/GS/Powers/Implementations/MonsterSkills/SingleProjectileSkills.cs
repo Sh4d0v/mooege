@@ -79,13 +79,16 @@ namespace Mooege.Core.GS.Powers.Implementations
         public override IEnumerable<TickTimer> Main()
         {
             bool hitAnything = false;
+            
             projectile = new Projectile(this, 3528, User.Position);
-            speed = 2f;
+            speed = 1.6f;
             /*SetProjectile(this, 3528, User.Position, 2f, (hit) =>
             {
                 WeaponDamage(hit, 1.00f, DamageType.Arcane);
                 projectile.Destroy();
             });*/
+            Vector3D inFrontOfUser = PowerMath.TranslateDirection2D(User.Position, projectile.Position, User.Position, 5f);
+
             User.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
             {
                 ActorID = User.DynamicID,
@@ -103,7 +106,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                                         }
             }, User);
             projectile.Position.Z += 5f;
-            projectile.Position.X += 5f;
+            projectile.Position.Y += 5f;
             projectile.Scale = 2f;
             projectile.Timeout = WaitSeconds(0.5f);
             projectile.OnCollision = (hit) =>
@@ -123,6 +126,8 @@ namespace Mooege.Core.GS.Powers.Implementations
                         hitPayload.Target.PlayEffectGroup(18748);//18748
                         Knockback(hitPayload.Target, -25f, ScriptFormula(3), ScriptFormula(4));
                     }
+                    hit.Teleport(inFrontOfUser);
+                    Target.Move(inFrontOfUser, Target.RotationW);
                 };
                 attack.Apply();
 
@@ -134,6 +139,7 @@ namespace Mooege.Core.GS.Powers.Implementations
             };
 
             projectile.Launch(TargetPosition, ScriptFormula(8));
+
             User.AddRopeEffect(30877, projectile);
 
             return Launch();
@@ -146,9 +152,8 @@ namespace Mooege.Core.GS.Powers.Implementations
             return_proj.Scale = 2f;
             return_proj.DestroyOnArrival = true;
             return_proj.LaunchArc(inFrontOfUser, 1f, -0.03f);
-            
-            Target.Teleport(inFrontOfUser);
-            Target.Move(inFrontOfUser, Target.RotationW);
+           
+
             TickTimer StunTime = new SecondsTickTimer(User.World.Game, 2f);
             AddBuff(Target, new DebuffStunned(StunTime));
             User.AddRopeEffect(30877, return_proj);

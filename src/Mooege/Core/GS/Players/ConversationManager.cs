@@ -458,6 +458,25 @@ namespace Mooege.Core.GS.Players
             //Конец Первого АКТА!
 
             //Квесты второго акта
+            // Калдейский базар
+            /*
+                Level Area = 55313
+              	StartingPointActorTag = 130
+                World = 70885
+             */
+            // Калдей
+            /*
+                Level Area = 210451
+              	StartingPointActorTag = 147
+                World = 109894
+             */
+            // Калдей
+            /*
+                Level Area = 81178
+              	StartingPointActorTag = 108
+                World = 81715
+            */
+
             // 1  - 80322
             // 2  - 93396
             // 3  - 74128
@@ -537,8 +556,9 @@ namespace Mooege.Core.GS.Players
             {
                 var Caldeum = player.World.Game.GetWorld(161472);
                 //Vector3D Start = new Vector3D(0f, 0f, 0f);
-                var startingPoint = Caldeum.StartingPoints[0].Position;
+                var startingPoint = Caldeum.GetActorBySNO(5503).Position;
                 player.ChangeWorld(Caldeum, startingPoint);
+                Caldeum.Game.Quests.Advance(80322);
             }
             //50588
             if (conversation.ConvPiggyBack != -1)

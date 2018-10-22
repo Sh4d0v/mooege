@@ -43,6 +43,7 @@ using Mooege.Core.GS.Powers;
 using Mooege.Core.GS.Ticker;
 using Mooege.Core.GS.Actors.Implementations.Minions;
 using Mooege.Core.GS.Actors.Implementations;
+using Mooege.Net.GS.Message.Fields;
 
 namespace Mooege.Net.GS
 {
@@ -82,6 +83,7 @@ namespace Mooege.Net.GS
             try
             {
                 var FalsePortal = client.Player.World.GetActorBySNO(191492);
+
                 FalsePortal.Destroy();
                 var FirstTeleg = world.GetActorBySNO(81699);
                 FirstTeleg.Field2 = 0;

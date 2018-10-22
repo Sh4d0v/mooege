@@ -110,8 +110,7 @@ namespace Mooege.Core.GS.Generators
             #endregion
             #region Проклятый замок
             /*
-             [093289]
-        a1dun_Leor_Jail_S_Entrance_01
+            [093289] a1dun_Leor_Jail_S_Entrance_01
 
             [093450] a1dun_Leor_Jail_NSEW_04
             [091982] a1dun_Leor_Jail_NSEW_02
@@ -122,11 +121,14 @@ namespace Mooege.Core.GS.Generators
             [091393] a1dun_Leor_Jail_N_01
             [091397] a1dun_Leor_Jail_E_01
             [091435] a1dun_Leor_Jail_NSEW_01
-            [099174] a1dun_Leor_Jail_Filler_NE_01
-            [099178] a1dun_Leor_Jail_Filler_NW_01
-            [099182] a1dun_Leor_Jail_Filler_SE_01
-            [099186] a1dun_Leor_Jail_Filler_SW_01
+            [099174] a1dun_Leor_Jail_Filler_NE_01 // 
+            [099178] a1dun_Leor_Jail_Filler_NW_01 // 
+            [099182] a1dun_Leor_Jail_Filler_SE_01 // Верхний левый
+            [099186] a1dun_Leor_Jail_Filler_SW_01 // Нижний правый
             [091311] a1dun_Leor_Jail_Filler_01
+            
+
+
 
             [095362] a1dun_Leor_Jail_N_Exit_01
             [093835] a1dun_Leor_Jail_NSEW_05*/
@@ -201,6 +203,108 @@ namespace Mooege.Core.GS.Generators
             */
             #endregion
 
+            #region Акт 2 - StingingWinds
+            /*
+                [117865] caOut_StingingWinds_Sub80_SunkenShip
+                
+                E02 - 0,E03 - 240, E04 - 480,E05 - 720, E06 - 960, E07 - 1200, E08 - 1440, E09 - 1680, E10 - 1920
+                S04 - 0,S05 - 240, S06 - 480,S07 - 720, S08 - 960, S09 - 1200, S10 - 1440, S11 - 1680, S12 - 1920, S13 - 2160, S14 - 2400, S15 - 2640, S16 - 2880, S17 - 3120
+                437 - 504
+                [031268] caOut_StingingWinds_E02_S07 0x720
+                [031269] caOut_StingingWinds_E02_S08 0x960
+                [001795] caOut_StingingWinds_E02_S09 0x1200
+                [031270] caOut_StingingWinds_E02_S10 0x1440
+
+                [031282] caOut_StingingWinds_E03_S06 240x480
+                [031283] caOut_StingingWinds_E03_S07 240x720
+                [031284] caOut_StingingWinds_E03_S08 240x960
+                [031285] caOut_StingingWinds_E03_S09 240x1200
+                [031286] caOut_StingingWinds_E03_S10 240x1440
+
+                [031301] caOut_StingingWinds_E04_S06 480x480
+                [031302] caOut_StingingWinds_E04_S07 480x720
+                [031303] caOut_StingingWinds_E04_S08 480x960
+                [031304] caOut_StingingWinds_E04_S09 480x1200
+                [031305] caOut_StingingWinds_E04_S10 480x1440
+
+                [031319] caOut_StingingWinds_E05_S05 720x240
+                [031320] caOut_StingingWinds_E05_S06 720x480
+                [031321] caOut_StingingWinds_E05_S07 720x720
+                [031322] caOut_StingingWinds_E05_S08 720x960
+                [031323] caOut_StingingWinds_E05_S09 720x1200
+                [031324] caOut_StingingWinds_E05_S10 720x1440
+                [031325] caOut_StingingWinds_E05_S11 720x1680
+                [031326] caOut_StingingWinds_E05_S12 720x1920
+
+                [031340] caOut_StingingWinds_E06_S05 960x240
+                [031341] caOut_StingingWinds_E06_S06 960x480
+                [031342] caOut_StingingWinds_E06_S07 960x720
+                [031343] caOut_StingingWinds_E06_S08 960x960
+                [031344] caOut_StingingWinds_E06_S09 960x1200
+                [031345] caOut_StingingWinds_E06_S10 960x1440
+                [001799] caOut_StingingWinds_E06_S11 960x1680
+                [031346] caOut_StingingWinds_E06_S12 960x1920
+
+                [031361] caOut_StingingWinds_E07_S05 1200x240
+                [031362] caOut_StingingWinds_E07_S06 1200x480
+                [031363] caOut_StingingWinds_E07_S07 1200x720
+                [031364] caOut_StingingWinds_E07_S08 1200x960
+                [001800] caOut_StingingWinds_E07_S09 1200x1200 5
+                [031365] caOut_StingingWinds_E07_S10 1200x1440
+                [031366] caOut_StingingWinds_E07_S11 1200x1680
+                [031367] caOut_StingingWinds_E07_S12 1200x1920
+                [031368] caOut_StingingWinds_E07_S13 1200x2160
+                [031369] caOut_StingingWinds_E07_S14 1200x2400 10
+                [110462] caOut_StingingWinds_E07_S15 1200x2640 
+                [110459] caOut_StingingWinds_E07_S16 1200x2880
+                [110456] caOut_StingingWinds_E07_S17 1200x3120
+                
+                [031381] caOut_StingingWinds_E08_S04 1440x0
+                [031382] caOut_StingingWinds_E08_S05 1440x240
+                [031383] caOut_StingingWinds_E08_S06 1440x480
+                [001801] caOut_StingingWinds_E08_S07 1440x720
+                [031385] caOut_StingingWinds_E08_S09 1440x1200 5
+                [031386] caOut_StingingWinds_E08_S10 1440x1440
+                [031387] caOut_StingingWinds_E08_S11 1440x1680
+                [031388] caOut_StingingWinds_E08_S12 1440x1920
+                [031389] caOut_StingingWinds_E08_S13 1440x2160
+                [031390] caOut_StingingWinds_E08_S14 1440x2400 10
+                [031391] caOut_StingingWinds_E08_S15 1440x2640 
+                [110465] caOut_StingingWinds_E08_S16 1440x2880
+                [110453] caOut_StingingWinds_E08_S17 1440x3120
+                
+                [031405] caOut_StingingWinds_E09_S08 1680x960
+                [031406] caOut_StingingWinds_E09_S09 1680x1200
+                [031407] caOut_StingingWinds_E09_S10 1680x1440
+                [031408] caOut_StingingWinds_E09_S11 1680x1680
+                [031409] caOut_StingingWinds_E09_S12 1680x1920 5
+                [031410] caOut_StingingWinds_E09_S13 1680x2160
+                [031411] caOut_StingingWinds_E09_S14 1680x2400
+                [031412] caOut_StingingWinds_E09_S15 1680x2640
+                [031413] caOut_StingingWinds_E09_S16 1680x2880
+                [110450] caOut_StingingWinds_E09_S17 1680x3120 10
+                
+                [031432] caOut_StingingWinds_E10_S14 1920x2400
+                [031433] caOut_StingingWinds_E10_S15 1920x2640
+                               
+            */
+            #endregion
+
+            #region Акт 2 - a2dun_Cald
+            /*
+            [086590] a2dun_Cald_E03_S01
+            [086586] a2dun_Cald_E03_S02
+            [086583] a2dun_Cald_E03_S03
+            [086579] a2dun_Cald_E03_S04
+            
+            [086589] a2dun_Cald_E04_S01
+            [086585] a2dun_Cald_E04_S02
+            [086582] a2dun_Cald_E04_S03
+            [086578] a2dun_Cald_E04_S04
+            
+            [087837] a2dun_Cald_Filler_C
+            */
+            #endregion
             /*
                 
             [076489] [Scene] trOut_Highlands_ManorInterior_E01_S01
