@@ -294,6 +294,12 @@ namespace Mooege.Core.GS.Powers
                         result = BinaryIntToFloat(numb1); // simply store id, used later by Table()
                         return true;
                     }
+                    else if (numb1 == 6) // known gamebalance power table id range
+                    {
+                        TagKeyScript relativeTag = PowerTagHelper.GenerateTagForScriptFormula(6);
+
+                        return Evaluate(powerSNO, relativeTag, attributes, rand, out result);
+                    }
                     else
                     {
                         Logger.Error("unknown identifier");

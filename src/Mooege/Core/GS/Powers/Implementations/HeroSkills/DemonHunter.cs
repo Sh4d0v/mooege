@@ -925,14 +925,14 @@ namespace Mooege.Core.GS.Powers.Implementations
             public override void Init()
             {
                 base.Init();
-                Timeout = WaitSeconds(ScriptFormula(4));
+                Timeout = WaitSeconds(2f);
             }
             public override bool Apply()
             {
                 if (!base.Apply())
                     return false;
 
-                AddBuff(Target, new DebuffSlowed(0.7f, WaitSeconds(ScriptFormula(4))));
+                AddBuff(Target, new DebuffSlowed(0.7f, WaitSeconds(2f)));
 
                 return true;
             }
@@ -1025,7 +1025,8 @@ namespace Mooege.Core.GS.Powers.Implementations
 
             public override void Remove()
             {
-                base.Remove();
+               base.Remove();
+               
             }
         }
     }

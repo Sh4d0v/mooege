@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Mooege.Common.Logging;
 using Mooege.Core.GS.Actors;
 
 namespace Mooege.Core.GS.Powers
@@ -35,8 +36,16 @@ namespace Mooege.Core.GS.Powers
 
             // update buffs and mark finished ones as removed
             foreach (Actor target in keys)
-                _RemoveBuffsIf(target, buff => buff.Update());
-
+            {
+                try
+                {
+                    _RemoveBuffsIf(target, buff => buff.Update());
+                }
+                catch
+                {
+                    
+                }
+            }
             // clean up removed buffs
             foreach (Actor target in keys)
             {

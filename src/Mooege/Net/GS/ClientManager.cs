@@ -1023,14 +1023,14 @@ namespace Mooege.Net.GS
                 //[102927] Ghost_Jail_Prisoner - Останки узника
                 //Первая точка (188.899f,152.7945f,0.09996948f)
                 //Вторая точка (152.8937f,158.7531f,0.09996949f)
+            }
+            #endregion
 
-                #endregion
+            #endregion
 
-                #endregion
-
-                #region Основная проверка
-                if (dbQuestProgress.ActiveQuest != -1)
-                {
+            #region Основная проверка
+            if (dbQuestProgress.ActiveQuest != -1)
+            {
                     #region Нижнии ворота тристрама
                     var DownGate = world.GetActorBySNO(90419);
                     DownGate.Attributes[GameAttribute.Gizmo_State] = 0;
@@ -1104,42 +1104,21 @@ namespace Mooege.Net.GS
                         }
                     }
 
-                }
-                else
+            }
+            else
+            {
+                //Ворота
+                var DownGate = world.GetActorBySNO(90419);
+                DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
+                DownGate.Attributes.BroadcastChangedIfRevealed();
+                DownGate.Attributes[GameAttribute.Operatable] = false;
+                var TELEGAS = world.GetActorsBySNO(112131);
+                foreach (var TELEGA in TELEGAS)
                 {
-                    //Ворота
-                    var DownGate = world.GetActorBySNO(90419);
-                    DownGate.Attributes[GameAttribute.Gizmo_State] = 1;
-                    DownGate.Attributes.BroadcastChangedIfRevealed();
-                    DownGate.Attributes[GameAttribute.Operatable] = false;
-                    var TELEGAS = world.GetActorsBySNO(112131);
-                    foreach (var TELEGA in TELEGAS)
-                    {
-                        TELEGA.Field2 = 0;
-                    }
+                    TELEGA.Field2 = 0;
                 }
             }
-            #endregion
-
-            #region Сырые локации
-
-            #region Покои Короля
-
-            //Покои: 117405
-            // To Tyrael Zone
-            /*
-            [148748] a1dun_Leor_Tyrael_Back_Skybox_01
-            [135396] a1dun_Leor_Tyrael_jail_01
-            [135521] a1dun_Leor_Tyrael_Stairs_A_01
-            [135710] a1dun_Leor_Tyrael_Filler_02
-            [117035] trDun_Crypt_W_Exit_Stranger_01
             
-            */
-            //  var Leor_Tyrael = client.Player.World.Game.GetWorld(117405);
-            Vector3D PointToScene = new Vector3D(0f, 0f, 0f);
-         //   Core.GS.Map.Scene CainScene = new Core.GS.Map.Scene(Leor_Tyrael, PointToScene, 135521, null);
-            #endregion
-
             #endregion
 
             DBSessions.AccountSession.Flush();

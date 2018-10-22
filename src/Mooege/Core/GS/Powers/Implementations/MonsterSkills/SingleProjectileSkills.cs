@@ -86,6 +86,22 @@ namespace Mooege.Core.GS.Powers.Implementations
                 WeaponDamage(hit, 1.00f, DamageType.Arcane);
                 projectile.Destroy();
             });*/
+            User.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = User.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                        {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 50,
+                                            AnimationSNO = User.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.SpecialAttack],
+                                            PermutationIndex = 0,
+                                            Speed = 1f
+                                        }
+                                        }
+            }, User);
             projectile.Position.Z += 5f;
             projectile.Position.X += 5f;
             projectile.Scale = 2f;
@@ -98,6 +114,7 @@ namespace Mooege.Core.GS.Powers.Implementations
 
                 AttackPayload attack = new AttackPayload(this);
                 attack.SetSingleTarget(hit);
+                
                 attack.AddWeaponDamage(ScriptFormula(0), DamageType.Physical);
                 attack.OnHit = (hitPayload) =>
                 {
@@ -113,6 +130,7 @@ namespace Mooege.Core.GS.Powers.Implementations
             projectile.OnTimeout = () =>
             {
                 _setupReturnProjectile(projectile.Position);
+                
             };
 
             projectile.Launch(TargetPosition, ScriptFormula(8));
@@ -128,7 +146,28 @@ namespace Mooege.Core.GS.Powers.Implementations
             return_proj.Scale = 2f;
             return_proj.DestroyOnArrival = true;
             return_proj.LaunchArc(inFrontOfUser, 1f, -0.03f);
+            
+            Target.Teleport(inFrontOfUser);
+            Target.Move(inFrontOfUser, Target.RotationW);
+            TickTimer StunTime = new SecondsTickTimer(User.World.Game, 2f);
+            AddBuff(Target, new DebuffStunned(StunTime));
             User.AddRopeEffect(30877, return_proj);
+            User.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = User.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                        {
+                                        new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                        {
+                                            Duration = 50,
+                                            AnimationSNO = User.AnimationSet.TagMapAnimDefault[Core.GS.Common.Types.TagMap.AnimationSetKeys.Attack2],
+                                            PermutationIndex = 0,
+                                            Speed = 1f
+                                        }
+                                        }
+            }, User);
         }
     }
     //[030877] [Rope] Butcher_Hookshot_Chain

@@ -1200,7 +1200,7 @@ namespace Mooege.Core.GS.Players
                 Field3 = -1,
                 PlayerFlags = (int)Toon.Flags,
                 PlayerSavedData = this.GetSavedData(),
-                QuestRewardHistoryEntriesCount = 0x00000000,
+                QuestRewardHistoryEntriesCount = 0x00000003,
                 tQuestRewardHistory = QuestRewardHistory,
             };
         }

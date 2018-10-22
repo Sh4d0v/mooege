@@ -217,6 +217,11 @@ namespace Mooege.Core.MooNet.Toons
         public uint TimePlayed { get { return this.DBToon.TimePlayed; } set { this.DBToon.TimePlayed = value; } }
 
         /// <summary>
+        /// Total time played for toon.
+        /// </summary>
+        public int LastQuestPlayed { get { return this.DBToon.DBProgressToon.ActiveQuest; } set { this.DBToon.DBProgressToon.ActiveQuest = value; } }
+
+        /// <summary>
         /// Last login time for toon.
         /// </summary>
         public uint LoginTime { get; set; }
@@ -257,9 +262,9 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
                                 .SetLastPlayedAct(0)//ActiveAct)
                                 .SetHighestUnlockedAct(0)
-                                .SetLastPlayedDifficulty(0)
-                                .SetHighestUnlockedDifficulty(0)
-                                .SetLastPlayedQuest(ActiveQuest)
+                                .SetLastPlayedDifficulty(3)
+                                .SetHighestUnlockedDifficulty(3)
+                                .SetLastPlayedQuest(this.LastQuestPlayed)//LastQuestPlayed
                                 .SetLastPlayedQuestStep(-1)
                                 .SetTimePlayed(this.TimePlayed)
                                 .Build();

@@ -1585,14 +1585,24 @@ namespace Mooege.Core.GS.Powers.Implementations
             StartCooldown(EvalTag(PowerKeys.CooldownTime));
             UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
 
+           
+            if (User.Attributes[GameAttribute.Hitpoints_Cur] != User.Attributes[GameAttribute.Hitpoints_Max])
+                User.Attributes[GameAttribute.Hitpoints_Cur] = User.Attributes[GameAttribute.Hitpoints_Cur] + 200f;
+
             AttackPayload attack = new AttackPayload(this);
             attack.Targets = GetEnemiesInRadius(User.Position, ScriptFormula(4));
             attack.AddWeaponDamage(ScriptFormula(0), DamageType.Holy);
             attack.OnHit = hit =>
             {
+                if (Rune_B > 0)
+                {
+                    if (User.Attributes[GameAttribute.Hitpoints_Cur] != User.Attributes[GameAttribute.Hitpoints_Max])
+                        User.Attributes[GameAttribute.Hitpoints_Cur] = User.Attributes[GameAttribute.Hitpoints_Cur] + 150f;
+                }
                 if (Rune_C > 0)
                 {
                     AddBuff(hit.Target, new FireDamageBuff(WaitSeconds(ScriptFormula(8))));
+
                 }
                 if (Rune_E > 0)
                 {

@@ -686,7 +686,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public Butcher(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-          //  (Brain as MonsterBrain).AddPresetPower(83008);
+            (Brain as MonsterBrain).AddPresetPower(83008);
           //  (Brain as MonsterBrain).AddPresetPower(30160);
             
             Attributes[GameAttribute.Attacks_Per_Second] = 1.4f;
