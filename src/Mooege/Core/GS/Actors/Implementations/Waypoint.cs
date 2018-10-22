@@ -33,7 +33,7 @@ namespace Mooege.Core.GS.Actors.Implementations
     public sealed class Waypoint : Gizmo
     {
         public int WaypointId { get; private set; }
-
+        public int LastI;
         public Waypoint(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
@@ -56,10 +56,12 @@ namespace Mooege.Core.GS.Actors.Implementations
 
         private void ReadWaypointId()
         {
+            
             var actData = (Mooege.Common.MPQ.FileFormats.Act)MPQStorage.Data.Assets[SNOGroup.Act][70015].Data;
             var SecondactData = (Mooege.Common.MPQ.FileFormats.Act)MPQStorage.Data.Assets[SNOGroup.Act][70016].Data;
             var wayPointInfo = actData.WayPointInfo;
             var SecondwayPointInfo = SecondactData.WayPointInfo;
+            
 
             var proximity = new Rect(this.Position.X - 1.0, this.Position.Y - 1.0, 2.0, 2.0);
             var scenes = this.World.QuadTree.Query<Scene>(proximity);
@@ -91,11 +93,11 @@ namespace Mooege.Core.GS.Actors.Implementations
                     this.Attributes[Net.GS.Message.GameAttribute.Operatable] = true;
                     this.Attributes[Net.GS.Message.GameAttribute.Gizmo_State] = 0;
                     this.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated] = true;
-
+                    LastI = i;
                     break;
                 }
             }
-            for (int i = 0; i < wayPointInfo.Length; i++)
+            for (int i = LastI; i < SecondwayPointInfo.Length; i++)
             {
                 // World - Level
                 //117405 - 117411
@@ -116,6 +118,7 @@ namespace Mooege.Core.GS.Actors.Implementations
 
                     break;
                 }
+
             }
         }
 

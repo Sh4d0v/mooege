@@ -1690,6 +1690,24 @@ namespace Mooege.Core.GS.Actors
 
                 Logger.Warn("Data for back portal Saved.");
 
+                //Create Back Portal
+                var TristramHome = player.World.Game.GetWorld(71150);
+                var OldPortal = TristramHome.GetActorsBySNO(5648);
+                foreach (var OldP in OldPortal)
+                {
+                    OldP.Destroy();
+                }
+                var ToHome = new Portal(player.World.Game.GetWorld(71150), 5648, player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
+                ToHome.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = dbPortalOfToon.WorldDest,
+                    DestLevelAreaSNO = player.CurrentScene.Specification.SNOLevelAreas[0],
+                    StartingPointActorTag = -101
+                };
+                // Название локации, не работает(
+                ToHome.NameSNOId = now_world.WorldSNO.Id;
+                ToHome.EnterWorld(ToPortal);
+
                 if (player.World.Game.GetWorld(71150) != player.World)
                 {
                     try
@@ -1721,23 +1739,7 @@ namespace Mooege.Core.GS.Actors
                         player.ActiveHireling.Teleport(ToPortal);
                     }
                 }
-                //Create Back Portal
-                var TristramHome = player.World.Game.GetWorld(71150);
-                var OldPortal = TristramHome.GetActorsBySNO(5648);
-                foreach (var OldP in OldPortal)
-                {
-                    OldP.Destroy();
-                }
-                var ToHome = new Portal(player.World.Game.GetWorld(71150), 5648, player.World.Game.GetWorld(71150).StartingPoints[0].Tags);
-                ToHome.Destination = new ResolvedPortalDestination
-                {
-                    WorldSNO = dbPortalOfToon.WorldDest,
-                    DestLevelAreaSNO = 172,
-                    StartingPointActorTag = -101
-                };
-                // Название локации, не работает(
-                ToHome.NameSNOId = now_world.WorldSNO.Id;
-                ToHome.EnterWorld(ToPortal);
+                
 
                 DBSessions.AccountSession.Flush();
             }

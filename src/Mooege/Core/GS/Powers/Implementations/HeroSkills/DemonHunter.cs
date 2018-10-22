@@ -939,7 +939,7 @@ namespace Mooege.Core.GS.Powers.Implementations
 
             public override void Remove()
             {
-                base.Remove();
+                base.Remove(); 
             }
         }
     }

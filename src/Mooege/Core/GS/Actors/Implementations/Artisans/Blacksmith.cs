@@ -40,7 +40,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             [189862] Crafting_Tier_04C - Переливающаяся слеза
             [189863] Crafting_Tier_04D - Горящая сера
             */
-
         }
+       
     }
 }

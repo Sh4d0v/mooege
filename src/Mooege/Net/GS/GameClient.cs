@@ -86,7 +86,7 @@ namespace Mooege.Net.GS
                         else if (message.Id == 87)
                         {
                             MooNetClient mooNetClient = BnetClient;
-                            Logger.Warn("Portal to New Tristram. Version 2.1.", message.GetType(), message.Id);
+                            Logger.Warn("Portal to New Tristram. Version 2.2.", message.GetType(), message.Id);
                             //Vector3D ToPortal = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
                             Vector3D ToPortal = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
                             try

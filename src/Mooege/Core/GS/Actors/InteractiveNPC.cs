@@ -298,6 +298,7 @@ namespace Mooege.Core.GS.Actors
             if (message is HirelingHireMessage) OnHire(client.Player);
             if (message is HirelingInventoryMessage) OnInventory(client.Player);
             if (message is CraftInteractionMessage) OnCraft(client.Player);
+            if (message is CraftInteractionMessage) OnCraft(client.Player);
             else return;
         }
 
@@ -305,7 +306,7 @@ namespace Mooege.Core.GS.Actors
         {
             throw new NotImplementedException();
         }
-
+        
         public virtual void OnInventory(Player player)
         {
             throw new NotImplementedException();
