@@ -90,8 +90,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 });
                 //player.Value.World.Game.Quests.CurrentQuest(72095);
                        dbQuestProgress.LastQuest = 87700;
-         //              dbQuestProgress.ActiveQuest = 72095;
-         //              dbQuestProgress.StepOfQuest = -1;
+                       dbQuestProgress.ActiveQuest = 72095;
+                       dbQuestProgress.StepOfQuest = -1;
                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                        DBSessions.AccountSession.Flush();
             };

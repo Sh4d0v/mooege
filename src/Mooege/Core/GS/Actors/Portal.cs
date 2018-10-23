@@ -78,6 +78,27 @@ namespace Mooege.Core.GS.Actors
                     }
 
                 }
+                //Патч выхода из колодца
+                if (world.WorldSNO.Id == 161961 && this.ActorSNO.Id == 176537)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 71150,
+                        DestLevelAreaSNO = 91324,
+                        StartingPointActorTag = 172
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+
+                }
                 else
                 {
 
@@ -259,7 +280,7 @@ namespace Mooege.Core.GS.Actors
                     
                     Logger.Warn("Portal {0} forced", this.ActorSNO.Id);
                 }
-                else if (this.ActorSNO.Id == 221031)
+                else if (this.ActorSNO.Id == 221031 && this.World.WorldSNO.Id == 62751)
                 {
                     try
                     {
@@ -276,8 +297,10 @@ namespace Mooege.Core.GS.Actors
                         this.Destination = new ResolvedPortalDestination
                         {
                             WorldSNO = 71150,
-                            DestLevelAreaSNO = 60885,
+                            DestLevelAreaSNO = 19929,
                             StartingPointActorTag = -103
+                            //[Actor] [Type: Player] SNOId:74706 DynamicId: 1838 Position: x:1761.3 y:2920.917 z:20.33314 Name: Demonhunter_Female
+                            //
 
                         };
                     }

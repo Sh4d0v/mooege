@@ -92,6 +92,11 @@ namespace Mooege.Net.GS
                 {
                     TELEGA.Field2 = 0;
                 }
+                var DoorForCellar = world.GetActorsBySNO(111888);
+                foreach (var Door in DoorForCellar)
+                {
+                    Door.Destroy();
+                }
             } catch { }
             
             //[050453] [UI] Quests

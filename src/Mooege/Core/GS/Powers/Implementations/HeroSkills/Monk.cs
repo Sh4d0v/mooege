@@ -1594,11 +1594,6 @@ namespace Mooege.Core.GS.Powers.Implementations
             attack.AddWeaponDamage(ScriptFormula(0), DamageType.Holy);
             attack.OnHit = hit =>
             {
-                if (Rune_B > 0)
-                {
-                    if (User.Attributes[GameAttribute.Hitpoints_Cur] != User.Attributes[GameAttribute.Hitpoints_Max])
-                        User.Attributes[GameAttribute.Hitpoints_Cur] = User.Attributes[GameAttribute.Hitpoints_Cur] + 150f;
-                }
                 if (Rune_C > 0)
                 {
                     AddBuff(hit.Target, new FireDamageBuff(WaitSeconds(ScriptFormula(8))));
@@ -1610,6 +1605,23 @@ namespace Mooege.Core.GS.Powers.Implementations
                     AddBuff(hit.Target, new FearBuff());
                 }
             };
+
+            if (Rune_A > 0)
+            {
+                attack.Targets = GetEnemiesInRadius(User.Position, 10f);
+                attack.AddWeaponDamage(2f, Rune_A > 0 ? DamageType.Holy : DamageType.Physical);
+                attack.OnHit = HitPayload =>
+                {
+                    Knockback(HitPayload.Target, 1f, 3f, -0.03f);
+                };
+                attack.Apply();
+            }
+
+            if (Rune_B > 0)
+            {
+                if (User.Attributes[GameAttribute.Hitpoints_Cur] != User.Attributes[GameAttribute.Hitpoints_Max])
+                    User.Attributes[GameAttribute.Hitpoints_Cur] = User.Attributes[GameAttribute.Hitpoints_Cur] + 150f;
+            }
             if (Rune_D > 0)
             {
                 AddBuff(User, new SpiritBuff(WaitSeconds(ScriptFormula(11))));

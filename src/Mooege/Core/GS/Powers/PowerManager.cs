@@ -169,8 +169,9 @@ namespace Mooege.Core.GS.Powers
 
                 targetPosition = target.Position;
             }
-            
+
             // find and run a power implementation
+
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
             //[Actor] 194263 - Mystic_B
             //[Actor] [Type: Gizmo] SNOId:178151 DynamicId: 1132 Position: x:2390,857 y:4244,667 z:0,09999084 Name: trOut_Highlands_Mystic_Wagon}

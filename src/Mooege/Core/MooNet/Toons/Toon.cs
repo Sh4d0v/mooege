@@ -281,7 +281,7 @@ namespace Mooege.Core.MooNet.Toons
                 return D3.Profile.HeroProfile.CreateBuilder()
                     .SetHardcore(this.Hardcore)
                     .SetHeroId(this.D3EntityID)
-                    .SetHighestDifficulty(0)
+                    .SetHighestDifficulty(3)
                     .SetHighestLevel(this.Level)
                     .Build();
             }
