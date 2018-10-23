@@ -538,8 +538,8 @@ namespace Mooege.Core.GS.Players
         {
             Conversation conversation = sender as Conversation;
             logger.Debug(" (ConversationEnded) Sending a notify with type {0} and value {1}", QuestStepObjectiveType.HadConversation, conversation.SNOId);
-
-            quests.Notify(QuestStepObjectiveType.HadConversation, conversation.SNOId);
+//            if(conversation.SNOId != 198521)
+                quests.Notify(QuestStepObjectiveType.HadConversation, conversation.SNOId);
 
             lock (openConversations)
             {

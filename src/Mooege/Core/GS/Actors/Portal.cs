@@ -1546,19 +1546,21 @@ namespace Mooege.Core.GS.Actors
                        world.Game.Quests.NotifyQuest(72546, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterWorld, 180550);
                     }
 
-                    //Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
-                    Vector3D SpawnPortalPosition = world.GetActorBySNO(183032).Position;
-                    // 73261 TagMap[ActorKeys.GizmoGroup]
                     
-                    Portal RealPortal = new Portal(world.Game.GetWorld(180550), 5648, world.Game.GetWorld(182976).StartingPoints[0].Tags);
-                    RealPortal.Destination = new ResolvedPortalDestination
-                    {
-                        WorldSNO = 182976,
-                        DestLevelAreaSNO = 62726,
-                        StartingPointActorTag = -104 //30
-                    };
-                    RealPortal.EnterWorld(SpawnPortalPosition);
+                    
                 }
+                //Vector3D SpawnPortalPosition = new Vector3D(28.91075f, 205.9426f, -24.90778f);
+                Vector3D SpawnPortalPosition = world.GetActorBySNO(183032).Position;
+                // 73261 TagMap[ActorKeys.GizmoGroup]
+
+                Portal RealPortal = new Portal(world.Game.GetWorld(180550), 5648, world.Game.GetWorld(182976).StartingPoints[0].Tags);
+                RealPortal.Destination = new ResolvedPortalDestination
+                {
+                    WorldSNO = 182976,
+                    DestLevelAreaSNO = 62726,
+                    StartingPointActorTag = -104 //30
+                };
+                RealPortal.EnterWorld(SpawnPortalPosition);
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }

@@ -27,7 +27,7 @@ namespace Mooege.Net.GS.Message.Definitions.Quest
         //D3.Quests.QuestReward
         public QuestReward QuestReward;
 
-        public QuestRewardMessage() : base(Opcodes.QuestStepCompleteMessage) { }
+        public QuestRewardMessage() : base(Opcodes.QuestMeterMessage) { }
 
         public override void Parse(GameBitBuffer buffer)
         {

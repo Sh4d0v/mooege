@@ -89,12 +89,12 @@ namespace Mooege.Core.GS.Games
         /// <summary>
         /// Incremented tick value on each Game.Update().
         /// </summary>
-        public readonly int TickRate = 5;
+        public readonly int TickRate = 6;
 
         /// <summary>
         /// Tick counter.
         /// </summary>
-        private int _tickCounter;
+        private int _tickCounter = 600;
 
         /// <summary>
         /// Returns the latest tick count.
