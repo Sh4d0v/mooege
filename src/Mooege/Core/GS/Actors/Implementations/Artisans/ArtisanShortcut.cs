@@ -39,7 +39,10 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             : base(world, snoId, tags)
         {
             Attributes[GameAttribute.MinimapActive] = false;
-            Attributes[GameAttribute.Conversation_Icon, 0] = 0;
+            Attributes[GameAttribute.MinimapIconOverride, 0] = 3;
+            //Attributes[GameAttribute.Conversation_Icon, 0] = 1; - Восклицательный
+            //Attributes[GameAttribute.Conversation_Icon, 0] = 2; - Воспросиительный
+            //Attributes[GameAttribute.Conversation_Icon, 0] = 3; - Звездочка
         }
 
         public override void OnTargeted(Player player, TargetMessage message)

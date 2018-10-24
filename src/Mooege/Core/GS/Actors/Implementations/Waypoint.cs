@@ -37,7 +37,7 @@ namespace Mooege.Core.GS.Actors.Implementations
         public Waypoint(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-            this.Attributes[GameAttribute.MinimapIconOverride] = 78759;
+            this.Attributes[GameAttribute.MinimapIconOverride] = 3;
             /*
                 [072689] [Actor] MinimapIconStairs_Switch
                 [075172] [Actor] minimapMarker_model

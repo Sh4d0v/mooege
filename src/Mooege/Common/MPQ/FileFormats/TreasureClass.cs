@@ -24,6 +24,7 @@ using Mooege.Core.GS.Items;
 using Mooege.Common.Helpers.Math;
 using Mooege.Core.GS.Players;
 using Mooege.Common.Storage;
+using Mooege.Core.MooNet.Toons;
 
 namespace Mooege.Common.MPQ.FileFormats
 {
@@ -44,9 +45,221 @@ namespace Mooege.Common.MPQ.FileFormats
         {
             public override Item CreateDrop(Player player)
             {
-                return ItemGenerator.CreateGold(player, RandomHelper.Next(1000, 3000));
+                return ItemGenerator.CreateGold(player, RandomHelper.Next(1*player.Toon.Level, 10 * player.Toon.Level));
+            }
+            public override Item CreateWeaponDrop(Player player)
+            {
+                if (player.Toon.Class == ToonClass.Barbarian)
+                {
+                    string Weapon = "axe_1h_";
+                    if (player.Toon.Level <= 3)
+                        Weapon += "001";
+                    else if (player.Toon.Level <= 5)
+                        Weapon += "002";
+                    else if (player.Toon.Level <= 8)
+                        Weapon += "003";
+                    else if (player.Toon.Level <= 13)
+                        Weapon += "004";
+                    else if (player.Toon.Level <= 17)
+                        Weapon += "005";
+                    else if (player.Toon.Level <= 21)
+                        Weapon += "006";
+                    else if (player.Toon.Level <= 25)
+                        Weapon += "007";
+                    else if (player.Toon.Level <= 30)
+                        Weapon += "101";
+                    else if (player.Toon.Level <= 34)
+                        Weapon += "102";
+                    else if (player.Toon.Level <= 38)
+                        Weapon += "103";
+                    else if (player.Toon.Level <= 42)
+                        Weapon += "104";
+                    else if (player.Toon.Level <= 46)
+                        Weapon += "105";
+                    else if (player.Toon.Level <= 48)
+                        Weapon += "106";
+                    else if (player.Toon.Level <= 51)
+                        Weapon += "107";
+                    else if (player.Toon.Level <= 53)
+                        Weapon += "201";
+                    else if (player.Toon.Level <= 55)
+                        Weapon += "202";
+                    else if (player.Toon.Level <= 57)
+                        Weapon += "203";
+                    else if (player.Toon.Level <= 59)
+                        Weapon += "204";
+                    else if (player.Toon.Level <= 60)
+                        Weapon += "205";
+                    else if (player.Toon.Level < 61)
+                        Weapon += "206";
+                    else if (player.Toon.Level < 63)
+                        Weapon += "207";
+                    return ItemGenerator.Cook(player, Weapon);
+                }
+
+                if (player.Toon.Class == ToonClass.DemonHunter)
+                {
+                    string Weapon = "crossbow_";
+                    if (player.Toon.Level <= 3)
+                        Weapon += "001";
+                    else if (player.Toon.Level <= 5)
+                        Weapon += "002";
+                    else if (player.Toon.Level <= 8)
+                        Weapon += "003";
+                    else if (player.Toon.Level <= 13)
+                        Weapon += "004";
+                    else if (player.Toon.Level <= 17)
+                        Weapon += "005";
+                    else if (player.Toon.Level <= 21)
+                        Weapon += "006";
+                    else if (player.Toon.Level <= 25)
+                        Weapon += "007";
+                    else if (player.Toon.Level <= 30)
+                        Weapon += "101";
+                    else if (player.Toon.Level <= 34)
+                        Weapon += "102";
+                    else if (player.Toon.Level <= 38)
+                        Weapon += "103";
+                    else if (player.Toon.Level <= 42)
+                        Weapon += "104";
+                    else if (player.Toon.Level <= 46)
+                        Weapon += "105";
+                    else if (player.Toon.Level <= 48)
+                        Weapon += "106";
+                    else if (player.Toon.Level <= 51)
+                        Weapon += "107";
+                    else if (player.Toon.Level <= 53)
+                        Weapon += "201";
+                    else if (player.Toon.Level <= 55)
+                        Weapon += "202";
+                    else if (player.Toon.Level <= 57)
+                        Weapon += "203";
+                    else if (player.Toon.Level <= 59)
+                        Weapon += "204";
+                    else if (player.Toon.Level <= 60)
+                        Weapon += "205";
+                    else if (player.Toon.Level < 61)
+                        Weapon += "206";
+                    else if (player.Toon.Level < 63)
+                        Weapon += "207";
+                    return ItemGenerator.Cook(player, Weapon);
+                }
+
+                if (player.Toon.Class == ToonClass.Monk)
+                {
+                    string Weapon = "fistweapon_1h_";
+                    if (player.Toon.Level <= 3)
+                        Weapon += "001";
+                    else if (player.Toon.Level <= 5)
+                        Weapon += "002";
+                    else if (player.Toon.Level <= 8)
+                        Weapon += "003";
+                    else if (player.Toon.Level <= 13)
+                        Weapon += "004";
+                   else if (player.Toon.Level <= 30)
+                        Weapon += "101";
+                    else if (player.Toon.Level <= 34)
+                        Weapon += "102";
+                    else if (player.Toon.Level <= 38)
+                        Weapon += "103";
+                    else if (player.Toon.Level <= 42)
+                        Weapon += "104";
+                    else if (player.Toon.Level <= 53)
+                        Weapon += "201";
+                    else if (player.Toon.Level <= 55)
+                        Weapon += "202";
+                    else if (player.Toon.Level <= 57)
+                        Weapon += "203";
+                    else if (player.Toon.Level <= 60)
+                        Weapon += "204";
+                    
+                    return ItemGenerator.Cook(player, Weapon);
+                }
+
+                if (player.Toon.Class == ToonClass.WitchDoctor)
+                {
+                    string Weapon = "CeremonialDagger_1H_";
+                    if (player.Toon.Level <= 3)
+                        Weapon += "001";
+                    else if (player.Toon.Level <= 7)
+                        Weapon += "002";
+                    else if (player.Toon.Level <= 13)
+                        Weapon += "003";
+                    else if (player.Toon.Level <= 17)
+                        Weapon += "004";
+                    else if (player.Toon.Level <= 25)
+                        Weapon += "101";
+                    else if (player.Toon.Level <= 28)
+                        Weapon += "102";
+                    else if (player.Toon.Level <= 33)
+                        Weapon += "103";
+                    else if (player.Toon.Level <= 40)
+                        Weapon += "104";
+                    else if (player.Toon.Level <= 44)
+                        Weapon += "201";
+                    else if (player.Toon.Level <= 48)
+                        Weapon += "202";
+                    else if (player.Toon.Level <= 54)
+                        Weapon += "203";
+                    else if (player.Toon.Level <= 60)
+                        Weapon += "204";
+                    return ItemGenerator.Cook(player, Weapon);
+                }
+
+                if (player.Toon.Class == ToonClass.Wizard)
+                {
+                    string Weapon = "wand_";
+                    if (player.Toon.Level <= 3)
+                        Weapon += "001";
+                    else if (player.Toon.Level <= 5)
+                        Weapon += "002";
+                    else if (player.Toon.Level <= 8)
+                        Weapon += "003";
+                    else if (player.Toon.Level <= 13)
+                        Weapon += "004";
+                    else if (player.Toon.Level <= 17)
+                        Weapon += "005";
+                    else if (player.Toon.Level <= 21)
+                        Weapon += "006";
+                    else if (player.Toon.Level <= 25)
+                        Weapon += "007";
+                    else if (player.Toon.Level <= 30)
+                        Weapon += "101";
+                    else if (player.Toon.Level <= 34)
+                        Weapon += "102";
+                    else if (player.Toon.Level <= 38)
+                        Weapon += "103";
+                    else if (player.Toon.Level <= 42)
+                        Weapon += "104";
+                    else if (player.Toon.Level <= 46)
+                        Weapon += "105";
+                    else if (player.Toon.Level <= 48)
+                        Weapon += "106";
+                    else if (player.Toon.Level <= 51)
+                        Weapon += "107";
+                    else if (player.Toon.Level <= 53)
+                        Weapon += "201";
+                    else if (player.Toon.Level <= 55)
+                        Weapon += "202";
+                    else if (player.Toon.Level <= 57)
+                        Weapon += "203";
+                    else if (player.Toon.Level <= 59)
+                        Weapon += "204";
+                    else if (player.Toon.Level <= 60)
+                        Weapon += "205";
+                    else if (player.Toon.Level < 61)
+                        Weapon += "206";
+                    else if (player.Toon.Level < 63)
+                        Weapon += "207";
+                    return ItemGenerator.Cook(player, Weapon);
+                }
+                else
+                {
+                    return ItemGenerator.CreateGold(player, RandomHelper.Next(1, 10));
+                }
             }
         }
+
 
         [PersistentProperty("Percentage")]
         public float Percentage { get; private set; }
@@ -66,6 +279,11 @@ namespace Mooege.Common.MPQ.FileFormats
         {
             Logger.Warn("Treasure classes not implemented, using generic treasure class");
             return TreasureClass.GenericTreasure.CreateDrop(player);
+        }
+        public virtual Item CreateWeaponDrop(Player player)
+        {
+            Logger.Warn("Тестовый дроп оружия) v0.1");
+            return TreasureClass.GenericTreasure.CreateWeaponDrop(player);
         }
     }
 

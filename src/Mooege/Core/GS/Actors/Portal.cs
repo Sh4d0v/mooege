@@ -99,6 +99,27 @@ namespace Mooege.Core.GS.Actors
                     }
 
                 }
+                //Второй уровень собора
+                if (world.WorldSNO.Id == 161961 && this.ActorSNO.Id == 176001)
+                {
+                    this.Destination = new ResolvedPortalDestination
+                    {
+                        WorldSNO = 50582,
+                        DestLevelAreaSNO = 19783,
+                        StartingPointActorTag = 172
+                    };
+
+                    // Override minimap icon in merkerset tags
+                    if (tags.ContainsKey(MarkerKeys.MinimapTexture))
+                    {
+                        MinimapIcon = tags[MarkerKeys.MinimapTexture].Id;
+                    }
+                    else
+                    {
+                        MinimapIcon = ActorData.TagMap[ActorKeys.MinimapMarker].Id;
+                    }
+
+                }
                 else
                 {
 
@@ -1014,11 +1035,12 @@ namespace Mooege.Core.GS.Actors
                 RealPortal.Destination = new ResolvedPortalDestination
                 {
                     WorldSNO = 60713,
-                    DestLevelAreaSNO = 60885,
+                    DestLevelAreaSNO = 60714,
                     StartingPointActorTag = -102
                 };
                 RealPortal.EnterWorld(FakePortal.Position);
-                
+
+
             }
             if (this.Destination.WorldSNO == 136441)
             {
@@ -1423,55 +1445,57 @@ namespace Mooege.Core.GS.Actors
             }
             if (this.Destination.WorldSNO == 119888)
             {
-                var ToWorld = player.World.Game.GetWorld(119888);
-                //Установить ожидание зоны.
-                var ListenerKhazraEnterTask = Task<bool>.Factory.StartNew(() => OnKhazraCaveListener(player, ToWorld));
-                ListenerKhazraEnterTask.ContinueWith(delegate
+                var MaindbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+                if (MaindbQuestProgress.ActiveQuest == 117779)
                 {
-                    world.Game.Quests.Advance(117779);
-                    
-                    //OnKillListenerKhazra
-                    var minions = ToWorld.GetActorsBySNO(178213);
-                    var Urik = ToWorld.GetActorBySNO(131131);
-                    var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
-                    MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200000f;
-                    MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200000f;
-                    List<uint> KhazrasKiller = new List<uint> { };
-                    foreach (var minion in minions)
-                    {
-                        KhazrasKiller.Add(minion.DynamicID);
-                        minion.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
-                    }
-                    KhazrasKiller.Add(Urik.DynamicID);
-                    Urik.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
-                    Urik.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
-                    Urik.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
-                    //Установить счётчик убийств
-                    var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerKhazra(KhazrasKiller, ToWorld));
-                    var MaindbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
-                    if (MaindbQuestProgress.StepOfQuest < 5)
-                    {
-                        StartConversation(ToWorld, 131144);
-                    }
-                    DBSessions.AccountSession.SaveOrUpdate(MaindbQuestProgress);
-                    DBSessions.AccountSession.Flush();
-                    CainKillerEvent.ContinueWith(delegate
+                    var ToWorld = player.World.Game.GetWorld(119888);
+                    //Установить ожидание зоны.
+                    var ListenerKhazraEnterTask = Task<bool>.Factory.StartNew(() => OnKhazraCaveListener(player, ToWorld));
+                    ListenerKhazraEnterTask.ContinueWith(delegate
                     {
                         world.Game.Quests.Advance(117779);
-                        foreach (var playerN in player.World.Players)
+
+                    //OnKillListenerKhazra
+                    var minions = ToWorld.GetActorsBySNO(178213);
+                        var Urik = ToWorld.GetActorBySNO(131131);
+                        var MaghdaSpirit = ToWorld.GetActorBySNO(129345);
+                        MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Max] = 200000f;
+                        MaghdaSpirit.Attributes[Net.GS.Message.GameAttribute.Hitpoints_Cur] = 200000f;
+                        List<uint> KhazrasKiller = new List<uint> { };
+                        foreach (var minion in minions)
                         {
-                            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
-                            if (dbQuestProgress.ActiveQuest == 117779)
-                            {
-                                dbQuestProgress.StepOfQuest = 5;
-                            }
-                            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                            DBSessions.AccountSession.Flush();
+                            KhazrasKiller.Add(minion.DynamicID);
+                            minion.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
                         }
+                        KhazrasKiller.Add(Urik.DynamicID);
+                        Urik.Attributes[Net.GS.Message.GameAttribute.Using_Bossbar] = true;
+                        Urik.Attributes[Net.GS.Message.GameAttribute.InBossEncounter] = true;
+                        Urik.Attributes[Net.GS.Message.GameAttribute.Quest_Monster] = true;
+                    //Установить счётчик убийств
+                    var CainKillerEvent = Task<bool>.Factory.StartNew(() => OnKillListenerKhazra(KhazrasKiller, ToWorld));
+                        if (MaindbQuestProgress.StepOfQuest < 5)
+                        {
+                            StartConversation(ToWorld, 131144);
+                        }
+                        CainKillerEvent.ContinueWith(delegate
+                        {
+                            world.Game.Quests.Advance(117779);
+                            foreach (var playerN in player.World.Players)
+                            {
+                                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
+                                if (dbQuestProgress.ActiveQuest == 117779)
+                                {
+                                    dbQuestProgress.StepOfQuest = 5;
+                                }
+                                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                                DBSessions.AccountSession.Flush();
+                            }
                         //
                     });
-                });
-
+                    });
+                }
+                DBSessions.AccountSession.SaveOrUpdate(MaindbQuestProgress);
+                DBSessions.AccountSession.Flush();
 
                 //PowerManager - Запустить диалог после использования части клинка.
 

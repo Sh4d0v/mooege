@@ -52,8 +52,10 @@ namespace Mooege.Core.GS.Actors.Implementations
         {
             // TODO Are chests dropping loot for everyone or only for the one opening it
             foreach (var p in this.GetPlayersInRange(30))
+            {
                 World.DropItem(this, null, _treasureClass.CreateDrop(player));
-
+                World.DropItem(this, null, _treasureClass.CreateWeaponDrop(player));
+            }
             World.BroadcastIfRevealed(new PlayAnimationMessage
             {
                 ActorID = this.DynamicID,

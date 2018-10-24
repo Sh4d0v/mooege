@@ -39,6 +39,7 @@ namespace Mooege.Core.GS.Actors.Implementations
         {
             if (ActorData.TagMap.ContainsKey(ActorKeys.LootTreasureClass))
                 TreasureClass = (TreasureClass)ActorData.TagMap[ActorKeys.LootTreasureClass].Target;
+            Field2 = 0;
         }
 
         public void ReceiveDamage(Actor source, float damage /* critical, type */)
