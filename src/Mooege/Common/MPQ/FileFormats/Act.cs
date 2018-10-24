@@ -37,7 +37,10 @@ namespace Mooege.Common.MPQ.FileFormats
         {
             var stream = file.Open();
             this.Header = new Header(stream);
-
+            /*
+            Act1 -  
+            Act2 - 15478589
+            */
             this.ActQuestInfo = stream.ReadSerializedData<ActQuestInfo>();
             stream.Position += 12;
 

@@ -152,6 +152,7 @@
     <Compile Include="Core\GS\Actors\Implementations\BlackSmithQuest.cs" />
     <Compile Include="Core\GS\Actors\Implementations\GhostQueen.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Leah.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\LeahInCamp.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Mystic.cs" />
     <Compile Include="Core\GS\Actors\Spawner.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Door.cs" />

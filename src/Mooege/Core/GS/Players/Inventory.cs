@@ -705,6 +705,21 @@ namespace Mooege.Core.GS.Players
                 _inventoryGold.Attributes.SendChangedMessage(_owner.InGameClient);
             }
             _owner.Toon.DBToon.DBGameAccount.GoldCollected += (uint)amount; // Add gold amount to Gold Collected Account Profile [Necrosummon]
+            var Achievemnts = MooNet.Achievement.AchievementManager.Achievements.AchievementList;
+            var AchievemntCategory = MooNet.Achievement.AchievementManager.Achievements.CategoryList;
+            var AchoevementsOfGeneral = MooNet.Achievement.AchievementManager.Achievements.GetCategory(1);
+            /*
+            [0]	{id: 5505025 order_hint: 1 attributes { key: ":title:"  value: "Achievements:Campaign"}}
+            [1]	{id: 5505026 order_hint: 0 attributes { key: ":title:"  value: "Achievements:General"}}	
+            [2]	{id: 5505027 order_hint: 2 attributes { key: ":title:"  value: "Achievements:Cooperative"}}
+            [3]	{id: 5505028 order_hint: 3 attributes { key: ":title:"  value: "Achievements:Hardcore"}}
+            [4]	{id: 5505029 order_hint: 4 attributes { key: ":title:"  value: "Achievements:Classes"}}
+            */
+            //Убийство Леорика (Норма)
+            var AchievementLeoric = MooNet.Achievement.AchievementManager.Achievements.GetAchievement(46);
+            
+
+
         }
 
         public void RemoveGoldAmount(int amount)

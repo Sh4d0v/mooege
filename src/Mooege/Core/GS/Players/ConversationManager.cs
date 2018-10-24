@@ -558,7 +558,10 @@ namespace Mooege.Core.GS.Players
                 //Vector3D Start = new Vector3D(0f, 0f, 0f);
                 var startingPoint = Caldeum.GetActorBySNO(5503).Position;
                 player.ChangeWorld(Caldeum, startingPoint);
-                Caldeum.Game.Quests.Advance(80322);
+                //Caldeum.Game.Quests.Advance(80322);
+                var LeahInCamp = Caldeum.GetActorBySNO(161510);
+                //LeahInCamp.
+                //LeahInCamp.Tags.Replace(Common.Types.TagMap.MarkerKeys.ConversationList, new Common.Types.TagMap.TagMapEntry(Common.Types.TagMap.MarkerKeys.ConversationList.ID, 900001, 2));
             }
             //50588
             if (conversation.ConvPiggyBack != -1)

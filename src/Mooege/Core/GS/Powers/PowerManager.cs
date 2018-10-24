@@ -173,6 +173,7 @@ namespace Mooege.Core.GS.Powers
             // find and run a power implementation
 
             var implementation = PowerLoader.CreateImplementationForPowerSNO(powerSNO);
+
             //[Actor] [Type: Gizmo] SNOId:96522 DynamicId: 1940 Position: x:756,0133 y:893,7787 z:-25 Name: a1dun_Cath_chest
 
             //[Actor] 194263 - Mystic_B
