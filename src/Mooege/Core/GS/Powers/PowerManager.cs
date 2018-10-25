@@ -310,10 +310,28 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
-            #region Разговор с кузнецом
+            #region Разговор с каином и кузнецом
             try
             {
-                if(target.ActorSNO.Id == 65036)
+                if(target.ActorSNO.Id == 3533)
+                {
+                    foreach (var player in user.World.Players)
+                    {
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                        if (dbQuestProgress.ActiveQuest == 72221)
+                        {
+                            dbQuestProgress.ActiveQuest = 72221;
+                            if (dbQuestProgress.StepOfQuest < 1)
+                            {
+                                dbQuestProgress.StepOfQuest = 1;
+                                StartConversation(player.Value.World, 198691);
+                            }
+                        }
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                    }
+                }
+                if (target.ActorSNO.Id == 65036)
                 {
                     foreach (var player in user.World.Players)
                     {
@@ -323,18 +341,13 @@ namespace Mooege.Core.GS.Powers
                             dbQuestProgress.ActiveQuest = 72221;
                             if (dbQuestProgress.StepOfQuest == 1)
                             {
-                                Dialog72221 = true;
-                               dbQuestProgress.StepOfQuest = 2;
+                                dbQuestProgress.StepOfQuest = 2;
+                                StartConversation(target.World, 198292);
                             }
 
                         }
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
-                    }
-                    if (Dialog72221 == true)
-                    {
-                        Dialog72221 = false;
-                        StartConversation(target.World, 198292);
                     }
                 }
             }

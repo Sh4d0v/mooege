@@ -48,7 +48,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             if (HadConversation)
             {
                 HadConversation = false;
-                world.Game.Quests.Advance(72095);
+                world.Game.Quests.NotifyQuest(72095, QuestStepObjectiveType.HadConversation, 198617);
                 world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 72095);
             }
             foreach (var player in world.Players)
@@ -56,7 +56,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 dbQuestProgress.LastQuest = 72095;
                 dbQuestProgress.ActiveQuest = 72221;
-                dbQuestProgress.StepOfQuest = 1;
+                dbQuestProgress.StepOfQuest = -1;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
                 player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
@@ -70,23 +70,32 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             Logger.Debug(" Второй квест окончен. ");
 
             // starting third quest
-            world.Game.Quests.Advance(72221);
-            var BlacksmithVendor = world.GetActorBySNO(56947);
-            Vector3D position = new Vector3D(BlacksmithVendor.Position);
-            //world.SpawnMonster(65036, position);// NonVendor - 65036
-            var BlacksmithQuest = world.GetActorBySNO(65036);
-            BlacksmithQuest.RotationAxis = BlacksmithVendor.RotationAxis;
-            BlacksmithQuest.RotationW = BlacksmithVendor.RotationW;
-            world.Leave(BlacksmithVendor);
-
-            var TELEGAS = world.GetActorsBySNO(112131);
-            Vector3D LastTelega = new Vector3D();
-            foreach (var TELEGA in TELEGAS)
+            //world.Game.Quests.Advance(72221);
+            try
             {
-                TELEGA.Destroy();
-                LastTelega = TELEGA.Position;
-            }
+                var BlacksmithVendor = world.GetActorBySNO(56947);
+                Vector3D position = new Vector3D(BlacksmithVendor.Position);
+                var BlacksmithQuest = world.GetActorBySNO(65036);
+//                		sno	56947	int
+                BlacksmithQuest.RotationAxis = BlacksmithVendor.RotationAxis;
+                BlacksmithQuest.RotationW = BlacksmithVendor.RotationW;
+//                world.Leave(BlacksmithVendor);
+                var Cain = world.GetActorBySNO(3533);
+                Cain.Attributes[Net.GS.Message.GameAttribute.MinimapIconOverride, 0] = 1;
+                Cain.Attributes[Net.GS.Message.GameAttribute.MinimapActive] = true;
 
+                var TELEGAS = world.GetActorsBySNO(112131);
+                Vector3D LastTelega = new Vector3D();
+                foreach (var TELEGA in TELEGAS)
+                {
+                    LastTelega = TELEGA.Position;
+                    TELEGA.Destroy();
+                    
+                }
+
+
+            }
+            catch { Logger.Warn("Не критичная ошибка скрипта."); }
 
         }
 

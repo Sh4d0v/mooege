@@ -156,7 +156,7 @@ namespace Mooege.Core.GS.Games
             if (clients != null)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(clients[0].Account.CurrentGameAccount.CurrentToon.PersistentID);
-                if (dbQuestProgress.ActiveAct == 1)
+                if (dbQuestProgress.ActiveAct == 0 || dbQuestProgress.ActiveAct == 1)
                     this.StartingWorldSNOId = 71150;
                 else if (dbQuestProgress.ActiveAct == 2)
                     this.StartingWorldSNOId = 71150;
@@ -306,7 +306,7 @@ namespace Mooege.Core.GS.Games
             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(joinedPlayer.Toon.PersistentID);
             if (dbQuestProgress.ActiveQuest != -1)
             {
-                if(dbQuestProgress.ActiveAct == 1)
+                if(dbQuestProgress.ActiveAct == 0 || dbQuestProgress.ActiveAct == 1)
                     joinedPlayer.EnterWorld(ToPortal1Act);
             }
             else

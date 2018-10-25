@@ -266,7 +266,7 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
                                 .SetLastPlayedAct(this.LastActPlayed)//ActiveAct)
-                                .SetHighestUnlockedAct(70016)
+                                .SetHighestUnlockedAct(1)
                                 .SetLastPlayedDifficulty(0)
                                 .SetHighestUnlockedDifficulty(3)
                                 .SetHighestCompletedDifficulty(1)

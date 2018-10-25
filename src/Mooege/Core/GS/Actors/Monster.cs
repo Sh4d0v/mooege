@@ -111,6 +111,7 @@ namespace Mooege.Core.GS.Actors
             : base(world, snoId, tags)
         {
             this.Field2 = 0x8;
+            
             this.GBHandle.Type = (int)GBHandleType.Monster; this.GBHandle.GBID = 1;
             this.Attributes[GameAttribute.Experience_Granted] = 125 * Config.Instance.ExpRate;
 

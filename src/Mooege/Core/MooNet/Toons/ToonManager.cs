@@ -307,7 +307,7 @@ namespace Mooege.Core.MooNet.Toons
                 DBToon = newDBToon, // Выдать созданному персонажу
                 LastQuest = 0, // Последний выполненный квест
                 StepOfQuest = 0, //Текущий шаг квеста
-                ActiveAct = 1, // Активный акт
+                ActiveAct = 0, // Активный акт
                 ActiveQuest = -1 // Активный квест
             };
             DBSessions.AccountSession.SaveOrUpdate(StartProgress);

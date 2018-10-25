@@ -136,10 +136,23 @@ namespace Mooege.Core.GS.Powers.Payloads
                     }
 
                     // Monsters Killed for the Account Profile
-                    if (!player.Toon.Hardcore)
-                        player.Toon.DBToon.DBGameAccount.MonstersKilled++;
-                    else if (player.Toon.Hardcore)
-                        player.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
+                    if (this.Target.Quality != 0)
+                    {
+                        if (!player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.ElitesKilled++;
+                        else if (player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.ElitesKilled++;
+                    }
+                    else
+                    {
+                        // Monsters Killed for the Account Profile
+                        if (!player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.MonstersKilled++;
+                        else if (player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
+                    }
+
+
                 }
 
                 if (this.Context.User is Minion) // Minion Kills counts too

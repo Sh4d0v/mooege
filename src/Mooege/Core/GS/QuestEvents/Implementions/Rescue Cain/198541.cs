@@ -113,8 +113,9 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 Logger.Debug(" RESCUE CAIN QUEST STARTED ");
                 Logger.Debug(" Quests.Advance(72095) ");
+                world.Game.Quests.NotifyQuest(72095, QuestStepObjectiveType.EventReceived, -1);
                 //world.Game.Quests.HasCurrentQuest(72095, -1);
-            //    world.Game.Quests.Advance(72095);
+                //    world.Game.Quests.Advance(72095);
             }
             // Away Leah
             try { world.Leave(LeahBrains); }
@@ -195,7 +196,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 {
                     if (actor.Attributes[Net.GS.Message.GameAttribute.Gizmo_Has_Been_Operated])
                     {
-                        world.Game.Quests.Advance(72095);
+                        //world.Game.Quests.Advance(72095);
+                        world.Game.Quests.NotifyQuest(72095, QuestStepObjectiveType.InteractWithActor, -1);
                         foreach (var player in world.Players)
                         {
                             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
