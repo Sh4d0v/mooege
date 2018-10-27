@@ -305,7 +305,8 @@ namespace Mooege.Core.MooNet.Toons
             {
                 DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID), // Привязка к используемому аккаунту
                 DBToon = newDBToon, // Выдать созданному персонажу
-                LastQuest = 0, // Последний выполненный квест
+                MaximumQuest = 87700, // Максимальный квест
+                MaximumAct = 0, // Максимальный квест
                 StepOfQuest = 0, //Текущий шаг квеста
                 ActiveAct = 0, // Активный акт
                 ActiveQuest = -1 // Активный квест

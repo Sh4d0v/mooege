@@ -89,7 +89,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                     QuestReward = Reward.Build()
                 });
                 //player.Value.World.Game.Quests.CurrentQuest(72095);
-                       dbQuestProgress.LastQuest = 87700;
+                       dbQuestProgress.MaximumQuest = 72095;
                        dbQuestProgress.ActiveQuest = 72095;
                        dbQuestProgress.StepOfQuest = -1;
                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);

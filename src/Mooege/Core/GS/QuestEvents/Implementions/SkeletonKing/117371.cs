@@ -64,7 +64,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
 
-                dbQuestProgress.LastQuest = 72061;
+                dbQuestProgress.MaximumQuest = 117779;
                 dbQuestProgress.ActiveQuest = 117779;
                 dbQuestProgress.StepOfQuest = -1;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);

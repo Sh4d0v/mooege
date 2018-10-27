@@ -1936,12 +1936,15 @@ namespace Mooege.Core.GS.Players
 
         public int[] SeenTutorials = new int[64]
         {
-            1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         };
 
-        public PlayerQuestRewardHistoryEntry[] QuestRewardHistory = new PlayerQuestRewardHistoryEntry[0] { };
+        public PlayerQuestRewardHistoryEntry[] QuestRewardHistory = new PlayerQuestRewardHistoryEntry[1]
+        {
+            new PlayerQuestRewardHistoryEntry {snoQuest = 87700, Field1 = -1 , Field2 = PlayerQuestRewardHistoryEntry.eField2.Normal}
+        };
 
         //Система найма
         public HirelingInfo[] HirelingInfo = new HirelingInfo[4]

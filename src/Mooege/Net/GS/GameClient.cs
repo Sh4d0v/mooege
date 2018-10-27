@@ -113,33 +113,14 @@ namespace Mooege.Net.GS
                         {
                             var dbArtisans = Common.Storage.DBSessions.AccountSession.Get<Common.Storage.AccountDataBase.Entities.DBArtisansOfToon>(this.Player.Toon.PersistentID);
                             Logger.Debug("Внимание! Тестовая функция!");
-                            Logger.Debug("Апгрейд кузнеца v0.1");
+                            Logger.Debug("Апгрейд ремесленников v0.3");
+                            
                             #region Кузнец
                             if (this.Player.SelectedNPC.ActorSNO.Id == 56947)
                             {
                                 int now_level = dbArtisans.Blacksmith;
-                                if (now_level == 1)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 2)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 3)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 4)
+                                
+                                if (now_level <= 4)
                                 {
                                     dbArtisans.Blacksmith++;
                                     Inventory CharInv = this.Player.Inventory;
@@ -156,28 +137,7 @@ namespace Mooege.Net.GS
                                     this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
                                     //101353
                                 }
-                                else if (now_level == 6)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 7)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 8)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-1000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 9)
+                                else if (now_level >= 6 && now_level <= 9)
                                 {
                                     dbArtisans.Blacksmith++;
                                     Inventory CharInv = this.Player.Inventory;
@@ -192,34 +152,12 @@ namespace Mooege.Net.GS
                                     this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
                                     this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
                                 }
-                                else if (now_level == 11)
+                                else if (now_level >= 11 && now_level <= 19 && now_level != 15)
                                 {
                                     dbArtisans.Blacksmith++;
                                     Inventory CharInv = this.Player.Inventory;
                                     CharInv.AddGoldAmount(-2000);
                                     this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 12)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 13)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 14)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                   
                                 }
                                 else if (now_level == 15)
                                 {
@@ -229,45 +167,384 @@ namespace Mooege.Net.GS
                                     this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
                                     this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
                                 }
-                                else if (now_level == 16)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 17)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 18)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
-                                else if (now_level == 19)
-                                {
-                                    dbArtisans.Blacksmith++;
-                                    Inventory CharInv = this.Player.Inventory;
-                                    CharInv.AddGoldAmount(-2000);
-                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
-                                }
                                 else if (now_level == 20)
                                 {
                                     dbArtisans.Blacksmith++;
                                     Inventory CharInv = this.Player.Inventory;
                                     CharInv.AddGoldAmount(-4000);
                                     //Добавить в требование 2 страницы кузнечного дела
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 226723)
+                                        {
+                                            //item.
+                                            //       CharInv.DestroyInventoryItem(item);
+                                            int needed = 2;
+                                            if(item.Attributes[GameAttribute.ItemStackQuantityLo]> needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level >= 21 && now_level <= 24)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-4000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 226723)
+                                        {
+                                            int needed = 1;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 25)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-4000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 226723)
+                                        {
+                                            int needed = 2;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level >= 26 && now_level <= 29)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-4000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 226723)
+                                        {
+                                            int needed = 1;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 30)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-6000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 230696)
+                                        {
+                                            int needed = 2;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level >= 31 && now_level <= 34)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-6000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 230696)
+                                        {
+                                            int needed = 1;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 35)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-6000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 230696)
+                                        {
+                                            int needed = 2;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level >= 36 && now_level <= 39)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-6000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 230696)
+                                        {
+                                            int needed = 1;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 40)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-8000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 2;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level >= 41 && now_level <= 44)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-8000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 1;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 45)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-8000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 5;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
                                     this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
                                     this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
                                 }
                             }
                             #endregion
+
+                            #region Каменьщик
+                            if (this.Player.SelectedNPC.ActorSNO.Id == 56949)
+                            {
+                                int now_level = dbArtisans.Jeweler;
+
+                                if (now_level <= 2)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-5000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 3 || now_level == 4)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-10000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 226724)
+                                        {
+                                            int needed = 10;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.SelectedNPC.PlayEffect(Message.Definitions.Effect.Effect.LevelUp);
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                    //101353
+                                }
+                                else if (now_level == 5 && now_level == 6)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-10000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 230697)
+                                        {
+                                            int needed = 10;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 7)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-10000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 10;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 8)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-30000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 10;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 9)
+                                {
+                                    dbArtisans.Jeweler++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-40000);
+                                    foreach (var item in CharInv.GetBackPackItems())
+                                    {
+                                        if (item.ActorSNO.Id == 189523)
+                                        {
+                                            int needed = 20;
+                                            if (item.Attributes[GameAttribute.ItemStackQuantityLo] > needed)
+                                                item.Attributes[GameAttribute.ItemStackQuantityLo] -= needed;
+                                            else
+                                                CharInv.DestroyInventoryItem(item);
+                                            item.Attributes.SendChangedMessage(this.Player.InGameClient);
+                                            CharInv.Reveal(this.Player);
+
+                                        }
+                                    }
+                                    this.Player.InGameClient.SendMessage(this.Player.GetJewelerData(dbArtisans));
+                                    //this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                            }
+                            #endregion
+
                             Common.Storage.DBSessions.AccountSession.SaveOrUpdate(dbArtisans);
                             Common.Storage.DBSessions.AccountSession.Flush();
                         }
