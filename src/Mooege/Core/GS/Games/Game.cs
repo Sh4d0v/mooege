@@ -94,7 +94,7 @@ namespace Mooege.Core.GS.Games
         /// <summary>
         /// Tick counter.
         /// </summary>
-        private int _tickCounter = 600;
+        private int _tickCounter = 6;
 
         /// <summary>
         /// Returns the latest tick count.
@@ -340,11 +340,14 @@ namespace Mooege.Core.GS.Games
                 Field9 = 0x00000001,
                 ActorID = joinedPlayer.DynamicID,
             });
+            var dbArtisans = DBSessions.AccountSession.Get<DBArtisansOfToon>(joinedPlayer.Toon.PersistentID);
 
             target.InGameClient.SendMessage(joinedPlayer.GetPlayerBanner()); // send player banner proto - D3.GameMessage.PlayerBanner
-            target.InGameClient.SendMessage(joinedPlayer.GetBlacksmithData()); // send player artisan proto /fasbat
-            target.InGameClient.SendMessage(joinedPlayer.GetJewelerData());
-            target.InGameClient.SendMessage(joinedPlayer.GetMysticData());
+            target.InGameClient.SendMessage(joinedPlayer.GetBlacksmithData(dbArtisans)); // Modded by AiDiEvE
+            target.InGameClient.SendMessage(joinedPlayer.GetJewelerData(dbArtisans));
+            target.InGameClient.SendMessage(joinedPlayer.GetMysticData(dbArtisans));
+
+            DBSessions.AccountSession.Flush();
         }
 
         #endregion

@@ -292,8 +292,8 @@ namespace Mooege.Net.GS.Message
         RequestTrainArtisanMessage = 277, // len: 	8   former SimpleMessage33
         IntDataMessage6 = 278, // len: 	12
         DebugDrawPrimMessage = 279, // len: 	188
-        GBIDDataMessage2 = 280, // len: 	12
-        CraftingResultsMessage = 281, // len: 	20
+        GBIDDataMessage2 = 281, // len: 	12 //Бывшая 280
+        CraftingResultsMessage = 280, // len: 	20 //Новая позиция умения
         CrafterLevelUpMessage = 282, // len: 	20
         ANNDataMessage31 = 283, // len: 	12
         ANNDataMessage32 = 284, // len: 	12

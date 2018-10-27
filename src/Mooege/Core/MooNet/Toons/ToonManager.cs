@@ -321,6 +321,15 @@ namespace Mooege.Core.MooNet.Toons
                 WorldDest = 0
             };
             DBSessions.AccountSession.SaveOrUpdate(NullPortal);
+            DBArtisansOfToon BaseArtisans = new DBArtisansOfToon
+            {
+                DBGameAccount = DBSessions.AccountSession.Get<DBGameAccount>(gameAccount.PersistentID),
+                DBToon = newDBToon,
+                Blacksmith = 1,
+                Jeweler = 1,
+                Mystic = 1,
+            };
+            DBSessions.AccountSession.SaveOrUpdate(BaseArtisans);
             #endregion
 
             DBSessions.AccountSession.Flush();

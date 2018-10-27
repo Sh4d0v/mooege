@@ -74,7 +74,8 @@ namespace Mooege.Net.GS
                     try
                     {
                         Logger.LogIncomingPacket(message); // change ConsoleTarget's level to Level.Dump in program.cs if u want to see messages on console.
-
+                        if(message.Id == 280)
+                        { }
                         if (message.Consumer != Consumers.None)
                         {
                             if (message.Consumer == Consumers.ClientManager) ClientManager.Instance.Consume(this, message); // Client should be greeted by ClientManager and sent initial game-setup messages.
@@ -108,25 +109,167 @@ namespace Mooege.Net.GS
                             ToHome.EnterWorld(PositionToPortal);
                         }
                         // Первая версия крафта
-                        else if (message.Id == 280)
+                        else if (message.Id == 277)
                         {
-                            Logger.Warn("Внимание! Тестовая функция");
-                            Logger.Debug("Запуск крафта");
-
-                            // Field0.
-                            // Data 230/252/263/267/304/337
-                            // -1941186209 - Отличные шоссы
-                            // 1022152670 - Прекрасные ножные повязки
-                            
-                           
-                           //Core.GS.Items.Item NewCraftItem = new Core.GS.Items.Item(Player.World, null);
-                           
-                           Inventory inventory = Player.Inventory;
-                           
-                           // inventory.AddGoldAmount(100000);
-                           // inventory.SpawnItem(NewCraftItem);
-
-    
+                            var dbArtisans = Common.Storage.DBSessions.AccountSession.Get<Common.Storage.AccountDataBase.Entities.DBArtisansOfToon>(this.Player.Toon.PersistentID);
+                            Logger.Debug("Внимание! Тестовая функция!");
+                            Logger.Debug("Апгрейд кузнеца v0.1");
+                            #region Кузнец
+                            if (this.Player.SelectedNPC.ActorSNO.Id == 56947)
+                            {
+                                int now_level = dbArtisans.Blacksmith;
+                                if (now_level == 1)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 2)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 3)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 4)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 5)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    //this.Player.SelectedNPC.PlayEffect(Message.Definitions.Effect.Effect.LevelUp);
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                    //101353
+                                }
+                                else if (now_level == 6)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 7)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 8)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 9)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-1000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 10)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 11)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 12)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 13)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 14)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                   
+                                }
+                                else if (now_level == 15)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                                else if (now_level == 16)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 17)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 18)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 19)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-2000);
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                }
+                                else if (now_level == 20)
+                                {
+                                    dbArtisans.Blacksmith++;
+                                    Inventory CharInv = this.Player.Inventory;
+                                    CharInv.AddGoldAmount(-4000);
+                                    //Добавить в требование 2 страницы кузнечного дела
+                                    this.Player.InGameClient.SendMessage(this.Player.GetBlacksmithData(dbArtisans));
+                                    this.Player.World.PowerManager.RunPower(this.Player.SelectedNPC, 85954);
+                                }
+                            }
+                            #endregion
+                            Common.Storage.DBSessions.AccountSession.SaveOrUpdate(dbArtisans);
+                            Common.Storage.DBSessions.AccountSession.Flush();
                         }
                         else Logger.Warn("{0} - ID:{1} has no consumer or self-handler.", message.GetType(), message.Id);
 

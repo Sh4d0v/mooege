@@ -23,22 +23,22 @@ namespace Mooege.Net.GS.Message.Definitions.Artisan
     [Message(Opcodes.CraftingResultsMessage)]
     public class CraftingResultsMessage : GameMessage
     {
-        public int Field0;
-        public int /* gbid */ Field1;
+        public int /* gbid */ Field0;
+        public int Field1;
         public int Field2;
 
         public override void Parse(GameBitBuffer buffer)
         {
             Field0 = buffer.ReadInt(32);
-            Field1 = buffer.ReadInt(32);
-            Field2 = buffer.ReadInt(32);
+       //     Field1 = buffer.ReadInt(32);
+       //     Field2 = buffer.ReadInt(32);
         }
 
         public override void Encode(GameBitBuffer buffer)
         {
             buffer.WriteInt(32, Field0);
-            buffer.WriteInt(32, Field1);
-            buffer.WriteInt(32, Field2);
+       //     buffer.WriteInt(32, Field1);
+       //     buffer.WriteInt(32, Field2);
         }
 
         public override void AsText(StringBuilder b, int pad)

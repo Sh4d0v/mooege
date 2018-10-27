@@ -552,7 +552,8 @@ namespace Mooege.Core.GS.Players
                 //var startingPoint = AttackedTown.StartingPoints[2].Position;
                 player.ChangeWorld(AttackedTown, Start);
             }
-            if (conversation.SNOId == 177564)
+            //Принудительная отправка во второй акт!
+            /*if (conversation.SNOId == 177564)
             {
                 var Caldeum = player.World.Game.GetWorld(161472);
                 //Vector3D Start = new Vector3D(0f, 0f, 0f);
@@ -562,7 +563,7 @@ namespace Mooege.Core.GS.Players
                 var LeahInCamp = Caldeum.GetActorBySNO(161510);
                 //LeahInCamp.
                 //LeahInCamp.Tags.Replace(Common.Types.TagMap.MarkerKeys.ConversationList, new Common.Types.TagMap.TagMapEntry(Common.Types.TagMap.MarkerKeys.ConversationList.ID, 900001, 2));
-            }
+            }*/
             //50588
             if (conversation.ConvPiggyBack != -1)
                 StartConversation(conversation.ConvPiggyBack);

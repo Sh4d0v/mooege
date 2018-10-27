@@ -53,7 +53,7 @@ using Mooege.Common.Helpers;
 using Mooege.Net.GS.Message.Definitions.ACD;
 using Mooege.Net.GS.Message.Definitions.Animation;
 using Mooege.Net.GS.Message.Definitions.Tutorial;
-
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.Players
 {
@@ -1987,28 +1987,29 @@ namespace Mooege.Core.GS.Players
             return new PlayerBannerMessage() { PlayerBanner = playerBanner };
         }
 
-        public BlacksmithDataInitialMessage GetBlacksmithData()
+        public BlacksmithDataInitialMessage GetBlacksmithData(DBArtisansOfToon Artisans)
         {
             var blacksmith = D3.ItemCrafting.CrafterData.CreateBuilder()
-                .SetLevel(45)
+                .SetLevel(Artisans.Blacksmith)
+                //1 - 1 level and 0 exp. 46 - max level. 5 Step for every level - AiDiE
                 .SetCooldownEnd(0)
                 .Build();
             return new BlacksmithDataInitialMessage() { CrafterData = blacksmith };
         }
 
-        public JewelerDataInitialMessage GetJewelerData()
+        public JewelerDataInitialMessage GetJewelerData(DBArtisansOfToon Artisans)
         {
             var jeweler = D3.ItemCrafting.CrafterData.CreateBuilder()
-                .SetLevel(9)
+                .SetLevel(Artisans.Jeweler)
                 .SetCooldownEnd(0)
                 .Build();
             return new JewelerDataInitialMessage() { CrafterData = jeweler };
         }
 
-        public MysticDataInitialMessage GetMysticData()
+        public MysticDataInitialMessage GetMysticData(DBArtisansOfToon Artisans)
         {
             var mystic = D3.ItemCrafting.CrafterData.CreateBuilder()
-                .SetLevel(45)
+                .SetLevel(Artisans.Mystic)
                 .SetCooldownEnd(0)
                 .Build();
             return new MysticDataInitialMessage() { CrafterData = mystic };

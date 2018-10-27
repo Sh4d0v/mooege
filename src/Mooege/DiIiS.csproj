@@ -130,6 +130,7 @@
     <Compile Include="Common\Logging\LogTarget.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBActiveSkills.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBArtisansOfToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBGameAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBInventory.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBItemInstance.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBActiveSkillsMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBArtisansOfToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBGameAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBInventoryMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBItemInstanceMapper.cs" />

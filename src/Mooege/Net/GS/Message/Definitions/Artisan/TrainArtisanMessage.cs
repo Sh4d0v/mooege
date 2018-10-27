@@ -24,8 +24,10 @@ namespace Mooege.Net.GS.Message.Definitions.Artisan
     [Message(Opcodes.RequestTrainArtisanMessage)]
     public class RequestTrainArtisanMessage : GameMessage
     {
+        //public int Field0;
         public override void Parse(GameBitBuffer buffer)
         {
+        //    Field0 = buffer.ReadInt(32);
         }
 
         public override void Encode(GameBitBuffer buffer)
