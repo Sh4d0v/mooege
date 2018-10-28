@@ -124,25 +124,33 @@ namespace Mooege.Net.GS
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1 || dbQuestProgress.StepOfQuest == 2)
                 {
-                    world.Leave(world.GetActorByDynamicId(83));
-                    Hireling LeahFriend = new Scoundrel(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
-                    LeahFriend.Brain = new HirelingBrain(LeahFriend);
-                    // SetBrain(new MinionBrain(this));
-                    LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
-                    LeahFriend.Attributes[GameAttribute.Pet_Type] = 0x8;
-                    LeahFriend.Attributes[GameAttribute.Hitpoints_Max] = 100f;
-                    LeahFriend.Attributes[GameAttribute.Hitpoints_Cur] = 80f;
-                    LeahFriend.Attributes[GameAttribute.Attacks_Per_Second] = 1.6f;
-                    LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
-                    LeahFriend.Attributes[GameAttribute.Untargetable] = false;
-                    LeahFriend.Position = RandomDirection(client.Player.Position, 3f, 8f);
-                    LeahFriend.RotationW = LeahBrains.RotationW;
-                    LeahFriend.RotationAxis = LeahBrains.RotationAxis;
-                    LeahFriend.EnterWorld(RandomDirection(client.Player.Position, 3f, 8f));
-                    LeahFriend.Attributes[GameAttribute.Level]++;
-                    client.Player.ActiveHireling = LeahFriend;
-                    client.Player.SelectedNPC = null;
-                    LeahFriend.Brain.Activate();
+                    try
+                    {
+                        //world.Leave(world.GetActorByDynamicId(83));
+                        Hireling LeahFriend = new Scoundrel(world, LeahBrains.ActorSNO.Id, LeahBrains.Tags);
+                        LeahFriend.Brain = new HirelingBrain(LeahFriend);
+
+                        LeahFriend.GBHandle.Type = 4;
+                        LeahFriend.GBHandle.GBID = 717705071;
+                        LeahFriend.Attributes[GameAttribute.Pet_Creator] = client.Player.PlayerIndex;
+                        LeahFriend.Attributes[GameAttribute.Pet_Type] = 0x8;
+                        LeahFriend.Attributes[GameAttribute.Hitpoints_Max] = 100f;
+                        LeahFriend.Attributes[GameAttribute.Hitpoints_Cur] = 80f;
+                        LeahFriend.Attributes[GameAttribute.Attacks_Per_Second] = 1.6f;
+                        LeahFriend.Attributes[GameAttribute.Pet_Owner] = client.Player.PlayerIndex;
+                        LeahFriend.Attributes[GameAttribute.Untargetable] = false;
+                        LeahFriend.Position = RandomDirection(client.Player.Position, 3f, 8f);
+                        LeahFriend.RotationW = LeahBrains.RotationW;
+                        LeahFriend.RotationAxis = LeahBrains.RotationAxis;
+                        LeahFriend.EnterWorld(RandomDirection(client.Player.Position, 3f, 8f));
+                        LeahFriend.Attributes[GameAttribute.Level]++;
+                        client.Player.ActiveHireling = LeahFriend;
+                        LeahFriend.Brain.Activate();
+                        MasterPlayer = client.Player;
+                    }
+                    catch { Logger.Warn("Ошибка создания спутника"); }
+                    
+                    
                     
                 }
                 if (dbQuestProgress.StepOfQuest == -1 || dbQuestProgress.StepOfQuest == 0 || dbQuestProgress.StepOfQuest == 1)
@@ -1110,7 +1118,7 @@ namespace Mooege.Net.GS
                             world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor, 192164);
                         }
                     }
-
+                    
             }
             else
             {
@@ -1158,6 +1166,7 @@ namespace Mooege.Net.GS
                             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
                             dbQuestProgress.ActiveQuest = 72095;
                             dbQuestProgress.StepOfQuest = 2;
+                            dbQuestProgress.StepIDofQuest = 28;
                             DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                             DBSessions.AccountSession.Flush();
                         }
@@ -1186,6 +1195,7 @@ namespace Mooege.Net.GS
                                 ActivePortal = false;
                             dbQuestProgress.ActiveQuest = 72095;
                             dbQuestProgress.StepOfQuest = 3;
+                            dbQuestProgress.StepIDofQuest = 49;
                             DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                             DBSessions.AccountSession.Flush();
                         }
@@ -1264,6 +1274,7 @@ namespace Mooege.Net.GS
                             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
                             dbQuestProgress.ActiveQuest = 72095;
                             dbQuestProgress.StepOfQuest = 5;
+                            dbQuestProgress.StepIDofQuest = 41;
                             DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                             DBSessions.AccountSession.Flush();
                         }

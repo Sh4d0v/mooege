@@ -108,7 +108,7 @@ namespace Mooege.Net.GS
                             Vector3D PositionToPortal = new Vector3D(Player.Position.X, Player.Position.Y + 3, Player.Position.Z);
                             ToHome.EnterWorld(PositionToPortal);
                         }
-                        // Первая версия крафта
+                        // Первая версия повышения уровня для ремесленников
                         else if (message.Id == 277)
                         {
                             var dbArtisans = Common.Storage.DBSessions.AccountSession.Get<Common.Storage.AccountDataBase.Entities.DBArtisansOfToon>(this.Player.Toon.PersistentID);
@@ -548,6 +548,18 @@ namespace Mooege.Net.GS
                             Common.Storage.DBSessions.AccountSession.SaveOrUpdate(dbArtisans);
                             Common.Storage.DBSessions.AccountSession.Flush();
                         }
+                        else if (message.Id == 280)
+                        {
+                            var dbArtisans = Common.Storage.DBSessions.AccountSession.Get<Common.Storage.AccountDataBase.Entities.DBArtisansOfToon>(this.Player.Toon.PersistentID);
+                            Logger.Debug("Внимание! Тестовая функция!");
+                            Logger.Debug("Крафт предмета v0.1");
+
+
+
+                            Common.Storage.DBSessions.AccountSession.SaveOrUpdate(dbArtisans);
+                            Common.Storage.DBSessions.AccountSession.Flush();
+                        }
+
                         else Logger.Warn("{0} - ID:{1} has no consumer or self-handler.", message.GetType(), message.Id);
 
                     }

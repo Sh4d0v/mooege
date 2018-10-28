@@ -61,14 +61,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
             setActorOperable(world, 3739, false); // no need for it now the update conversation list is laucnhed once the conversation is marked as read :p
             StartConversation(world, 198199);
-          /*  foreach (var player in world.Players)
-            {
-                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
-                dbQuestProgress.ActiveQuest = 87700;
-                dbQuestProgress.StepOfQuest = 1;
-                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
-                DBSessions.AccountSession.Flush();
-            };*/
+            /*  foreach (var player in world.Players)
+              {
+                  var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                  dbQuestProgress.ActiveQuest = 87700;
+                  dbQuestProgress.StepOfQuest = 1;
+                  dbQuestProgress.StepIDofQuest = 66;
+                  DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                  DBSessions.AccountSession.Flush();
+              };*/
             var wave1Actors = world.GetActorsInGroup("GizmoGroup1");
             monstersId.Clear();
             ActorsVector3D.Clear();
@@ -111,6 +112,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                         dbQuestProgress.ActiveQuest = 87700;
                         dbQuestProgress.StepOfQuest = 2;
+                        dbQuestProgress.StepIDofQuest = 42;
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     };

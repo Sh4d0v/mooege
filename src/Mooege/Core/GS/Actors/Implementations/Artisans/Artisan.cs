@@ -43,6 +43,6 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             player.InGameClient.SendMessage(new OpenArtisanWindowMessage() { ArtisanID = this.DynamicID });
 
         }
-
+        
     }
 }

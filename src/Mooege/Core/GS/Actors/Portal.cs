@@ -989,6 +989,7 @@ namespace Mooege.Core.GS.Actors
                     if (dbQuestProgress.StepOfQuest == 5)
                     {
                         dbQuestProgress.StepOfQuest = 6;
+                        dbQuestProgress.StepIDofQuest = 51;
                         QuestEnter = true;
                     }
 
@@ -1014,6 +1015,7 @@ namespace Mooege.Core.GS.Actors
                     if (dbQuestProgress.StepOfQuest == 10)
                     {
                         dbQuestProgress.StepOfQuest = 11;
+                        dbQuestProgress.StepIDofQuest = 11;
                         QuestEnter = true;
                     }
 
@@ -1342,6 +1344,7 @@ namespace Mooege.Core.GS.Actors
                         if (dbQuestProgress.StepOfQuest == 11)
                         {
                             dbQuestProgress.StepOfQuest = 12;
+                            dbQuestProgress.StepIDofQuest = 15;
                         }                        
                     }
                     if(dbQuestProgress.ActiveQuest == 72061)
@@ -1832,6 +1835,7 @@ namespace Mooege.Core.GS.Actors
                     if (dbQuestProgress.StepOfQuest == 12)
                     {
                         dbQuestProgress.StepOfQuest = 12;
+                        dbQuestProgress.StepIDofQuest = 15;
                         QuestEnter = true;
                         var Wrongminions = dest.GetActorsBySNO(80652);
                         Vector3D FirstPoint = new Vector3D(112.1694f, 166.0996f, 0.09996167f);
@@ -1864,6 +1868,7 @@ namespace Mooege.Core.GS.Actors
                             {
                                 world.Game.Quests.Advance(72095);
                                 dbQuestProgress.StepOfQuest = 13;
+                                dbQuestProgress.StepIDofQuest = 17;
                             }
                         });
                     }

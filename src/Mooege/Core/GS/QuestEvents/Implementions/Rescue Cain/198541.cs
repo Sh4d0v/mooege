@@ -158,6 +158,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
                 dbQuestProgress.ActiveQuest = 72095;
                 dbQuestProgress.StepOfQuest = 1;
+                dbQuestProgress.StepIDofQuest = 7;
                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                 DBSessions.AccountSession.Flush();
             }
@@ -203,6 +204,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                             var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                             dbQuestProgress.ActiveQuest = 72095;
                             dbQuestProgress.StepOfQuest = 2;
+                            dbQuestProgress.StepIDofQuest = 28;
                             DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                             DBSessions.AccountSession.Flush();
                         }
@@ -230,6 +232,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                             ActivePortal = false;
                         dbQuestProgress.ActiveQuest = 72095;
                         dbQuestProgress.StepOfQuest = 3;
+                        dbQuestProgress.StepIDofQuest = 49;
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     }
@@ -276,6 +279,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(playerN.Value.Toon.PersistentID);
                                 dbQuestProgress.ActiveQuest = 72095;
                                 dbQuestProgress.StepOfQuest = 5;
+                                dbQuestProgress.StepIDofQuest = 41;
                                 DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                                 DBSessions.AccountSession.Flush();
                             }

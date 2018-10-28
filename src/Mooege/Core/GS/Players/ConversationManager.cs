@@ -405,7 +405,23 @@ namespace Mooege.Core.GS.Players
             this.QuestEventDict.Add(198588, new _198588()); // Разговор с Леей под домом после убийства
             this.QuestEventDict.Add(17667, new _17667());   // Разговор с Каином после спасения
             this.QuestEventDict.Add(198617, new _198617()); // Завершение квеста
-
+            /* Step to Save
+            [Debug] [Quest]: 1  (quest ctor) steps ID contained in quest is : 7 
+            [Debug] [Quest]: 2 (quest ctor) steps ID contained in quest is : 28
+            [Debug] [Quest]: 3 (quest ctor) steps ID contained in quest is : 49
+            [Debug] [Quest]: 4 (quest ctor) steps ID contained in quest is : 39
+            [Debug] [Quest]: 5 (quest ctor) steps ID contained in quest is : 41
+            [Debug] [Quest]: 6 (quest ctor) steps ID contained in quest is : 51
+            [Debug] [Quest]: 7 (quest ctor) steps ID contained in quest is : 43
+            [Debug] [Quest]: 8 (quest ctor) steps ID contained in quest is : 45
+            [Debug] [Quest]: 9 (quest ctor) steps ID contained in quest is : 47
+            [Debug] [Quest]: 10 (quest ctor) steps ID contained in quest is : 23
+            [Debug] [Quest]: 11 (quest ctor) steps ID contained in quest is : 11
+            [Debug] [Quest]: 12 (quest ctor) steps ID contained in quest is : 15
+            [Debug] [Quest]: 13 (quest ctor) steps ID contained in quest is : 17
+            [Debug] [Quest]: 14 (quest ctor) steps ID contained in quest is : 19
+            [Debug] [Quest]: 15 (quest ctor) steps ID contained in quest is : 32
+            */
             // Crown 72221
             this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
             this.QuestEventDict.Add(198312, new _198312()); // Диалог после убийства миры с кузнецом

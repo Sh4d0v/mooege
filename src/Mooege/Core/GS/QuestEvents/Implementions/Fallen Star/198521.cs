@@ -55,44 +55,45 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             Logger.Debug(" Conversation done ");
             if(HadConversation)
             {
-            //    world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
+                //    world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
                 //world.Game.Quests.Advance(87700);
-       //         world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
-          
+                //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
                 HadConversation = false;
             }
 
 
-
+            
             //okay now we send a notify with QuestEvent for every one
             //force leah to have a specific conversation list :p
             //world.GetActorBySNO(4580).Tags.Replace(MarkerKeys.ConversationList, new TagMapEntry(MarkerKeys.ConversationList.ID, 166675, 2));
-            //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
+            world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
+            world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
             foreach (var player in world.Players)
             {
                 var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                 
-                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
-                {
-                    snoQuest = 87700,
-                    Field1 = 2,
-                    Field2 = 10.0f
-                });
+                
                 D3.Quests.QuestReward.Builder Reward = new D3.Quests.QuestReward.Builder();
                 Reward.SnoQuest = 87700;
                 Reward.GoldGranted = 500;
                 Reward.XpGranted = 1000;
 
                 Reward.Build();
+
                 player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestRewardMessage()
                 {
                     QuestReward = Reward.Build()
                 });
+                player.Value.PlayEffectGroup(224698);
+                player.Value.PlayEffect(Net.GS.Message.Definitions.Effect.Effect.LevelUp, 203455);
                 //player.Value.World.Game.Quests.CurrentQuest(72095);
                        dbQuestProgress.MaximumQuest = 72095;
                        dbQuestProgress.ActiveQuest = 72095;
                        dbQuestProgress.StepOfQuest = -1;
-                       DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                       dbQuestProgress.StepIDofQuest = 7;
+                        dbQuestProgress.StepIDofQuest = 43;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                        DBSessions.AccountSession.Flush();
             };
 

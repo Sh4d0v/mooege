@@ -239,6 +239,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                         dbQuestProgress.ActiveQuest = 87700;
                         dbQuestProgress.StepOfQuest = 8;
+                        dbQuestProgress.StepIDofQuest = 55;
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     };

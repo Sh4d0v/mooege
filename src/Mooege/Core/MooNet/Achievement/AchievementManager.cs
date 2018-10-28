@@ -80,7 +80,7 @@ namespace Mooege.Core.MooNet.Achievement
 
             }
         }
-
+       
         public static int TotalAchievements
         {
             get { return Achievements.AchievementCount; }
@@ -95,5 +95,6 @@ namespace Mooege.Core.MooNet.Achievement
         {
             get { return Achievements.CriteriaCount; }
         }
+        
     }
 }

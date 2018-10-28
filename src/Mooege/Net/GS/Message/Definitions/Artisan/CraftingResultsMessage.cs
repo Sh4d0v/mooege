@@ -29,16 +29,18 @@ namespace Mooege.Net.GS.Message.Definitions.Artisan
 
         public override void Parse(GameBitBuffer buffer)
         {
+            //Field0 = buffer.ReadInt(32);
             Field0 = buffer.ReadInt(32);
-       //     Field1 = buffer.ReadInt(32);
-       //     Field2 = buffer.ReadInt(32);
+            Field1 = buffer.ReadInt(6);
+            //     Field1 = buffer.ReadInt(4);
+            //     Field2 = buffer.ReadInt(32);
         }
 
         public override void Encode(GameBitBuffer buffer)
         {
             buffer.WriteInt(32, Field0);
-       //     buffer.WriteInt(32, Field1);
-       //     buffer.WriteInt(32, Field2);
+            buffer.WriteInt(32, Field1);
+            buffer.WriteInt(32, Field2);
         }
 
         public override void AsText(StringBuilder b, int pad)

@@ -278,6 +278,54 @@ namespace Mooege.Core.GS.Powers
             catch { }
             #endregion
 
+            #region Падение люстры.
+            try
+            {
+                if (target.ActorSNO.Id == 5747)
+                {
+                    var DropGizmo = target.GetObjectsInRange<Gizmo>(60f);
+                    foreach (var One in DropGizmo)
+                    {
+                        if (One.ActorSNO.Id == 5744)// || One.ActorSNO.Id == 89503)
+                        {
+                            //[030209] [Power] DestructableObjectChandelier_AOE
+                            //[035552] [Shakes] trDun_Chandelier_Trap
+                            //Anim 10217
+                            user.World.BroadcastIfRevealed(new Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+                            {
+                                ActorID = One.DynamicID,
+                                Field1 = 11,
+                                Field2 = 0,
+                                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                                {
+                                    new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                                    {
+                                        Duration = 10,
+                                        AnimationSNO = 10217,
+                                        PermutationIndex = 0,
+                                        Speed = 1
+                                    }
+                                }
+
+                            }, One);
+                            One.Attributes[GameAttribute.Deleted_On_Server] = true;
+                            One.Attributes[GameAttribute.Could_Have_Ragdolled] = true;
+                            One.Attributes.BroadcastChangedIfRevealed();
+                            Timeout = new SecondsTickTimer(user.World.Game, 1.5f);
+                            var Boom = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(Timeout));
+                            //Ждём пока убьют
+                            Boom.ContinueWith(delegate
+                            {
+                                user.World.PowerManager.RunPower(One, 30209);
+                            });
+                            //One.Destroy();
+                        }
+                    }
+                }
+            }
+            catch { } 
+            //*/
+            #endregion
             #region Квестовые события
 
             #region Северные ворота
@@ -369,6 +417,7 @@ namespace Mooege.Core.GS.Powers
                             if (dbQuestProgress.StepOfQuest == 14)
                             {
                                 dbQuestProgress.StepOfQuest = 15;
+                                dbQuestProgress.StepIDofQuest = 32;
                                 UseDoor72095 = true;
                             }
 
@@ -403,6 +452,7 @@ namespace Mooege.Core.GS.Powers
                             if (dbQuestProgress.StepOfQuest == 9)
                             {
                                 dbQuestProgress.StepOfQuest = 10;
+                                dbQuestProgress.StepIDofQuest = 23;
                                 UseDoor72095 = true;
                             }
 
@@ -438,6 +488,7 @@ namespace Mooege.Core.GS.Powers
                             if (dbQuestProgress.StepOfQuest == 6)
                             {
                                 //dbQuestProgress.StepOfQuest = 7;
+                                dbQuestProgress.StepIDofQuest = 43;
                                 UseActorOnKotel72095 = true;
                             }
 

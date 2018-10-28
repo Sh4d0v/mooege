@@ -22,6 +22,8 @@ using Mooege.Common.Versions;
 using Mooege.Common.Logging;
 using Mooege.Net.MooNet;
 using Mooege.Common.Extensions;
+using bnet.protocol;
+using bnet.protocol.achievements;
 
 namespace Mooege.Core.MooNet.Services
 {
@@ -37,7 +39,7 @@ namespace Mooege.Core.MooNet.Services
         {
             throw new NotImplementedException();
         }
-
+        
         public override void RegisterWithService(IRpcController controller, bnet.protocol.achievements.RegisterWithServiceRequest request, Action<bnet.protocol.achievements.RegisterWithServiceResponse> done)
         {
             // This should register client with achievement notifier service. -Egris
@@ -103,6 +105,69 @@ namespace Mooege.Core.MooNet.Services
 
         public override void ValidateStaticData(IRpcController controller, bnet.protocol.achievements.ValidateStaticDataRequest request, Action<bnet.protocol.NoData> done)
         {
+            throw new NotImplementedException();
+        }
+    }
+    [Service(serviceID: 0x22, serviceName: "bnet.protocol.achievements.AchievementsUtils")]
+    public class AchievementsUtils : bnet.protocol.achievements.AchievementsUtils, IServerService
+    {
+        private static readonly Logger Logger = LogManager.CreateLogger();
+        public MooNetClient Client { get; set; }
+        public bnet.protocol.Header LastCallHeader { get; set; }
+        public uint Status { get; set; }
+
+        public override void CacheKill(IRpcController controller, CacheKillRequest request, Action<NoData> done)
+        {
+            Logger.Trace("CacheKill() Not Implemented");
+            throw new NotImplementedException();
+        }
+
+        public override void GetAchievementStats(IRpcController controller, GetAchievementStatsRequest request, Action<GetAchievementStatsResponse> done)
+        {
+            Logger.Trace("GetAchievementStats() Not Implemented");
+            throw new NotImplementedException();
+        }
+
+        /*public override void Initialize(IRpcController controller, bnet.protocol.achievements.InitializeRequest request, Action<bnet.protocol.achievements.InitializeResponse> done)
+        {
+            Logger.Trace("Initialize()");
+
+            var contentHandle = bnet.protocol.ContentHandle.CreateBuilder()
+                .SetRegion(VersionInfo.MooNet.Regions[VersionInfo.MooNet.Region])
+                .SetUsage(0x61636875) //achu
+                .SetHash(ByteString.CopyFrom(VersionInfo.MooNet.Achievements.AchievementFileHash.ToByteArray()));
+            var reponse = bnet.protocol.achievements.InitializeResponse.CreateBuilder().SetContentHandle(contentHandle)
+                .SetMaxRecordsPerUpdate(1)
+                .SetMaxCriteriaPerRecord(2)
+                .SetMaxAchievementsPerRecord(1)
+                .SetMaxRegistrations(512)
+                .SetFlushFrequency(1);
+
+            done(reponse.Build());
+        }*/
+        public override void GetCriteriaStats(IRpcController controller, GetCriteriaStatsRequest request, Action<GetCriteriaStatsResponse> done)
+        {
+            Logger.Trace("GetCriteriaStats() Not Implemented");
+            throw new NotImplementedException();
+        }
+
+        public override void GrantAchievement(IRpcController controller, GrantAchievementRequest request, Action<GrantAchievementResponse> done)
+        {
+            Logger.Trace("GrantAchievement() Not Implemented");
+
+            //done();
+            throw new NotImplementedException();
+        }
+
+        public override void RevokeAchievement(IRpcController controller, RevokeAchievementRequest request, Action<RevokeAchievementResponse> done)
+        {
+            Logger.Trace("RevokeAchievement() Not Implemented");
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateCriteria(IRpcController controller, UpdateCriteriaRequest request, Action<NoData> done)
+        {
+            Logger.Trace("UpdateCriteria() Not Implemented");
             throw new NotImplementedException();
         }
     }

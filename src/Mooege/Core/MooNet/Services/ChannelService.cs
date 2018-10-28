@@ -123,6 +123,8 @@ namespace Mooege.Core.MooNet.Services
                         {
                             dbQuestProgress.ActiveQuest = gameCreateParams.Coop.SnoQuest;
                         }
+                        
+                        
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                             Logger.Trace("D3.Party.GameCreateParams: {0}", gameCreateParams.ToString());
@@ -138,7 +140,7 @@ namespace Mooege.Core.MooNet.Services
                 {
                     if (!this.Client.MOTDSent)
                         this.Client.SendMOTD(); // send the MOTD to client if we haven't yet so.
-
+                    
                     if (!attribute.HasValue || attribute.Value.MessageValue.IsEmpty) //Sometimes not present -Egris
                     {
                         var attr = bnet.protocol.attribute.Attribute.CreateBuilder()
@@ -158,7 +160,9 @@ namespace Mooege.Core.MooNet.Services
                             .SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetMessageValue(oldScreen.ToByteString()));
                         channelState.AddAttribute(attr);
                         Logger.Trace("Client moving to Screen: {0}, with Status: {1}", oldScreen.Screen, oldScreen.Status);
+
                     }
+
                 }
                 else if (attribute.Name == "D3.Party.JoinPermissionPreviousToLock")
                 {

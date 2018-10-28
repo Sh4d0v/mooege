@@ -58,14 +58,14 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                 HadConversation = false;
                 StartConversation(world, 204113);
                 world.Game.Quests.Advance(87700);
-                foreach (var player in world.Players)
+                /*foreach (var player in world.Players)
                 {
                     var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                     dbQuestProgress.ActiveQuest = 87700;
                     dbQuestProgress.StepOfQuest = 3;
                     DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                     DBSessions.AccountSession.Flush();
-                };
+                };*/
                 var transformActors = Task<bool>.Factory.StartNew(() => HoudiniVsZombies(world, 204605));
                 transformActors.Wait();
                 var zombieWave = Task<bool>.Factory.StartNew(() => LaunchWave(ActorsVector3D, world, 203121));
@@ -184,6 +184,7 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
                         var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
                         dbQuestProgress.ActiveQuest = 87700;
                         dbQuestProgress.StepOfQuest = 4;
+                        dbQuestProgress.StepIDofQuest = 46;
                         DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
                         DBSessions.AccountSession.Flush();
                     };

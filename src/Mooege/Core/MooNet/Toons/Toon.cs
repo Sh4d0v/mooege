@@ -227,6 +227,11 @@ namespace Mooege.Core.MooNet.Toons
         public int LastActPlayed { get { return this.DBToon.DBProgressToon.ActiveAct; } set { this.DBToon.DBProgressToon.ActiveAct = value; } }
 
         /// <summary>
+        ///Step of Quest ID played for toon.
+        /// </summary>
+        public int LastStepQID { get { return this.DBToon.DBProgressToon.StepIDofQuest; } set { this.DBToon.DBProgressToon.StepIDofQuest = value; } }
+
+        /// <summary>
         /// Last login time for toon.
         /// </summary>
         public uint LoginTime { get; set; }
@@ -265,13 +270,13 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetPlayerFlags((uint)this.Flags + Convert.ToUInt16(Hardcore)) // If is hardcore character, add +1 to Flags. [Necrosummon]
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
-                                .SetLastPlayedAct(this.LastActPlayed)//ActiveAct)
+                                .SetLastPlayedAct(0)//this.LastActPlayed)//ActiveAct)
                                 .SetHighestUnlockedAct(1)
                                 .SetLastPlayedDifficulty(0)
                                 .SetHighestUnlockedDifficulty(3)
                                 .SetHighestCompletedDifficulty(1)
                                 .SetLastPlayedQuest(this.LastQuestPlayed)//LastQuestPlayed
-                                .SetLastPlayedQuestStep(0)
+                                .SetLastPlayedQuestStep(this.LastStepQID)
                                 .SetTimePlayed(this.TimePlayed)
                                 .Build();
             }

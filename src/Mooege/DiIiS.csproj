@@ -182,6 +182,7 @@
     <Compile Include="Core\GS\Powers\Implementations\General\LevelUp.cs" />
     <Compile Include="Core\GS\Powers\Implementations\General\StatusDebuffs.cs" />
     <Compile Include="Core\GS\Powers\Implementations\General\SummonedBuff.cs" />
+    <Compile Include="Core\GS\Powers\Implementations\General\Traps.cs" />
     <Compile Include="Core\GS\Powers\Implementations\MonsterSkills\SummoningSkills.cs" />
     <Compile Include="Core\GS\Powers\Payloads\AttackPayload.cs" />
     <Compile Include="Core\GS\Powers\BaseBuffs.cs" />

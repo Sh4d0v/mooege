@@ -121,11 +121,14 @@ namespace Mooege.Core.GS.Games
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest:
                             {
-                                if (value == objective.SNOName1.Id)
+                                /*
+                                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
                                 {
-                                    Counter++;
-                                    questStep.UpdateCounter(this);
-                                }
+                                    snoQuest = 87700,
+                                    Field1 = 2,
+                                    Field2 = 10.0f
+                                });*/
+                               // questStep.EndQuest(this);
                                 break;
                             }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation:
@@ -234,6 +237,34 @@ namespace Mooege.Core.GS.Games
                         Checked = objective.Done ? 1 : 0,
                     });
 
+            }
+
+            private void EndQuest(QuestObjective objective)
+            {
+
+                Logger.Debug("Test of End Quest");
+                D3.Quests.QuestReward.Builder Reward = new D3.Quests.QuestReward.Builder();
+                Reward.SnoQuest = 87700;
+                Reward.GoldGranted = 500;
+                Reward.XpGranted = 1000;
+                D3.Quests.QuestStepComplete.Builder builder = new D3.Quests.QuestStepComplete.Builder();
+                builder.Reward = Reward.Build();
+                builder.SetIsQuestComplete(true);
+
+                
+                //D3.Quests.QuestStepComplete.Builder() StepComp = new D3.Quests.QuestStepComplete.Builder();
+                foreach (var player in _quest.game.Players.Values)
+                {
+                    player.InGameClient.SendMessage(new QuestStepCompleteMessage()
+                    {
+                        //QuestStepComplete = builder.Build();
+                        QuestStepComplete = builder.Build()
+                    });
+                    player.InGameClient.SendMessage(new QuestRewardMessage()
+                    {
+                        QuestReward = Reward.Build()
+                    });
+                }
             }
 
             private void UpdateCounter(QuestObjective objective)
@@ -514,7 +545,7 @@ namespace Mooege.Core.GS.Games
                     CurrentStep = null;
                     completedSteps.Add(FollowUpStepID);
                     Logger.Debug(" (StepCompleted) shooting the event handler");
-                    OnQuestProgress -= OnQuestProgress;
+                    //OnQuestProgress -= OnQuestProgress;
                 }
                 else
                 {
