@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mooege.Common.MPQ;
@@ -217,6 +217,21 @@ namespace Mooege.Core.MooNet.Toons
         public uint TimePlayed { get { return this.DBToon.TimePlayed; } set { this.DBToon.TimePlayed = value; } }
 
         /// <summary>
+        ///Last Quest played for toon.
+        /// </summary>
+        public int LastQuestPlayed { get { return this.DBToon.DBProgressToon.ActiveQuest; } set { this.DBToon.DBProgressToon.ActiveQuest = value; } }
+
+        /// <summary>
+        ///Last Act played for toon.
+        /// </summary>
+        public int LastActPlayed { get { return this.DBToon.DBProgressToon.ActiveAct; } set { this.DBToon.DBProgressToon.ActiveAct = value; } }
+
+        /// <summary>
+        ///Step of Quest ID played for toon.
+        /// </summary>
+        public int LastStepQID { get { return this.DBToon.DBProgressToon.StepIDofQuest; } set { this.DBToon.DBProgressToon.StepIDofQuest = value; } }
+
+        /// <summary>
         /// Last login time for toon.
         /// </summary>
         public uint LoginTime { get; set; }
@@ -244,6 +259,10 @@ namespace Mooege.Core.MooNet.Toons
         {
             get
             {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(this.PersistentID);
+                int ActiveQuest = dbQuestProgress.ActiveQuest;
+                int ActiveAct = dbQuestProgress.ActiveAct;
+                DBSessions.AccountSession.Flush();
                 return D3.Hero.Digest.CreateBuilder().SetVersion(902)
                                 .SetHeroId(this.D3EntityID)
                                 .SetHeroName(this.Name)
@@ -251,12 +270,13 @@ namespace Mooege.Core.MooNet.Toons
                                 .SetPlayerFlags((uint)this.Flags + Convert.ToUInt16(Hardcore)) // If is hardcore character, add +1 to Flags. [Necrosummon]
                                 .SetLevel(this.Level)
                                 .SetVisualEquipment(this.HeroVisualEquipmentField.Value)
-                                .SetLastPlayedAct(0)
-                                .SetHighestUnlockedAct(0)
+                                .SetLastPlayedAct(0)//this.LastActPlayed)//ActiveAct)
+                                .SetHighestUnlockedAct(1)
                                 .SetLastPlayedDifficulty(0)
-                                .SetHighestUnlockedDifficulty(0)
-                                .SetLastPlayedQuest(-1)
-                                .SetLastPlayedQuestStep(-1)
+                                .SetHighestUnlockedDifficulty(3)
+                                .SetHighestCompletedDifficulty(1)
+                                .SetLastPlayedQuest(this.LastQuestPlayed)//LastQuestPlayed
+                                .SetLastPlayedQuestStep(this.LastStepQID)
                                 .SetTimePlayed(this.TimePlayed)
                                 .Build();
             }
@@ -272,7 +292,7 @@ namespace Mooege.Core.MooNet.Toons
                 return D3.Profile.HeroProfile.CreateBuilder()
                     .SetHardcore(this.Hardcore)
                     .SetHeroId(this.D3EntityID)
-                    .SetHighestDifficulty(0)
+                    .SetHighestDifficulty(3)
                     .SetHighestLevel(this.Level)
                     .Build();
             }
@@ -553,7 +573,7 @@ namespace Mooege.Core.MooNet.Toons
         #region DB
 
 
-        
+
         /*private bool VisualItemExistsInDb(int slot)
         {
             var query = string.Format("SELECT toon_id FROM inventory WHERE toon_id = {0} AND equipment_slot = {1}", this.PersistentID, slot);
@@ -562,7 +582,7 @@ namespace Mooege.Core.MooNet.Toons
             return reader.HasRows;
         }*/
     }
-        #endregion
+    #endregion
 
     #region Definitions and Enums
     //Order is important as actor voices and saved data is based on enum index

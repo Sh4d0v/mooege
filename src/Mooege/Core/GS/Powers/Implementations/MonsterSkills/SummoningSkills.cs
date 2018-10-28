@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2011 - 2018 mooege project
+* Copyright (C) 2018 DiIiS project
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,13 +51,25 @@ namespace Mooege.Core.GS.Powers.Implementations
                                              User.Position.Y + 8 * (float)Math.Sin(userFacing),
                                              User.Position.Z);
         }
+        private bool WaitToSpawn(TickTimer timer)
+        {
+            while (timer.TimedOut != true)
+            {
 
+            }
+            return true;
+        }
         public void SummonMonster(int actorSNO)
         {
-            var monster = ActorFactory.Create(User.World, actorSNO, new TagMap());
-            monster.Scale = 1.35f;  // TODO: look this up properly
-            monster.EnterWorld(this.SpawnPosition);
-            this.World.BuffManager.AddBuff(User, monster, new Implementations.SummonedBuff());
+         /*   TickTimer CoolDown = new SecondsTickTimer(User.World.Game, 2.5f);
+            var WaitToWalk = System.Threading.Tasks.Task<bool>.Factory.StartNew(() => WaitToSpawn(CoolDown));
+            WaitToWalk.ContinueWith(delegate
+            {*/
+                var monster = ActorFactory.Create(User.World, actorSNO, new TagMap());
+                monster.Scale = 1.35f;  // TODO: look this up properly
+                monster.EnterWorld(this.SpawnPosition);
+                this.World.BuffManager.AddBuff(User, monster, new Implementations.SummonedBuff());
+        //    });
         }
     }
 
@@ -78,6 +90,28 @@ namespace Mooege.Core.GS.Powers.Implementations
         public override IEnumerable<TickTimer> Main()
         {
             RandomPostion();
+            SummonMonster((this.User as Monster).SNOSummons[0]);
+            yield break;
+        }
+    }
+
+    [ImplementsPowerSNO(30496)] // Skeleton King Summon Skeleton
+    public class KingSummonSkeleton : SummoningSkill
+    {
+        public override IEnumerable<TickTimer> Main()
+        {
+            RandomPostion();
+            SummonMonster((this.User as Monster).SNOSummons[0]);
+            yield break;
+        }
+    }
+
+    [ImplementsPowerSNO(30547)] // Summon Demon
+    public class SummonDemon : SummoningSkill
+    {
+        public override IEnumerable<TickTimer> Main()
+        {
+            InFrontPostion();
             SummonMonster((this.User as Monster).SNOSummons[0]);
             yield break;
         }

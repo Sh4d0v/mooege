@@ -53,11 +53,27 @@ namespace Mooege.Net.GS.BarbarianPrimarySkills
         // Bash Base skill
         public float BashWeaponDamagePercent { get { return this.GetFloat("BashWeaponDamagePercent", 150); } set { this.Set("BashWeaponDamagePercent", value); } }
         public int BashFuryGeneration { get { return this.GetInt("BashFuryGeneration", 6); } set { this.Set("BashFuryGeneration", value); } }
+        public float BashKnockbackChance { get { return this.GetFloat("BashKnockbackChance", 20); } set { this.Set("BashKnockbackChance", value); } }
+        // Instigation (Rune D)
+        public int BashExtraFuryGeneration { get { return this.GetInt("BashExtraFuryGeneration", 6); } set { this.Set("BashExtraFuryGeneration", value); } }
+        // Punish (Rune B)
+        public float BashIncreasedDamageSkills { get { return this.GetFloat("BashIncreasedDamageSkills", 6); } set { this.Set("BashIncreasedDamageSkills", value); } }
+        public float BashPunishDuration { get { return this.GetFloat("BashPunishDuration", 5); } set { this.Set("BashPunishDuration", value); } }
+        public int BashPunishMaxStacks { get { return this.GetInt("BashPunishMaxStacks", 3); } set { this.Set("BashPunishMaxStacks", value); } }
+        // Onslaught (Rune A)
+        public int BashReverberations { get { return this.GetInt("BashReverberations", 2); } set { this.Set("BashReverberations", value); } }
+        public float BashReverberationWeaponDamage { get { return this.GetFloat("BashReverberationWeaponDamage", 22); } set { this.Set("BashReverberationWeaponDamage", value); } }
+        // Clobber (Rune C)
+        public float BashStunChance { get { return this.GetFloat("BashStunChance", 35); } set { this.Set("BashStunChance", value); } }
+        public float BashStunDuration { get { return this.GetFloat("BashStunDuration", 1.5f); } set { this.Set("BashStunDuration", value); } }
+        // Pulverize (Rune E)
+        public float BashPulverizeWeaponDamage { get { return this.GetFloat("BashPulverizeWeaponDamage", 22); } set { this.Set("BashPulverizeWeaponDamage", value); } }
+        public float BashPulverizeDistance { get { return this.GetFloat("BashPulverizeDistance", 26); } set { this.Set("BashPulverizeDistance", value); } }
 
         private static readonly BarbarianPrimarySkillsConfig _instance = new BarbarianPrimarySkillsConfig();
         public static BarbarianPrimarySkillsConfig Instance { get { return _instance; } }
         private BarbarianPrimarySkillsConfig() : base("Primary-Skills") { }
-    }   
+    }
 }
 
 namespace Mooege.Net.GS.BarbarianSecondarySkills
@@ -79,6 +95,7 @@ namespace Mooege.Net.GS.BarbarianRageSkills
     public sealed class BarbarianRageSkillsConfig : Common.BarbarianSkillsConfig.Config
     {
         // Hammer of the Ancients Base skill
+        public float WrathOfTheBerserkerDuration { get { return this.GetFloat("WrathOfTheBerserkerDuration", 15); } set { this.Set("WrathOfTheBerserkerDuration", value); } }
         public float WrathOfTheBerserkerCooldown { get { return this.GetFloat("WrathOfTheBerserkerCooldown", 120); } set { this.Set("WrathOfTheBerserkerCooldown", value); } }
         public int WrathOfTheBerserkerFuryCost { get { return this.GetInt("WrathOfTheBerserkerFuryCost", 50); } set { this.Set("WrathOfTheBerserkerFuryCost", value); } }
 
@@ -87,8 +104,36 @@ namespace Mooege.Net.GS.BarbarianRageSkills
         private BarbarianRageSkillsConfig() : base("Rage-Skills") { }
     }
 }
-
-
-
 #endregion
+
+#region DemonHunterSkills
+namespace Mooege.Net.GS.DemonHunterPrimarySkills
+{
+    public sealed class DemonHunterPrimarySkillsConfig : Common.DemonHunterSkillsConfig.Config
+    {
+        // Hungering Arrow
+        public float HungeringArrowDamagePercent { get { return this.GetFloat("HungeringArrowDamagePercent", 115); } set { this.Set("HungeringArrowDamagePercent", value); } }
+        public int HungeringArrowHatredGeneration { get { return this.GetInt("HungeringArrowHatredGeneration", 3); } set { this.Set("HungeringArrowHatredGeneration", value); } }
+        public float HungeringArrowPierceChance { get { return this.GetFloat("HungeringArrowPierceChance", 35); } set { this.Set("HungeringArrowPierceChance", value); } }
+        // Puncturing (Rune D)
+        public float HungeringArrowPuncturingPierceChance { get { return this.GetFloat("HungeringArrowPuncturingPierceChance", 50); } set { this.Set("HungeringArrowPuncturingPierceChance", value); } }
+        // Devouring Arrow (Rune C)
+        public float HungeringArrowDevouringArrowExtraDamage { get { return this.GetFloat("HungeringArrowDevouringArrowExtraDamage", 70); } set { this.Set("HungeringArrowDevouringArrowExtraDamage", value); } }
+        // Cinder Arrow (Rune A)
+        public float HungeringArrowCinderArrowExtraDamage { get { return this.GetFloat("HungeringArrowCinderArrowExtraDamage", 35); } set { this.Set("HungeringArrowCinderArrowExtraDamage", value); } }
+        public int HungeringArrowCinderArrowDuration { get { return this.GetInt("HungeringArrowCinderArrowDuration", 3); } set { this.Set("HungeringArrowCinderArrowDuration", value); } }
+        // Spray of Teeth (Rune E)
+        public int HungeringArrowSprayOfTeethArea { get { return this.GetInt("HungeringArrowSprayOfTeethArea", 3); } set { this.Set("HungeringArrowSprayOfTeethArea", value); } }
+        public float HungeringArrowSprayOfTeethWeaponDamage { get { return this.GetFloat("HungeringArrowSprayOfTeethWeaponDamage", 50); } set { this.Set("HungeringArrowSprayOfTeethWeaponDamage", value); } }
+        // Shatter Shot (Rune B)
+        public int HungeringArrowShatterShotProjectiles { get { return this.GetInt("HungeringArrowShatterShotProjectiles", 3); } set { this.Set("HungeringArrowShatterShotProjectiles", value); } }
+        public float HungeringArrowShatterShotWeaponDamage { get { return this.GetFloat("HungeringArrowShatterShotWeaponDamage", 115); } set { this.Set("HungeringArrowShatterShotWeaponDamage", value); } }
+
+        private static readonly DemonHunterPrimarySkillsConfig _instance = new DemonHunterPrimarySkillsConfig();
+        public static DemonHunterPrimarySkillsConfig Instance { get { return _instance; } }
+        private DemonHunterPrimarySkillsConfig() : base("Primary-Skills") { }
+    }
+}
+#endregion
+
 

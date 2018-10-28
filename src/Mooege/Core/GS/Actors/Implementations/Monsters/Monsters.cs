@@ -1,5 +1,5 @@
 ﻿﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2011 mooege project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,9 +38,9 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public TreasureGoblin(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
-            (Brain as MonsterBrain).AddPresetPower(105371);
-            (Brain as MonsterBrain).AddPresetPower(54836);
-            (Brain as MonsterBrain).AddPresetPower(105665);
+            //(Brain as MonsterBrain).AddPresetPower(105371);
+            //(Brain as MonsterBrain).AddPresetPower(54836);
+            //(Brain as MonsterBrain).AddPresetPower(105665);
         }
     }
 
@@ -110,6 +110,50 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public DarkCultists(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
+    [HandledSNO(90008)] 
+    public class DarkCultistsTownAttackMelee : Monster
+    {
+        public DarkCultistsTownAttackMelee(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
+    [HandledSNO(6027)]
+    public class CrazyDarkCultistsMelee : Monster
+    {
+        public CrazyDarkCultistsMelee(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
+        }
+    }
+    [HandledSNO(6052)]
+    public class BerserkMini : Monster
+    {
+        public BerserkMini(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.3f;
+            this.RunSpeed = 0.3f;
         }
     }
     [HandledSNO(6035)]
@@ -119,6 +163,41 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             : base(world, snoId, tags)
         {
             (Brain as MonsterBrain).AddPresetPower(30592);
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 10f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
+        }
+    }
+    [HandledSNO(178297)]
+    public class DarkCultistSummnoer : Monster
+    {
+        public DarkCultistSummnoer(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            
+            (Brain as MonsterBrain).AddPresetPower(30547);
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
+        }
+    }
+    [HandledSNO(90367)]
+    public class DarkCultistSummnoerTownAttack : Monster
+    {
+        public DarkCultistSummnoerTownAttack(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).AddPresetPower(30570); 
+            (Brain as MonsterBrain).AddPresetPower(30547);
+            this.Attributes[GameAttribute.Movement_Scalar] = this.Attributes[GameAttribute.Movement_Scalar] * 0.5f;
+            this.Attributes[GameAttribute.Run_Speed_Granted] = this.Attributes[GameAttribute.Run_Speed_Granted] * 0.5f;
+            this.Attributes[GameAttribute.Movement_Scalar_Reduction_Percent] -= 20f;
+            this.WalkSpeed = 0.15f;
+            this.RunSpeed = 0.15f;
         }
     }
     #endregion
@@ -355,6 +434,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
         public TombGuardian(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            
             (Brain as MonsterBrain).AddPresetPower(30592);
             (Brain as MonsterBrain).AddPresetPower(30503);
             (Brain as MonsterBrain).AddPresetPower(30543); //Summon Skeletons
@@ -552,13 +632,117 @@ namespace Mooege.Core.GS.Actors.Implementations.Monsters
             //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
         }
     }
+    #endregion
 
+    #region Beast A
     [HandledSNO(3337)] //Beast A
     public class Beast : Monster
     {
         public Beast(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+        }
+    }
+    #endregion
+
+    #region БОССЫ!!
+    #region Леорик
+    //5350
+    [HandledSNO(5350)]
+    public class LeorikKing : Monster
+    {
+        public LeorikKing(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).AddPresetPower(30496);
+            Attributes[GameAttribute.Hitpoints_Max] = 2000f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 2000f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 100f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 100f;
+        }
+    }
+    #endregion
+    #region Арана
+    //51341
+    [HandledSNO(51341)]
+    public class SpiderQueen : Monster
+    {
+        public SpiderQueen(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            //(Brain as MonsterBrain).AddPresetPower(30496);
+            Attributes[GameAttribute.Hitpoints_Max] = 2500f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 2500f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 80f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 80f;
+        }
+    }
+    #endregion
+    #region Мясник
+    //3526
+    [HandledSNO(3526)]
+    public class Butcher : Monster
+    {
+        public Butcher(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).AddPresetPower(83008);
+          //  (Brain as MonsterBrain).AddPresetPower(30160);
+            
+            Attributes[GameAttribute.Attacks_Per_Second] = 1.4f;
+            this.RunSpeed = 0.3f;
+            Attributes[GameAttribute.Hitpoints_Max] = 4000f;
+            Attributes[GameAttribute.Hitpoints_Cur] = 4000f;
+            Attributes[GameAttribute.Damage_Weapon_Min, 0] = 180f;
+            Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 180f;
+        }
+    }
+    #endregion
+    #endregion
+
+    #region
+
+    [HandledSNO(85900)] 
+    public class MiraBlacksmithWife : Monster
+    {
+        public MiraBlacksmithWife(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).RemovePresetPower(30592); // Only distance attack
+            (Brain as MonsterBrain).AddPresetPower(110518);
+            //this.Attributes[GameAttribute.Health]
+
+            //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
+            //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
+        }
+    }
+    #endregion
+
+    #region Queen Of Wretched Mothers
+    [HandledSNO(176889)] // ZombieFemale_A_TristramQuest_Unique.acr
+    public class QueenWretchedMother : Monster
+    {
+        public QueenWretchedMother(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            (Brain as MonsterBrain).RemovePresetPower(30592); // Only distance attack
+            (Brain as MonsterBrain).AddPresetPower(94734);
+            (Brain as MonsterBrain).AddPresetPower(110518);
+            //this.Attributes[GameAttribute.Health]
+            
+            //this.Attributes[GameAttribute.Damage_Weapon_Min, 0] = 4f;
+            //this.Attributes[GameAttribute.Damage_Weapon_Delta, 0] = 4f;
+        }
+    }
+    #endregion
+    #region Goatman's
+    [HandledSNO(4282)] // Goatman_Moonclan_Melee_A.acr
+    public class Goatman_Moonclan_Melee_A : Monster
+    {
+        public Goatman_Moonclan_Melee_A(World world, int snoId, TagMap tags)
+            : base(world, snoId, tags)
+        {
+            
         }
     }
     #endregion

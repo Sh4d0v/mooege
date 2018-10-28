@@ -288,6 +288,7 @@ namespace Mooege.Core.GS.Powers.Implementations
                         SpawnEffect(99572, new Vector3D(hit.Position.X, hit.Position.Y, hit.Position.Z + 5f)); // impact effect (fix height)
                         proj.Destroy();
                         WeaponDamage(hit, ScriptFormula(1), DamageType.Arcane);
+                        WeaponDamage(GetEnemiesInRadius(hit.Position, 1f), 0.30f, DamageType.Physical);
                     };
                     yield return WaitTicks(1); //TODO: We need less than 100MS Update.
                 }

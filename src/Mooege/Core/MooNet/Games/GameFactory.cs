@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ namespace Mooege.Core.MooNet.Games
 
         public void StartGame(List<MooNetClient> clients, ulong objectId)
         {
-            this.InGame = GameManager.CreateGame((int)this.DynamicId); // create the ingame.
+            this.InGame = GameManager.CreateGame((int)this.DynamicId, clients); // create the ingame.
 
             foreach (var client in clients) // get all clients in game.
             {

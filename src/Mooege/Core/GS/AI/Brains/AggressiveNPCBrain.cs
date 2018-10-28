@@ -46,6 +46,7 @@ namespace Mooege.Core.GS.AI.Brains
             if (body.ActorData.MonsterSNO > 0)
             {
                 var monsterData = (Mooege.Common.MPQ.FileFormats.Monster)MPQStorage.Data.Assets[SNOGroup.Monster][body.ActorData.MonsterSNO].Data;
+                
                 foreach (var monsterSkill in monsterData.SkillDeclarations)
                 {
                     if (monsterSkill.SNOPower > 0)

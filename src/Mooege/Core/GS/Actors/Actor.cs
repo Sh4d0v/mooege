@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -478,7 +478,15 @@ namespace Mooege.Core.GS.Actors
         protected void UpdateQuestRangeVisbility() //erekose set to protected
         {
             if (_questRange != null)
-                Visible = World.Game.Quests.IsInQuestRange(_questRange);
+                try {
+                    
+                    Visible = World.Game.Quests.IsInQuestRange(_questRange);
+                    if (ActorSNO.Id == 178293)
+                    {
+                        Visible = true;
+                    }
+                }
+                catch { }
             else
                 Visible = true;
         }

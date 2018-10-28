@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Mooege.Net.GS.Message.Definitions.Player
 {
-    [Message(new[] {Opcodes.PlayerQuestMessage1, Opcodes.PlayerQuestMessage2})]
+    [Message(new[] {Opcodes.PlayerQuestMessage1})]//, Opcodes.PlayerQuestMessage2})]
     public class PlayerQuestMessage : GameMessage
     {
         public int Field0;

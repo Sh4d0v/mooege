@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ namespace Mooege.Common.Storage
 {
     public sealed class Config : Common.Config.Config
     {
+        public string DatabaseSystem { get { return this.GetString("DatabaseSystem", "Assets"); } set { this.Set("DatabaseSystem", "SQLite"); } }
         public string Root { get { return this.GetString("Root", "Assets"); } set { this.Set("Root", value); } }
         public string MPQRoot { get { return this.GetString("MPQRoot", "Assets/MPQ"); } set { this.Set("MPQRoot", value); } }
         public bool EnableTasks { get { return this.GetBoolean("EnableTasks", true); } set { this.Set("EnableTasks", value); } }

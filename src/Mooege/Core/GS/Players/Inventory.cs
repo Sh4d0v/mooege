@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -468,6 +468,27 @@ namespace Mooege.Core.GS.Players
             if (item.DBInventory != null)
                 _dbInventoriesToDelete.Add(item.DBInventory);
             item.DBInventory = null;
+            /*
+                [011539] [Anim2D] DropDownItemMouseover00
+                [011541] [Anim2D] DropDownItemSelected00
+                [000757] [Anim2D] DropDownItemSelected01
+            */
+            _owner.World.BroadcastIfRevealed(new Mooege.Net.GS.Message.Definitions.Animation.PlayAnimationMessage
+            {
+                ActorID = item.DynamicID,
+                Field1 = 5,
+                Field2 = 0,
+                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                            {
+                            new Net.GS.Message.Fields.PlayAnimationMessageSpec()
+                            {
+                                Duration = 200,
+                                AnimationSNO = 757,
+                                PermutationIndex = 0,
+                                Speed = 1f
+                            }
+                            }
+            }, item);
             item.CurrentState = ItemState.Normal;
             AcceptMoveRequest(item);
         }
@@ -521,6 +542,7 @@ namespace Mooege.Core.GS.Players
         {
             Item collectedItem = _owner.World.GetItem(itemID);
             AddGoldAmount(collectedItem.Attributes[GameAttribute.Gold]);
+            //_owner.Toon.DBToon.DBGameAccount.GoldCollected = AddGoldAmount(collectedItem.Attributes[GameAttribute.Gold]);
         }
 
         private void OnInventoryRequestUseMessage(InventoryRequestUseMessage inventoryRequestUseMessage)
@@ -682,6 +704,22 @@ namespace Mooege.Core.GS.Players
                 _inventoryGold.Attributes[GameAttribute.ItemStackQuantityLo] = _inventoryGold.Attributes[GameAttribute.Gold];
                 _inventoryGold.Attributes.SendChangedMessage(_owner.InGameClient);
             }
+            _owner.Toon.DBToon.DBGameAccount.GoldCollected += (uint)amount; // Add gold amount to Gold Collected Account Profile [Necrosummon]
+            var Achievemnts = MooNet.Achievement.AchievementManager.Achievements.AchievementList;
+            var AchievemntCategory = MooNet.Achievement.AchievementManager.Achievements.CategoryList;
+            var AchoevementsOfGeneral = MooNet.Achievement.AchievementManager.Achievements.GetCategory(1);
+            /*
+            [0]	{id: 5505025 order_hint: 1 attributes { key: ":title:"  value: "Achievements:Campaign"}}
+            [1]	{id: 5505026 order_hint: 0 attributes { key: ":title:"  value: "Achievements:General"}}	
+            [2]	{id: 5505027 order_hint: 2 attributes { key: ":title:"  value: "Achievements:Cooperative"}}
+            [3]	{id: 5505028 order_hint: 3 attributes { key: ":title:"  value: "Achievements:Hardcore"}}
+            [4]	{id: 5505029 order_hint: 4 attributes { key: ":title:"  value: "Achievements:Classes"}}
+            */
+            //Убийство Леорика (Норма)
+            var AchievementLeoric = MooNet.Achievement.AchievementManager.Achievements.GetAchievement(46);
+            
+
+
         }
 
         public void RemoveGoldAmount(int amount)
@@ -875,18 +913,18 @@ namespace Mooege.Core.GS.Players
             }
 
             // save stash
-            if(!_owner.Toon.DBToon.Hardcore)
+            if (!_owner.Toon.DBToon.Hardcore)
                 dbGameAccount.StashSize = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
             else
                 dbGameAccount.StashSizeHC = _owner.Attributes[GameAttribute.Shared_Stash_Slots];
 
             foreach (Item itm in _stashGrid.Items.Values)
             {
-                SaveItemToDB(dbGameAccount, null, _owner.Toon.DBToon.Hardcore,  EquipmentSlotId.Stash, itm);
+                SaveItemToDB(dbGameAccount, null, _owner.Toon.DBToon.Hardcore, EquipmentSlotId.Stash, itm);
             }
 
             // save gold
-            if(!_owner.Toon.DBToon.Hardcore)
+            if (!_owner.Toon.DBToon.Hardcore)
                 dbGameAccount.Gold = GetGoldAmount();
             else
                 dbGameAccount.GoldHC = GetGoldAmount();

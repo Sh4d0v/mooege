@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
 using System.Threading;
-
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -48,6 +49,18 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             Logger.Debug(" SKELETON KING QUEST STARTED ");
             StartConversation(world, 154570);
             world.Game.Quests.Advance(72061);
+            foreach (var player in world.Players)
+            {
+
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                dbQuestProgress.MaximumQuest = 72061;
+                dbQuestProgress.ActiveQuest = 72061;
+                dbQuestProgress.StepOfQuest = 1;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();
+                Logger.Debug(" Progress Saved ");
+
+            };
         }
 
         private bool StartConversation(Map.World world, Int32 conversationId)

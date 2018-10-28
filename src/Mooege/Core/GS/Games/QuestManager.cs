@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,9 +115,11 @@ namespace Mooege.Core.GS.Games
         public bool HasCurrentQuest(int snoQuest, int Step)
         {
             if (Quests.ContainsKey(snoQuest))
-                if (Quests[snoQuest].CurrentStep.QuestStepID == Step || Step == -1)
-                    return true;
-
+                //72095 32
+                    if (Step == -1 || Quests[snoQuest].CurrentStep.QuestStepID == Step)
+                        return true;
+               /* if (snoQuest == 117779 && Step == 5)
+                    return true;*/
             return false;
         }
 

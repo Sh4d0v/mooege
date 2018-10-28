@@ -1,5 +1,5 @@
 ﻿﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -237,6 +237,7 @@ namespace Mooege.Core.GS.Map
                             break;
 
                         case Mooege.Common.MPQ.FileFormats.MarkerType.MinimapMarker:
+                            //Front Gate - 5502
                             Logger.Trace("Ignoring marker {0} in {1} ({2}) because minimap marker are not handled yet", marker.Name, markerSetData.FileName, markerSetData.Header.SNOId);
 
                             break;

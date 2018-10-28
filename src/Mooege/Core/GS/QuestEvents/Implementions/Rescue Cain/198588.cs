@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
 using System.Threading.Tasks;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -38,12 +40,30 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             : base(198588)
         {
         }
-
+        
         public override void Execute(Map.World world)
         {
-            Logger.Debug(" RESCUE CAIN QUEST SECOND FILE STARTED ");
-            // world.GetActorBySNO(3739).WalkSpeed = 0.108f;
-            // world.GetActorBySNO(3739).RunSpeed = 0.3598633f;
+            Logger.Debug(" Разговор с Леей закончен ");
+            world.Game.Quests.Advance(72095);
+
+            foreach (var player in world.Players)
+            {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                dbQuestProgress.ActiveQuest = 72095;
+                dbQuestProgress.StepOfQuest = 9;
+                dbQuestProgress.StepIDofQuest = 47;
+                DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                DBSessions.AccountSession.Flush();                
+            };
+        }
+
+        private bool StartConversation(Map.World world, Int32 conversationId)
+        {
+            foreach (var player in world.Players)
+            {
+                player.Value.Conversations.StartConversation(conversationId);
+            }
+            return true;
         }
     }
 }

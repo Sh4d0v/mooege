@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,407 @@ namespace Mooege.Core.GS.Generators
             var worldAsset = MPQStorage.Data.Assets[SNOGroup.Worlds][worldSNO];
             var worldData = (Mooege.Common.MPQ.FileFormats.World)worldAsset.Data;
 
+            #region Инфа для высокогорья
+            /*
+                [075347] trOut_Highlands_Entrance_E04_N01
+                [075348] trOut_Highlands_Entrance_E04_S01
+                [075789] trOut_Highlands_Entrance_E04_S04 - "3000"	"3840"
+                [075790] trOut_Highlands_Entrance_E04_S05 - "3120"	"3840"
+
+                [074865] trOut_Highlands_Entrance_E05_S01
+                [074861] trOut_Highlands_Entrance_E05_S02
+                [074866] trOut_Highlands_Entrance_E05_S03
+                [074854] trOut_Highlands_Entrance_E05_S04
+                [075346] trOut_Highlands_Entrance_E05_N01
+
+                [074864] trOut_Highlands_Entrance_E06_S01
+                [074860] trOut_Highlands_Entrance_E06_S02
+                [074857] trOut_Highlands_Entrance_E06_S03
+                [074853] trOut_Highlands_Entrance_E06_S04
+
+                [074863] trOut_Highlands_Entrance_E07_S01
+                [074859] trOut_Highlands_Entrance_E07_S02
+                [074856] trOut_Highlands_Entrance_E07_S03
+                [074852] trOut_Highlands_Entrance_E07_S04
+
+                [074862] trOut_Highlands_Entrance_E08_S01
+                [074858] trOut_Highlands_Entrance_E08_S02
+                [074855] trOut_Highlands_Entrance_E08_S03
+                [074851] trOut_Highlands_Entrance_E08_S04
+
+                [123952] trOut_Highlands_Sub80_MysticWagon - Вагон (СубСцена)
+                
+                [076172] trOut_Highlands_Roads_EW_01
+                [076179] trOut_Highlands_Roads_NE_01
+                [076186] trOut_Highlands_Roads_NSEW_01
+                [076193] trOut_Highlands_Roads_NS_01
+                [076200] trOut_Highlands_Roads_NW_01
+                [076207] trOut_Highlands_Roads_SE_01
+                [076214] trOut_Highlands_Roads_SW_01
+                [082761] trOut_Highlands_Roads_SW_02
+                [083007] trOut_Highlands_Roads_SE_02
+                [199507] trOut_Highlands_Roads_NS_01_AO_1
+                [083128] trOut_Highlands_Roads_NW_02
+                [083257] trOut_Highlands_Roads_NS_03
+                [083286] trOut_Highlands_Roads_NS_02
+                [083326] trOut_Highlands_Roads_NE_02
+                [083395] trOut_Highlands_Roads_EW_03
+                [083453] trOut_Highlands_Roads_EW_02
+            */
+            #endregion
+            #region Лощина стенаний
+            /*
+             
+            
+
+             
+            [078420] trOut_Wilderness_Road_NE_02
+            [074241] trOut_Wilderness_Road_EW_01
+            [074248] trOut_Wilderness_Road_NE_01
+            [074276] trOut_Wilderness_Road_SW_01
+            [078798] trOut_Wilderness_Road_SW_02
+            */
+            #endregion
+            #region Проклятый замок
+            /*
+            [093289] a1dun_Leor_Jail_S_Entrance_01
+
+            [093450] a1dun_Leor_Jail_NSEW_04
+            [091982] a1dun_Leor_Jail_NSEW_02
+            [092335] a1dun_Leor_Jail_NSEW_03 // Босс батл
+            [097158] a1dun_Leor_Jail_Filler_Exit_01
+            [091385] a1dun_Leor_Jail_W_01
+            [091389] a1dun_Leor_Jail_S_01
+            [091393] a1dun_Leor_Jail_N_01
+            [091397] a1dun_Leor_Jail_E_01
+            [091435] a1dun_Leor_Jail_NSEW_01
+            [099174] a1dun_Leor_Jail_Filler_NE_01 // 
+            [099178] a1dun_Leor_Jail_Filler_NW_01 // 
+            [099182] a1dun_Leor_Jail_Filler_SE_01 // Верхний левый
+            [099186] a1dun_Leor_Jail_Filler_SW_01 // Нижний правый
+            [091311] a1dun_Leor_Jail_Filler_01
+            
+
+
+
+            [095362] a1dun_Leor_Jail_N_Exit_01
+            [093835] a1dun_Leor_Jail_NSEW_05*/
+            #endregion
+            #region Замок Леорика
+
+            /*
+             * 
+            [World] SNOId: 75049 DynamicId: 117440514 Name: a1dun_Leor_Manor}
+
+            [135710] a1dun_Leor_Tyrael_Filler_02
+            [148748] a1dun_Leor_Tyrael_Back_Skybox_01
+            [135396] a1dun_Leor_Tyrael_jail_01
+            [135521] a1dun_Leor_Tyrael_Stairs_A_01
+            /
+            [030928] a1dun_Leor_E_Entrance_01 // Начало второго уровня агоний
+            [030945] a1dun_Leor_N_Entrance_01 // Начало первого уровня агоний
+            [030953] a1dun_Leor_S_Entrance_01 
+            [030956] a1dun_Leor_W_Entrance_01
+            
+            [030957] a1dun_Leor_W_Exit_01
+            [030954] a1dun_Leor_S_Exit_01 //Выход на второй уровень
+            [001778] a1dun_Leor_N_Exit_01 
+            [030929] a1dun_leor_E_Exit_01
+            [080422] a1dun_Leor_W_Exit_Boss_01 //Выход на переправу высокогорья
+            
+            [109551] a1dun_Leor_SW_Hall_01_B
+            [109578] a1dun_Leor_SW_Hall_01_C
+            [052681] a1dun_Leor_EW_01_BellowsRoom
+            [052683] a1dun_Leor_NS_01_Executioner
+            [030924] a1dun_Leor_01_Filler
+            
+            [030948] a1dun_Leor_SE_01
+            [030949] a1dun_Leor_SE_02
+            
+            [030940] a1dun_Leor_NS_01
+            [030941] a1dun_Leor_NS_02
+            
+            [030942] a1dun_Leor_NW_01
+            [030943] a1dun_Leor_NW_02
+            
+            [030925] a1dun_Leor_EW_01
+            [030926] a1dun_Leor_EW_02
+            
+            [030932] A1dun_Leor_NE_01
+            [030933] a1dun_Leor_NE_02
+            [183305] a1dun_Leor_NE_03
+            
+            [030936] a1dun_Leor_NSE_01
+            [030937] a1dun_Leor_NSE_02
+            
+            [030938] a1dun_Leor_NSW_01
+            [030939] a1dun_Leor_NSW_02
+            
+            [030946] A1dun_Leor_SEW_01
+            [030947] a1dun_Leor_SEW_02
+            
+            [030930] a1dun_Leor_NEW_01
+            [030931] a1dun_Leor_NEW_02
+            
+            [030934] a1dun_Leor_NSEW_01
+            [030935] a1dun_Leor_NSEW_02
+            [052682] a1dun_Leor_NSEW_03
+            
+            [030944] a1dun_Leor_N_Dead_End_01
+            [030927] a1dun_Leor_E_Dead_End_01
+            [030952] a1dun_Leor_S_Dead_End_01
+            [030955] a1dun_Leor_W_Dead_End_01
+            
+            [030950] a1dun_Leor_SW_Hall_01
+            [030951] a1dun_Leor_SW_Hall_02
+            */
+            #endregion
+
+            #region Акт 2 - StingingWinds
+            /*
+                [117865] caOut_StingingWinds_Sub80_SunkenShip
+                
+                E02 - 0,E03 - 240, E04 - 480,E05 - 720, E06 - 960, E07 - 1200, E08 - 1440, E09 - 1680, E10 - 1920
+                S04 - 0,S05 - 240, S06 - 480,S07 - 720, S08 - 960, S09 - 1200, S10 - 1440, S11 - 1680, S12 - 1920, S13 - 2160, S14 - 2400, S15 - 2640, S16 - 2880, S17 - 3120
+                437 - 504
+                [031268] caOut_StingingWinds_E02_S07 0x720
+                [031269] caOut_StingingWinds_E02_S08 0x960
+                [001795] caOut_StingingWinds_E02_S09 0x1200
+                [031270] caOut_StingingWinds_E02_S10 0x1440
+
+                [031282] caOut_StingingWinds_E03_S06 240x480
+                [031283] caOut_StingingWinds_E03_S07 240x720
+                [031284] caOut_StingingWinds_E03_S08 240x960
+                [031285] caOut_StingingWinds_E03_S09 240x1200
+                [031286] caOut_StingingWinds_E03_S10 240x1440
+
+                [031301] caOut_StingingWinds_E04_S06 480x480
+                [031302] caOut_StingingWinds_E04_S07 480x720
+                [031303] caOut_StingingWinds_E04_S08 480x960
+                [031304] caOut_StingingWinds_E04_S09 480x1200
+                [031305] caOut_StingingWinds_E04_S10 480x1440
+
+                [031319] caOut_StingingWinds_E05_S05 720x240
+                [031320] caOut_StingingWinds_E05_S06 720x480
+                [031321] caOut_StingingWinds_E05_S07 720x720
+                [031322] caOut_StingingWinds_E05_S08 720x960
+                [031323] caOut_StingingWinds_E05_S09 720x1200
+                [031324] caOut_StingingWinds_E05_S10 720x1440
+                [031325] caOut_StingingWinds_E05_S11 720x1680
+                [031326] caOut_StingingWinds_E05_S12 720x1920
+
+                [031340] caOut_StingingWinds_E06_S05 960x240
+                [031341] caOut_StingingWinds_E06_S06 960x480
+                [031342] caOut_StingingWinds_E06_S07 960x720
+                [031343] caOut_StingingWinds_E06_S08 960x960
+                [031344] caOut_StingingWinds_E06_S09 960x1200
+                [031345] caOut_StingingWinds_E06_S10 960x1440
+                [001799] caOut_StingingWinds_E06_S11 960x1680
+                [031346] caOut_StingingWinds_E06_S12 960x1920
+
+                [031361] caOut_StingingWinds_E07_S05 1200x240
+                [031362] caOut_StingingWinds_E07_S06 1200x480
+                [031363] caOut_StingingWinds_E07_S07 1200x720
+                [031364] caOut_StingingWinds_E07_S08 1200x960
+                [001800] caOut_StingingWinds_E07_S09 1200x1200 5
+                [031365] caOut_StingingWinds_E07_S10 1200x1440
+                [031366] caOut_StingingWinds_E07_S11 1200x1680
+                [031367] caOut_StingingWinds_E07_S12 1200x1920
+                [031368] caOut_StingingWinds_E07_S13 1200x2160
+                [031369] caOut_StingingWinds_E07_S14 1200x2400 10
+                [110462] caOut_StingingWinds_E07_S15 1200x2640 
+                [110459] caOut_StingingWinds_E07_S16 1200x2880
+                [110456] caOut_StingingWinds_E07_S17 1200x3120
+                
+                [031381] caOut_StingingWinds_E08_S04 1440x0
+                [031382] caOut_StingingWinds_E08_S05 1440x240
+                [031383] caOut_StingingWinds_E08_S06 1440x480
+                [001801] caOut_StingingWinds_E08_S07 1440x720
+                [031385] caOut_StingingWinds_E08_S09 1440x1200 5
+                [031386] caOut_StingingWinds_E08_S10 1440x1440
+                [031387] caOut_StingingWinds_E08_S11 1440x1680
+                [031388] caOut_StingingWinds_E08_S12 1440x1920
+                [031389] caOut_StingingWinds_E08_S13 1440x2160
+                [031390] caOut_StingingWinds_E08_S14 1440x2400 10
+                [031391] caOut_StingingWinds_E08_S15 1440x2640 
+                [110465] caOut_StingingWinds_E08_S16 1440x2880
+                [110453] caOut_StingingWinds_E08_S17 1440x3120
+                
+                [031405] caOut_StingingWinds_E09_S08 1680x960
+                [031406] caOut_StingingWinds_E09_S09 1680x1200
+                [031407] caOut_StingingWinds_E09_S10 1680x1440
+                [031408] caOut_StingingWinds_E09_S11 1680x1680
+                [031409] caOut_StingingWinds_E09_S12 1680x1920 5
+                [031410] caOut_StingingWinds_E09_S13 1680x2160
+                [031411] caOut_StingingWinds_E09_S14 1680x2400
+                [031412] caOut_StingingWinds_E09_S15 1680x2640
+                [031413] caOut_StingingWinds_E09_S16 1680x2880
+                [110450] caOut_StingingWinds_E09_S17 1680x3120 10
+                
+                [031432] caOut_StingingWinds_E10_S14 1920x2400
+                [031433] caOut_StingingWinds_E10_S15 1920x2640
+                               
+            */
+            #endregion
+
+            #region Акт 2 - a2dun_Cald
+            /*
+            [086590] a2dun_Cald_E03_S01
+            [086586] a2dun_Cald_E03_S02
+            [086583] a2dun_Cald_E03_S03
+            [086579] a2dun_Cald_E03_S04
+            
+            [086589] a2dun_Cald_E04_S01
+            [086585] a2dun_Cald_E04_S02
+            [086582] a2dun_Cald_E04_S03
+            [086578] a2dun_Cald_E04_S04
+            
+            [087837] a2dun_Cald_Filler_C
+            */
+            #endregion
+            /*
+                
+            [076489] [Scene] trOut_Highlands_ManorInterior_E01_S01
+            [076485] [Scene] trOut_Highlands_ManorInterior_E01_S02
+            [076482] [Scene] trOut_Highlands_ManorInterior_E01_S03
+            
+            [076488] [Scene] trOut_Highlands_ManorInterior_E02_S01
+            [076484] [Scene] trOut_Highlands_ManorInterior_E02_S02
+            [076481] [Scene] trOut_Highlands_ManorInterior_E02_S03
+            
+            [076487] [Scene] trOut_Highlands_ManorInterior_E03_S01
+            [076490] [Scene] trOut_Highlands_ManorInterior_E03_S02
+            [076480] [Scene] trOut_Highlands_ManorInterior_E03_S03
+            
+            [076483] [Scene] trOut_Highlands_ManorInterior_E04_S02
+             */
+            if (worldAsset.SNOId == 2826)
+            {
+                //1 Уровень залов агонии 
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 58982)
+            {
+                //2 Уровень залов агонии
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 58983)
+            {
+                //3 Уровень залов агонии
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 60395)
+            {
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 72637)
+            {
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 180550)
+            {
+                worldData.IsGenerated = false;
+            }
+            if (worldAsset.SNOId == 50582)
+            {
+                worldData.IsGenerated = false;
+                /*
+                [032936] trDun_Cath_01_Filler
+                [032938] trDun_Cath_E
+                [032939] trDun_Cath_EW_01
+                [032940] trDun_Cath_EW_Entrance_01
+                [032941] trDun_Cath_EW_Hall_01
+                [032943] trDun_Cath_E_Dead_End_01
+                [032944] trDun_Cath_E_Entrance01
+                [032945] trDun_Cath_E_Entrance_02
+                [032946] trDun_Cath_E_Exit
+                [032947] trDun_Cath_E_Exit_02
+                [032948] trDun_Cath_E_Exit_Crypt_01
+                [032951] trDun_Cath_NEW_01
+                [032952] trDun_Cath_NE_01
+                [032954] trDun_Cath_NE_Hall_01
+                [032955] trDun_Cath_NE_Hall_02
+                [032956] trDun_Cath_NE_Hall_03
+                [032957] trDun_Cath_NE_Hall_04
+                [032958] trDun_Cath_NSEW_01
+                [032960] trDun_Cath_NSE_01
+                [032961] trDun_Cath_NS_01
+                [032963] trDun_Cath_NS_Hall_01
+                [032964] trDun_Cath_NS_Hall_02
+                [032965] trDun_Cath_NW_01
+                [032967] trDun_Cath_NW_Hall_01
+                [032968] trDun_Cath_NW_Hall_02
+                [032969] trDun_Cath_N_01
+                [032970] trDun_Cath_N_02
+                [032971] trDun_Cath_N_Dead_End_01
+                [032974] trDun_Cath_N_Entrance_02
+                [032975] trDun_Cath_N_Entrance_03
+                [032976] trDun_Cath_N_Exit_01
+                [032979] trDun_Cath_SEW_01
+                [032981] trDun_Cath_SE_01
+                [032982] trDun_Cath_SE_Hall_01
+                [032983] trDun_Cath_SE_Hall_02
+                [032984] trDun_Cath_SE_Hall_03
+                [032985] trDun_Cath_SW_01
+                [032986] trDun_Cath_SW_Hall_01
+                [032987] trDun_Cath_SW_Hall_02
+                [032989] trDun_Cath_S_01
+                [032990] trDun_Cath_S_02_Stranger
+                [032991] trDun_Cath_S_Dead_End_01
+                [032992] trDun_Cath_S_Entrance_01
+                [032993] trDun_Cath_S_Exit_01
+                [032995] trDun_Cath_S_Exit_03
+                [032997] trDun_Cath_S_Exit_Crypt_02
+                [032999] trDun_Cath_W_Dead_End_01
+                [033000] trDun_Cath_W_Entrance_01
+                [033001] trDun_Cath_W_Exit_01
+                [033002] trDun_Cath_W_Exit_Crypt_01
+                [136166] trDun_Cath_E_DungeonStone_Exit_01
+                [136167] trDun_Cath_N_DungeonStone_Exit_01
+                [136168] trDun_Cath_S_DungeonStone_Exit_01
+                [136170] trDun_Cath_W_DungeonStone_Exit_01
+                [001883] trDun_Cath_EW_Hall_02
+                [001884] trDun_Cath_NSW_01
+                [001885] trDun_Cath_SEW_02
+                [001886] trDun_Cath_W_01
+                [091612] trDun_Cath_NSEW_02_Templar
+                [060885] trDun_Cath_Cain_Intro_01
+                [066589] trDun_Cath_NE_02
+                [066919] trDun_Cath_NS_02
+                [066925] trDun_Cath_SE_02
+                [067021] trDun_Cath_EW_02
+                */
+
+            }
+
+            if (worldAsset.SNOId == 117405)
+            {
+
+                //worldData.IsGenerated = true;
+               
+            }
+            //trDun_Cave_Middle_RiverA - затопленный храм.
+            //trDun_Cave_Middle_ChasmA - Пристанище войнов.
+            //trDun_Cave_Middle_LostCampA - 
+
+            if(worldAsset.SNOId == 119888)
+            {
+                worldData.IsGenerated = false;
+                /*
+                 
+                [116976] trDun_Cave_Goat_NSEW_02
+                [075138] trDun_Cave_Goat_S_Entrance_01
+                [075141] trDun_Cave_Goat_NE_01
+                [075144] trDun_Cave_Goat_NSW_01
+                [075186] trDun_Cave_Goat_NS_01
+                [075261] trDun_Cave_Goat_EW_01
+                [075353] trDun_Cave_Goat_NSEW_01
+                [075606] trDun_Cave_Goat_W_Entrance_01
+
+
+                 */
+
+            }
 
             if (worldData.IsGenerated)
             {
@@ -58,6 +459,7 @@ namespace Mooege.Core.GS.Generators
 
             var world = new World(game, worldSNO);
             var levelAreas = new Dictionary<int, List<Scene>>();
+                       
 
             // Create a clusterID => Cluster Dictionary
             var clusters = new Dictionary<int, Mooege.Common.MPQ.FileFormats.SceneCluster>();
@@ -123,6 +525,7 @@ namespace Mooege.Core.GS.Generators
                     RotationW = sceneChunk.PRTransform.Quaternion.W,
                     RotationAxis = sceneChunk.PRTransform.Quaternion.Vector3D,
                     SceneGroupSNO = -1
+                    
                 };
 
                 // If the scene has a subscene (cluster ID is set), choose a random subscenes from the cluster load it and attach it to parent scene /farmy
@@ -182,7 +585,11 @@ namespace Mooege.Core.GS.Generators
 
                 }
                 scene.Specification = sceneChunk.SceneSpecification;
-                scene.LoadMarkers();
+                try
+                {
+                    scene.LoadMarkers();
+                }
+                catch { }
 
                 // add scene to level area dictionary
                 foreach (var levelArea in scene.Specification.SNOLevelAreas)
@@ -235,7 +642,7 @@ namespace Mooege.Core.GS.Generators
                 if (worldSNO == 161961)
                 {
                     entrance = tiles[131902];
-                    tiles.Remove(131902);
+                    //tiles.Remove(131902);
                 }
                 else
                     entrance = GetTileInfo(tiles, TileTypes.Entrance);

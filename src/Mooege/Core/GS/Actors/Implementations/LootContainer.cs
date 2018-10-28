@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,8 +52,10 @@ namespace Mooege.Core.GS.Actors.Implementations
         {
             // TODO Are chests dropping loot for everyone or only for the one opening it
             foreach (var p in this.GetPlayersInRange(30))
+            {
                 World.DropItem(this, null, _treasureClass.CreateDrop(player));
-
+                World.DropItem(this, null, _treasureClass.CreateWeaponDrop(player));
+            }
             World.BroadcastIfRevealed(new PlayAnimationMessage
             {
                 ActorID = this.DynamicID,

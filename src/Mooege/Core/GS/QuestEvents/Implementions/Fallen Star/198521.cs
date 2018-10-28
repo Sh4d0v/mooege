@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using Mooege.Core.GS.Map;
 using Mooege.Core.GS.Common.Types.TagMap;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
+using Mooege.Core.GS.Actors.Interactions;
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
 {
@@ -37,6 +40,8 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
     {
 
         private static readonly Logger Logger = LogManager.CreateLogger();
+        public List<ConversationInteraction> Conversations { get; private set; }
+        private Boolean HadConversation = true;
 
 
         public _198521()
@@ -46,23 +51,50 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
 
         public override void Execute(Map.World world)
         {
-            StartConversation(world, 198521);
+            //StartConversation(world, 198521); 
             Logger.Debug(" Conversation done ");
-            world.Game.Quests.Advance(87700);
-            //okay now we send a notify with QuestEvent for every one
-            world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
-            //force leah to have a specific conversation list :p
-            //world.GetActorBySNO(4580).Tags.Add(MarkerKeys.ConversationList, new TagMapEntry(198541, 108832, 2));
+            if(HadConversation)
+            {
+                //    world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
+                //world.Game.Quests.Advance(87700);
+                //world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+                world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation, 198521);
+                HadConversation = false;
+            }
 
+
+            
+            //okay now we send a notify with QuestEvent for every one
+            //force leah to have a specific conversation list :p
+            //world.GetActorBySNO(4580).Tags.Replace(MarkerKeys.ConversationList, new TagMapEntry(MarkerKeys.ConversationList.ID, 166675, 2));
+            world.Game.Quests.NotifyQuest(87700, Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest, 1);
+            world.Game.Quests.Notify(QuestStepObjectiveType.CompleteQuest, 87700);
             foreach (var player in world.Players)
             {
-                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
-                {
-                    snoQuest = 87700,
-                    Field1 = 2,
-                    Field2 = 10.0f
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                
+                
+                D3.Quests.QuestReward.Builder Reward = new D3.Quests.QuestReward.Builder();
+                Reward.SnoQuest = 87700;
+                Reward.GoldGranted = 500;
+                Reward.XpGranted = 1000;
 
+                Reward.Build();
+
+                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestRewardMessage()
+                {
+                    QuestReward = Reward.Build()
                 });
+                player.Value.PlayEffectGroup(224698);
+                player.Value.PlayEffect(Net.GS.Message.Definitions.Effect.Effect.LevelUp, 203455);
+                //player.Value.World.Game.Quests.CurrentQuest(72095);
+                       dbQuestProgress.MaximumQuest = 72095;
+                       dbQuestProgress.ActiveQuest = 72095;
+                       dbQuestProgress.StepOfQuest = -1;
+                       dbQuestProgress.StepIDofQuest = 7;
+                        dbQuestProgress.StepIDofQuest = 43;
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                       DBSessions.AccountSession.Flush();
             };
 
             // starting second quest

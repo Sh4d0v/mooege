@@ -445,17 +445,16 @@ namespace Mooege.Core.GS.Powers.Implementations
 
         public override IEnumerable<TickTimer> Main()
         {
-            //These are both zero, but we will keep them in the event blizzard changed their mind.
-            StartCooldown(EvalTag(PowerKeys.CooldownTime));
-            UsePrimaryResource(EvalTag(PowerKeys.ResourceCost));
+            var DemonHunterConf = Net.GS.DemonHunterPrimarySkills.DemonHunterPrimarySkillsConfig.Instance;
 
+            GeneratePrimaryResource(DemonHunterConf.HungeringArrowHatredGeneration); // The skill generate hatred on shot, not on hit.
+            var pierced = false;
             var projectile = new Projectile(this, RuneSelect(129932, 154590, 154591, 154592, 154593, 154594), User.Position);
             projectile.Position.Z += 5f;
-            projectile.Launch(TargetPosition, ScriptFormula(7));
+            projectile.Launch(TargetPosition, ScriptFormula(7)); // Projectile Speed
             projectile.OnCollision = (hit) =>
             {
                 SpawnEffect(99572, new Vector3D(hit.Position.X, hit.Position.Y, hit.Position.Z + 5f)); // impact effect (fix height)
-                WeaponDamage(hit, ScriptFormula(0), DamageType.Physical);
                 bool firsthit = true;
                 float range = ScriptFormula(3);
                 if (firsthit == false)
@@ -465,19 +464,117 @@ namespace Mooege.Core.GS.Powers.Implementations
                 var remaningtargets = GetEnemiesInRadius(hit.Position, 10f);
                 int count = remaningtargets.Actors.Count();
                 var targets = (GetEnemiesInRadius(hit.Position, range));
-                double chance = RandomHelper.NextDouble();
                 targets.Actors.Remove(hit);
                 var closetarget = targets.GetClosestTo(hit.Position);
-                if (closetarget != null && chance > ScriptFormula(5))
+
+                if (Rune_D > 0) // Puncturing Arrow
                 {
-                    projectile.Launch(closetarget.Position, ScriptFormula(7));
+                    if (Rand.NextDouble() < DemonHunterConf.HungeringArrowPuncturingPierceChance / 100)
+                    {
+                        pierced = true;
+
+                        if (closetarget != null)
+                            projectile.Launch(closetarget.Position, ScriptFormula(7));
+                        else
+                            projectile.Launch(User.Position, ScriptFormula(7));
+                    }
+                }
+                else if (Rand.NextDouble() < DemonHunterConf.HungeringArrowPierceChance / 100) // Base Pierce Chance
+                {
+                    pierced = true;
+
+                    if (Rune_B > 0) // Shatter Shot
+                    {
+                        if (pierced)
+                        {
+                            var shatterShots = DemonHunterConf.HungeringArrowShatterShotProjectiles;
+                            Vector3D inFrontOfUser = PowerMath.TranslateDirection2D(User.Position, TargetPosition, User.Position, 3f);
+                            Vector3D[] projDestinations = PowerMath.GenerateSpreadPositions(User.Position, TargetPosition, 1f, shatterShots);
+
+                            for (int i = 0; i < projDestinations.Length; i++)
+                            {
+                                var multiproj = new Projectile(this, RuneSelect(129932, 154590, 154591, 154592, 154593, 154594), hit.Position);
+                                multiproj.OnCollision = (Target) =>
+                                {
+                                    WeaponDamage(Target, DemonHunterConf.HungeringArrowShatterShotWeaponDamage / 100, DamageType.Physical);
+                                };
+                                multiproj.Launch(projDestinations[i], ScriptFormula(7));
+                            }
+                        }
+                    }
+                    else if (closetarget != null)
+                    {
+                        projectile.Launch(closetarget.Position, ScriptFormula(7));
+                    }
+                    else
+                    {
+                        projectile.Destroy();
+                    }
+                }
+
+                if (Rune_A > 0) // Cinder Arrow
+                {
+                    AddBuff(hit, new CinderDoTDamage());
+                }
+
+                if (Rune_E > 0) // Spray of Teeth
+                {
+                    if (Rand.NextDouble() < User.Attributes[GameAttribute.Crit_Percent_Base]) //AttackPayload and PowerManager has a conflict adding the same T value to AddDeletingActor, make this for another critical condition [Necrosummon]
+                    {
+                        WeaponDamage(GetEnemiesInRadius(hit.Position, DemonHunterConf.HungeringArrowSprayOfTeethArea), DemonHunterConf.HungeringArrowSprayOfTeethWeaponDamage / 100, DamageType.Physical);
+                        projectile.Destroy();
+                    }
+                }
+
+                if (Rune_C > 0) // Devouring Arrow
+                {
+                    if (pierced)
+                    {
+                        WeaponDamage(hit, (DemonHunterConf.HungeringArrowDamagePercent / 100) + (DemonHunterConf.HungeringArrowDevouringArrowExtraDamage / 100), DamageType.Physical);
+                        projectile.Destroy();
+                    }
+                    else
+                        WeaponDamage(hit, DemonHunterConf.HungeringArrowDamagePercent / 100, DamageType.Physical); // Base Damage
                 }
                 else
                 {
-                    projectile.Destroy();
+                    WeaponDamage(hit, DemonHunterConf.HungeringArrowDamagePercent / 100, DamageType.Physical); // Base Damage
                 }
             };
             yield break;
+        }
+
+        [ImplementsPowerBuff(0)]
+        class CinderDoTDamage : PowerBuff
+        {
+            const float _damageRate = 1f;
+            TickTimer _damageTimer = null;
+
+            public override void Init()
+            {
+                var DemonHunterConf = Net.GS.DemonHunterPrimarySkills.DemonHunterPrimarySkillsConfig.Instance;
+                Timeout = WaitSeconds(DemonHunterConf.HungeringArrowCinderArrowDuration);
+            }
+
+            public override bool Update()
+            {
+                var DemonHunterConf = Net.GS.DemonHunterPrimarySkills.DemonHunterPrimarySkillsConfig.Instance;
+
+                if (base.Update())
+                    return true;
+
+                if (_damageTimer == null || _damageTimer.TimedOut)
+                {
+                    _damageTimer = WaitSeconds(_damageRate);
+
+                    WeaponDamage(Target, DemonHunterConf.HungeringArrowCinderArrowExtraDamage / 100, DamageType.Fire);
+                }
+                return false;
+            }
+            public override void Remove()
+            {
+                base.Remove();
+            }
         }
     }
     #endregion
@@ -828,21 +925,21 @@ namespace Mooege.Core.GS.Powers.Implementations
             public override void Init()
             {
                 base.Init();
-                Timeout = WaitSeconds(ScriptFormula(4));
+                Timeout = WaitSeconds(2f);
             }
             public override bool Apply()
             {
                 if (!base.Apply())
                     return false;
 
-                AddBuff(Target, new DebuffSlowed(0.7f, WaitSeconds(ScriptFormula(4))));
+                AddBuff(Target, new DebuffSlowed(0.7f, WaitSeconds(2f)));
 
                 return true;
             }
 
             public override void Remove()
             {
-                base.Remove();
+                base.Remove(); 
             }
         }
     }
@@ -928,7 +1025,8 @@ namespace Mooege.Core.GS.Powers.Implementations
 
             public override void Remove()
             {
-                base.Remove();
+               base.Remove();
+               
             }
         }
     }

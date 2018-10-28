@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,10 @@ using Mooege.Net.GS.Message.Definitions.Game;
 using Mooege.Net.GS.Message.Definitions.Misc;
 using Mooege.Net.GS.Message.Definitions.Player;
 using Mooege.Net.GS.Message.Fields;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
+using System.Collections.Generic;
+using Mooege.Net.MooNet;
 using Mooege.Core.GS.Common.Types.Math;
 
 namespace Mooege.Core.GS.Games
@@ -90,7 +94,7 @@ namespace Mooege.Core.GS.Games
         /// <summary>
         /// Tick counter.
         /// </summary>
-        private int _tickCounter;
+        private int _tickCounter = 6;
 
         /// <summary>
         /// Returns the latest tick count.
@@ -142,13 +146,27 @@ namespace Mooege.Core.GS.Games
         /// Creates a new game with given gameId.
         /// </summary>
         /// <param name="gameId"></param>
-        public Game(int gameId)
+        public Game(int gameId, List<MooNetClient> clients)
         {
             this.GameId = gameId;
             this.Players = new ConcurrentDictionary<GameClient, Player>();
             this._objects = new ConcurrentDictionary<uint, DynamicObject>();
             this._worlds = new ConcurrentDictionary<int, World>();
-            this.StartingWorldSNOId = 71150; // FIXME: This must be set according to the game settings (start quest/act). Better yet, track the player's save point and toss this stuff. /komiga
+            //Проверка на текущий акт!
+            if (clients != null)
+            {
+                var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(clients[0].Account.CurrentGameAccount.CurrentToon.PersistentID);
+                if (dbQuestProgress.ActiveAct == 0 || dbQuestProgress.ActiveAct == 1)
+                    this.StartingWorldSNOId = 71150;
+                else if (dbQuestProgress.ActiveAct == 2)
+                    this.StartingWorldSNOId = 71150;
+                // Леорик 1 - 2824, 2 - 58982, 3 - 58983
+                DBSessions.AccountSession.Flush();
+            }
+            else
+            {
+                this.StartingWorldSNOId = 71150; 
+            }
             this.Quests = new QuestManager(this);
 
             this._tickWatch = new Stopwatch();
@@ -216,7 +234,7 @@ namespace Mooege.Core.GS.Games
                             client.Player.Inventory.Consume(client, message);
                             break;
                         case Consumers.Player:
-                            client.Player.Consume(client, message);
+                            client.Player.Consume(client, message);                            
                             break;
 
                         case Consumers.Conversations:
@@ -251,7 +269,7 @@ namespace Mooege.Core.GS.Games
         public void Enter(Player joinedPlayer)
         {
             this.Players.TryAdd(joinedPlayer.InGameClient, joinedPlayer);
-
+            
             // send all players in the game to new player that just joined (including him)
             foreach (var pair in this.Players)
             {
@@ -281,11 +299,23 @@ namespace Mooege.Core.GS.Games
             });
 
             //joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.First().Position);
-            joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.Find(x => x.ActorSNO.Name == "Start_Location_Team_0").Position);
-            //joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.Find(x => x.ActorSNO.Name == "Start_Location_0").Position); // Tristam Zone
+            
+            var world = joinedPlayer.World;
+            Vector3D ToPortal1Act = new Vector3D(2985.6241f, 2795.627f, 24.04532f);
+            // Проверка на место спауна.
+            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(joinedPlayer.Toon.PersistentID);
+            if (dbQuestProgress.ActiveQuest != -1)
+            {
+                if(dbQuestProgress.ActiveAct == 0 || dbQuestProgress.ActiveAct == 1)
+                    joinedPlayer.EnterWorld(ToPortal1Act);
+            }
+            else
+            {
+                joinedPlayer.EnterWorld(this.StartingWorld.StartingPoints.Find(x => x.ActorSNO.Name == "Start_Location_Team_0").Position);
+            }
+            DBSessions.AccountSession.Flush();
             joinedPlayer.InGameClient.TickingEnabled = true; // it seems bnet-servers only start ticking after player is completely in-game. /raist
 
-            //joinedPlayer.World.SpawnMonster(6652, new Vector3D(2967, 2859, 24)); // Spawn a monster when the player login
         }
 
         /// <summary>
@@ -310,11 +340,14 @@ namespace Mooege.Core.GS.Games
                 Field9 = 0x00000001,
                 ActorID = joinedPlayer.DynamicID,
             });
+            var dbArtisans = DBSessions.AccountSession.Get<DBArtisansOfToon>(joinedPlayer.Toon.PersistentID);
 
             target.InGameClient.SendMessage(joinedPlayer.GetPlayerBanner()); // send player banner proto - D3.GameMessage.PlayerBanner
-            target.InGameClient.SendMessage(joinedPlayer.GetBlacksmithData()); // send player artisan proto /fasbat
-            target.InGameClient.SendMessage(joinedPlayer.GetJewelerData());
-            target.InGameClient.SendMessage(joinedPlayer.GetMysticData());
+            target.InGameClient.SendMessage(joinedPlayer.GetBlacksmithData(dbArtisans)); // Modded by AiDiEvE
+            target.InGameClient.SendMessage(joinedPlayer.GetJewelerData(dbArtisans));
+            target.InGameClient.SendMessage(joinedPlayer.GetMysticData(dbArtisans));
+
+            DBSessions.AccountSession.Flush();
         }
 
         #endregion

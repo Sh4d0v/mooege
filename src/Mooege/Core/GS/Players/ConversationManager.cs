@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -248,13 +248,25 @@ namespace Mooege.Core.GS.Players
             });
 
             //TODO: Handle each conversation type
-            if (this.asset.ConversationType == ConversationTypes.QuestEvent)
+            if (this.asset.ConversationType == ConversationTypes.QuestEvent || this.asset.ConversationType == ConversationTypes.QuestFloat)
             {
                 logger.Debug("Handling conversation type QuestEvent for Conversation: {0}", this.SNOId);
                 if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
                 {
                     logger.Info(" (EndConversation) Start cov");
                     this.manager.QuestEventDict[(uint)this.SNOId].Execute(this.player.World); // launch a questEvent
+                }
+                else
+                {
+                    logger.Debug("  (EndConversation) Conversation number {0} is linked to a Quest Event or Quest Float or Quest Standard, it should be implemented ", this.SNOId);
+                }
+            }else if (this.SNOId == 167115 || this.SNOId == 72817 || this.SNOId == 133372 || this.SNOId == 198925 || this.SNOId == 194942)  // КАААААААААСТЫЛИ
+            {
+                logger.Debug("Запуск диалога: {0}", this.SNOId);
+                if (this.manager.QuestEventDict.ContainsKey((uint)this.SNOId))
+                {
+                    logger.Info("(Диалог) Запуск скрипта");
+                    this.manager.QuestEventDict[(uint)this.SNOId].Execute(this.player.World); // Запуск квеста
                 }
                 else
                 {
@@ -266,6 +278,8 @@ namespace Mooege.Core.GS.Players
                 logger.Debug("  (EndConversation) Conversation type {0} for Conversation: {1} not implemented", this.asset.ConversationType, this.SNOId);
 
             }
+           
+            
 
             if (ConversationEnded != null)
                 ConversationEnded(this, null);
@@ -376,24 +390,123 @@ namespace Mooege.Core.GS.Players
             // this is were we store the active quests when they are implemented 
             // warning the number here should match that of conversation which ARE considered as QuestEvent from the asset db
 
-            // protector of tristam 87700
-            this.QuestEventDict.Add(151087, new SurviveTheWaves());
-            this.QuestEventDict.Add(151123, new LeahInn());
-            this.QuestEventDict.Add(151167, new LeahInnAfterKilling());
-            this.QuestEventDict.Add(198503, new _198503()); // erekose
-            this.QuestEventDict.Add(198521, new _198521()); // erekose
+            // Fallen Star 87700
+            this.QuestEventDict.Add(151087, new SurviveTheWaves()); //Defend of New Tristram
+            this.QuestEventDict.Add(151123, new LeahInn()); // Inn and Killing Zombie
+            this.QuestEventDict.Add(151167, new LeahInnAfterKilling()); //Talking With Leah
+            this.QuestEventDict.Add(198503, new _198503()); // Killing WM and QWM + Teleport  
+            this.QuestEventDict.Add(198521, new _198521()); // Teleport and End.
 
-            // rescue Cain 72095
-            this.QuestEventDict.Add(198541, new _198541()); // erekose
-            this.QuestEventDict.Add(198617, new _198617()); // erekose
+            // Rescue Cain 72095
+            this.QuestEventDict.Add(198541, new _198541()); // Start Quest
+            this.QuestEventDict.Add(190404, new _190404()); // Диалог перед телепортацией
+            this.QuestEventDict.Add(166678, new _166678()); // Открытие ворот
+            this.QuestEventDict.Add(167115, new _167115()); // Призыв и убийство капитана Далтина
+            this.QuestEventDict.Add(198588, new _198588()); // Разговор с Леей под домом после убийства
+            this.QuestEventDict.Add(17667, new _17667());   // Разговор с Каином после спасения
+            this.QuestEventDict.Add(198617, new _198617()); // Завершение квеста
+            /* Step to Save
+            [Debug] [Quest]: 1  (quest ctor) steps ID contained in quest is : 7 
+            [Debug] [Quest]: 2 (quest ctor) steps ID contained in quest is : 28
+            [Debug] [Quest]: 3 (quest ctor) steps ID contained in quest is : 49
+            [Debug] [Quest]: 4 (quest ctor) steps ID contained in quest is : 39
+            [Debug] [Quest]: 5 (quest ctor) steps ID contained in quest is : 41
+            [Debug] [Quest]: 6 (quest ctor) steps ID contained in quest is : 51
+            [Debug] [Quest]: 7 (quest ctor) steps ID contained in quest is : 43
+            [Debug] [Quest]: 8 (quest ctor) steps ID contained in quest is : 45
+            [Debug] [Quest]: 9 (quest ctor) steps ID contained in quest is : 47
+            [Debug] [Quest]: 10 (quest ctor) steps ID contained in quest is : 23
+            [Debug] [Quest]: 11 (quest ctor) steps ID contained in quest is : 11
+            [Debug] [Quest]: 12 (quest ctor) steps ID contained in quest is : 15
+            [Debug] [Quest]: 13 (quest ctor) steps ID contained in quest is : 17
+            [Debug] [Quest]: 14 (quest ctor) steps ID contained in quest is : 19
+            [Debug] [Quest]: 15 (quest ctor) steps ID contained in quest is : 32
+            */
+            // Crown 72221
+            this.QuestEventDict.Add(198292, new _198292()); // Диалог с кузнецом
+            this.QuestEventDict.Add(198312, new _198312()); // Диалог после убийства миры с кузнецом
+            this.QuestEventDict.Add(196041, new _196041()); // Диалог с кузнецом для починки короны
+            this.QuestEventDict.Add(196043, new _196043()); // Завершение квеста
 
-            // skeleton king 72061
-            this.QuestEventDict.Add(154570, new _154570());
+            // EVENT - Highlands VendorRescue 129801
+            this.QuestEventDict.Add(129751, new _129751()); // Начало квеста
 
+            // EVENT - Jar of Souls - 84767
+
+
+            // Skeleton King 72061
+            this.QuestEventDict.Add(80681, new _80681()); // Начало квеста
+            this.QuestEventDict.Add(139823, new _139823()); // Начало события с мечом
+            this.QuestEventDict.Add(139825, new _139825()); // Продолжение события с мечом
+            this.QuestEventDict.Add(181910, new _181910()); // Приветствие в кратере
+            this.QuestEventDict.Add(181912, new _181912()); // Последующий диалог в кратере.
+            this.QuestEventDict.Add(117371, new _117371()); // Завершение квеста.
+            
+            // Sword of Justice 117779
+            this.QuestEventDict.Add(194412, new _194412()); // Диалог с Магдой
+            this.QuestEventDict.Add(118037, new _118037()); // Завершение квеста.
+
+            // The Broken Blade/ Nephalem Power 72738
+            this.QuestEventDict.Add(167656, new _167656()); // Начало на ферме.
+            this.QuestEventDict.Add(167677, new _167677()); // Диалог с бандитом.
+            this.QuestEventDict.Add(111899, new _111899()); // События после фермы.
+            this.QuestEventDict.Add(81576, new _81576()); // Первый диалог с Алариком.
+            this.QuestEventDict.Add(133372, new _133372()); // Диалог с Алариком внутри Храма после убийства скелетов.
+            this.QuestEventDict.Add(198925, new _198925()); // МАГДА!).
+
+            // The Doom in Wortham / TownAttack 73236
+            this.QuestEventDict.Add(120357, new _120357()); //Начало квеста
+            this.QuestEventDict.Add(72817, new _72817()); //Отправка в город
+            this.QuestEventDict.Add(194942, new _194942()); //Угроза Магды
+            this.QuestEventDict.Add(165080, new _165080()); //Магда в подвале
+
+            // Trailing the Coven 72546
+            this.QuestEventDict.Add(138268, new _138268()); //Магда в подвале
+
+            // The Imprisoned Angel 72801
+            this.QuestEventDict.Add(103388, new _103388()); //Призрак королевы
+            this.QuestEventDict.Add(119680, new _119680()); //Возвращение меча
+
+            // Перед сбором душ - [103388] [Conversation] Quest_Jail_Queen_01
+            // После сбора душ - [109728] [Conversation] Quest_Jail_Queen_AllPrisonersFreed
+            // Return to Tristram 136656
+
+            //Конец Первого АКТА!
+
+            //Квесты второго акта
+            // Калдейский базар
+            /*
+                Level Area = 55313
+              	StartingPointActorTag = 130
+                World = 70885
+             */
+            // Калдей
+            /*
+                Level Area = 210451
+              	StartingPointActorTag = 147
+                World = 109894
+             */
+            // Калдей
+            /*
+                Level Area = 81178
+              	StartingPointActorTag = 108
+                World = 81715
+            */
+
+            // 1  - 80322
+            // 2  - 93396
+            // 3  - 74128
+            // 4  - 57331
+            // 5  - 78264
+            // 6  - 78266
+            // 7  - 57335
+            // 8  - 57337
+            // 9  - 121792
+            // 10 - 57339
         }
 
         /// <summary>
-        /// Stops all conversations
+        /// Остановка всех диалогов
         /// </summary>
         public void StopAll()
         {
@@ -410,9 +523,9 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Starts and plays a conversation
+        /// Запуск и исполнение диалога
         /// </summary>
-        /// <param name="snoConversation">SnoID of the conversation</param>
+        /// <param name="snoConversation">SnoID - номер диалога</param>
         public void StartConversation(int snoConversation)
         {
             if (!Mooege.Common.MPQ.MPQStorage.Data.Assets[Common.Types.SNO.SNOGroup.Conversation].ContainsKey(snoConversation))
@@ -430,7 +543,6 @@ namespace Mooege.Core.GS.Players
                 lock (openConversations)
                 {
                     openConversations.Add(snoConversation, newConversation);
-
                 }
             }
         }
@@ -442,14 +554,33 @@ namespace Mooege.Core.GS.Players
         {
             Conversation conversation = sender as Conversation;
             logger.Debug(" (ConversationEnded) Sending a notify with type {0} and value {1}", QuestStepObjectiveType.HadConversation, conversation.SNOId);
-
-            quests.Notify(QuestStepObjectiveType.HadConversation, conversation.SNOId);
+//            if(conversation.SNOId != 198521)
+                quests.Notify(QuestStepObjectiveType.HadConversation, conversation.SNOId);
 
             lock (openConversations)
             {
                 openConversations.Remove(conversation.SNOId);
             }
-
+            if (conversation.SNOId == 72817)
+            {
+                var AttackedTown = player.World.Game.GetWorld(72882);
+                Vector3D Start = new Vector3D(511.3073f,855.166f,79.90576f);
+                //var startingPoint = AttackedTown.StartingPoints[2].Position;
+                player.ChangeWorld(AttackedTown, Start);
+            }
+            //Принудительная отправка во второй акт!
+            /*if (conversation.SNOId == 177564)
+            {
+                var Caldeum = player.World.Game.GetWorld(161472);
+                //Vector3D Start = new Vector3D(0f, 0f, 0f);
+                var startingPoint = Caldeum.GetActorBySNO(5503).Position;
+                player.ChangeWorld(Caldeum, startingPoint);
+                //Caldeum.Game.Quests.Advance(80322);
+                var LeahInCamp = Caldeum.GetActorBySNO(161510);
+                //LeahInCamp.
+                //LeahInCamp.Tags.Replace(Common.Types.TagMap.MarkerKeys.ConversationList, new Common.Types.TagMap.TagMapEntry(Common.Types.TagMap.MarkerKeys.ConversationList.ID, 900001, 2));
+            }*/
+            //50588
             if (conversation.ConvPiggyBack != -1)
                 StartConversation(conversation.ConvPiggyBack);
 
@@ -457,7 +588,7 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Returns true when the conversation playing finishes.
+        /// Возвращать true - если диалог завершён правильно.
         /// </summary>
         private bool _conversationTrigger = false;
         public bool ConversationRunning()
@@ -468,7 +599,7 @@ namespace Mooege.Core.GS.Players
         }
 
         /// <summary>
-        /// Update all open conversations
+        /// Обновление доступных диалогов
         /// </summary>
         /// <param name="gameTick"></param>
         public void Update(int tickCounter)

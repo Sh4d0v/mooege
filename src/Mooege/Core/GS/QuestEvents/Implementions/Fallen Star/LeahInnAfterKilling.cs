@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ using Mooege.Core.GS.Actors;
 using Mooege.Core.GS.Common.Types.Math;
 using Mooege.Core.GS.Generators;
 using Mooege.Common.Logging;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 
 namespace Mooege.Core.GS.QuestEvents.Implementations
@@ -54,6 +56,15 @@ namespace Mooege.Core.GS.QuestEvents.Implementations
             {
                 HadConversation = false;
                 world.Game.Quests.Advance(87700);
+                foreach (var player in world.Players)
+                {
+                    var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Value.Toon.PersistentID);
+                    dbQuestProgress.ActiveQuest = 87700;
+                    dbQuestProgress.StepOfQuest = 5;
+                    dbQuestProgress.StepIDofQuest = 50;
+                    DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                    DBSessions.AccountSession.Flush();
+                };
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,5 +40,6 @@ namespace Mooege.Common.Storage.AccountDataBase.Entities
         public virtual bool Deleted { get; set; }
 
         public virtual DBActiveSkills DBActiveSkills { get; set; }
+        public virtual DBProgressToon DBProgressToon { get; set; }
     }
 }

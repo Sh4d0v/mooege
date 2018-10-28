@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ namespace Mooege.Common.Versions
             /// Main assemblies version.
             /// </summary>
             public const string Version = "1.10485.*"; // also 1.11327.*
+            //public const string Version = "1.11327.*"; 
         }
 
         /// <summary>
@@ -48,9 +49,12 @@ namespace Mooege.Common.Versions
             /// Required client version.
             /// </summary>
             public const int RequiredClientVersion = 10485; // also 11327
+            //public const int RequiredClientVersion = 11327;
 
             public static Dictionary<string, int> ClientVersionMaps = new Dictionary<string, int>
             {
+                {"Aurora 127cc0376a_public", 13300},
+                {"Aurora d2b2e2dbd0_public", 11327},
                 {"Aurora ab0ebd5e2c_public", 10485}, // also 10057, 10235
                 {"Aurora 24e2d13e54_public", 9991},
                 {"Aurora 79fef7ae8e_public", 9950},
@@ -151,6 +155,7 @@ namespace Mooege.Common.Versions
             /// Required MPQ patch version.
             /// </summary>
             public const int RequiredPatchVersion = 10485; // also 11327
+            //public const int RequiredPatchVersion = 11327;
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ namespace Mooege.Core.GS.Skills
             // Barbarian
             if (player.RuthlessPassive())
             {
-                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.55f;
+                player.Attributes[GameAttribute.Crit_Percent_Base] += 0.05f;
                 player.Attributes[GameAttribute.Crit_Damage_Percent] += 0.5f;
             }
 

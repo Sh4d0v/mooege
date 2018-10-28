@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,6 +120,17 @@ namespace Mooege.Core.GS.Games
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.InteractWithActor:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillMonster:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.CompleteQuest:
+                            {
+                                /*
+                                player.Value.InGameClient.SendMessage(new Mooege.Net.GS.Message.Definitions.Quest.QuestMeterMessage()
+                                {
+                                    snoQuest = 87700,
+                                    Field1 = 2,
+                                    Field2 = 10.0f
+                                });*/
+                               // questStep.EndQuest(this);
+                                break;
+                            }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.HadConversation:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EnterLevelArea:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.EventReceived:
@@ -149,6 +160,49 @@ namespace Mooege.Core.GS.Games
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.KillGroup:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PlayerFlagSet:
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.PossessItem:
+                            {
+                                if (value == objective.SNOName1.Id)
+                                {
+                                    Logger.Debug(" %%%%%%% AN EVENT OCCURED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ");
+                                    Logger.Debug(" (Notify) objective SNOName1  Name : {0}, Id {1}, Valid {2} ", objective.SNOName1.Name, objective.SNOName1.Id, objective.SNOName1.IsValid);
+                                    Logger.Debug(" (Notify) objective SNOName2  Name : {0}, Id {1}, Valid {2} ", objective.SNOName2.Name, objective.SNOName2.Id, objective.SNOName2.IsValid);
+                                    Logger.Debug(" (Notify) objective Group1Name : {0} ", objective.Group1Name);
+                                    Logger.Debug(" (Notify) objective I0 : {0} ", objective.I0);
+                                    Logger.Debug(" (Notify) objective I2 : {0} ", objective.I2);
+                                    Logger.Debug(" (Notify) objective I4 : {0} ", objective.I4);
+                                    Logger.Debug(" (Notify) objective I5 : {0} ", objective.I5);
+                                    Logger.Debug(" -> (Notify) objectiveType : {0} ", objective.ObjectiveType);
+                                    Logger.Debug(" (Notify) objective GBID1 : {0} ", objective.GBID1);
+                                    Logger.Debug(" (Notify) objective GBID2 : {0} ", objective.GBID2);
+                                    Logger.Debug(" (Notify) NOW CALLING UPDATE COUNTER ");
+
+                                    Counter++;
+
+
+                                    //*/
+                                    questStep.UpdateCounter(this);
+                                }
+                                if (value == 61441)
+                                {
+                                    if (this.questStep.ObjectivesSets[0].Objectives[0].Counter == 0)
+                                    {
+                                        this.questStep.ObjectivesSets[0].Objectives[0].Counter++;
+                                        this.questStep.ObjectivesSets[1].Objectives[0].Counter++;
+                                        questStep.UpdateCounter(this);
+                                    }
+                                }
+                                if (value == 62989)
+                                {
+                                    if (this.questStep.ObjectivesSets[0].Objectives[1].Counter == 0)
+                                    {
+                                        this.questStep.ObjectivesSets[0].Objectives[1].Counter++;
+                                        this.questStep.ObjectivesSets[1].Objectives[1].Counter++;
+                                        questStep.UpdateCounter(this);
+                                    }
+                                }
+                                
+                                break;
+                            }
                         case Mooege.Common.MPQ.FileFormats.QuestStepObjectiveType.TimedEventExpired:
                             throw new NotImplementedException();
                     }
@@ -183,6 +237,34 @@ namespace Mooege.Core.GS.Games
                         Checked = objective.Done ? 1 : 0,
                     });
 
+            }
+
+            private void EndQuest(QuestObjective objective)
+            {
+
+                Logger.Debug("Test of End Quest");
+                D3.Quests.QuestReward.Builder Reward = new D3.Quests.QuestReward.Builder();
+                Reward.SnoQuest = 87700;
+                Reward.GoldGranted = 500;
+                Reward.XpGranted = 1000;
+                D3.Quests.QuestStepComplete.Builder builder = new D3.Quests.QuestStepComplete.Builder();
+                builder.Reward = Reward.Build();
+                builder.SetIsQuestComplete(true);
+
+                
+                //D3.Quests.QuestStepComplete.Builder() StepComp = new D3.Quests.QuestStepComplete.Builder();
+                foreach (var player in _quest.game.Players.Values)
+                {
+                    player.InGameClient.SendMessage(new QuestStepCompleteMessage()
+                    {
+                        //QuestStepComplete = builder.Build();
+                        QuestStepComplete = builder.Build()
+                    });
+                    player.InGameClient.SendMessage(new QuestRewardMessage()
+                    {
+                        QuestReward = Reward.Build()
+                    });
+                }
             }
 
             private void UpdateCounter(QuestObjective objective)
@@ -243,11 +325,26 @@ namespace Mooege.Core.GS.Games
 
                 foreach (var objectiveSet in assetQuestStep.StepObjectiveSets)
                 {
-                    ObjectivesSets.Add(new ObjectiveSet()
+                    if (objectiveSet.FollowUpStepID == -2)
                     {
-                        FollowUpStepID = objectiveSet.FollowUpStepID,
-                        Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
-                    });
+                        ObjectivesSets.Add(new ObjectiveSet()
+                        {
+
+                            FollowUpStepID = 36,
+                            Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
+                        });
+                    }
+                    else
+                    {
+                        ObjectivesSets.Add(new ObjectiveSet()
+                        {
+
+                            FollowUpStepID = objectiveSet.FollowUpStepID,
+                            Objectives = new List<QuestObjective>(from objective in objectiveSet.StepObjectives select new QuestObjective(objective, this, c++))
+                        });
+                    }
+                    
+                    
                 }
                 c = 0;
 
@@ -448,7 +545,7 @@ namespace Mooege.Core.GS.Games
                     CurrentStep = null;
                     completedSteps.Add(FollowUpStepID);
                     Logger.Debug(" (StepCompleted) shooting the event handler");
-                    OnQuestProgress -= OnQuestProgress;
+                    //OnQuestProgress -= OnQuestProgress;
                 }
                 else
                 {

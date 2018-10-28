@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 using System;
 using System.Data.SQLite;
+
 using System.IO;
 using Mooege.Common.Helpers.IO;
 using Mooege.Common.Logging;
@@ -28,10 +29,12 @@ namespace Mooege.Common.Storage
     public static class DBManager
     {
         public static SQLiteConnection MPQMirror { get; private set; }
-
         public static SQLiteConnection Connection { get; private set; }
+        
 
         public static readonly Logger Logger = LogManager.CreateLogger();
+        public static string LoginSQL = "postgres";
+        public static string PassWSQL = "postgres";
 
         public static string AssetDirectory
         {
@@ -68,15 +71,32 @@ namespace Mooege.Common.Storage
 
         private static void ConnectAccounts()
         {
-            try
+            if (Mooege.Common.Storage.Config.Instance.DatabaseSystem == "SQLite")
             {
-
-                Connection = new SQLiteConnection(String.Format("Data Source={0}/accountDB.db", AssetDirectory));
-                Connection.Open();
+                try
+                {
+                    Logger.Info("Database System = SQLite.");
+                    Connection = new SQLiteConnection(String.Format("Data Source={0}/AccountDB.db", AssetDirectory));
+                    Connection.Open();
+                }
+                catch (Exception e)
+                {
+                    Logger.FatalException(e, "Connect()");
+                }
             }
-            catch (Exception e)
+
+            else if (Mooege.Common.Storage.Config.Instance.DatabaseSystem == "MySQL")
             {
-                Logger.FatalException(e, "Connect()");
+                try
+                {
+                    Logger.Info("Database System = MySQL.");
+                    Logger.Info("Attention! This version is experimental, the database for accounts has moved to MySQL.");
+                    Logger.Info("No use SSL Mode, standard user and password: mooege. ");
+                }
+                catch (Exception e)
+                {
+                    Logger.FatalException(e, "Connect()");
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,8 +228,8 @@ namespace Mooege.Core.GS.Actors
             Logger.Debug(" (OnTargeted) the npc has dynID {0}", DynamicID);
 
             player.SelectedNPC = this;
-
-            var vendor = player.SelectedNPC as Vendor;
+			
+			var vendor = player.SelectedNPC as Vendor;
 
             var count = Interactions.Count + Conversations.Count;
 
@@ -239,25 +239,34 @@ namespace Mooege.Core.GS.Actors
             // If there is only one conversation option, immediatly select it without showing menu
             if (Interactions.Count == 0 && Conversations.Count == 1 && this != vendor)
             {
-                player.Conversations.StartConversation(Conversations[0].ConversationSNO);
-                Conversations[0].MarkAsRead();
-                UpdateConversationList();
+                // No start bugged conv!
+                if (Conversations[0].ConversationSNO == 141849 || Conversations[0].ConversationSNO == 141856)
+                {
+
+                }
+                else
+                {
+                    player.Conversations.StartConversation(Conversations[0].ConversationSNO);
+                    Conversations[0].MarkAsRead();
+                    UpdateConversationList();
+                }
                 return;
             }
+
 
             NPCInteraction[] npcInters = new NPCInteraction[count];
 
             var it = 0;
-            foreach (var conv in Conversations)
-            {
-                if (this == vendor)
-                    return;
-                else
-                {
-                    npcInters[it] = conv.AsNPCInteraction(this, player);
-                    it++;
-                }
-            }
+            foreach (var conv in Conversations)            
+			{               
+              if (this == vendor)                    
+                  return;                
+              else                
+              {                    
+                  npcInters[it] = conv.AsNPCInteraction(this, player);                    
+                  it++;                
+              }            
+			}
 
             foreach (var inter in Interactions)
             {
@@ -289,6 +298,7 @@ namespace Mooege.Core.GS.Actors
             if (message is HirelingHireMessage) OnHire(client.Player);
             if (message is HirelingInventoryMessage) OnInventory(client.Player);
             if (message is CraftInteractionMessage) OnCraft(client.Player);
+            if (message is CraftInteractionMessage) OnCraft(client.Player);
             else return;
         }
 
@@ -296,7 +306,7 @@ namespace Mooege.Core.GS.Actors
         {
             throw new NotImplementedException();
         }
-
+        
         public virtual void OnInventory(Player player)
         {
             throw new NotImplementedException();
@@ -312,12 +322,18 @@ namespace Mooege.Core.GS.Actors
             var conversation = Conversations.FirstOrDefault(conv => conv.ConversationSNO == message.ConversationSNO);
             if (conversation == null)
                 return;
+            if (Conversations[0].ConversationSNO == 141849 || Conversations[0].ConversationSNO == 141856)
+            {
 
-            player.Conversations.StartConversation(conversation.ConversationSNO);
-            conversation.MarkAsRead();
+            }
+            else
+            {
 
-            UpdateConversationList(); // erekose now the dialogs shit are updated properly :D yay !
+                player.Conversations.StartConversation(conversation.ConversationSNO);
+                conversation.MarkAsRead();
 
+                UpdateConversationList(); // erekose now the dialogs shit are updated properly :D yay !
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
         protected int proxySNO = -1;
         protected int skillKit = -1;
         protected int hirelingGBID = -1;
-
+        public Actor Master;
 
         private World originalWorld = null;
         private PRTransform originalPRT = null;
@@ -275,6 +275,7 @@ namespace Mooege.Core.GS.Actors.Implementations.Hirelings
             if (this.IsHireling)
             {
                 var original = CreateHireling(originalWorld, mainSNO, this.Tags);
+                original.Brain.DeActivate();
                 original.SetUpAttributes(player);
                 original.RotationW = this.originalPRT.Quaternion.W;
                 original.RotationAxis = this.originalPRT.Quaternion.Vector3D;

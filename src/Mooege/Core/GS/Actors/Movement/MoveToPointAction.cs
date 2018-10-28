@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,19 +40,19 @@ namespace Mooege.Core.GS.Actors.Movement
             var facingAngle = MovementHelpers.GetFacingAngle(this.Owner, this.Heading);
             this.Owner.Move(this.Heading, facingAngle);
 
-            Logger.Trace("Heading: " + this.Heading);
-            Logger.Trace("Start point: " + this.Owner.Position);
+            //Logger.Trace("Heading: " + this.Heading);
+            //Logger.Trace("Start point: " + this.Owner.Position);
 
             this.Timer = new SteppedRelativeTickTimer(this.Owner.World.Game, 6, (int)(distance / this.Owner.WalkSpeed),
             (tick) =>
             {
                 this.Owner.Position = MovementHelpers.GetMovementPosition(this.Owner.Position, this.Owner.WalkSpeed, facingAngle, 6);
-                Logger.Trace("Step: " + this.Owner.Position);
+                //Logger.Trace("Step: " + this.Owner.Position);
             },
             (tick) =>
             {
                 this.Owner.Position = Heading;
-                Logger.Trace("Completed: " + this.Owner.Position);
+                //Logger.Trace("Completed: " + this.Owner.Position);
                 this.Done = true;
             });
 

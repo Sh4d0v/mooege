@@ -26,6 +26,8 @@ using Mooege.Net.GS.Message.Definitions.Animation;
 using Mooege.Core.GS.Common.Types.SNO;
 using Mooege.Net.GS.Message;
 using TreasureClass = Mooege.Common.MPQ.FileFormats.TreasureClass;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.GS.Actors.Implementations
 {
@@ -38,18 +40,44 @@ namespace Mooege.Core.GS.Actors.Implementations
         public Door(World world, int snoId, TagMap tags)
             : base(world, snoId, tags)
         {
+            Field2 = 0;
         }
 
 
         public override void OnTargeted(Players.Player player, Net.GS.Message.Definitions.World.TargetMessage message)
         {
-            World.BroadcastIfRevealed(new PlayAnimationMessage
+            var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(player.Toon.PersistentID);
+            if (ActorSNO.Id == 104545 && dbQuestProgress.ActiveQuest == 72546 && dbQuestProgress.StepOfQuest == 4)
             {
-                ActorID = this.DynamicID,
-                Field1 = 5,
-                Field2 = 0,
-                tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                        //118037 - Конец квеста
+                    World.Game.Quests.Advance(72546);
+                    Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                    Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                    Attributes[GameAttribute.Gizmo_State] = 1;
+                    Attributes[GameAttribute.Untargetable] = true;
+                    Attributes.BroadcastChangedIfRevealed();
+            }
+            else
+            {
+
+                var OpenDoor = new Door(this.World, this.ActorSNO.Id, this.Tags);
+                OpenDoor.Field2 = 16;
+                OpenDoor.RotationAxis = this.RotationAxis;
+                OpenDoor.RotationW = this.RotationW;
+                OpenDoor.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
+                OpenDoor.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
+                OpenDoor.Attributes[GameAttribute.Gizmo_State] = 1;
+                OpenDoor.Attributes[GameAttribute.Untargetable] = true;
+                Attributes.BroadcastChangedIfRevealed();
+                OpenDoor.EnterWorld(this.Position);
+
+                World.BroadcastIfRevealed(new PlayAnimationMessage
                 {
+                    ActorID = OpenDoor.DynamicID,
+                    Field1 = 5,
+                    Field2 = 0,
+                    tAnim = new Net.GS.Message.Fields.PlayAnimationMessageSpec[]
+                    {
                     new Net.GS.Message.Fields.PlayAnimationMessageSpec()
                     {
                         Duration = 50,
@@ -57,22 +85,24 @@ namespace Mooege.Core.GS.Actors.Implementations
                         PermutationIndex = 0,
                         Speed = 1
                     }
-                }
+                    }
 
-            }, this);
+                }, OpenDoor);
 
-            World.BroadcastIfRevealed(new SetIdleAnimationMessage
-            {
-                ActorID = this.DynamicID,
-                AnimationSNO = AnimationSetKeys.Open.ID
-            }, this);
+                World.BroadcastIfRevealed(new SetIdleAnimationMessage
+                {
+                    ActorID = OpenDoor.DynamicID,
+                    AnimationSNO = AnimationSetKeys.Open.ID
+                }, OpenDoor);
 
-            this.Attributes[GameAttribute.Gizmo_Has_Been_Operated] = true;
-            this.Attributes[GameAttribute.Gizmo_Operator_ACDID] = unchecked((int)player.DynamicID);
-            this.Attributes[GameAttribute.Gizmo_State] = 1;
-            Attributes.BroadcastChangedIfRevealed();
+
+                Destroy();
+            }
+            DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+            DBSessions.AccountSession.Flush();
 
             base.OnTargeted(player, message);
+            
         }
     }
 }

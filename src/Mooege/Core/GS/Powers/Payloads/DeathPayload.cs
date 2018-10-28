@@ -134,6 +134,36 @@ namespace Mooege.Core.GS.Powers.Payloads
                         if (Mooege.Common.Helpers.Math.RandomHelper.NextDouble() < Mooege.Net.GS.Config.Instance.HealthGlobeDropRate / 100)
                             this.Target.World.SpawnHealthGlobe(this.Target, player, this.Target.Position);
                     }
+
+                    // Monsters Killed for the Account Profile
+                    if (this.Target.Quality != 0)
+                    {
+                        if (!player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.ElitesKilled++;
+                        else if (player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.ElitesKilled++;
+                    }
+                    else
+                    {
+                        // Monsters Killed for the Account Profile
+                        if (!player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.MonstersKilled++;
+                        else if (player.Toon.Hardcore)
+                            player.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
+                    }
+
+
+                }
+
+                if (this.Context.User is Minion) // Minion Kills counts too
+                {
+                    Minion minion = (Minion)this.Context.User;
+                    var summoner = minion.Master.World.GetPlayer(minion.Master.DynamicID);
+
+                    if (!summoner.Toon.Hardcore)
+                        summoner.Toon.DBToon.DBGameAccount.MonstersKilled++;
+                    else if (summoner.Toon.Hardcore)
+                        summoner.Toon.DBToon.DBGameAccount.HardcoreMonstersKilled++;
                 }
             }
 

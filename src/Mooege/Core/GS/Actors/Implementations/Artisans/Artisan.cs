@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,14 +31,18 @@ namespace Mooege.Core.GS.Actors.Implementations.Artisans
             : base(world, snoId, tags)
         {
             this.Attributes[GameAttribute.MinimapActive] = true;
-
+            //{544769 = 186330}
+            //{544768 = 223677}
+            //{544768 = 223677}
+            //{524872 = 75875}
             Interactions.Add(new CraftInteraction());
         }
 
         public override void OnCraft(Player player)
         {
             player.InGameClient.SendMessage(new OpenArtisanWindowMessage() { ArtisanID = this.DynamicID });
-        }
 
+        }
+        
     }
 }

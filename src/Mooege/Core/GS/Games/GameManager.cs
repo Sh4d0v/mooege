@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ using Mooege.Common.Logging;
 using Mooege.Core.GS.Players;
 using Mooege.Core.MooNet.Toons;
 using Mooege.Net.GS.Message;
+using Mooege.Net.MooNet;
 
 namespace Mooege.Core.GS.Games
 {
@@ -31,12 +32,12 @@ namespace Mooege.Core.GS.Games
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly Dictionary<int, Game> Games = new Dictionary<int, Game>();
 
-        public static Game CreateGame(int gameId)
+        public static Game CreateGame(int gameId, List<MooNetClient> clients)
         {
             if (Games.ContainsKey(gameId))
                 return Games[gameId];
 
-            var game = new Game(gameId);
+            var game = new Game(gameId, clients);
             Games.Add(gameId, game);
             return game;
         }
@@ -66,8 +67,50 @@ namespace Mooege.Core.GS.Games
             {
                 //TODO: Move this inside player OnLeave event
                 var toon = p.Toon;
+                var gameAccount = toon.DBToon.DBGameAccount; // For update account profile [Necrosummon]
                 toon.TimePlayed += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
                 toon.ExperienceNext = p.Attributes[GameAttribute.Experience_Next];
+
+                // Updating time played/highest level by classes [Necrosummon]
+                if (toon.Class == ToonClass.Barbarian)
+                {
+                    gameAccount.BarbarianPlayedTime += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
+
+                    if (gameAccount.BarbarianHighestLevel < toon.Level) // Updates the Highest Level of this class if is more high when you logout [Necrosummon]
+                        gameAccount.BarbarianHighestLevel = toon.Level;
+                }
+                else if (toon.Class == ToonClass.DemonHunter)
+                {
+                    gameAccount.DemonHunterPlayedTime += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
+
+                    if (gameAccount.DemonHunterHighestLevel < toon.Level)
+                        gameAccount.DemonHunterHighestLevel = toon.Level;
+                }
+                else if (toon.Class == ToonClass.Monk)
+                {
+                    gameAccount.MonkPlayedTime += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
+
+                    if (gameAccount.MonkHighestLevel < toon.Level)
+                        gameAccount.MonkHighestLevel = toon.Level;
+                }
+                else if (toon.Class == ToonClass.WitchDoctor)
+                {
+                    gameAccount.WitchDoctorPlayedTime += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
+
+                    if (gameAccount.WitchDoctorHighestLevel < toon.Level)
+                        gameAccount.WitchDoctorHighestLevel = toon.Level;
+                }
+                else if (toon.Class == ToonClass.Wizard)
+                {
+                    gameAccount.WizardPlayedTime += DateTimeExtensions.ToUnixTime(DateTime.UtcNow) - toon.LoginTime;
+
+                    if (gameAccount.WizardHighestLevel < toon.Level)
+                        gameAccount.WizardHighestLevel = toon.Level;
+                }
+
+                // Hardcore Highest Level Account Profile Info
+                if (toon.Hardcore && gameAccount.HighestHardcoreLevel < toon.Level)
+                    gameAccount.HighestHardcoreLevel = toon.Level;
 
                 // Remove Player From World
                 if (p.InGameClient != null)

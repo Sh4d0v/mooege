@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,17 @@ using Mooege.Common.Versions;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("mooege")]
-[assembly: AssemblyDescription("mooege - an educational game server emulator.")]
+[assembly: AssemblyTitle("DiIiS")]
+[assembly: AssemblyDescription("DiIiS - it's only game).")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-[assembly: AssemblyCompany("mooege.org")]
-[assembly: AssemblyProduct("mooege")]
-[assembly: AssemblyCopyright("Copyright © 2011 - 2012, mooege project.")]
-[assembly: AssemblyTrademark("mooege")]
+[assembly: AssemblyCompany("DiIiS.org")]
+[assembly: AssemblyProduct("DiIiS")]
+[assembly: AssemblyCopyright("Copyright © 2018, DiIiS project.")]
+[assembly: AssemblyTrademark("DiIiS")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

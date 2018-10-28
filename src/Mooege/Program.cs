@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,12 +79,12 @@ namespace Mooege
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler; // Watch for any unhandled exceptions.
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture; // Use invariant culture - we have to set it explicitly for every thread we create to prevent any mpq-reading problems (mostly because of number formats).
 
-            //string Revision = "9"; // Actual revision
-            //string date = "08/21/2017";
+            string Revision = "55"; // Ревизия
+            string date = "28/10/2018";
 
-            //string title = "D3Emu - Revision [" + Revision + "] - Date [" + date + "] - By Necrosummon";
+            string title = "D3IIIS - Revision [" + Revision + "] - Date [" + date + "] - By AiDiE";
 
-            //Console.Title = title;
+            Console.Title = title;
             Console.ForegroundColor = ConsoleColor.Red;
             PrintBanner(); // print ascii banner.
             Console.ResetColor(); // reset color back to default.
@@ -94,7 +94,7 @@ namespace Mooege
 
             InitLoggers(); // init logging facility.
 
-            //Logger.Info("D3Emu revision {0}. {1}", Revision, date);
+            Logger.Info("DiIiS revision {0}. {1}", Revision, date);
             Logger.Info("Required client version: 1.0.3.{0}.", VersionInfo.MooNet.RequiredClientVersion);
 
             // init openssl & wrapper.
@@ -136,7 +136,7 @@ namespace Mooege
             Logger.Info("Loading achievements database..");
             Logger.Trace("Achievement file parsed with a total of {0} achievements and {1} criteria in {2} categories.",
                 AchievementManager.TotalAchievements, AchievementManager.TotalCriteria, AchievementManager.TotalCategories);
-
+            
 
             Logger.Info("Type '!commands' for a list of available commands.");
 
@@ -303,15 +303,7 @@ namespace Mooege
         /// </summary>
         private static void PrintBanner()
         {
-            Console.WriteLine();
-            Console.WriteLine(@"       \------.     _           __      ,-.___     _   _        ,---.  ");
-            Console.WriteLine(@"        \ .--. \    \'-,      ,',.'.     \ ._ \    \'-'/       / .-. \ ");
-            Console.WriteLine(@"        | |  | |     | |     J /__\ L    | |_)(     | |       f /   \ l");
-            Console.WriteLine(@"        | |  | |     | |     | |  ] ]    | .-. \    | |   ,   t \   / j");
-            Console.WriteLine(@"        / '--' /    ,'_'.   .'_'. F F    / |__)/    / '--'/    \ '-' / ");
-            Console.WriteLine(@"       /_,----'      ' '     ' ' /,'    '-----'    '-----'      '---'  ");
-            Console.WriteLine(@"      ('                        ''                    ");
-            Console.WriteLine();
+            
         }
 
         /// <summary>
@@ -319,9 +311,10 @@ namespace Mooege
         /// </summary>
         private static void PrintLicense()
         {
-            Console.WriteLine("                  Copyright (C) 2011-2017, Mooege project");
+            Console.WriteLine("                         Copyright (C) 2018. Created by AiDiE.                ");
+            Console.WriteLine("                        Based on Mooege, Copyright (C) 2011-2012                ");
             Console.WriteLine();
-	    Console.WriteLine();
+            Console.WriteLine();
         }
 
         #endregion

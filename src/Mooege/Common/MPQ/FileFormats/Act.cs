@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,10 @@ namespace Mooege.Common.MPQ.FileFormats
         {
             var stream = file.Open();
             this.Header = new Header(stream);
-
+            /*
+            Act1 -  
+            Act2 - 15478589
+            */
             this.ActQuestInfo = stream.ReadSerializedData<ActQuestInfo>();
             stream.Position += 12;
 

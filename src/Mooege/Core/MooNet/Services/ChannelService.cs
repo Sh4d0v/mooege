@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2011 - 2018 mooege project
+ * Copyright (C) 2018 DiIiS project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ using Mooege.Core.MooNet.Channels;
 using Mooege.Core.MooNet.Commands;
 using Mooege.Net.MooNet;
 using Mooege.Core.MooNet.Accounts;
+using Mooege.Common.Storage;
+using Mooege.Common.Storage.AccountDataBase.Entities;
 
 namespace Mooege.Core.MooNet.Services
 {
@@ -105,7 +107,27 @@ namespace Mooege.Core.MooNet.Services
                             .SetName("D3.Party.GameCreateParams")
                             .SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetMessageValue(gameCreateParams.ToByteString()).Build());
                         channelState.AddAttribute(attr);
-                        Logger.Trace("D3.Party.GameCreateParams: {0}", gameCreateParams.ToString());
+                        var dbQuestProgress = DBSessions.AccountSession.Get<DBProgressToon>(channel.Owner.Account.CurrentGameAccount.CurrentToon.PersistentID);
+                        if (gameCreateParams.Coop.SnoQuest == 87700 && gameCreateParams.Coop.QuestStepId == -1)
+                        {
+                            if(dbQuestProgress.ActiveQuest != 87700)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+                            else if (dbQuestProgress.ActiveQuest == 87700 && dbQuestProgress.StepOfQuest == -1)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+                            else if(dbQuestProgress.ActiveQuest == 87000 && dbQuestProgress.StepOfQuest == 0)
+                            { dbQuestProgress.ActiveQuest = -1; dbQuestProgress.StepOfQuest = 0; }
+
+
+                        }
+                        else
+                        {
+                            dbQuestProgress.ActiveQuest = gameCreateParams.Coop.SnoQuest;
+                        }
+                        
+                        
+                        DBSessions.AccountSession.SaveOrUpdate(dbQuestProgress);
+                        DBSessions.AccountSession.Flush();
+                            Logger.Trace("D3.Party.GameCreateParams: {0}", gameCreateParams.ToString());
                     }
                 }
                 else if (attribute.Name == "D3.Party.SearchForPublicGame.Params")
@@ -118,7 +140,7 @@ namespace Mooege.Core.MooNet.Services
                 {
                     if (!this.Client.MOTDSent)
                         this.Client.SendMOTD(); // send the MOTD to client if we haven't yet so.
-
+                    
                     if (!attribute.HasValue || attribute.Value.MessageValue.IsEmpty) //Sometimes not present -Egris
                     {
                         var attr = bnet.protocol.attribute.Attribute.CreateBuilder()
@@ -138,7 +160,9 @@ namespace Mooege.Core.MooNet.Services
                             .SetValue(bnet.protocol.attribute.Variant.CreateBuilder().SetMessageValue(oldScreen.ToByteString()));
                         channelState.AddAttribute(attr);
                         Logger.Trace("Client moving to Screen: {0}, with Status: {1}", oldScreen.Screen, oldScreen.Status);
+
                     }
+
                 }
                 else if (attribute.Name == "D3.Party.JoinPermissionPreviousToLock")
                 {

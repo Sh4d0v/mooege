@@ -8,7 +8,7 @@
     <ProjectGuid>{41BB6B2D-BD3F-42B6-860C-D21DC74B33CD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Mooege</RootNamespace>
-    <AssemblyName>Mooege</AssemblyName>
+    <AssemblyName>DiIiS</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -80,6 +80,9 @@
     </Reference>
     <Reference Include="Microsoft.CSharp">
     </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\Npgsql.2.2.7\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.3.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dep\nhibernate\NHibernate.dll</HintPath>
@@ -127,21 +130,32 @@
     <Compile Include="Common\Logging\LogTarget.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBActiveSkills.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBArtisansOfToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBGameAccount.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBInventory.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBItemInstance.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBPortalOfToon.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Entities\DBProgressToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Entities\DBToon.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBActiveSkillsMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBArtisansOfToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBGameAccountMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBInventoryMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBItemInstanceMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBPortalOfToonMapper.cs" />
+    <Compile Include="Common\Storage\AccountDataBase\Mapper\DBProgressToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\Mapper\DBToonMapper.cs" />
     <Compile Include="Common\Storage\AccountDataBase\SessionProvider.cs" />
     <Compile Include="Common\Storage\DBSessions.cs" />
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Core\GS\Actors\Actions\PowerAction.cs" />
+    <Compile Include="Core\GS\Actors\BossPortal.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\BlackSmithQuest.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\GhostQueen.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Leah.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\LeahInCamp.cs" />
+    <Compile Include="Core\GS\Actors\Implementations\Mystic.cs" />
     <Compile Include="Core\GS\Actors\Spawner.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Door.cs" />
     <Compile Include="Core\GS\Actors\Implementations\Minions\AncientKorlic.cs" />
@@ -168,6 +182,7 @@
     <Compile Include="Core\GS\Powers\Implementations\General\LevelUp.cs" />
     <Compile Include="Core\GS\Powers\Implementations\General\StatusDebuffs.cs" />
     <Compile Include="Core\GS\Powers\Implementations\General\SummonedBuff.cs" />
+    <Compile Include="Core\GS\Powers\Implementations\General\Traps.cs" />
     <Compile Include="Core\GS\Powers\Implementations\MonsterSkills\SummoningSkills.cs" />
     <Compile Include="Core\GS\Powers\Payloads\AttackPayload.cs" />
     <Compile Include="Core\GS\Powers\BaseBuffs.cs" />
@@ -336,14 +351,45 @@
     <Compile Include="Core\GS\Players\Equipment.cs" />
     <Compile Include="Core\GS\Powers\Skill.cs" />
     <Compile Include="Core\GS\Powers\TargetList.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TheImprisonedAngel\103388.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TheImprisonedAngel\119680.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\TrailingTheCoven\138268.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\120357.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\165080.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\194942.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\AttackTown\72817.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\196041.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\196043.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\198292.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Blacksmith\198312.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198503.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\198521.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\LeahInn.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\LeahInnAfterKilling.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Fallen Star\SurviveTheWaves.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\111899.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\133372.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\167656.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\167677.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\198925.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\NephalemPower\81576.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\166678.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\167115.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\17667.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\190404.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198541.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198588.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\Rescue Cain\198617.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\Side_BrotherRescue\129751.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\117371.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\139823.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\139825.cs" />
     <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\154570.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181910.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\181912.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SkeletonKing\80861.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SwordOfJustice\118037.cs" />
+    <Compile Include="Core\GS\QuestEvents\Implementions\SwordOfJustice\194412.cs" />
     <Compile Include="Core\GS\QuestEvents\QuestEvent.cs" />
     <Compile Include="Core\GS\Ticker\SteppedTickTimer.cs" />
     <Compile Include="Core\GS\Ticker\TickTimer.cs" />
@@ -418,6 +464,7 @@
     <Compile Include="Net\GS\Message\Definitions\Inventory\InventoryIdentifyItem.cs" />
     <Compile Include="Net\GS\Message\Definitions\Player\PlayerKickTimerMessage.cs" />
     <Compile Include="Net\GS\Message\Definitions\Player\UnlockDifficultyMessage.cs" />
+    <Compile Include="Net\GS\Message\Definitions\Quest\QuestRewardMessage.cs" />
     <Compile Include="Net\GS\Message\Definitions\Skill\AssignTraitsMessage.cs" />
     <Compile Include="Net\GS\Message\Definitions\Skill\CancelChanneledSkillMessage.cs" />
     <Compile Include="Common\Logging\LogConfig.cs" />
@@ -724,9 +771,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="..\..\assets\database.Account.config">
-      <Link>database.Account.config</Link>
+    <None Include="..\..\assets\databaseSQLite.Account.config">
+      <Link>databaseSQLite.Account.config</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\assets\databaseMySQL.Account.config">
+      <Link>databaseMySQL.Account.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="..\..\assets\mpqdata.db">
       <Link>Assets\mpqdata.db</Link>
@@ -754,6 +806,8 @@
     <None Include="conf\Server.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="conf\Skills\Barbarian.conf" />
+    <None Include="conf\Skills\Demon Hunter.conf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
